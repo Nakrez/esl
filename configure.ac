@@ -10,6 +10,12 @@ AM_INIT_AUTOMAKE([foreign -Wall -Werror -Wno-portability subdir-objects])
 # Check for a C++ compiler
 AC_PROG_CXX
 
+# Check for flex
+AC_PROG_LEX
+
+# Check for bison
+AC_PROG_YACC
+
 # Safety check. Ensure autoconf is not being run from outer space
 AC_CONFIG_SRCDIR([AUTHORS])
 
