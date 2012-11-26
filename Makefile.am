@@ -1,7 +1,7 @@
 bin_PROGRAMS = esl
-esl_CFLAGS =
-esl_LDFLAGS =
-esl_SOURCES = src/main.cpp
+esl_CPPFLAGS =
+esl_LDFLAGS = $(LEXLIB)
+esl_SOURCES = src/main.cpp src/lexer.l src/parser.y
 
 scrub:
 	@files="$($SHELL git ls-files --other --exclude-standard 2>/dev/null)";\

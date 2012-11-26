@@ -1,0 +1,11 @@
+%{
+#include <parser.hpp>
+%}
+
+%option nounput noyywrap nodefault debug c++
+
+%%
+
+"\n"    return TOK_NEWLINE;
+
+%%
