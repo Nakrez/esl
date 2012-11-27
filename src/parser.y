@@ -37,10 +37,12 @@ class eslxx_driver;
 %token END       0 "end_of_file"
 %token TOK_NEWLINE "\n" TOK_EQ "="
 %token TOK_PLUS "+" TOK_MINUS "-" TOK_MUL "*" TOK_DIV "/" TOK_MOD "%"
+%token TOK_PAROPEN "(" TOK_PARCLOSE ")"
+%token TOK_IF "if" TOK_THEN "then" TOK_ELSE "else" TOK_END "end"
 
 %token <sval> TOK_ID "identifier" TOK_DIGIT "digit"
 
-%type  <ast>  assignation expr
+%type  <ast>  instr statement expr control rule_if
 
 %left "+" "-"
 %left "*" "/" "%"
@@ -51,16 +53,47 @@ input       :
             ;
 
 instr       :
-            assignation { driver.ast()->add($1); }
+            statement "\n"{ driver.ast()->add($1); }
+            |control "\n"
+            |"\n" { $$ = new esl_ast(EMPTY, ""); }
+            |error "\n" { $$ = new esl_ast(EMPTY, ""); }
             ;
 
-assignation :
-            "identifier" "=" expr "\n" {
-                                         $$ = new esl_ast(ASSIGNEMENT, "");
-                                         $$->add(new esl_ast(ID, *$1));
-                                         $$->add($3);
-                                       }
-            | error "\n" { $$ = new esl_ast(EMPTY, ""); }
+control     :
+            rule_if { $$ = $1; }
+            ;
+new_line    :
+            new_line "\n"
+            |"\n"
+
+rule_if     :
+            "if" statement "then" new_line instr "end" {
+                                                $$ = new esl_ast(IF, "");
+                                                $$->add($2);
+                                                $$->add($5);
+                                              }
+            |"if" statement "then" new_line instr "else" new_line instr "end"
+                                              {
+                                                $$ = new esl_ast(IF, "");
+                                                $$->add($2);
+                                                $$->add($5);
+                                                $$->add($8);
+                                              }
+            |"if" statement "then" new_line instr "else" rule_if "end"
+                                              {
+                                                $$ = new esl_ast(IF, "");
+                                                $$->add($2);
+                                                $$->add($5);
+                                                $$->add($7);
+                                              }
+            ;
+statement   :
+            "identifier" "=" expr {
+                                    $$ = new esl_ast(ASSIGNEMENT, "");
+                                    $$->add(new esl_ast(ID, *$1));
+                                    $$->add($3);
+                                  }
+            |expr { $$ = $1; }
             ;
 
 expr        :
@@ -84,6 +117,7 @@ expr        :
                              $$ = new esl_ast(MOD, "");
                              $$->add($1); $$->add($3);
                            }
+            |"(" expr ")"  { $$ = $2; }
             |"digit" { $$ = new esl_ast(NUMBER, *$1); }
             |"identifier" { $$ = new esl_ast(ID, *$1); }
 %%

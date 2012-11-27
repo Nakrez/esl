@@ -14,7 +14,7 @@ void eslxx_driver::free()
     delete gen_ast;
 }
 
-void eslxx_driver::error (const yy::location& l, const std::string& m)
+void eslxx_driver::error(const yy::location& l, const std::string& m)
 {
     std::cerr << l << ": " << m << std::endl;
 }

@@ -26,7 +26,7 @@ esl: $(OBJ)
 
 clean:
 	rm -f $(OBJ) src/parser.output src/location.hh src/position.hh \
-	src/stack.hh src/parser.hpp
+	src/stack.hh src/parser.hpp tree.dot tree.png
 
 
 ## ------------ ##

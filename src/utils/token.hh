@@ -7,6 +7,8 @@ enum token
     STATEMENTS,
     ASSIGNEMENT,
 
+    IF,
+
     ADD,
     MINUS,
     MUL,

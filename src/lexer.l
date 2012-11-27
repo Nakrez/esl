@@ -20,8 +20,13 @@
     typedef yy::eslxx_parser::token token;
 %}
 
+"if"                    return token::TOK_IF;
+"then"                  return token::TOK_THEN;
+"else"                  return token::TOK_ELSE;
+"end"                   return token::TOK_END;
+
 [a-z_A-Z][a-zA-Z_0-9]*  {
-                            yylval->sval = new std::string (yytext);
+                            yylval->sval = new std::string(yytext);
                             return token::TOK_ID;
                         }
 "+"                     return token::TOK_PLUS;
@@ -30,7 +35,12 @@
 "/"                     return token::TOK_DIV;
 "%"                     return token::TOK_MOD;
 "="                     return token::TOK_EQ;
-[0-9]+                  return token::TOK_DIGIT;
+"("                     return token::TOK_PAROPEN;
+")"                     return token::TOK_PARCLOSE;
+[0-9]+                  {
+                            yylval->sval = new std::string(yytext);
+                            return token::TOK_DIGIT;
+                        }
 "\n"                    {
                             yylloc->lines(yyleng);
                             yylloc->step();
