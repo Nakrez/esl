@@ -54,7 +54,11 @@ std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
     {
         case STATEMENTS: return compile_statements(ast->get_fson());
         case ASSIGNEMENT: return compile_assignement(ast);
-        case ADD: return compile_addition(ast);
+        case ADD: return compile_arith(ast, ARITH_ADD);
+        case MINUS: return compile_arith(ast, ARITH_MINUS);
+        case MUL: return compile_arith(ast, ARITH_MUL);
+        case DIV: return compile_arith(ast, ARITH_DIV);
+        case MOD: return compile_arith(ast, ARITH_MOD);
         case NUMBER: return compile_number(ast);
     }
 
@@ -90,7 +94,8 @@ std::vector<esl_bytecode *> *esl_compiler::compile_assignement(esl_ast *ast)
     return code;
 }
 
-std::vector<esl_bytecode *> *esl_compiler::compile_addition(esl_ast *ast)
+std::vector<esl_bytecode *> *esl_compiler::compile_arith(esl_ast *ast,
+                                                         enum instr i)
 {
     std::vector<esl_bytecode *> *code = NULL;
     std::vector<esl_bytecode *> *ret_code = NULL;
@@ -101,7 +106,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile_addition(esl_ast *ast)
 
     code->insert(code->end(), ret_code->begin(), ret_code->end());
 
-    code->push_back(new esl_bytecode(ARITH_ADD, 0, NULL));
+    code->push_back(new esl_bytecode(i, 0, NULL));
 
     return code;
 }

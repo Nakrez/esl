@@ -24,6 +24,10 @@ enum instr
     ** Perform an addition
     */
     ARITH_ADD,
+    ARITH_MINUS,
+    ARITH_MUL,
+    ARITH_DIV,
+    ARITH_MOD,
 
     /*
     **
