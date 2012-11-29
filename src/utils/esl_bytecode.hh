@@ -86,6 +86,11 @@ const static std::string instr_string[] =
     "POP",
     "DUP_TOP",
     "ARITH_ADD",
+    "ARITH_MINUS",
+    "ARITH_MUL",
+    "ARITH_DIV",
+    "ARITH_MOD",
+
     "STORE",
     "LOAD",
     "LOAD_CST",
