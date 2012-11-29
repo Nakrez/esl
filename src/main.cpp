@@ -6,8 +6,8 @@ int main(int argc, char **argv)
 
     driver.parser(argv[1]);
 
+    std::cout << argv[1] << std::endl;
     driver.free();
 
     return (0);
 }
-

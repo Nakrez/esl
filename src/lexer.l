@@ -23,7 +23,12 @@
 "if"                    return token::TOK_IF;
 "then"                  return token::TOK_THEN;
 "else"                  return token::TOK_ELSE;
+"elif"                  return token::TOK_ELIF;
 "end"                   return token::TOK_END;
+"function"              return token::TOK_FUNCTION;
+"do"                    return token::TOK_DO;
+"while"                 return token::TOK_WHILE;
+"until"                 return token::TOK_UNTIL;
 
 [a-z_A-Z][a-zA-Z_0-9]*  {
                             yylval->sval = new std::string(yytext);

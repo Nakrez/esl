@@ -1,7 +1,23 @@
 if 2 then
     test = 2
-else if a = 4 then
+elif a = 4 then
     test = 3
 else
-    test = 5
+    test = 4
+end
+test = 3 + 5
+function sboob()
+    if 2 then
+        echo()
+        lol()
+        prout()
+    end
+end
+
+while sboob() do
+    echo()
+end
+
+until echo() do
+    sboob()
 end

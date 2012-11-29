@@ -38,88 +38,137 @@ class eslxx_driver;
 %token TOK_NEWLINE "\n" TOK_EQ "="
 %token TOK_PLUS "+" TOK_MINUS "-" TOK_MUL "*" TOK_DIV "/" TOK_MOD "%"
 %token TOK_PAROPEN "(" TOK_PARCLOSE ")"
-%token TOK_IF "if" TOK_THEN "then" TOK_ELSE "else" TOK_END "end"
+%token TOK_IF "if" TOK_THEN "then" TOK_ELSE "else" TOK_ELIF "elif"
+%token TOK_END "end"
+%token TOK_FUNCTION "function"
+%token TOK_FOR "for" TOK_DO "do" TOK_WHILE "while" TOK_UNTIL "until"
 
 %token <sval> TOK_ID "identifier" TOK_DIGIT "digit"
 
-%type  <ast>  instr statement expr control rule_if
+%type <ast> instr expr simple_instr functions esl_command compound_list
+%type <ast> rule_while rule_until rule_if do_group else_group
 
 %left "+" "-"
 %left "*" "/" "%"
+
 %%
 
-input       :
-            | input instr
-            ;
+input   :
+        |input instr { if ($2) driver.ast()->add($2); }
+        ;
 
-instr       :
-            statement "\n"{ driver.ast()->add($1); }
-            |control "\n"
-            |"\n" { $$ = new esl_ast(EMPTY, ""); }
-            |error "\n" { $$ = new esl_ast(EMPTY, ""); }
-            ;
+instr   :
+        simple_instr "\n" { $$ = $1; }
+        |functions "\n" { $$ = $1; }
+        |esl_command "\n" { $$ = $1; }
+        |"\n" { $$ = NULL; }
+        |error "\n" { $$ = NULL; }
+        ;
 
-control     :
-            rule_if { $$ = $1; }
-            ;
-new_line    :
-            new_line "\n"
-            |"\n"
+compound_list   :
+                simple_instr "\n" { driver.compound()->add($1); }
+                |esl_command "\n" { driver.compound()->add($1); }
+                | compound_list simple_instr "\n" { driver.compound()->add($2); }
+                | compound_list esl_command "\n" { driver.compound()->add($2); }
+                ;
 
-rule_if     :
-            "if" statement "then" new_line instr "end" {
-                                                $$ = new esl_ast(IF, "");
-                                                $$->add($2);
-                                                $$->add($5);
-                                              }
-            |"if" statement "then" new_line instr "else" new_line instr "end"
-                                              {
-                                                $$ = new esl_ast(IF, "");
-                                                $$->add($2);
-                                                $$->add($5);
-                                                $$->add($8);
-                                              }
-            |"if" statement "then" new_line instr "else" rule_if "end"
-                                              {
-                                                $$ = new esl_ast(IF, "");
-                                                $$->add($2);
-                                                $$->add($5);
-                                                $$->add($7);
-                                              }
-            ;
-statement   :
-            "identifier" "=" expr {
-                                    $$ = new esl_ast(ASSIGNEMENT, "");
-                                    $$->add(new esl_ast(ID, *$1));
+simple_instr    :
+                expr { $$ = $1; }
+                |"identifier" "(" ")" {
+                                        $$ = new esl_ast(FUNCTION_CALL,
+                                                         std::string(*$1));
+                                      }
+                |"identifier" "=" expr {
+                                         $$ = new esl_ast(ASSIGNEMENT, "");
+                                         $$->add(new esl_ast(ID, *$1));
+                                         $$->add($3);
+                                       }
+                ;
+functions       :
+                "function" "identifier" "(" ")" "\n" compound_list "end"
+                                        {
+                                            $$ = new esl_ast(FUNCTION_DECL,
+                                                             *$2);
+                                            $$->add(driver.compound());
+                                            driver.reset_compound();
+                                        }
+                ;
+expr            :
+                expr "+" expr
+                                {
+                                    $$ = new esl_ast(ADD, "");
+                                    $$->add($1);
                                     $$->add($3);
-                                  }
-            |expr { $$ = $1; }
-            ;
+                                }
+                |"digit" { $$ = new esl_ast(NUMBER, *$1); }
+                ;
 
-expr        :
-             expr "+" expr {
-                             $$ = new esl_ast(ADD, "");
-                             $$->add($1); $$->add($3);
-                           }
-            |expr "-" expr {
-                             $$ = new esl_ast(MINUS, "");
-                             $$->add($1); $$->add($3);
-                           }
-            |expr "*" expr {
-                             $$ = new esl_ast(MUL, "");
-                             $$->add($1); $$->add($3);
-                           }
-            |expr "/" expr {
-                             $$ = new esl_ast(DIV, "");
-                             $$->add($1); $$->add($3);
-                           }
-            |expr "%" expr {
-                             $$ = new esl_ast(MOD, "");
-                             $$->add($1); $$->add($3);
-                           }
-            |"(" expr ")"  { $$ = $2; }
-            |"digit" { $$ = new esl_ast(NUMBER, *$1); }
-            |"identifier" { $$ = new esl_ast(ID, *$1); }
+esl_command     :
+                rule_if { $$ = $1; }
+                |rule_until { $$ = $1; }
+                |rule_while { $$ = $1; }
+                ;
+
+rule_if         :
+                "if" simple_instr "then" "\n" compound_list else_group "end"
+                                                    {
+                                                      $$ = new esl_ast(IF, "");
+                                                      $$->add($2);
+                                                      $$->add(driver.compound());
+                                                      driver.reset_compound();
+                                                      $$->add($6);
+                                                    }
+
+                |"if" simple_instr "then" "\n" compound_list "end"
+                                                    {
+                                                      $$ = new esl_ast(IF, "");
+                                                      $$->add($2);
+                                                      $$->add(driver.compound());
+                                                      driver.reset_compound();
+                                                    }
+                ;
+
+else_group      :
+                "else" "\n" compound_list { $$ = driver.compound(); driver.reset_compound(); }
+                |"elif" simple_instr "then" "\n" compound_list
+                                                {
+                                                  $$ = new esl_ast(IF, "");
+                                                  $$->add($2);
+                                                  $$->add(driver.compound());
+                                                  driver.reset_compound();
+                                                }
+                |"elif" simple_instr "then" "\n" compound_list else_group
+                                                {
+                                                  $$ = new esl_ast(IF, "");
+                                                  $$->add($2);
+                                                  $$->add(driver.compound());
+                                                  driver.reset_compound();
+                                                  $$->add($6);
+                                                }
+                ;
+
+rule_while      :
+                "while" simple_instr do_group {
+                                                $$ = new esl_ast(WHILE, "");
+                                                $$->add($2);
+                                                $$->add($3);
+                                              }
+                ;
+
+rule_until      :
+                "until" simple_instr do_group {
+                                                $$ = new esl_ast(UNTIL, "");
+                                                $$->add($2);
+                                                $$->add($3);
+                                              }
+                ;
+
+do_group        :
+                "do" "\n" compound_list "end" {
+                                                $$ = driver.compound();
+                                                driver.reset_compound();
+                                              }
+                ;
 %%
 void yy::eslxx_parser::error (const yy::eslxx_parser::location_type& l,
                                const std::string& m)

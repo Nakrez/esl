@@ -91,7 +91,7 @@ void esl_ast::add(token tok, const std::string &content)
 void esl_ast::print_node(esl_ast *node, std::ofstream &file)
 {
     file << "N_" << node->get_id() << " [label=\"";
-    file << node->get_token();
+    file << token_string[node->get_token()];
 
     if (*(node->get_content()) != std::string(""))
         file << ", " << node->get_content()->c_str();
