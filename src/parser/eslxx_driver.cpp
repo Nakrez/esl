@@ -13,6 +13,7 @@ eslxx_driver::~eslxx_driver()
 void eslxx_driver::free()
 {
     delete gen_ast;
+    delete compound_ast;
 }
 
 void eslxx_driver::error(const yy::location& l, const std::string& m)
