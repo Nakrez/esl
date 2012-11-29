@@ -6,6 +6,7 @@
 # include <iostream>
 # include <fstream>
 
+# include <utils/esl_bytecode.hh>
 # include <utils/esl_ast.hh>
 
 class esl_compiler
@@ -19,6 +20,7 @@ class esl_compiler
 
     private:
         esl_ast     *ast;
+        std::vector<esl_bytecode *> *byte_code;
 };
 
 #endif /* ESL_COMPILER_H_ */

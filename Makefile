@@ -8,7 +8,7 @@ CC = clang++
 CFLAGS = -Wall -Wextra -g -Isrc
 
 OBJ = src/parser/parser.o src/parser/lexer.o src/parser/eslxx_driver.o \
-	src/utils/esl_ast.o \
+	src/utils/esl_ast.o src/utils/esl_bytecode.o \
 	src/compile/esl_compiler.o \
 	src/main.o
 

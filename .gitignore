@@ -4,6 +4,7 @@ lexer.cpp
 parser.output
 *.dot
 *.eslc
+*core*
 esl
 position.hh
 location.hh
