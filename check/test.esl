@@ -1,1 +1,11 @@
-2 + 2
+if 2 then
+    test = 13
+elif 4 then
+    test = 4
+    fail = 7
+    lol = lool = 5
+elif 5 then
+    super = 243
+else
+    non = 34 + 43 / 43
+end

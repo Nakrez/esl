@@ -23,13 +23,10 @@ class eslxx_driver
         void scan_begin();
         void scan_end();
         esl_ast *ast();
-        esl_ast *compound();
-        void reset_compound();
         void free();
 
     private:
         std::string file;
         esl_ast     *gen_ast;
-        esl_ast     *compound_ast;
 };
 #endif /* ESLXX_DRIVER_H_ */

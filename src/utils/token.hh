@@ -42,6 +42,8 @@ const static std::string token_string[] =
 
     "IF",
 
+    "EXPR",
+
     "ADD",
     "MINUS",
     "MUL",

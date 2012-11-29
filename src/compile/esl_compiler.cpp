@@ -51,12 +51,17 @@ void esl_compiler::export_bytecode(const std::string &filename)
 
 std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
 {
+    std::vector<esl_bytecode *> *code = NULL;
+
     if (ast == NULL)
         return NULL;
 
     switch (ast->get_token())
     {
-        case STATEMENTS: return compile_statements(ast->get_fson());
+        case STATEMENTS: code = compile_statements(ast->get_fson());
+                         if (ast->get_fson()->get_token() == IF && ast == this->gen_ast)
+                            code->push_back(new esl_bytecode(NOP, 1, NULL));
+                         return code;
         case ASSIGNEMENT: return compile_assignement(ast);
         case ADD: return compile_arith(ast, ARITH_ADD);
         case MINUS: return compile_arith(ast, ARITH_MINUS);
@@ -66,6 +71,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
         case NUMBER: return compile_number(ast);
         case EXPR: return compile(ast->get_fson());
         case ID: return compile_identifier(ast);
+        case IF: return compile_if(ast);
     }
 
     return NULL;
@@ -93,6 +99,48 @@ std::vector<esl_bytecode *> *esl_compiler::compile_statements(esl_ast *ast)
 
     return code;
 }
+
+std::vector<esl_bytecode *> *esl_compiler::compile_if(esl_ast *ast)
+{
+    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
+    std::vector<esl_bytecode *> *ret_code = NULL;
+    esl_bytecode                *jump = new esl_bytecode(JUMP_IF_FALSE, 1, NULL);
+    int                         *jump_next = NULL;
+
+    ret_code = compile(ast->get_fson());
+    code->insert(code->end(), ret_code->begin(), ret_code->end());
+    delete ret_code;
+
+    code->push_back(jump);
+
+    ret_code = compile(ast->get_fson()->get_rbro());
+    code->insert(code->end(), ret_code->begin(), ret_code->end());
+
+    jump_next = new int;
+    *jump_next = ret_code->size() + 2;
+    jump->set_param(jump_next);
+
+    delete ret_code;
+
+    if (ast->get_fson()->get_rbro()->get_rbro())
+    {
+        jump = new esl_bytecode(JUMP, 1, NULL);
+        code->push_back(jump);
+
+        ret_code = compile(ast->get_fson()->get_rbro()->get_rbro());
+        code->insert(code->end(), ret_code->begin(), ret_code->end());
+
+        jump_next = new int;
+        *jump_next = ret_code->size() + 1;
+        jump->set_param(jump_next);
+
+
+        delete ret_code;
+    }
+
+    return code;
+}
+
 
 std::vector<esl_bytecode *> *esl_compiler::compile_assignement(esl_ast *ast)
 {
