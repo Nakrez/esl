@@ -100,6 +100,31 @@ expr            :
                                     $$->add($1);
                                     $$->add($3);
                                 }
+                |expr "-" expr
+                                {
+                                    $$ = new esl_ast(MINUS, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+                |expr "*" expr
+                                {
+                                    $$ = new esl_ast(MUL, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+                |expr "/" expr
+                                {
+                                    $$ = new esl_ast(DIV, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+                |expr "%" expr
+                                {
+                                    $$ = new esl_ast(MOD, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+
                 |"digit" { $$ = new esl_ast(NUMBER, *$1); }
                 ;
 
