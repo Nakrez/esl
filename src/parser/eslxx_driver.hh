@@ -1,7 +1,7 @@
 #ifndef ESLXX_DRIVER_H_
 # define ESLXX_DRIVER_H_
 
-# include <parser.hpp>
+# include <parser/parser.hpp>
 # include <utils/esl_ast.hh>
 
 # define YY_DECL                                        \

@@ -3,7 +3,7 @@
 {
 #include <string>
 
-#include "utils/esl_ast.hh"
+#include <utils/esl_ast.hh>
 
 class eslxx_driver;
 }
@@ -31,7 +31,7 @@ class eslxx_driver;
 
 %code
 {
-#include <eslxx_driver.hh>
+#include <parser/eslxx_driver.hh>
 }
 
 %token END       0 "end_of_file"

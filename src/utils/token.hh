@@ -50,4 +50,5 @@ const static std::string token_string[] =
     "NUMBER",
     "STRING"
 };
+
 #endif /* !TOKEN_H_ */

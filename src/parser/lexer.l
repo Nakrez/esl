@@ -1,6 +1,6 @@
 %{
-#include <parser.hpp>
-#include <eslxx_driver.hh>
+#include <parser/parser.hpp>
+#include <parser/eslxx_driver.hh>
 
 # undef yywrap
 # define yywrap() 1

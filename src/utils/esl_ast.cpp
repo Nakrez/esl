@@ -39,6 +39,16 @@ std::string *esl_ast::get_content()
     return content;
 }
 
+esl_ast *esl_ast::get_fson()
+{
+    return this->fson;
+}
+
+esl_ast *esl_ast::get_rbro()
+{
+    return this->rbro;
+}
+
 /* Setter */
 void esl_ast::set_id(int id)
 {
