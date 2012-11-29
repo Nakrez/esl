@@ -7,8 +7,9 @@ FLEXFLAGS =
 CC = clang++
 CFLAGS = -Wall -Wextra -g -Isrc
 
-OBJ = src/parser.o src/lexer.o src/main.o src/eslxx_driver.o \
-      src/utils/esl_ast.o
+OBJ = src/parser/parser.o src/parser/lexer.o src/parser/eslxx_driver.o \
+	src/utils/esl_ast.o \
+	src/main.o
 
 all: esl
 
@@ -25,9 +26,10 @@ esl: $(OBJ)
 	$(FLEX) $(FLEXFLAGS) -o $@ $<
 
 clean:
-	rm -f $(OBJ) src/parser.output src/location.hh src/position.hh \
-	src/stack.hh src/parser.hpp tree.dot tree.png esl src/parser.cpp
-
+	rm -f $(OBJ) src/parser/parser.output src/parser/location.hh \
+	src/parser/position.hh \
+	src/parser/stack.hh src/parser/parser.hpp src/parser.cpp \
+	tree.dot tree.png esl
 
 ## ------------ ##
 ## Test suite.  ##
