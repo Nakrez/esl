@@ -64,6 +64,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
         case DIV: return compile_arith(ast, ARITH_DIV);
         case MOD: return compile_arith(ast, ARITH_MOD);
         case NUMBER: return compile_number(ast);
+        case ID: return compile_identifier(ast);
     }
 
     return NULL;
@@ -131,4 +132,16 @@ std::vector<esl_bytecode *> *esl_compiler::compile_number(esl_ast *ast)
     code->push_back(new esl_bytecode(LOAD_CST, 1, value));
 
     return code;
+}
+
+std::vector<esl_bytecode *> *esl_compiler::compile_identifier(esl_ast *ast)
+{
+    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
+
+    std::string *value = new std::string(ast->get_content()->c_str());
+
+    code->push_back(new esl_bytecode(LOAD, 2, value));
+
+    return code;
+
 }

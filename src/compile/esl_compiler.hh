@@ -25,6 +25,7 @@ class esl_compiler
         std::vector<esl_bytecode *> *compile_assignement(esl_ast *);
         std::vector<esl_bytecode *> *compile_arith(esl_ast *, enum instr);
         std::vector<esl_bytecode *> *compile_number(esl_ast *);
+        std::vector<esl_bytecode *> *compile_identifier(esl_ast *);
 
     private:
         esl_ast     *gen_ast;

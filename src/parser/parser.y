@@ -128,7 +128,7 @@ expr            :
                                 }
 
                 |"digit" { $$ = new esl_ast(NUMBER, *$1); delete $1;}
-                |"identifier" { $$ = new esl_ast(NUMBER, *$1); delete $1;}
+                |"identifier" { $$ = new esl_ast(ID, *$1); delete $1;}
                 ;
 
 esl_command     :
