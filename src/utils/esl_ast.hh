@@ -2,6 +2,7 @@
 # define ESL_AST_H_
 
 # include <string>
+# include <list>
 # include <iostream>
 # include <fstream>
 
@@ -27,6 +28,8 @@ class esl_ast
         esl_ast *get_rbro();
 
         void set_id(int id);
+
+        static esl_ast *ast_from_list(std::list<esl_ast *> *);
 
     private:
         void print_sons(esl_ast *sons, int id_father, std::ofstream &file);

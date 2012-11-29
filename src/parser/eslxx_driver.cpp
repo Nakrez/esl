@@ -3,7 +3,6 @@
 eslxx_driver::eslxx_driver()
 {
     gen_ast = new esl_ast(STATEMENTS, "");
-    reset_compound();
 }
 
 eslxx_driver::~eslxx_driver()
@@ -13,7 +12,6 @@ eslxx_driver::~eslxx_driver()
 void eslxx_driver::free()
 {
     delete gen_ast;
-    delete compound_ast;
 }
 
 void eslxx_driver::error(const yy::location& l, const std::string& m)
@@ -24,16 +22,6 @@ void eslxx_driver::error(const yy::location& l, const std::string& m)
 esl_ast *eslxx_driver::ast()
 {
     return gen_ast;
-}
-
-esl_ast *eslxx_driver::compound()
-{
-    return compound_ast;
-}
-
-void eslxx_driver::reset_compound()
-{
-    compound_ast = new esl_ast(STATEMENTS, "");
 }
 
 int eslxx_driver::parser(const std::string &f)

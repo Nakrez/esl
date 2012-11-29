@@ -152,3 +152,15 @@ esl_ast *esl_ast::create_node(token tok, const std::string &content)
 {
     return new esl_ast(tok, content);
 }
+
+esl_ast *esl_ast::ast_from_list(std::list<esl_ast *> *l)
+{
+    esl_ast *ast = new esl_ast(STATEMENTS, "");
+
+    for (std::list<esl_ast *>::iterator i = l->begin(); i != l->end(); ++i)
+        ast->add(*i);
+
+    delete l;
+
+    return ast;
+}

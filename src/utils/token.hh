@@ -15,6 +15,8 @@ enum token
 
     IF,
 
+    EXPR,
+
     ADD,
     MINUS,
     MUL,
@@ -39,6 +41,8 @@ const static std::string token_string[] =
     "WHILE",
 
     "IF",
+
+    "EXPR",
 
     "ADD",
     "MINUS",

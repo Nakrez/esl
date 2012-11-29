@@ -6,6 +6,7 @@
 
 enum instr
 {
+    NOP,
     /*
     ** Remove the top of the stack
     */
@@ -36,6 +37,8 @@ enum instr
 
     /*
     ** Store the top of the stack in the variable name
+    **
+    ** Don't perfrom POP
     */
     STORE,
 
@@ -84,6 +87,7 @@ enum instr
 
 const static std::string instr_string[] =
 {
+    "NOP",
     "POP",
     "DUP_TOP",
     "ARITH_ADD",
@@ -109,6 +113,9 @@ class esl_bytecode
         enum instr  get_type();
         int         get_type_param();
         void        *get_param();
+
+        void        set_param(void *);
+        void        set_type(enum instr type);
 
     private:
         enum instr  type;

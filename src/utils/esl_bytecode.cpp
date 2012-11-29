@@ -32,3 +32,13 @@ void *esl_bytecode::get_param()
 {
     return this->param;
 }
+
+void esl_bytecode::set_param(void *param)
+{
+    this->param = param;
+}
+
+void esl_bytecode::set_type(enum instr type)
+{
+    this->type = type;
+}
