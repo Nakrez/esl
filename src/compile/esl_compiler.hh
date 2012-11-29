@@ -8,6 +8,7 @@
 
 # include <utils/esl_bytecode.hh>
 # include <utils/esl_ast.hh>
+# include <utils/utils.hh>
 
 class esl_compiler
 {
@@ -19,7 +20,14 @@ class esl_compiler
         void export_bytecode(const std::string &filename);
 
     private:
-        esl_ast     *ast;
+        std::vector<esl_bytecode *> *compile(esl_ast *);
+        std::vector<esl_bytecode *> *compile_statements(esl_ast *);
+        std::vector<esl_bytecode *> *compile_assignement(esl_ast *);
+        std::vector<esl_bytecode *> *compile_addition(esl_ast *);
+        std::vector<esl_bytecode *> *compile_number(esl_ast *);
+
+    private:
+        esl_ast     *gen_ast;
         std::vector<esl_bytecode *> *byte_code;
 };
 
