@@ -79,7 +79,7 @@ simple_instr    :
                                                          std::string(*$1));
                                         delete $1;
                                       }
-                |"identifier" "=" expr {
+                |"identifier" "=" simple_instr {
                                          $$ = new esl_ast(ASSIGNEMENT, "");
                                          $$->add(new esl_ast(ID, *$1));
                                          $$->add($3);
