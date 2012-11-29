@@ -23,6 +23,8 @@ class esl_ast
         int get_id();
         token get_token();
         std::string *get_content();
+        esl_ast *get_fson();
+        esl_ast *get_rbro();
 
         void set_id(int id);
 
