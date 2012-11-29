@@ -64,6 +64,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
         case DIV: return compile_arith(ast, ARITH_DIV);
         case MOD: return compile_arith(ast, ARITH_MOD);
         case NUMBER: return compile_number(ast);
+        case EXPR: return compile(ast->get_fson());
         case ID: return compile_identifier(ast);
     }
 
@@ -77,8 +78,12 @@ std::vector<esl_bytecode *> *esl_compiler::compile_statements(esl_ast *ast)
 
     while (ast)
     {
-        if ((ret_code = compile(ast)) != NULL)
-           code->insert(code->end(), ret_code->begin(), ret_code->end());
+        ret_code = compile(ast);
+        code->insert(code->end(), ret_code->begin(), ret_code->end());
+
+        if (ast->get_token() == EXPR ||
+            ast->get_token() == ASSIGNEMENT)
+            code->push_back(new esl_bytecode(POP, 0, NULL));
 
         ret_code->clear();
         delete ret_code;

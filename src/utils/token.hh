@@ -15,6 +15,8 @@ enum token
 
     IF,
 
+    EXPR,
+
     ADD,
     MINUS,
     MUL,

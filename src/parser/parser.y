@@ -73,7 +73,7 @@ compound_list   :
                 ;
 
 simple_instr    :
-                expr { $$ = $1; }
+                expr { $$ = new esl_ast(EXPR, ""); $$->add($1); }
                 |"identifier" "(" ")" {
                                         $$ = new esl_ast(FUNCTION_CALL,
                                                          std::string(*$1));
