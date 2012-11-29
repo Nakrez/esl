@@ -77,11 +77,13 @@ simple_instr    :
                 |"identifier" "(" ")" {
                                         $$ = new esl_ast(FUNCTION_CALL,
                                                          std::string(*$1));
+                                        delete $1;
                                       }
                 |"identifier" "=" expr {
                                          $$ = new esl_ast(ASSIGNEMENT, "");
                                          $$->add(new esl_ast(ID, *$1));
                                          $$->add($3);
+                                         delete $1;
                                        }
                 ;
 functions       :
@@ -100,7 +102,33 @@ expr            :
                                     $$->add($1);
                                     $$->add($3);
                                 }
-                |"digit" { $$ = new esl_ast(NUMBER, *$1); }
+                |expr "-" expr
+                                {
+                                    $$ = new esl_ast(MINUS, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+                |expr "*" expr
+                                {
+                                    $$ = new esl_ast(MUL, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+                |expr "/" expr
+                                {
+                                    $$ = new esl_ast(DIV, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+                |expr "%" expr
+                                {
+                                    $$ = new esl_ast(MOD, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+
+                |"digit" { $$ = new esl_ast(NUMBER, *$1); delete $1;}
+                |"identifier" { $$ = new esl_ast(NUMBER, *$1); delete $1;}
                 ;
 
 esl_command     :

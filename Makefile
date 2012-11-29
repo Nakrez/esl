@@ -12,6 +12,7 @@ OBJ = src/parser/parser.o src/parser/lexer.o src/parser/eslxx_driver.o \
 	src/compile/esl_compiler.o \
 	src/main.o
 
+.PRECIOUS: src/parser/lexer.cpp
 all: esl
 
 esl: $(OBJ)

@@ -57,7 +57,7 @@
 
 void eslxx_driver::scan_begin()
 {
-    if (file.empty () || file == "-")
+    if (file.empty() || file == "-")
         yyin = stdin;
     else if (!(yyin = fopen(file.c_str(), "r")))
     {
@@ -68,4 +68,5 @@ void eslxx_driver::scan_begin()
 void eslxx_driver::scan_end()
 {
     fclose (yyin);
+    yylex_destroy();
 }
