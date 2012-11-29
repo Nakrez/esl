@@ -9,7 +9,13 @@ esl_bytecode::esl_bytecode(enum instr type, int type_param, void *param)
 
 esl_bytecode::~esl_bytecode()
 {
-
+    if (param)
+    {
+        if (type_param == 1)
+            delete (int *)param;
+        else
+            delete (std::string *)param;
+    }
 }
 
 enum instr esl_bytecode::get_type()

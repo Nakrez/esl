@@ -7,7 +7,11 @@ esl_compiler::esl_compiler(esl_ast *ast)
 
 esl_compiler::~esl_compiler()
 {
+    for (std::vector<esl_bytecode *>::iterator i = byte_code->begin(); i !=
+         byte_code->end(); ++ i)
+        delete *i;
 
+    delete byte_code;
 }
 
 void esl_compiler::compile()
@@ -75,6 +79,9 @@ std::vector<esl_bytecode *> *esl_compiler::compile_statements(esl_ast *ast)
         if ((ret_code = compile(ast)) != NULL)
            code->insert(code->end(), ret_code->begin(), ret_code->end());
 
+        ret_code->clear();
+        delete ret_code;
+
         ast = ast->get_rbro();
     }
 
@@ -108,12 +115,15 @@ std::vector<esl_bytecode *> *esl_compiler::compile_arith(esl_ast *ast,
 
     code->push_back(new esl_bytecode(i, 0, NULL));
 
+    delete ret_code;
+
     return code;
 }
 
 std::vector<esl_bytecode *> *esl_compiler::compile_number(esl_ast *ast)
 {
     std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
+
     int *value = new int;
 
     *value = utils::atoi(*(ast->get_content()));

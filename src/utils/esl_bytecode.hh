@@ -2,6 +2,7 @@
 # define ESL_BYTECODE_H_
 
 # include <string>
+# include <iostream>
 
 enum instr
 {
