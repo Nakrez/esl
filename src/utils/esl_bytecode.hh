@@ -81,8 +81,18 @@ enum instr
     **
     ** 1 param : the target adress
     */
-    JUMP
+    JUMP,
 
+    RETURN,
+
+    MAKE_FUNCTION,
+
+    CALL_FUNCTION,
+
+    /*
+    ** Print everything on the stack
+    */
+    PRINT
 };
 
 const static std::string instr_string[] =
@@ -101,7 +111,11 @@ const static std::string instr_string[] =
     "LOAD_CST",
     "JUMP_IF_TRUE",
     "JUMP_IF_FALSE",
-    "JUMP"
+    "JUMP",
+    "RETURN",
+    "MAKE_FUNCTION",
+    "CALL_FUNCTION",
+    "PRINT"
 };
 
 class esl_bytecode

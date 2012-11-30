@@ -17,6 +17,7 @@ esl_compiler::~esl_compiler()
 void esl_compiler::compile()
 {
     this->byte_code = compile(this->gen_ast);
+    this->byte_code->push_back(new esl_bytecode(NOP, 0, NULL));
 }
 
 void esl_compiler::export_bytecode(const std::string &filename)
@@ -58,10 +59,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
 
     switch (ast->get_token())
     {
-        case STATEMENTS: code = compile_statements(ast->get_fson());
-                         if (ast->get_fson()->get_token() == IF && ast == this->gen_ast)
-                            code->push_back(new esl_bytecode(NOP, 1, NULL));
-                         return code;
+        case STATEMENTS: return compile_statements(ast->get_fson());
         case ASSIGNEMENT: return compile_assignement(ast);
         case ADD: return compile_arith(ast, ARITH_ADD);
         case MINUS: return compile_arith(ast, ARITH_MINUS);
@@ -72,6 +70,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
         case EXPR: return compile(ast->get_fson());
         case ID: return compile_identifier(ast);
         case IF: return compile_if(ast);
+        case FUNCTION_DECL: return compile_function(ast);
     }
 
     return NULL;
@@ -96,6 +95,30 @@ std::vector<esl_bytecode *> *esl_compiler::compile_statements(esl_ast *ast)
 
         ast = ast->get_rbro();
     }
+
+    return code;
+}
+
+std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
+{
+    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
+    std::vector<esl_bytecode *> *ret_code = NULL;
+
+    /* Get the code of the function */
+    ret_code = compile(ast->get_fson()->get_rbro());
+
+    /* Add instruction MAKE_FUNCTION */
+    code->push_back(new esl_bytecode(MAKE_FUNCTION,
+                                     2, /* STRING */
+                                     new std::string(*(ast->get_fson()->get_content()))));
+
+    /* Add the function code to the generate code */
+    code->insert(code->end(), ret_code->begin(), ret_code->end());
+
+    /* Add instruction RETURN */
+    code->push_back(new esl_bytecode(RETURN, 0, NULL));
+
+    delete ret_code;
 
     return code;
 }

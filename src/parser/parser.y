@@ -101,6 +101,7 @@ functions       :
                                         {
                                             $$ = new esl_ast(FUNCTION_DECL,
                                                              *$2);
+                                            $$->add(new esl_ast(EMPTY, ""));
                                             $$->add(esl_ast::ast_from_list($6));
                                         }
                 ;
