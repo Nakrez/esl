@@ -1,4 +1,9 @@
 Execution
 Bytecode while
 Bytecode until
-Bytecode function
+Parse function with args
+Parse call function with args
+Bytecode function with args
+Bytecode call function with args
+Check leaks
+Built exit
