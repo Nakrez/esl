@@ -5,6 +5,7 @@ enum token
 {
     EMPTY,
     STATEMENTS,
+    LIST,
 
     ASSIGNEMENT,
     FUNCTION_CALL,
