@@ -17,8 +17,5 @@ end
 
 param = 3+4
 
-lil = lol(param, param)
+lil = lol(param, param22)
 print()
-
-
-4 - 3 + 4 + 2 - (2 + 3 / ( 8 - 2))

@@ -1,9 +1,6 @@
 Execution
 Bytecode while
 Bytecode until
-Parse function with args
-Parse call function with args
-Bytecode function with args
-Bytecode call function with args
 Check leaks
+Add jump after MAKE_FUNCTION
 Built exit
