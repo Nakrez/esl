@@ -28,6 +28,7 @@ class esl_ast
         esl_ast *get_rbro();
 
         void set_id(int id);
+        void set_token(token tok);
 
         static esl_ast *ast_from_list(std::list<esl_ast *> *);
 

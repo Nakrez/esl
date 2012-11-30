@@ -50,7 +50,7 @@ class eslxx_driver;
 %type <ast> instr expr simple_instr functions esl_command
 %type <ast> rule_while rule_until rule_if do_group else_group
 
-%type <lval> compound_list
+%type <lval> compound_list id_list
 
 %left "+" "-"
 %left "*" "/" "%"
@@ -82,6 +82,29 @@ compound_list   :
                                     $$->push_back($2); }
                 ;
 
+id_list         :
+                "identifier"
+                             { $$ = new std::list<esl_ast *>;
+                               $$->push_back(new esl_ast(ID, *$1));
+                               delete $1;
+                             }
+                |"identifier" "\n"
+                             { $$ = new std::list<esl_ast *>;
+                               $$->push_back(new esl_ast(ID, *$1));
+                               delete $1;
+                             }
+                | id_list "identifier"
+                             { $$ = $1;
+                               $$->push_back(new esl_ast(ID, *$2));
+                               delete $2;
+                             }
+                | id_list "identifier" "\n"
+                             { $$ = $1;
+                               $$->push_back(new esl_ast(ID, *$2));
+                               delete $2;
+                             }
+                ;
+
 simple_instr    :
                 expr { $$ = new esl_ast(EXPR, ""); $$->add($1); }
                 |"identifier" "(" ")" {
@@ -89,6 +112,15 @@ simple_instr    :
                                                          std::string(*$1));
                                         delete $1;
                                       }
+                |"identifier" "(" id_list ")"
+                                      {
+                                        $$ = new esl_ast(FUNCTION_CALL,
+                                                         std::string(*$1));
+                                        $$->add(esl_ast::ast_from_list($3));
+                                        $$->get_fson()->set_token(LIST);
+                                        delete $1;
+                                      }
+
                 |"identifier" "=" simple_instr {
                                          $$ = new esl_ast(ASSIGNEMENT, "");
                                          $$->add(new esl_ast(ID, *$1));
@@ -101,8 +133,19 @@ functions       :
                                         {
                                             $$ = new esl_ast(FUNCTION_DECL,
                                                              *$2);
+                                            delete $2;
                                             $$->add(new esl_ast(EMPTY, ""));
                                             $$->add(esl_ast::ast_from_list($6));
+                                        }
+                |"function" "identifier" "(" id_list ")" "\n" compound_list "end"
+                                        {
+                                            $$ = new esl_ast(FUNCTION_DECL,
+                                                             *$2);
+                                            delete $2;
+                                            $$->add(esl_ast::ast_from_list($4));
+                                            $$->get_fson()->set_token(LIST);
+
+                                            $$->add(esl_ast::ast_from_list($7));
                                         }
                 ;
 expr            :

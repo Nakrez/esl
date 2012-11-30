@@ -55,6 +55,11 @@ void esl_ast::set_id(int id)
     id_ast = id;
 }
 
+void esl_ast::set_token(token tok)
+{
+    this->tok = tok;
+}
+
 /* Public members */
 void esl_ast::add(esl_ast *ast)
 {
