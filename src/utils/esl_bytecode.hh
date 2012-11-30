@@ -6,6 +6,7 @@
 
 enum instr
 {
+    NOP,
     /*
     ** Remove the top of the stack
     */
@@ -36,6 +37,8 @@ enum instr
 
     /*
     ** Store the top of the stack in the variable name
+    **
+    ** Don't perfrom POP
     */
     STORE,
 
@@ -78,12 +81,23 @@ enum instr
     **
     ** 1 param : the target adress
     */
-    JUMP
+    JUMP,
 
+    RETURN,
+
+    MAKE_FUNCTION,
+
+    CALL_FUNCTION,
+
+    /*
+    ** Print everything on the stack
+    */
+    PRINT
 };
 
 const static std::string instr_string[] =
 {
+    "NOP",
     "POP",
     "DUP_TOP",
     "ARITH_ADD",
@@ -97,7 +111,11 @@ const static std::string instr_string[] =
     "LOAD_CST",
     "JUMP_IF_TRUE",
     "JUMP_IF_FALSE",
-    "JUMP"
+    "JUMP",
+    "RETURN",
+    "MAKE_FUNCTION",
+    "CALL_FUNCTION",
+    "PRINT"
 };
 
 class esl_bytecode
@@ -109,6 +127,9 @@ class esl_bytecode
         enum instr  get_type();
         int         get_type_param();
         void        *get_param();
+
+        void        set_param(void *);
+        void        set_type(enum instr type);
 
     private:
         enum instr  type;

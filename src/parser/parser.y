@@ -2,6 +2,7 @@
 %code requires
 {
 #include <string>
+#include <list>
 
 #include <utils/esl_ast.hh>
 
@@ -25,8 +26,9 @@ class eslxx_driver;
 
 %union
 {
-    std::string *sval;
-    esl_ast     *ast;
+    std::string             *sval;
+    esl_ast                 *ast;
+    std::list<esl_ast *>    *lval;
 }
 
 %code
@@ -45,8 +47,10 @@ class eslxx_driver;
 
 %token <sval> TOK_ID "identifier" TOK_DIGIT "digit"
 
-%type <ast> instr expr simple_instr functions esl_command compound_list
+%type <ast> instr expr simple_instr functions esl_command
 %type <ast> rule_while rule_until rule_if do_group else_group
+
+%type <lval> compound_list
 
 %left "+" "-"
 %left "*" "/" "%"
@@ -66,20 +70,26 @@ instr   :
         ;
 
 compound_list   :
-                simple_instr "\n" { driver.compound()->add($1); }
-                |esl_command "\n" { driver.compound()->add($1); }
-                | compound_list simple_instr "\n" { driver.compound()->add($2); }
-                | compound_list esl_command "\n" { driver.compound()->add($2); }
+                simple_instr "\n" { $$ = new std::list<esl_ast *>;
+                                    $$->push_back($1); }
+                |esl_command "\n"  { $$ = new std::list<esl_ast *>;
+                                    $$->push_back($1); }
+                | compound_list simple_instr "\n"
+                                    { $$ = $1;
+                                    $$->push_back($2); }
+                | compound_list esl_command "\n"
+                                    { $$ = $1;
+                                    $$->push_back($2); }
                 ;
 
 simple_instr    :
-                expr { $$ = $1; }
+                expr { $$ = new esl_ast(EXPR, ""); $$->add($1); }
                 |"identifier" "(" ")" {
                                         $$ = new esl_ast(FUNCTION_CALL,
                                                          std::string(*$1));
                                         delete $1;
                                       }
-                |"identifier" "=" expr {
+                |"identifier" "=" simple_instr {
                                          $$ = new esl_ast(ASSIGNEMENT, "");
                                          $$->add(new esl_ast(ID, *$1));
                                          $$->add($3);
@@ -91,8 +101,8 @@ functions       :
                                         {
                                             $$ = new esl_ast(FUNCTION_DECL,
                                                              *$2);
-                                            $$->add(driver.compound());
-                                            driver.reset_compound();
+                                            $$->add(new esl_ast(EMPTY, ""));
+                                            $$->add(esl_ast::ast_from_list($6));
                                         }
                 ;
 expr            :
@@ -128,7 +138,7 @@ expr            :
                                 }
 
                 |"digit" { $$ = new esl_ast(NUMBER, *$1); delete $1;}
-                |"identifier" { $$ = new esl_ast(NUMBER, *$1); delete $1;}
+                |"identifier" { $$ = new esl_ast(ID, *$1); delete $1;}
                 ;
 
 esl_command     :
@@ -142,8 +152,7 @@ rule_if         :
                                                     {
                                                       $$ = new esl_ast(IF, "");
                                                       $$->add($2);
-                                                      $$->add(driver.compound());
-                                                      driver.reset_compound();
+                                                      $$->add(esl_ast::ast_from_list($5));
                                                       $$->add($6);
                                                     }
 
@@ -151,26 +160,23 @@ rule_if         :
                                                     {
                                                       $$ = new esl_ast(IF, "");
                                                       $$->add($2);
-                                                      $$->add(driver.compound());
-                                                      driver.reset_compound();
+                                                      $$->add(esl_ast::ast_from_list($5));
                                                     }
                 ;
 
 else_group      :
-                "else" "\n" compound_list { $$ = driver.compound(); driver.reset_compound(); }
+                "else" "\n" compound_list { $$ = esl_ast::ast_from_list($3); }
                 |"elif" simple_instr "then" "\n" compound_list
                                                 {
                                                   $$ = new esl_ast(IF, "");
                                                   $$->add($2);
-                                                  $$->add(driver.compound());
-                                                  driver.reset_compound();
+                                                  $$->add(esl_ast::ast_from_list($5));
                                                 }
                 |"elif" simple_instr "then" "\n" compound_list else_group
                                                 {
                                                   $$ = new esl_ast(IF, "");
                                                   $$->add($2);
-                                                  $$->add(driver.compound());
-                                                  driver.reset_compound();
+                                                  $$->add(esl_ast::ast_from_list($5));
                                                   $$->add($6);
                                                 }
                 ;
@@ -193,8 +199,7 @@ rule_until      :
 
 do_group        :
                 "do" "\n" compound_list "end" {
-                                                $$ = driver.compound();
-                                                driver.reset_compound();
+                                                $$ = esl_ast::ast_from_list($3);
                                               }
                 ;
 %%

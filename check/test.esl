@@ -1,1 +1,19 @@
-test = test + 3 / 5
+if 2 then
+    test = sboob
+elif 3 then
+    a = b = 9
+else
+    c = 0
+end
+
+function lol()
+    if 2 then
+        er = 3
+    else
+        ol = 5
+    end
+    fun = 3
+end
+
+lil = lol()
+print()
