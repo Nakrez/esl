@@ -6,7 +6,7 @@ else
     c = 0
 end
 
-function lol()
+function lol(p1, p2)
     if 2 then
         er = 3
     else
@@ -15,5 +15,7 @@ function lol()
     fun = 3
 end
 
-lil = lol()
+param = 3+4
+
+lil = lol(param, param)
 print()

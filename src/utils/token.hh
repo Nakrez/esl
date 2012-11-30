@@ -33,6 +33,7 @@ const static std::string token_string[] =
 {
     "EMPTY",
     "STATEMENTS",
+    "LIST",
 
     "ASSIGNEMENT",
     "FUNCTION_CALL",
