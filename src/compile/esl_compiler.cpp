@@ -88,7 +88,8 @@ std::vector<esl_bytecode *> *esl_compiler::compile_statements(esl_ast *ast)
         code->insert(code->end(), ret_code->begin(), ret_code->end());
 
         if (ast->get_token() == EXPR ||
-            ast->get_token() == ASSIGNEMENT)
+            ast->get_token() == ASSIGNEMENT ||
+            ast->get_token() == FUNCTION_CALL)
             code->push_back(new esl_bytecode(POP, 0, NULL));
 
         ret_code->clear();

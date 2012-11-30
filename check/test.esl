@@ -15,4 +15,5 @@ function lol()
     fun = 3
 end
 
-lol()
+lil = lol()
+print()
