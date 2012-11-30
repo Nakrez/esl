@@ -19,3 +19,6 @@ param = 3+4
 
 lil = lol(param, param)
 print()
+
+
+4 - 3 + 4 + 2 - (2 + 3 / ( 8 - 2))
