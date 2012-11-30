@@ -1,11 +1,19 @@
 if 2 then
-    test = 13
-elif 4 then
-    test = 4
-    fail = 7
-    lol = lool = 5
-elif 5 then
-    super = 243
+    test = sboob
+elif 3 then
+    a = b = 9
 else
-    non = 34 + 43 / 43
+    c = 0
 end
+
+function lol()
+    if 2 then
+        er = 3
+    else
+        ol = 5
+    end
+    fun = 3
+end
+
+lil = lol()
+print()

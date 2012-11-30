@@ -27,6 +27,10 @@ class esl_compiler
         std::vector<esl_bytecode *> *compile_number(esl_ast *);
         std::vector<esl_bytecode *> *compile_identifier(esl_ast *);
         std::vector<esl_bytecode *> *compile_if(esl_ast *);
+        std::vector<esl_bytecode *> *compile_function(esl_ast *);
+        std::vector<esl_bytecode *> *compile_call(esl_ast *);
+
+        esl_bytecode *make_call_instruction(esl_ast *);
 
     private:
         esl_ast     *gen_ast;

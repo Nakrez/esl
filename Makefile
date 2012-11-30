@@ -13,6 +13,7 @@ OBJ = src/parser/parser.o src/parser/lexer.o src/parser/eslxx_driver.o \
 	src/main.o
 
 .PRECIOUS: src/parser/lexer.cpp
+
 all: esl
 
 esl: $(OBJ)
@@ -37,6 +38,15 @@ clean:
 ## Test suite.  ##
 ## ------------ ##
 
+ast: check
+	dot tree.dot -Tpng -otree.png
+	sxiv tree.png
+
+check: all
+	./esl check/test.esl
+
+byte: check
+	cat byte.eslc
 ## -------------- ##
 ## Distribution.  ##
 ## -------------- ##
