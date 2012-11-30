@@ -14,3 +14,5 @@ function lol()
     end
     fun = 3
 end
+
+lol()

@@ -71,6 +71,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
         case ID: return compile_identifier(ast);
         case IF: return compile_if(ast);
         case FUNCTION_DECL: return compile_function(ast);
+        case FUNCTION_CALL: return compile_call(ast);
     }
 
     return NULL;
@@ -119,6 +120,30 @@ std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
     code->push_back(new esl_bytecode(RETURN, 0, NULL));
 
     delete ret_code;
+
+    return code;
+}
+
+esl_bytecode *esl_compiler::make_call_instruction(esl_ast *ast)
+{
+    if (*(ast->get_content()) == std::string("print"))
+        return new esl_bytecode(PRINT, 0, NULL);
+
+    return new esl_bytecode(CALL_FUNCTION, 2, new std::string(*(ast->get_content())));
+}
+
+std::vector<esl_bytecode *> *esl_compiler::compile_call(esl_ast *ast)
+{
+    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
+
+    /* If there is params */
+    if (ast->get_fson() != NULL)
+    {
+        /* Load args to the stack */
+    }
+
+    /* Build call instruction (check special code for built in) */
+    code->push_back(make_call_instruction(ast));
 
     return code;
 }

@@ -44,6 +44,9 @@ ast: check
 
 check: all
 	./esl check/test.esl
+
+byte: check
+	cat byte.eslc
 ## -------------- ##
 ## Distribution.  ##
 ## -------------- ##
