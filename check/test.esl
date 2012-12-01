@@ -4,7 +4,8 @@ function test(p)
     print(p)
 end
 
-param = 3
+temp = 3
+param = temp
 print(param)
 
 test(param)
