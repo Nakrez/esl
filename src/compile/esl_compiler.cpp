@@ -14,6 +14,12 @@ esl_compiler::~esl_compiler()
     delete byte_code;
 }
 
+/* Getter */
+std::vector<esl_bytecode *> *esl_compiler::get_bytecode()
+{
+    return byte_code;
+}
+
 void esl_compiler::compile()
 {
     this->byte_code = compile(this->gen_ast);

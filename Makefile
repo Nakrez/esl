@@ -10,6 +10,7 @@ CFLAGS = -Wall -Wextra -g -Isrc
 OBJ = src/parser/parser.o src/parser/lexer.o src/parser/eslxx_driver.o \
 	src/utils/esl_ast.o src/utils/esl_bytecode.o src/utils/utils.o\
 	src/compile/esl_compiler.o \
+	src/execute/esl_vm.o \
 	src/main.o
 
 all: esl
