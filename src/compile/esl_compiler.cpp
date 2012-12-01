@@ -52,8 +52,6 @@ void esl_compiler::export_bytecode(const std::string &filename)
 
 std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
 {
-    std::vector<esl_bytecode *> *code = NULL;
-
     if (ast == NULL)
         return NULL;
 
@@ -101,20 +99,76 @@ std::vector<esl_bytecode *> *esl_compiler::compile_statements(esl_ast *ast)
     return code;
 }
 
-std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
+std::vector<esl_bytecode *> *esl_compiler::compile_list(esl_ast *ast,
+                                                        enum instr token)
 {
     std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
-    std::vector<esl_bytecode *> *ret_code = NULL;
+    esl_ast                     *temp_ast = NULL;
 
-    /* Get the code of the function */
-    ret_code = compile(ast->get_fson()->get_rbro());
+    temp_ast = ast->get_fson();
+
+    while (temp_ast)
+    {
+        code->push_back(new esl_bytecode(token,
+                                         2,
+                                         new std::string(*(temp_ast->get_content()))));
+        temp_ast = temp_ast->get_rbro();
+    }
+
+    return code;
+}
+
+std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
+{
+    std::vector<esl_bytecode *> *code = NULL;
+    std::vector<esl_bytecode *> *ret_code = NULL;
+    esl_bytecode                *jump = NULL;
+    int                         *jump_addr = new int;
+
+    *jump_addr = 0;
+
+    /* If there is param LOAD them in the stack */
+    if (ast->get_fson()->get_token() != EMPTY)
+    {
+        code = new std::vector<esl_bytecode *>;
+        ret_code = compile_list(ast->get_fson(), STORE);
+        *jump_addr = ret_code->size() + 1;
+    }
 
     /* Add instruction MAKE_FUNCTION */
     code->push_back(new esl_bytecode(MAKE_FUNCTION,
                                      2, /* STRING */
-                                     new std::string(*(ast->get_fson()->get_content()))));
+                                     new std::string(*(ast->get_content()))));
+
+    /*
+    ** Add instruction JUMP after MAKE_FUNCTION
+    ** The adress will be calculate after code compilation
+    */
+    jump = new esl_bytecode(JUMP, 1, NULL);
+
+    code->push_back(jump);
+
+    /* Add the param code to the generate code */
+    if (ret_code)
+    {
+        code->insert(code->end(), ret_code->begin(), ret_code->end());
+        delete ret_code;
+    }
+
+    /* Get the code of the function */
+    ret_code = compile(ast->get_fson()->get_rbro());
+
+    /*
+    ** Calculate the JUMP adress 
+    ** The +1 is to JUMP after RETURN instruction
+    */
+
+    *jump_addr += ret_code->size() + 1;
+
+    jump->set_param(jump_addr);
 
     /* Add the function code to the generate code */
+
     code->insert(code->end(), ret_code->begin(), ret_code->end());
 
     /* Add instruction RETURN */
@@ -135,13 +189,14 @@ esl_bytecode *esl_compiler::make_call_instruction(esl_ast *ast)
 
 std::vector<esl_bytecode *> *esl_compiler::compile_call(esl_ast *ast)
 {
-    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
+    std::vector<esl_bytecode *> *code = NULL;
 
     /* If there is params */
     if (ast->get_fson() != NULL)
-    {
         /* Load args to the stack */
-    }
+        code = compile_list(ast->get_fson(), LOAD);
+    else
+        code = new std::vector<esl_bytecode *>;
 
     /* Build call instruction (check special code for built in) */
     code->push_back(make_call_instruction(ast));

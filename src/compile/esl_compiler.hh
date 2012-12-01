@@ -29,6 +29,7 @@ class esl_compiler
         std::vector<esl_bytecode *> *compile_if(esl_ast *);
         std::vector<esl_bytecode *> *compile_function(esl_ast *);
         std::vector<esl_bytecode *> *compile_call(esl_ast *);
+        std::vector<esl_bytecode *> *compile_list(esl_ast *, enum instr);
 
         esl_bytecode *make_call_instruction(esl_ast *);
 
