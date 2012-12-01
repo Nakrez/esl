@@ -27,5 +27,7 @@ int main(int argc, char **argv)
     driver.free();
 
     delete compiler;
+    delete vm;
+
     return (0);
 }

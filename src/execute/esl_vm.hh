@@ -18,7 +18,6 @@ class esl_vm
 
     private:
         std::vector<esl_bytecode *> *code;
-        int                         pc;
         esl_context                 *current_context;
         std::stack<esl_stack_obj *> *stack;
 };

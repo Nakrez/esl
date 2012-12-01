@@ -13,17 +13,17 @@ class esl_context
         ~esl_context();
 
         esl_variable *get_variable(std::string);
-        int get_function(std::string);
-        int get_pc();
+        size_t get_function(std::string);
+        size_t get_pc();
         void set_variable(const std::string &, esl_variable *);
-        void set_function(const std::string &, int);
-        void set_pc(int);
+        void set_function(const std::string &, size_t);
+        void set_pc(size_t);
         void incr_pc();
 
     private:
         std::unordered_map<std::string, esl_variable *>     *variables;
-        std::unordered_map<std::string, int>                *functions;
-        int                                                 pc;
+        std::unordered_map<std::string, size_t>                *functions;
+        size_t                                                 pc;
 };
 
 #endif /* !ESL_CONTEXT_H_ */
