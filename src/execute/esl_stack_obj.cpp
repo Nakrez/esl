@@ -14,10 +14,7 @@ esl_stack_obj::esl_stack_obj(enum stack_type type, void *object)
 
 esl_stack_obj::~esl_stack_obj()
 {
-    if (this->type == S_VAL)
-        delete ((esl_value *) this->object);
-    else if (this->type == S_CONTEXT)
-        delete ((esl_context *) this->object);
+
 }
 
 void *esl_stack_obj::get_object()

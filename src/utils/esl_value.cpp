@@ -1,4 +1,4 @@
-#include <execute/esl_value.hh>
+#include <utils/esl_value.hh>
 
 esl_value::esl_value()
 {
@@ -40,4 +40,10 @@ void esl_value::set_type(enum value type)
     this->type = type;
 }
 
-
+void esl_value::print()
+{
+    if (this->type == V_INT)
+        std::cout << *((int *)this->value);
+    else if (this->type == V_STRING)
+        std::cout << *((std::string *)this->value);
+}

@@ -4,6 +4,8 @@
 # include <string>
 # include <iostream>
 
+# include <utils/esl_value.hh>
+
 enum instr
 {
     NOP,
@@ -121,20 +123,16 @@ const static std::string instr_string[] =
 class esl_bytecode
 {
     public:
-        esl_bytecode(enum instr type, int type_param, void *param);
+        esl_bytecode(enum instr type, esl_value *param);
         ~esl_bytecode();
 
         enum instr  get_type();
-        int         get_type_param();
-        void        *get_param();
-
-        void        set_param(void *);
-        void        set_type(enum instr type);
+        esl_value   *get_param();
+        void        set_param(esl_value *);
 
     private:
         enum instr  type;
-        int         type_param;
-        void        *param;
+        esl_value   *param;
 };
 
 #endif /* ESL_BYTECODE_H_ */

@@ -2,6 +2,7 @@
 # define ESL_VALUE_H_
 
 # include <string>
+# include <iostream>
 
 enum value
 {
@@ -21,6 +22,8 @@ class esl_value
         enum value get_type();
         void set_value(void *);
         void set_type(enum value);
+
+        void print();
 
     private:
         enum value  type;

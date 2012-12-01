@@ -17,6 +17,14 @@ class esl_vm
         void run();
 
     private:
+        void pop();
+        void store(esl_bytecode *instr);
+        void load(esl_bytecode *instr);
+        void jump(esl_bytecode *instr);
+        void register_function(esl_bytecode *instr);
+        void print();
+
+    private:
         std::vector<esl_bytecode *> *code;
         esl_context                 *current_context;
         std::stack<esl_stack_obj *> *stack;

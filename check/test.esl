@@ -1,21 +1,11 @@
-if 2 then
-    test = sboob
-elif 3 then
-    a = b = 9
-else
-    c = 0
+function test(p)
+    print(p)
+    p = 4
+    print(p)
 end
 
-function lol(p1, p2)
-    if 2 then
-        er = 3
-    else
-        ol = 5
-    end
-    fun = 3
-end
+param = 3
+print(param)
 
-param = 3+4
-
-lil = lol(param, param)
+test(param)
 print(param)

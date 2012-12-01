@@ -5,13 +5,13 @@ FLEX = flex
 FLEXFLAGS =
 
 CC = clang++
-CFLAGS = -Wall -Wextra -Isrc -std=c++11
+CFLAGS = -Wall -Wextra -g -Isrc -std=c++11
 
 OBJ =   src/utils/esl_ast.o src/utils/esl_bytecode.o src/utils/utils.o\
+	src/utils/esl_value.o \
 	src/parser/parser.o src/parser/lexer.o src/parser/eslxx_driver.o \
 	src/compile/esl_compiler.o \
 	src/execute/esl_vm.o src/execute/esl_context.o \
-	src/execute/esl_variable.o src/execute/esl_value.o \
 	src/execute/esl_stack_obj.o \
 	src/main.o
 
@@ -48,6 +48,11 @@ check: all
 
 byte: check
 	cat byte.eslc
+
+exec:
+	valgrind --leak-check=full ./esl check/test.esl
+	./esl check/test.esl
+
 ## -------------- ##
 ## Distribution.  ##
 ## -------------- ##
