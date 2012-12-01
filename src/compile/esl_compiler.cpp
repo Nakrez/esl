@@ -76,6 +76,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
         case IF: return compile_if(ast);
         case FUNCTION_DECL: return compile_function(ast);
         case FUNCTION_CALL: return compile_call(ast);
+        default : return NULL; /* TODO: Throw exception */
     }
 
     return NULL;

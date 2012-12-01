@@ -7,8 +7,8 @@ FLEXFLAGS =
 CC = clang++
 CFLAGS = -Wall -Wextra -Isrc -std=c++11
 
-OBJ = src/parser/parser.o src/parser/lexer.o src/parser/eslxx_driver.o \
-	src/utils/esl_ast.o src/utils/esl_bytecode.o src/utils/utils.o\
+OBJ =   src/utils/esl_ast.o src/utils/esl_bytecode.o src/utils/utils.o\
+	src/parser/parser.o src/parser/lexer.o src/parser/eslxx_driver.o \
 	src/compile/esl_compiler.o \
 	src/execute/esl_vm.o src/execute/esl_context.o \
 	src/execute/esl_variable.o src/execute/esl_value.o \

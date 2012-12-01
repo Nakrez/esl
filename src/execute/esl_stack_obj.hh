@@ -15,7 +15,7 @@ class esl_stack_obj
 {
     public:
         esl_stack_obj();
-        esl_stack_obj(void *, enum stack_type);
+        esl_stack_obj(enum stack_type type, void *object);
         ~esl_stack_obj();
 
         void *get_object();

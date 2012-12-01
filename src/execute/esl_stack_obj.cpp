@@ -6,7 +6,7 @@ esl_stack_obj::esl_stack_obj()
     this->object = NULL;
 }
 
-esl_stack_obj::esl_stack_obj(void *object, enum stack_type type)
+esl_stack_obj::esl_stack_obj(enum stack_type type, void *object)
 {
     this->type = type;
     this->object = object;
