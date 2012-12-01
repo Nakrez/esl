@@ -39,7 +39,7 @@ class eslxx_driver;
 %token END       0 "end_of_file"
 %token TOK_NEWLINE "\n" TOK_EQ "="
 %token TOK_PLUS "+" TOK_MINUS "-" TOK_MUL "*" TOK_DIV "/" TOK_MOD "%"
-%token TOK_PAROPEN "(" TOK_PARCLOSE ")"
+%token TOK_PAROPEN "(" TOK_PARCLOSE ")" TOK_COMA ","
 %token TOK_IF "if" TOK_THEN "then" TOK_ELSE "else" TOK_ELIF "elif"
 %token TOK_END "end"
 %token TOK_FUNCTION "function"
@@ -93,15 +93,15 @@ id_list         :
                                $$->push_back(new esl_ast(ID, *$1));
                                delete $1;
                              }
-                | id_list "identifier"
+                | id_list "," "identifier"
                              { $$ = $1;
-                               $$->push_back(new esl_ast(ID, *$2));
-                               delete $2;
+                               $$->push_back(new esl_ast(ID, *$3));
+                               delete $3;
                              }
-                | id_list "identifier" "\n"
+                | id_list "," "identifier" "\n"
                              { $$ = $1;
-                               $$->push_back(new esl_ast(ID, *$2));
-                               delete $2;
+                               $$->push_back(new esl_ast(ID, *$3));
+                               delete $3;
                              }
                 ;
 
