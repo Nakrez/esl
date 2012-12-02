@@ -1,3 +1,7 @@
+function test(lol)
+    print(1)
+end
+
 function test(p)
     print(p)
     p = 4

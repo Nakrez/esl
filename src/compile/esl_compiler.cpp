@@ -142,7 +142,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile_list(esl_ast *ast)
 
 std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
 {
-    std::vector<esl_bytecode *> *code = NULL;
+    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
     std::vector<esl_bytecode *> *ret_code = NULL;
     esl_bytecode                *jump = NULL;
     int                         *jump_addr = new int;
@@ -153,14 +153,12 @@ std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
     /* If there is param LOAD them in the stack */
     if (ast->get_fson()->get_token() != EMPTY)
     {
-        code = new std::vector<esl_bytecode *>;
         ret_code = compile_list(ast->get_fson());
         *jump_addr = ret_code->size() + 1;
     }
 
     value = new std::string(*(ast->get_content()));
 
-        std::cout << "lol" << std::endl; 
     /* Add instruction MAKE_FUNCTION */
     code->push_back(new esl_bytecode(MAKE_FUNCTION, new esl_value(V_STRING,
                                                                   value)));
