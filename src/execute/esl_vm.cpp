@@ -71,6 +71,14 @@ void esl_vm::pop()
 
 void esl_vm::function_return(esl_bytecode *instr)
 {
+    esl_stack_obj *ret = NULL;
+
+    if (stack->top()->get_type() == S_VAL)
+    {
+        ret = stack->top();
+        stack->pop();
+    }
+
     /* Delete the function context */
     delete this->current_context;
 
@@ -78,11 +86,16 @@ void esl_vm::function_return(esl_bytecode *instr)
     /* TODO: Check top of the stack is a context */
     this->current_context = (esl_context *)(stack->top()->get_object());
 
-    delete stack->top();
-    stack->pop();
+    this->pop();
 
-    /* Push the return value */
-    stack->push(new esl_stack_obj(S_VAL, instr->get_param()));
+    if (instr->get_param() && instr->get_param()->get_type() != V_EMPTY)
+    {
+        /* Push the return value */
+        stack->push(new esl_stack_obj(S_VAL, instr->get_param()));
+    }
+
+    if (ret)
+        stack->push(ret);
 }
 
 void esl_vm::call_function(esl_bytecode *instr)

@@ -1,0 +1,12 @@
+function ttt()
+    print(2)
+end
+function tt()
+    print (1)
+    ttt()
+end
+function t()
+    print(0)
+end
+
+t()

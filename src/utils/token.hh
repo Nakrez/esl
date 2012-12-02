@@ -11,6 +11,8 @@ enum token
     FUNCTION_CALL,
 
     FUNCTION_DECL,
+    RETURN_STM,
+
     UNTIL,
     WHILE,
 
@@ -39,6 +41,7 @@ const static std::string token_string[] =
     "FUNCTION_CALL",
 
     "FUNCTION_DECL",
+    "RETURN_STM",
     "UNTIL",
     "WHILE",
 

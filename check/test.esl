@@ -1,11 +1,7 @@
-function test(lol)
-    print(1)
+function lol(p)
+    print(0)
+    return 3
 end
 
-function test(p)
-    print(p)
-    p = 4
-    print(p)
-end
 
-print(test(test(1)))
+print(lol(1))

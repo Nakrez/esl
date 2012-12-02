@@ -29,6 +29,7 @@
 "do"                    return token::TOK_DO;
 "while"                 return token::TOK_WHILE;
 "until"                 return token::TOK_UNTIL;
+"return"                return token::TOK_RETURN;
 
 [a-z_A-Z][a-zA-Z_0-9]*  {
                             yylval->sval = new std::string(yytext);

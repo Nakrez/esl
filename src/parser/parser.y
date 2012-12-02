@@ -42,7 +42,7 @@ class eslxx_driver;
 %token TOK_PAROPEN "(" TOK_PARCLOSE ")" TOK_COMA ","
 %token TOK_IF "if" TOK_THEN "then" TOK_ELSE "else" TOK_ELIF "elif"
 %token TOK_END "end"
-%token TOK_FUNCTION "function"
+%token TOK_FUNCTION "function" TOK_RETURN "return"
 %token TOK_FOR "for" TOK_DO "do" TOK_WHILE "while" TOK_UNTIL "until"
 
 %token <sval> TOK_ID "identifier" TOK_DIGIT "digit"
@@ -147,6 +147,10 @@ simple_instr    :
                                          $$->add($3);
                                          delete $1;
                                        }
+                |"return" expr  {
+                                    $$ = new esl_ast(RETURN_STM, "");
+                                    $$->add($2);
+                                }
                 ;
 functions       :
                 "function" "identifier" "(" ")" "\n" compound_list "end"

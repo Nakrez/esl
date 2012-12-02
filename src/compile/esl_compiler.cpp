@@ -78,6 +78,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
         case FUNCTION_DECL: return compile_function(ast);
         case FUNCTION_CALL: return compile_call(ast);
         case LIST: return compile_list(ast);
+        case RETURN_STM: return compile_return(ast);
         default : return NULL; /* TODO: Throw exception */
     }
 
@@ -109,6 +110,15 @@ std::vector<esl_bytecode *> *esl_compiler::compile_statements(esl_ast *ast)
     return code;
 }
 
+std::vector<esl_bytecode *> *esl_compiler::compile_return(esl_ast *ast)
+{
+    std::vector<esl_bytecode *> *code = NULL;
+
+    code = compile(ast->get_fson());
+    code->push_back(new esl_bytecode(RETURN, new esl_value(V_EMPTY, NULL)));
+
+    return code;
+}
 std::vector<esl_bytecode *> *esl_compiler::compile_list(esl_ast *ast)
 {
     std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
