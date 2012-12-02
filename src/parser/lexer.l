@@ -34,6 +34,7 @@
                             yylval->sval = new std::string(yytext);
                             return token::TOK_ID;
                         }
+","                     return token::TOK_COMA;
 "+"                     return token::TOK_PLUS;
 "-"                     return token::TOK_MINUS;
 "*"                     return token::TOK_MUL;

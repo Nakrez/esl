@@ -5,11 +5,14 @@ FLEX = flex
 FLEXFLAGS =
 
 CC = clang++
-CFLAGS = -Wall -Wextra -g -Isrc
+CFLAGS = -Wall -Wextra -g -Isrc -std=c++11
 
-OBJ = src/parser/parser.o src/parser/lexer.o src/parser/eslxx_driver.o \
-	src/utils/esl_ast.o src/utils/esl_bytecode.o src/utils/utils.o\
+OBJ =   src/utils/esl_ast.o src/utils/esl_bytecode.o src/utils/utils.o\
+	src/utils/esl_value.o \
+	src/parser/parser.o src/parser/lexer.o src/parser/eslxx_driver.o \
 	src/compile/esl_compiler.o \
+	src/execute/esl_vm.o src/execute/esl_context.o \
+	src/execute/esl_stack_obj.o \
 	src/main.o
 
 all: esl
@@ -29,8 +32,8 @@ esl: $(OBJ)
 clean:
 	rm -f $(OBJ) src/parser/parser.output src/parser/location.hh \
 	src/parser/position.hh \
-	src/parser/stack.hh src/parser/parser.hpp src/parser.cpp \
-	tree.dot tree.png esl *.eslc *core*
+	src/parser/stack.hh src/parser/parser.hpp src/parser/parser.cpp \
+	src/parser/lexer.cpp tree.dot tree.png esl *.eslc *core*
 
 ## ------------ ##
 ## Test suite.  ##
@@ -45,6 +48,11 @@ check: all
 
 byte: check
 	cat byte.eslc
+
+exec:
+	valgrind -v ./esl check/test.esl
+	./esl check/test.esl
+
 ## -------------- ##
 ## Distribution.  ##
 ## -------------- ##

@@ -19,6 +19,8 @@ class esl_compiler
         void compile();
         void export_bytecode(const std::string &filename);
 
+        std::vector<esl_bytecode *> *get_bytecode();
+
     private:
         std::vector<esl_bytecode *> *compile(esl_ast *);
         std::vector<esl_bytecode *> *compile_statements(esl_ast *);
@@ -29,7 +31,7 @@ class esl_compiler
         std::vector<esl_bytecode *> *compile_if(esl_ast *);
         std::vector<esl_bytecode *> *compile_function(esl_ast *);
         std::vector<esl_bytecode *> *compile_call(esl_ast *);
-        std::vector<esl_bytecode *> *compile_list(esl_ast *, enum instr);
+        std::vector<esl_bytecode *> *compile_list(esl_ast *);
 
         esl_bytecode *make_call_instruction(esl_ast *);
 
