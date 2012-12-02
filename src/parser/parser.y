@@ -50,7 +50,7 @@ class eslxx_driver;
 %type <ast> instr expr simple_instr functions esl_command
 %type <ast> rule_while rule_until rule_if do_group else_group
 
-%type <lval> compound_list id_list
+%type <lval> compound_list id_list param_list
 
 %left "+" "-"
 %left "*" "/" "%"
@@ -82,7 +82,7 @@ compound_list   :
                                     $$->push_back($2); }
                 ;
 
-id_list         :
+param_list         :
                 "identifier"
                              { $$ = new std::list<esl_ast *>;
                                $$->push_back(new esl_ast(ID, *$1));
@@ -93,15 +93,35 @@ id_list         :
                                $$->push_back(new esl_ast(ID, *$1));
                                delete $1;
                              }
-                | id_list "," "identifier"
+                | param_list "," "identifier"
                              { $$ = $1;
                                $$->push_back(new esl_ast(ID, *$3));
                                delete $3;
                              }
-                | id_list "," "identifier" "\n"
+                | param_list "," "identifier" "\n"
                              { $$ = $1;
                                $$->push_back(new esl_ast(ID, *$3));
                                delete $3;
+                             }
+                ;
+
+
+id_list         :
+                simple_instr
+                             { $$ = new std::list<esl_ast *>;
+                               $$->push_back($1);
+                             }
+                |simple_instr "\n"
+                             { $$ = new std::list<esl_ast *>;
+                               $$->push_back($1);
+                             }
+                | id_list "," simple_instr
+                             { $$ = $1;
+                               $$->push_back($3);
+                             }
+                | id_list "," simple_instr "\n"
+                             { $$ = $1;
+                               $$->push_back($3);
                              }
                 ;
 
@@ -137,7 +157,7 @@ functions       :
                                             $$->add(new esl_ast(EMPTY, ""));
                                             $$->add(esl_ast::ast_from_list($6));
                                         }
-                |"function" "identifier" "(" id_list ")" "\n" compound_list "end"
+                |"function" "identifier" "(" param_list ")" "\n" compound_list "end"
                                         {
                                             $$ = new esl_ast(FUNCTION_DECL,
                                                              *$2);

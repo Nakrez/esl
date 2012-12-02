@@ -4,9 +4,4 @@ function test(p)
     print(p)
 end
 
-temp = 3
-param = temp
-print(param)
-
-test(param)
-print(param)
+print(test(test(1)))

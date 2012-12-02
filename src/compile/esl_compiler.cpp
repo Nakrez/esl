@@ -77,6 +77,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
         case IF: return compile_if(ast);
         case FUNCTION_DECL: return compile_function(ast);
         case FUNCTION_CALL: return compile_call(ast);
+        case LIST: return compile_list(ast);
         default : return NULL; /* TODO: Throw exception */
     }
 
@@ -108,10 +109,10 @@ std::vector<esl_bytecode *> *esl_compiler::compile_statements(esl_ast *ast)
     return code;
 }
 
-std::vector<esl_bytecode *> *esl_compiler::compile_list(esl_ast *ast,
-                                                        enum instr token)
+std::vector<esl_bytecode *> *esl_compiler::compile_list(esl_ast *ast)
 {
     std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
+    std::vector<esl_bytecode *> *ret_code = NULL;
     esl_ast                     *temp_ast = NULL;
     std::string                 *value = NULL;
 
@@ -121,8 +122,18 @@ std::vector<esl_bytecode *> *esl_compiler::compile_list(esl_ast *ast,
     {
         value = new std::string(*(temp_ast->get_content()));
 
-        code->push_back(new esl_bytecode(token, new esl_value(V_STRING,
-                                                              value)));
+        if (temp_ast->get_token() == ID)
+        {
+            code->push_back(new esl_bytecode(STORE, new esl_value(V_STRING,
+                                                                  value)));
+            code->push_back(new esl_bytecode(POP, new esl_value(V_EMPTY,
+                                                                NULL)));
+        }
+        else
+        {
+            ret_code = compile(temp_ast);
+            code->insert(code->end(), ret_code->begin(), ret_code->end());
+        }
         temp_ast = temp_ast->get_rbro();
     }
 
@@ -143,12 +154,13 @@ std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
     if (ast->get_fson()->get_token() != EMPTY)
     {
         code = new std::vector<esl_bytecode *>;
-        ret_code = compile_list(ast->get_fson(), STORE);
+        ret_code = compile_list(ast->get_fson());
         *jump_addr = ret_code->size() + 1;
     }
 
     value = new std::string(*(ast->get_content()));
 
+        std::cout << "lol" << std::endl; 
     /* Add instruction MAKE_FUNCTION */
     code->push_back(new esl_bytecode(MAKE_FUNCTION, new esl_value(V_STRING,
                                                                   value)));
@@ -172,7 +184,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
     ret_code = compile(ast->get_fson()->get_rbro());
 
     /*
-    ** Calculate the JUMP adress 
+    ** Calculate the JUMP adress
     ** The +1 is to JUMP after RETURN instruction
     */
 
@@ -185,7 +197,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
     code->insert(code->end(), ret_code->begin(), ret_code->end());
 
     /* Add instruction RETURN */
-    code->push_back(new esl_bytecode(RETURN, new esl_value(V_EMPTY, NULL)));
+    code->push_back(new esl_bytecode(RETURN, new esl_value(V_INT, new int(0))));
 
     delete ret_code;
 
@@ -206,14 +218,19 @@ esl_bytecode *esl_compiler::make_call_instruction(esl_ast *ast)
 
 std::vector<esl_bytecode *> *esl_compiler::compile_call(esl_ast *ast)
 {
-    std::vector<esl_bytecode *> *code = NULL;
+    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
+    std::vector<esl_bytecode *> *ret_code = NULL;
+    esl_ast                     *temp_ast = NULL;
 
-    /* If there is params */
-    if (ast->get_fson() != NULL)
-        /* Load args to the stack */
-        code = compile_list(ast->get_fson(), LOAD);
-    else
-        code = new std::vector<esl_bytecode *>;
+    /* Load args */
+    if (ast->get_fson())
+        temp_ast = ast->get_fson()->get_fson();
+    while (temp_ast)
+    {
+        ret_code = compile(ast->get_fson());
+        code->insert(code->end(), ret_code->begin(), ret_code->end());
+        temp_ast = temp_ast->get_rbro();
+    }
 
     /* Build call instruction (check special code for built in) */
     code->push_back(make_call_instruction(ast));

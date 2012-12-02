@@ -50,7 +50,7 @@ byte: check
 	cat byte.eslc
 
 exec:
-	valgrind --leak-check=full ./esl check/test.esl
+	valgrind -v ./esl check/test.esl
 	./esl check/test.esl
 
 ## -------------- ##

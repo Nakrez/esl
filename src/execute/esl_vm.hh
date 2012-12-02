@@ -22,6 +22,8 @@ class esl_vm
         void load(esl_bytecode *instr);
         void jump(esl_bytecode *instr);
         void register_function(esl_bytecode *instr);
+        void call_function(esl_bytecode *instr);
+        void function_return(esl_bytecode *);
         void print();
 
     private:
