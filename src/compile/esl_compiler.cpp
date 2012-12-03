@@ -130,10 +130,9 @@ std::vector<esl_bytecode *> *esl_compiler::compile_list(esl_ast *ast)
 
     while (temp_ast)
     {
-        value = new std::string(*(temp_ast->get_content()));
-
         if (temp_ast->get_token() == ID)
         {
+            value = new std::string(*(temp_ast->get_content()));
             code->push_back(new esl_bytecode(STORE, new esl_value(V_STRING,
                                                                   value)));
             code->push_back(new esl_bytecode(POP, new esl_value(V_EMPTY,
@@ -143,6 +142,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile_list(esl_ast *ast)
         {
             ret_code = compile(temp_ast);
             code->insert(code->end(), ret_code->begin(), ret_code->end());
+            delete ret_code;
         }
         temp_ast = temp_ast->get_rbro();
     }
@@ -239,6 +239,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile_call(esl_ast *ast)
     {
         ret_code = compile(ast->get_fson());
         code->insert(code->end(), ret_code->begin(), ret_code->end());
+        delete ret_code;
         temp_ast = temp_ast->get_rbro();
     }
 

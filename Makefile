@@ -59,7 +59,7 @@ check: all
 byte: check
 	cat byte.eslc
 
-exec:
+exec: all
 	valgrind -v ./esl check/test.esl
 	./esl check/test.esl
 
