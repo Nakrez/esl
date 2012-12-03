@@ -34,6 +34,16 @@ clean:
 	src/parser/position.hh \
 	src/parser/stack.hh src/parser/parser.hpp src/parser/parser.cpp \
 	src/parser/lexer.cpp tree.dot tree.png esl *.eslc *core*
+	make -C doc/vm clean
+
+## -------------- ##
+## Documentation. ##
+## -------------- ##
+
+doc: doc_bytecode
+
+doc_bytecode:
+	make -C doc/vm
 
 ## ------------ ##
 ## Test suite.  ##
