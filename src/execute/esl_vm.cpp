@@ -129,7 +129,7 @@ void esl_vm::call_function(esl_bytecode *instr)
     fun_addr = this->current_context->get_function(fun_name);
 
     /* Setup new context */
-    this->current_context = new esl_context;
+    this->current_context = this->current_context->duplicate();
 
     /*
     ** Register the current function in the new context

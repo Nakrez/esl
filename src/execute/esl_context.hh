@@ -19,6 +19,7 @@ class esl_context
         void set_function(const std::string &, size_t);
         void set_pc(size_t);
         void incr_pc(size_t);
+        esl_context *duplicate();
 
     private:
         std::unordered_map<std::string, esl_value *>            *variables;

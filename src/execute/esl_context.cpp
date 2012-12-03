@@ -47,3 +47,14 @@ void esl_context::incr_pc(size_t pc)
 {
     this->pc += pc;
 }
+
+esl_context *esl_context::duplicate()
+{
+    esl_context *ret = NULL;
+
+    ret = new esl_context();
+
+    ret->functions = new std::unordered_map<std::string, size_t>(*(this->functions));
+
+    return ret;
+}

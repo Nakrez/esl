@@ -7,7 +7,7 @@ function tt()
 end
 function t()
     print(0)
-    return 0
+    tt()
 end
 
 t()
