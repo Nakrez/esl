@@ -156,6 +156,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
     std::vector<esl_bytecode *> *ret_code = NULL;
     esl_bytecode                *jump = NULL;
     int                         *jump_addr = new int;
+    int                         avoid = 1;
     std::string                 *value = NULL;
 
     *jump_addr = 0;
@@ -165,6 +166,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
     {
         ret_code = compile_list(ast->get_fson());
         *jump_addr = ret_code->size() + 1;
+        avoid = 0;
     }
 
     value = new std::string(*(ast->get_content()));
@@ -196,7 +198,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
     ** The +1 is to JUMP after RETURN instruction
     */
 
-    *jump_addr += ret_code->size() + 1;
+    *jump_addr += ret_code->size() + 1 + avoid;
 
     jump->get_param()->set_value(jump_addr);
 

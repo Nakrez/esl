@@ -73,7 +73,7 @@ void esl_vm::function_return(esl_bytecode *instr)
 {
     esl_stack_obj *ret = NULL;
 
-    if (stack->top()->get_type() == S_VAL)
+    if (stack->top() && stack->top()->get_type() == S_VAL)
     {
         ret = stack->top();
         stack->pop();
@@ -112,7 +112,7 @@ void esl_vm::call_function(esl_bytecode *instr)
         stack->pop();
     }
 
-    /* Pop current context in the stack */
+    /* Push current context in the stack */
     stack->push(new esl_stack_obj(S_CONTEXT, this->current_context));
 
     /* Put back args on the stack */
