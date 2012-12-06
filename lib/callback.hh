@@ -1,5 +1,5 @@
-#ifndef ESL_CALLBACK_HH
-# define ESL_CALLBACK_HH
+#ifndef CALLBACK_HH
+# define CALLBACK_HH
 
 # include "context.hh"
 # include "params.hh"
@@ -7,7 +7,7 @@
 
 namespace esl
 {
-    class Callback
+    class Callback : public Object
     {
         public:
             Callback();
@@ -16,4 +16,4 @@ namespace esl
             virtual Object* call(Context *, Params *);
     };
 }
-#endif /* !ESL_CALLBACK */
+#endif /* !CALLBACK_HH */

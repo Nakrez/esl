@@ -11,8 +11,11 @@ namespace esl
             Runtime();
             ~Runtime();
 
+            size_t pc_get () const;
+            void pc_incr (int incr);
+
         private:
-            int pc_;
+            size_t pc_;
     };
 }
 

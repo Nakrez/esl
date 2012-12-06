@@ -14,7 +14,7 @@ namespace esl
             ~Function ();
 
             std::string get_name() const;
-            Object *call(Params *);
+            Object* call(Params *);
 
         private:
             std::string name_;

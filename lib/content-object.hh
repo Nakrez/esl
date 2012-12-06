@@ -9,7 +9,8 @@ enum obj_type
     O_FUNCTION,
     O_VALUE,
     O_INT,
-    O_STRING
+    O_STRING,
+    O_RUNTIME
 };
 
 namespace esl

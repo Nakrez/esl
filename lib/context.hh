@@ -2,9 +2,10 @@
 # define CONTEXT_H_
 
 # include <string>
-# include <unordered_map>
+# include <map>
 
 # include "object.hh"
+# include "function.hh"
 
 namespace esl
 {
@@ -14,8 +15,10 @@ namespace esl
             Context();
             ~Context();
 
-        private:
+            Function* function_get (const std::string& name) const;
 
+        private:
+            std::map<std::string, esl::Function*>* functions_;
     };
 }
 #endif /* !CONTEXT_H_ */
