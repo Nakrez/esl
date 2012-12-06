@@ -1,11 +1,11 @@
 #include "value.hh"
 
-esl::Value::Value() : esl::Object ()
+esl::Value::Value() : esl::ContentObject ()
 {
 }
 
 esl::Value::Value(obj_type type, void* content)
-    : esl::Object(type, content)
+    : esl::ContentObject (type, content)
 {
 }
 

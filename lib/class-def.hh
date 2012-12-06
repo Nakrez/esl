@@ -9,6 +9,6 @@ namespace esl
             ClassDef ();
             ~ClassDef ();
 
-    }
+    };
 }
 #endif /* !CLASS_DEF_HH */

@@ -4,11 +4,11 @@
 # include <string>
 # include <iostream>
 
-# include "object.hh"
+# include "content-object.hh"
 
 namespace esl
 {
-    class Value : public Object
+    class Value : public ContentObject
     {
         public:
             Value();

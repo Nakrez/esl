@@ -6,6 +6,14 @@ esl::ContentObject::ContentObject ()
 
 }
 
+esl::ContentObject::ContentObject (obj_type type, void* content)
+    : esl::Object ()
+    , type_ (type)
+    , content_ (content)
+{
+
+}
+
 esl::ContentObject::~ContentObject ()
 {
 

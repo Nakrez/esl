@@ -18,6 +18,7 @@ namespace esl
     {
         public:
             ContentObject ();
+            ContentObject (obj_type, void*);
             ~ContentObject ();
 
             void* content_get () const;
