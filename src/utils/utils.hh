@@ -4,10 +4,13 @@
 # include <string>
 # include <sstream>
 
-class utils
+namespace esl
 {
-    public:
-        static int atoi(const std::string &);
-};
+    class Utils
+    {
+        public:
+            static int atoi(const std::string &);
+    };
+}
 
 #endif /* UTILS_H_ */

@@ -3,18 +3,24 @@
 
 # include <vector>
 
-class EslParams
+# include "object.hh"
+# include "value.hh"
+
+namespace esl
 {
-public:
-    EslParams ();
-    ~EslParams ();
+    class Params : public Object
+    {
+        public:
+            Params ();
+            ~Params ();
 
-    bool empty () const;
-    int count () const;
-    EslValue *get(int) const;
+            bool empty () const;
+            int count () const;
+            Value* get(int) const;
 
-private:
-    std::vector<EslValue *> params_;
-};
+        private:
+            std::vector<Value*> params_;
+    };
+}
 
 #endif /* !ESL_PARAMS_HH */

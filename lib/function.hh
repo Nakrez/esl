@@ -1,20 +1,24 @@
-#ifndef ESL_FUNCTION_HH
-# define ESL_FUNCTION_HH
+#ifndef FUNCTION_HH
+# define FUNCTION_HH
 
-# include <vm/core/esl-callback.hh>
+# include "object.hh"
+# include "callback.hh"
+# include "params.hh"
 
-class EslFunction
+namespace esl
 {
-public:
-    EslFunction ();
-    ~EslFunction ();
+    class Function
+    {
+        public:
+            Function ();
+            ~Function ();
 
-    std::string get_name() const;
-    EslObject *call(EslParams *);
+            std::string get_name() const;
+            Object *call(Params *);
 
-private:
-    std::string name_;
-    EslCallback *callback_;
-};
-
-#endif /* !ESL_FUNCTION_HH */
+        private:
+            std::string name_;
+            Callback *callback_;
+    };
+}
+#endif /* !FUNCTION_HH */

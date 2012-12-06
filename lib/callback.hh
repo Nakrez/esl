@@ -1,15 +1,19 @@
 #ifndef ESL_CALLBACK_HH
 # define ESL_CALLBACK_HH
 
+# include "context.hh"
+# include "params.hh"
+# include "object.hh"
+
 namespace esl
 {
-    class EslCallback
+    class Callback
     {
         public:
-            EslCallback();
-            ~EslCallback();
+            Callback();
+            ~Callback();
 
-            virtual EslOBject *call(EslContext *, EslParams *);
+            virtual Object* call(Context *, Params *);
     };
 }
 #endif /* !ESL_CALLBACK */
