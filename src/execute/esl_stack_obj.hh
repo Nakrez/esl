@@ -1,31 +1,18 @@
-#ifndef ESL_STACK_OBJ_H_
-# define ESL_STACK_OBJ_H_
+#ifndef STACK_OBJ_HH
+# define STACK_OBJ_HH
 
-# include <utils/esl_value.hh>
-# include <execute/esl_context.hh>
+# include "../../lin/content-object.hh"
 
-enum stack_type
+namespace esl
 {
-    S_EMPTY,
-    S_VAL,
-    S_CONTEXT
-};
+    class StackObject : public ContextObject
+    {
+        public:
+            StackObject();
+            StackObject(obj_type type, void *object);
+            ~StackObject();
 
-class esl_stack_obj
-{
-    public:
-        esl_stack_obj();
-        esl_stack_obj(enum stack_type type, void *object);
-        ~esl_stack_obj();
-
-        void *get_object();
-        enum stack_type get_type();
-        void set_object(void *);
-        void set_type(enum stack_type);
-
-    private:
-        enum stack_type type;
-        void            *object;
-};
-
-#endif /* !ESL_STACK_OBJ_H_ */
+        private:
+    };
+}
+#endif /* !STACK_OBJ_HH */

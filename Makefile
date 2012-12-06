@@ -9,8 +9,8 @@ CFLAGS = -Wall -Wextra -g -Isrc -std=c++11
 
 OBJ =   src/utils/ast.o src/utils/bytecode.o src/utils/utils.o \
 	src/parser/parser.o src/parser/lexer.o src/parser/driver.o \
-	src/compile/esl_compiler.o \
-	src/execute/esl_vm.o src/execute/esl_context.o \
+	src/compile/compiler.o \
+	src/execute/vm.o \
 	src/execute/esl_stack_obj.o \
 	src/main.o
 

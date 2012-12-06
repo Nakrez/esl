@@ -28,3 +28,8 @@ obj_type esl::ContentObject::type_get () const
 {
     return this->type_;
 }
+
+void esl::ContentObject::content_set (void* content)
+{
+    this->content_ = content;
+}

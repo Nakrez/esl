@@ -24,6 +24,8 @@ namespace esl
             void* content_get () const;
             obj_type type_get () const;
 
+            void content_set (void* content);
+
         protected:
             obj_type type_;
             void* content_;
