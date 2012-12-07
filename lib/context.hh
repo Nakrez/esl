@@ -13,6 +13,7 @@ namespace esl
     {
         public:
             Context();
+            Context(const Context& context);
             ~Context();
 
             Function* function_get (const std::string& name) const;

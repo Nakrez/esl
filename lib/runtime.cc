@@ -7,6 +7,11 @@ esl::Runtime::Runtime ()
 
 }
 
+esl::Runtime::Runtime(const Runtime& runtime)
+    : Context (runtime)
+{
+}
+
 esl::Runtime::~Runtime ()
 {
 

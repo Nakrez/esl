@@ -9,6 +9,7 @@ namespace esl
     {
         public:
             Runtime();
+            Runtime(const Runtime& runtime);
             ~Runtime();
 
             size_t pc_get () const;

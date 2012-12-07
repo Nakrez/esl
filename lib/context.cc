@@ -6,6 +6,12 @@ esl::Context::Context()
     this->functions_ = new std::map<std::string, esl::Function*>();
 }
 
+esl::Context::Context(const Context& context)
+    : Object ()
+{
+    this->functions_ = new std::map<std::string, esl::Function*>(*(context.functions_));
+}
+
 esl::Context::~Context()
 {
 }
