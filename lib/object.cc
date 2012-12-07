@@ -14,6 +14,6 @@ void esl::Object::decr_ref ()
 {
     --(this->ref_count_);
 
-    if (this->ref_count_ <= 0)
-        delete this;
+ //   if (this->ref_count_ <= 0)
+//        delete this;
 }

@@ -1,16 +1,21 @@
 #include "context.hh"
 
+esl::ContentObject* esl::std_callback (esl::Runtime*, esl::Params*)
+{
+    return nullptr;
+}
+
 esl::Context::Context()
     : Object ()
 {
-    this->functions_ = new std::map<std::string, esl::Function*>();
+    this->functions_ = new std::map<std::string, std::pair<esl::Callback, int>>();
     this->variables_ = new std::map<std::string, esl::Value*>();
 }
 
 esl::Context::Context(const Context& context)
     : Object ()
 {
-    this->functions_ = new std::map<std::string, esl::Function*>(*(context.functions_));
+    this->functions_ = new std::map<std::string, std::pair<esl::Callback, int>>(*(context.functions_));
     this->variables_ = new std::map<std::string, esl::Value*>();
 }
 
@@ -18,7 +23,7 @@ esl::Context::~Context()
 {
 }
 
-esl::Function* esl::Context::function_get (const std::string& name) const
+std::pair<esl::Callback, int> esl::Context::function_get (const std::string& name) const
 {
     return this->functions_->at(name);
 }
@@ -34,7 +39,9 @@ void esl::Context::variable_set (const std::string& name, esl::Value* value)
     (*(this->variables_))[name] = value;
 }
 
-void esl::Context::function_set (const std::string& name, esl::Function* fun)
+void esl::Context::function_set (const std::string& name,
+                                 esl::Callback call,
+                                 int addr)
 {
-    (*(this->functions_))[name] = fun;
+    (*(this->functions_))[name] = std::pair<esl::Callback, int>(call, addr);
 }

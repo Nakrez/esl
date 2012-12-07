@@ -1,7 +1,7 @@
 function fun(t)
+    print(0)
     t = 3
 end
 
 test = 2
 fun(test)
-print(test)

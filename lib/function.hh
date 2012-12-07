@@ -11,12 +11,11 @@ namespace esl
     class Runtime;
     class ContentObject;
 
-    using Callback = esl::ContentObject* (*)(esl::Runtime*, esl::Params*);
 
     class Function
     {
         public:
-            Function ();
+            Function (std::string, Callback);
             ~Function ();
 
             std::string get_name() const;

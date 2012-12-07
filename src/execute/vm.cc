@@ -49,7 +49,7 @@ void esl::Vm::run()
                 break;
             case CALL_FUNCTION:
                 this->call_function(instr);
-                continue;
+                break;
             case RETURN:
                 this->function_return(instr);
                 break;
@@ -106,7 +106,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
 {
     std::stack<esl::ContentObject*> tmp_stack = std::stack<esl::ContentObject *>();
     std::string fun_name;
-    esl::Function* fun = nullptr;
+    std::pair<esl::Callback, int> fun;
     esl::Params* params = new esl::Params();
     esl::Runtime* fun_runtime = new esl::Runtime(*(this->runtime_));
 
@@ -120,7 +120,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     }
 
     /* Push current context in the stack */
-    //this->stack_->push(new esl::ContentObject(O_RUNTIME, this->runtime_));
+    this->stack_->push(new esl::ContentObject(O_RUNTIME, this->runtime_));
 
     /* TODO: Check fun_name is a string */
     fun_name = *((std::string *)(instr->get_param()->content_get()));
@@ -129,7 +129,17 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     fun = this->runtime_->function_get(fun_name);
 
     /* Setup new context */
-    fun->call(fun_runtime, params);
+    if (fun.first(fun_runtime, params) == nullptr) /* std_callback */
+    {
+        for (int i = 0; i < params->count(); ++i)
+        {
+           this->stack_->push(params->get_params(i + 1));
+           std::cout << "params" << std::endl;
+        }
+        fun_runtime->pc_set(fun.second + 1);
+
+        this->runtime_ = fun_runtime;
+    }
 
     /*
     ** Register the current function in the new context
@@ -176,12 +186,14 @@ void esl::Vm::jump(esl::Bytecode *instr)
 
 void esl::Vm::register_function(esl::Bytecode *instr)
 {
-    //std::string     *var_name = NULL;
+    std::string     *var_name = NULL;
 
-    //var_name = (std::string *)instr->get_param()->content_get();
+    var_name = (std::string *)instr->get_param()->content_get();
 
     /* TODO: Register Function */
-    //this->runtime_->function_set(*var_name, );
+    this->runtime_->function_set(*var_name,
+                                 esl::std_callback,
+                                 this->runtime_->pc_get());
 }
 
 void esl::Vm::print()

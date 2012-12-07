@@ -1,9 +1,8 @@
 CC = clang++
 CFLAGS = -Wall -Wextra -g -std=c++11 -fPIC
 
-OBJ = class-def.o content-object.o context.o function.o module.o \
-	object-instance.o runtime.o value.o executable-context.o \
-	params.o object.o
+OBJ = class-def.o content-object.o context.o module.o object-instance.o \
+	runtime.o value.o executable-context.o params.o object.o
 
 all: libesl
 
