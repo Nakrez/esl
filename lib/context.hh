@@ -6,6 +6,7 @@
 
 # include "object.hh"
 # include "function.hh"
+# include "value.hh"
 
 namespace esl
 {
@@ -17,9 +18,14 @@ namespace esl
             ~Context();
 
             Function* function_get (const std::string& name) const;
+            Value* variable_get (const std::string& name) const;
+
+
+            void variable_set (const std::string& name, Value* value);
 
         private:
             std::map<std::string, Function*>* functions_;
+            std::map<std::string, Value*>* variables_;
     };
 }
 #endif /* !CONTEXT_H_ */

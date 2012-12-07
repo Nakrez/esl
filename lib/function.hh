@@ -11,6 +11,8 @@ namespace esl
 {
     class Params;
     class Callback;
+    class Runtime;
+    class ContentObject;
     class Function
     {
         public:
@@ -18,7 +20,7 @@ namespace esl
             ~Function ();
 
             std::string get_name() const;
-            Object* call(Params *);
+            ContentObject* call(Runtime*, Params *);
 
         private:
             std::string name_;

@@ -4,3 +4,4 @@ Bytecode until
 Check leaks
 Add jump after MAKE_FUNCTION
 Built exit
+Replace NULL

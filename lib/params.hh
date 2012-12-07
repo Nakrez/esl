@@ -16,7 +16,8 @@ namespace esl
 
             bool empty () const;
             int count () const;
-            Value* get(int) const;
+            Value* get_params (int) const;
+            void params_set (Value*);
 
         private:
             std::vector<Value*> params_;

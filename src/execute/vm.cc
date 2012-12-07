@@ -106,87 +106,82 @@ void esl::Vm::call_function(esl::Bytecode *instr)
 {
     std::stack<esl::ContentObject*> tmp_stack = std::stack<esl::ContentObject *>();
     std::string fun_name;
-    int fun_addr = 0;
+    esl::Function* fun = nullptr;
+    esl::Params* params = new esl::Params();
+    esl::Runtime* fun_runtime = new esl::Runtime(*(this->runtime_));
 
 
     /* Storing all args before context switch */
     while (!(this->stack_->empty()) &&
            this->stack_->top()->type_get() != O_RUNTIME)
     {
-        tmp_stack.push(this->stack_->top());
+        params->params_set((esl::Value*)this->stack_->top()->content_get());
         this->stack_->pop();
     }
 
     /* Push current context in the stack */
-    this->stack_->push(new esl::ContentObject(O_RUNTIME, this->runtime_));
-
-    /* Put back args on the stack */
-    while (!(tmp_stack.empty()))
-    {
-        this->stack_->push(tmp_stack.top());
-        tmp_stack.pop();
-    }
+    //this->stack_->push(new esl::ContentObject(O_RUNTIME, this->runtime_));
 
     /* TODO: Check fun_name is a string */
     fun_name = *((std::string *)(instr->get_param()->content_get()));
 
     /* TODO: Check that function is registerd */
-    fun_addr = this->runtime_->get_function(fun_name);
+    fun = this->runtime_->function_get(fun_name);
 
     /* Setup new context */
-    this->current_context = this->current_context->duplicate();
+    fun->call(fun_runtime, params);
 
     /*
     ** Register the current function in the new context
     ** Use for recursive function)
     */
-    this->current_context->set_function(std::string(fun_name), fun_addr);
+    //this->runtime_->set_function(std::string(fun_name), fun_addr);
 
     /* Jump top the functions code */
-    this->current_context->set_pc(fun_addr);
+
 }
 
-void esl::Vm::store(esl_bytecode *instr)
+void esl::Vm::store(esl::Bytecode *instr)
 {
-    std::string     *var_name = NULL;
-    esl_value       *value = NULL;
+    std::string *var_name = NULL;
+    esl::Value *value = NULL;
 
-    var_name = (std::string *)instr->get_param()->get_value();
+    var_name = (std::string *)instr->get_param()->content_get();
 
     /* TODO: check type of TOS */
-    value = (esl_value *)this->stack->top()->get_object();
+    value = (esl::Value *)this->stack_->top()->content_get();
 
-    this->current_context->set_variable(*var_name, value);
+    this->runtime_->variable_set(*var_name, value);
 }
 
-void esl::Vm::load(esl_bytecode *instr)
+void esl::Vm::load(esl::Bytecode *instr)
 {
-    std::string     *var_name = NULL;
-    esl_value       *value = NULL;
+    std::string *var_name = NULL;
+    esl::Value *value = NULL;
 
-    var_name = (std::string *)instr->get_param()->get_value();
+    var_name = (std::string *)instr->get_param()->content_get();
 
     /* TODO: check existance */
-    value = this->current_context->get_variable(*var_name);
+    value = this->runtime_->variable_get(*var_name);
 
-    stack->push(new esl::ContentObject(S_VAL, value));
+    this->stack_->push(new esl::ContentObject(O_VALUE, value));
 }
 
-void esl::Vm::jump(esl_bytecode *instr)
+void esl::Vm::jump(esl::Bytecode *instr)
 {
-    int *addr = (int *)instr->get_param()->get_value();
+    int *addr = (int *)instr->get_param()->content_get();
 
-    this->current_context->incr_pc(*addr);
+    this->runtime_->pc_incr(*addr);
 }
 
-void esl::Vm::register_function(esl_bytecode *instr)
+void esl::Vm::register_function(esl::Bytecode *instr)
 {
     std::string     *var_name = NULL;
 
-    var_name = (std::string *)instr->get_param()->get_value();
+    var_name = (std::string *)instr->get_param()->content_get();
 
-    this->current_context->set_function(*var_name,
-                                        this->current_context->get_pc() + 2);
+    this->runtime_->function_set(*var_name,
+                                        this->runtime_->get_pc() + 2);
 }
 
 void esl::Vm::print()
