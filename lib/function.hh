@@ -4,15 +4,14 @@
 # include <string>
 
 # include "object.hh"
-//# include "callback.hh"
-//# include "params.hh"
+# include "params.hh"
 
 namespace esl
 {
-    class Params;
-    class Callback;
     class Runtime;
     class ContentObject;
+
+    using Callback = esl::ContentObject* (*)(esl::Runtime*, esl::Params*);
 
     class Function
     {
@@ -25,7 +24,7 @@ namespace esl
 
         private:
             std::string name_;
-            Callback *callback_;
+            Callback callback_;
     };
 }
 #endif /* !FUNCTION_HH */
