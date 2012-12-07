@@ -1,7 +1,7 @@
-function lol(p)
-    print(p)
-    return 3
+function fun(t)
+    t = 3
 end
 
-
-print(lol(1))
+test = 2
+fun(test)
+print(test)

@@ -4,12 +4,14 @@ esl::Context::Context()
     : Object ()
 {
     this->functions_ = new std::map<std::string, esl::Function*>();
+    this->variables_ = new std::map<std::string, esl::Value*>();
 }
 
 esl::Context::Context(const Context& context)
     : Object ()
 {
     this->functions_ = new std::map<std::string, esl::Function*>(*(context.functions_));
+    this->variables_ = new std::map<std::string, esl::Value*>();
 }
 
 esl::Context::~Context()
