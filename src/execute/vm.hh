@@ -7,6 +7,7 @@
 # include "../../lib/content-object.hh"
 # include "../../lib/executable-context.hh"
 # include "../../lib/params.hh"
+# include "../../lib/empty-stack-exception.hh"
 # include "../utils/bytecode.hh"
 
 namespace esl

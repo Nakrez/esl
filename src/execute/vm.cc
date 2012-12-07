@@ -66,6 +66,9 @@ void esl::Vm::run()
 
 void esl::Vm::pop()
 {
+    if (this->stack_->empty())
+        throw esl::EmptyStackException();
+
     /* Delete TOS */
     delete this->stack_->top();
 
