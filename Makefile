@@ -16,7 +16,7 @@ OBJ =   src/utils/ast.o src/utils/bytecode.o src/utils/utils.o \
 all: esl
 
 esl: libesl $(OBJ)
-	$(CC) $(OBJ) -o $@
+	$(CC) ./libesl.so $(OBJ) -o $@
 
 libesl:
 	make -C lib
