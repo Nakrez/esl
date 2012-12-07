@@ -12,5 +12,5 @@ esl::Context::~Context()
 
 esl::Function* esl::Context::function_get (const std::string& name) const
 {
-    return this->functions_[name];
+    return this->functions_->at(name);
 }

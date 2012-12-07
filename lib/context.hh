@@ -18,7 +18,7 @@ namespace esl
             Function* function_get (const std::string& name) const;
 
         private:
-            std::map<std::string, esl::Function*>* functions_;
+            std::map<std::string, Function*>* functions_;
     };
 }
 #endif /* !CONTEXT_H_ */

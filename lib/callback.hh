@@ -5,6 +5,8 @@
 # include "params.hh"
 # include "object.hh"
 
+class Context;
+
 namespace esl
 {
     class Callback : public Object

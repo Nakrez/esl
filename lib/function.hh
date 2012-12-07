@@ -1,12 +1,16 @@
 #ifndef FUNCTION_HH
 # define FUNCTION_HH
 
+# include <string>
+
 # include "object.hh"
-# include "callback.hh"
-# include "params.hh"
+//# include "callback.hh"
+//# include "params.hh"
 
 namespace esl
 {
+    class Params;
+    class Callback;
     class Function
     {
         public:
