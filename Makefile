@@ -21,9 +21,6 @@ esl: libesl $(OBJ)
 libesl:
 	make -C lib
 
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
-
 %.o: %.cc
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -31,7 +28,7 @@ libesl:
 %.cc: %.y
 	$(BISON) $(BISONFLAGS) -o $@ $<
 
-%.cpp: %.l
+%.cc: %.l
 	$(FLEX) $(FLEXFLAGS) -o $@ $<
 
 clean:

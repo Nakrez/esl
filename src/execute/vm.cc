@@ -3,7 +3,7 @@
 esl::Vm::Vm (std::vector<esl::Bytecode*>* code)
 {
     this->code_ = code;
-    this->runtime_ = new esl::ExecutableContext;
+    this->runtime_ = new esl::ExecutableContext();
     this->stack_ = new std::stack<esl::ContentObject*>;
 }
 
