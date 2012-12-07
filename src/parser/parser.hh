@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 2.6.5.  */
+/* A Bison parser, made by GNU Bison 2.5.  */
 
 /* Skeleton interface for Bison LALR(1) parsers in C++
    
-      Copyright (C) 2002-2012 Free Software Foundation, Inc.
+      Copyright (C) 2002-2011 Free Software Foundation, Inc.
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,18 +30,14 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/**
- ** \file src/parser/parser.hh
- ** Define the yy::parser class.
- */
-
 /* C++ LALR(1) parser skeleton written by Akim Demaille.  */
 
-#ifndef YY_YY_SRC_PARSER_PARSER_HH_INCLUDED
-# define YY_YY_SRC_PARSER_PARSER_HH_INCLUDED
+#ifndef PARSER_HEADER_H
+# define PARSER_HEADER_H
 
 /* "%code requires" blocks.  */
-/* Line 36 of lalr1.cc  */
+
+/* Line 35 of lalr1.cc  */
 #line 3 "src/parser/parser.y"
 
 #include <string>
@@ -52,8 +48,9 @@
 class Driver;
 
 
-/* Line 36 of lalr1.cc  */
-#line 57 "src/parser/parser.hh"
+
+/* Line 35 of lalr1.cc  */
+#line 54 "src/parser/parser.hh"
 
 
 #include <string>
@@ -66,10 +63,24 @@ class Driver;
 # define YYDEBUG 1
 #endif
 
+/* Enabling verbose error messages.  */
+#ifdef YYERROR_VERBOSE
+# undef YYERROR_VERBOSE
+# define YYERROR_VERBOSE 1
+#else
+# define YYERROR_VERBOSE 1
+#endif
+
+/* Enabling the token table.  */
+#ifndef YYTOKEN_TABLE
+# define YYTOKEN_TABLE 0
+#endif
+
 
 namespace yy {
-/* Line 36 of lalr1.cc  */
-#line 73 "src/parser/parser.hh"
+
+/* Line 35 of lalr1.cc  */
+#line 84 "src/parser/parser.hh"
 
   /// A Bison parser.
   class eslxx_parser
@@ -79,7 +90,8 @@ namespace yy {
 #ifndef YYSTYPE
     union semantic_type
     {
-/* Line 36 of lalr1.cc  */
+
+/* Line 35 of lalr1.cc  */
 #line 28 "src/parser/parser.y"
 
     std::string *sval;
@@ -87,8 +99,9 @@ namespace yy {
     std::list<esl::Ast *> *lval;
 
 
-/* Line 36 of lalr1.cc  */
-#line 92 "src/parser/parser.hh"
+
+/* Line 35 of lalr1.cc  */
+#line 105 "src/parser/parser.hh"
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -236,14 +249,16 @@ namespace yy {
     /// For a rule, its LHS.
     static const unsigned char yyr1_[];
     /// For a rule, its RHS length.
-    static const unsigned char yyr2_[]; 
+    static const unsigned char yyr2_[];
+
+#if YYDEBUG || YYERROR_VERBOSE || YYTOKEN_TABLE
+    /// For a symbol, its name in clear.
+    static const char* const yytname_[];
+#endif
 
     /// Convert the symbol name \a n to a form suitable for a diagnostic.
     static std::string yytnamerr_ (const char *n);
 
-
-    /// For a symbol, its name in clear.
-    static const char* const yytname_[];
 #if YYDEBUG
     /// A type to store symbol numbers and -1.
     typedef signed char rhs_number_type;
@@ -299,9 +314,10 @@ namespace yy {
   };
 
 } // yy
-/* Line 36 of lalr1.cc  */
-#line 304 "src/parser/parser.hh"
+
+/* Line 35 of lalr1.cc  */
+#line 320 "src/parser/parser.hh"
 
 
 
-#endif /* !YY_YY_SRC_PARSER_PARSER_HH_INCLUDED  */
+#endif /* ! defined PARSER_HEADER_H */

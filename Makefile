@@ -11,7 +11,6 @@ OBJ =   src/utils/ast.o src/utils/bytecode.o src/utils/utils.o \
 	src/parser/parser.o src/parser/lexer.o src/parser/driver.o \
 	src/compile/compiler.o \
 	src/execute/vm.o \
-	src/execute/esl_stack_obj.o \
 	src/main.o
 
 all: esl

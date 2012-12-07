@@ -1,12 +1,12 @@
-#include <parser/eslxx_driver.hh>
-#include <compile/esl_compiler.hh>
-#include <execute/esl_vm.hh>
+#include "parser/driver.hh"
+#include "compile/compiler.hh"
+#include "execute/vm.hh"
 
 int main(int argc, char **argv)
 {
-    eslxx_driver    driver;
-    esl_compiler    *compiler = NULL;
-    esl_vm          *vm = NULL;
+    Driver    driver;
+    esl::Compiler    *compiler = NULL;
+    esl::Vm          *vm = NULL;
 
     if (argc < 2)
         return (1);
@@ -15,12 +15,12 @@ int main(int argc, char **argv)
     driver.parser(argv[1]);
 
     /* Compile the AST given by the parser into bytecode */
-    compiler = new esl_compiler(driver.ast());
+    compiler = new esl::Compiler(driver.ast());
     compiler->compile();
 
     compiler->export_bytecode("byte.eslc");
 
-    vm = new esl_vm(compiler->get_bytecode());
+    vm = new esl::Vm(compiler->get_bytecode());
 
     vm->run();
 

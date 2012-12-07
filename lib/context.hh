@@ -20,8 +20,8 @@ namespace esl
             Function* function_get (const std::string& name) const;
             Value* variable_get (const std::string& name) const;
 
-
             void variable_set (const std::string& name, Value* value);
+            void function_set (const std::string& name, Function* fun);
 
         private:
             std::map<std::string, Function*>* functions_;

@@ -176,22 +176,22 @@ void esl::Vm::jump(esl::Bytecode *instr)
 
 void esl::Vm::register_function(esl::Bytecode *instr)
 {
-    std::string     *var_name = NULL;
+    //std::string     *var_name = NULL;
 
-    var_name = (std::string *)instr->get_param()->content_get();
+    //var_name = (std::string *)instr->get_param()->content_get();
 
-    this->runtime_->function_set(*var_name,
-                                        this->runtime_->get_pc() + 2);
+    /* TODO: Register Function */
+    //this->runtime_->function_set(*var_name, );
 }
 
 void esl::Vm::print()
 {
-    esl_value   *value = NULL;
+    esl::Value* value = NULL;
 
     /* Print all the stack till the end or a context */
-    while (!(stack->empty()) && stack->top()->get_type() == S_VAL)
+    while (!(this->stack_->empty()) && this->stack_->top()->type_get() == O_VALUE)
     {
-        value = (esl_value *)stack->top()->get_object();
+        value = (esl::Value*)this->stack_->top()->content_get();
         value->print();
         this->pop();
     }
@@ -199,5 +199,5 @@ void esl::Vm::print()
     std::cout << std::endl;
 
     /* Push a return value */
-    stack->push(new esl::ContentObject(S_VAL, new esl_value(V_INT, new int(0))));
+    this->stack_->push(new esl::ContentObject(O_VALUE, new int(0)));
 }

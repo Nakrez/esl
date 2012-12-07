@@ -31,3 +31,8 @@ void esl::Context::variable_set (const std::string& name, esl::Value* value)
     /* TODO : decr smart pointer */
     (*(this->variables_))[name] = value;
 }
+
+void esl::Context::function_set (const std::string& name, esl::Function* fun)
+{
+    (*(this->functions_))[name] = fun;
+}
