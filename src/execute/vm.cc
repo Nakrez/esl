@@ -52,7 +52,7 @@ void esl::Vm::run()
                 this->call_function(instr);
                 break;
             case RETURN:
-                this->function_return(instr);
+                this->function_return();
                 break;
             case PRINT:
                 this->print();
@@ -126,7 +126,7 @@ void esl::Vm::pop()
     this->stack_->pop();
 }
 
-void esl::Vm::function_return(esl::Bytecode *instr)
+void esl::Vm::function_return()
 {
     esl::ContentObject *ret = nullptr;
 
@@ -166,6 +166,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
            this->stack_->top()->type_get() != O_RUNTIME)
     {
         params->params_set((esl::Value*)this->stack_->top()->content_get());
+        decr_obj(this->stack_->top());
         this->stack_->pop();
     }
 
@@ -187,7 +188,8 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     if (fun.first(fun_runtime, params) == nullptr) /* std_callback */
     {
         for (int i = 0; i < params->count(); ++i)
-           this->stack_->push(new esl::ContentObject(O_VALUE, params->get_params(i + 1)));
+            this->stack_->push(new esl::ContentObject(O_VALUE,
+                                                      params->get_params(i + 1)));
 
         fun_runtime->pc_set(fun.second + 1);
 
@@ -195,6 +197,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     }
 
     delete params;
+
     /*
     ** Register the current function in the new context
     ** Use for recursive function)

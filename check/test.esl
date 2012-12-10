@@ -1,6 +1,6 @@
 function t(p, r)
     p=12
-    return (4)
+    return (r)
 end
 
 val=0

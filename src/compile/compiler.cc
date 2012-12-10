@@ -241,9 +241,12 @@ std::vector<esl::Bytecode *> *esl::Compiler::compile_call(esl::Ast *ast)
         temp_ast = ast->get_fson()->get_fson();
     //while (temp_ast)
     //{
+    if (temp_ast)
+    {
         ret_code = compile(ast->get_fson());
         code->insert(code->end(), ret_code->begin(), ret_code->end());
         delete ret_code;
+    }
         //temp_ast = temp_ast->get_rbro();
     //}
 

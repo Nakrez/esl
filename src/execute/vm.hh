@@ -28,7 +28,7 @@ namespace esl
             void jump (Bytecode* instr);
             void register_function (Bytecode* instr);
             void call_function (Bytecode* instr);
-            void function_return (Bytecode* );
+            void function_return ();
             void print ();
             void decr_obj (void*);
             void incr_obj (void*);

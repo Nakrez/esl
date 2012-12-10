@@ -8,7 +8,6 @@ esl::Params::Params ()
 
 esl::Params::~Params ()
 {
-
 }
 
 bool esl::Params::empty () const

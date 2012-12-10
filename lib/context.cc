@@ -52,7 +52,9 @@ esl::Value* esl::Context::variable_get (const std::string& name) const
 
 void esl::Context::variable_set (const std::string& name, esl::Value* value)
 {
-    /* TODO : decr smart pointer */
+    if (this->variables_->find(name) != this->variables_->end())
+        this->variables_->at(name)->decr_ref();
+
     (*(this->variables_))[name] = value;
 }
 

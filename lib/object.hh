@@ -13,6 +13,8 @@ namespace esl
             void incr_ref ();
             void decr_ref ();
 
+            int ref_get () const;
+
         protected:
             int ref_count_;
     };

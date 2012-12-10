@@ -1,13 +1,18 @@
-unction ttt()
+function ttt()
     print(2)
 end
 function tt()
     print (1)
     ttt()
 end
-function t(p)
+function t()
     print(0)
     tt()
 end
 
-t(1)
+t()
+
+a=3
+b=a
+b=4
+a=5

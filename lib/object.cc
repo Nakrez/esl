@@ -17,3 +17,8 @@ void esl::Object::decr_ref ()
     if (this->ref_count_ <= 0)
         delete this;
 }
+
+int esl::Object::ref_get () const
+{
+    return ref_count_;
+}
