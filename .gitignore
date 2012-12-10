@@ -9,3 +9,4 @@ esl
 position.hh
 location.hh
 stack.hh
+*.so

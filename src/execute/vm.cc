@@ -21,7 +21,7 @@ esl::Vm::~Vm()
 
 void esl::Vm::run()
 {
-    esl::Bytecode *instr = NULL;
+    esl::Bytecode *instr = nullptr;
 
     while (this->runtime_->pc_get() < this->code_->size())
     {
@@ -29,7 +29,7 @@ void esl::Vm::run()
         switch (instr->get_type())
         {
             case POP:
-                this->pop();
+                this->stack_->pop();
                 break;
             case JUMP:
                 this->jump(instr);
@@ -87,32 +87,27 @@ void esl::Vm::function_return(esl::Bytecode *instr)
     }
 
     /* Delete the function context */
-    delete this->runtime_;
+    //delete this->runtime_;
 
     /* Restore the previous context */
     /* TODO: Check top of the stack is a context */
-    this->runtime_ = (esl::Runtime*) (this->stack_->top()->content_get());
+    this->runtime_ = (esl::Runtime*)(this->stack_->top()->content_get());
 
-    this->pop();
-
-    if (instr->get_param() && instr->get_param()->type_get() != O_NIL)
-    {
-        /* Push the return value */
-        this->stack_->push(new esl::ContentObject(O_VALUE, instr->get_param()));
-    }
+    this->stack_->pop();
 
     if (ret)
         this->stack_->push(ret);
+    else
+        this->stack_->push(new esl::ContentObject(O_NIL, nullptr));
+
 }
 
 void esl::Vm::call_function(esl::Bytecode *instr)
 {
-    std::stack<esl::ContentObject*> tmp_stack = std::stack<esl::ContentObject *>();
     std::string fun_name;
     std::pair<esl::Callback, int> fun;
     esl::Params* params = new esl::Params();
     esl::Runtime* fun_runtime = new esl::Runtime(*(this->runtime_));
-
 
     /* Storing all args before context switch */
     while (!(this->stack_->empty()) &&
@@ -135,10 +130,8 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     if (fun.first(fun_runtime, params) == nullptr) /* std_callback */
     {
         for (int i = 0; i < params->count(); ++i)
-        {
-           this->stack_->push(params->get_params(i + 1));
-           std::cout << "params" << std::endl;
-        }
+           this->stack_->push(new esl::ContentObject(O_VALUE, params->get_params(i + 1)));
+
         fun_runtime->pc_set(fun.second + 1);
 
         this->runtime_ = fun_runtime;
@@ -148,10 +141,6 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     ** Register the current function in the new context
     ** Use for recursive function)
     */
-    //this->runtime_->set_function(std::string(fun_name), fun_addr);
-
-    /* Jump top the functions code */
-
 }
 
 void esl::Vm::store(esl::Bytecode *instr)
@@ -159,10 +148,16 @@ void esl::Vm::store(esl::Bytecode *instr)
     std::string *var_name = NULL;
     esl::Value *value = NULL;
 
-    var_name = (std::string *)instr->get_param()->content_get();
+    var_name = static_cast<std::string*>(instr->get_param()->content_get());
 
     /* TODO: check type of TOS */
-    value = (esl::Value *)this->stack_->top()->content_get();
+    if (this->stack_->top()->type_get() != O_VALUE || var_name == nullptr)
+        std::cout << "BUG ISSUE esl::Vm::store" << this->runtime_->pc_get() << std::endl;
+
+    value = static_cast<esl::Value*>(this->stack_->top()->content_get());
+
+    if (value == nullptr)
+        std::cout << "BUG ISSUE2 esl::Vm::store" << std::endl;
 
     this->runtime_->variable_set(*var_name, value);
 }
@@ -175,6 +170,7 @@ void esl::Vm::load(esl::Bytecode *instr)
     var_name = (std::string *)instr->get_param()->content_get();
 
     /* TODO: check existance */
+
     value = this->runtime_->variable_get(*var_name);
 
     this->stack_->push(new esl::ContentObject(O_VALUE, value));
@@ -189,7 +185,7 @@ void esl::Vm::jump(esl::Bytecode *instr)
 
 void esl::Vm::register_function(esl::Bytecode *instr)
 {
-    std::string     *var_name = NULL;
+    std::string     *var_name = nullptr;
 
     var_name = (std::string *)instr->get_param()->content_get();
 
@@ -201,18 +197,24 @@ void esl::Vm::register_function(esl::Bytecode *instr)
 
 void esl::Vm::print()
 {
-    esl::Value* value = NULL;
+    esl::Value* value = nullptr;
 
     /* Print all the stack till the end or a context */
-    while (!(this->stack_->empty()) && this->stack_->top()->type_get() == O_VALUE)
+    while (!(this->stack_->empty()) &&
+           this->stack_->top()->type_get() == O_VALUE)
     {
-        value = (esl::Value*)this->stack_->top()->content_get();
-        value->print();
-        this->pop();
+        if (this->stack_->top()->type_get() == O_NIL)
+            std::cout << "nill" << std::endl;
+        else
+        {
+            value = (esl::Value*)this->stack_->top()->content_get();
+            value->print();
+        }
+        this->stack_->pop();
     }
 
     std::cout << std::endl;
 
     /* Push a return value */
-    this->stack_->push(new esl::ContentObject(O_VALUE, new int(0)));
+    this->stack_->push(new esl::ContentObject(O_NIL, nullptr));
 }

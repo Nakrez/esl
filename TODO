@@ -5,3 +5,5 @@ Check leaks
 Add jump after MAKE_FUNCTION
 Built exit
 Replace NULL
+Add Exceptions and error reports + msg on unexplained exception
+
