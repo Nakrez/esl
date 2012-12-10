@@ -24,11 +24,14 @@ namespace esl
             void pop ();
             void store (Bytecode* instr);
             void load (Bytecode* instr);
+            void load_cst (Bytecode* instr);
             void jump (Bytecode* instr);
             void register_function (Bytecode* instr);
             void call_function (Bytecode* instr);
             void function_return (Bytecode* );
             void print ();
+            void decr_obj (void*);
+            void incr_obj (void*);
 
         private:
             std::vector<Bytecode*>* code_;

@@ -1,6 +1,8 @@
 #ifndef OBJECT_HH
 # define OBJECT_HH
 
+# include <iostream>
+
 namespace esl
 {
     class Object

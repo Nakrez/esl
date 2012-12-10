@@ -9,6 +9,12 @@ esl::Value::Value(obj_type type, void* content)
 {
 }
 
+esl::Value::Value(const esl::Value& v)
+    : esl::ContentObject (v.type_, v.content_)
+{
+
+}
+
 esl::Value::~Value()
 {
     if (this->type_ == O_INT)

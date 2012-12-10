@@ -13,6 +13,7 @@ namespace esl
         public:
             Value();
             Value(obj_type, void*);
+            Value(const Value&);
             ~Value();
 
             void print();

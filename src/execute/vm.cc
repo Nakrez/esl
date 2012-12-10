@@ -11,6 +11,8 @@ esl::Vm::~Vm()
 {
     while (!(this->stack_->empty()))
     {
+        std::cout << "Not empty Statck" << std::endl;
+        decr_obj(this->stack_->top()->content_get());
         delete this->stack_->top();
         this->stack_->pop();
     }
@@ -29,14 +31,13 @@ void esl::Vm::run()
         switch (instr->get_type())
         {
             case POP:
-                this->stack_->pop();
+                this->pop();
                 break;
             case JUMP:
                 this->jump(instr);
                 continue;
             case LOAD_CST:
-                this->stack_->push(new esl::ContentObject(O_VALUE,
-                                                          instr->get_param()));
+                this->load_cst(instr);
                 break;
             case LOAD:
                 this->load(instr);
@@ -64,13 +65,62 @@ void esl::Vm::run()
     }
 }
 
+void esl::Vm::load_cst (Bytecode* instr)
+{
+    esl::Value* v = new esl::Value(*((esl::Value*)(instr->get_param())));
+    esl::ContentObject* obj = new esl::ContentObject(O_VALUE, v);
+
+    incr_obj(v);
+    incr_obj(obj);
+
+    this->stack_->push(obj);
+}
+
+void esl::Vm::decr_obj (void* object)
+{
+    if (object == nullptr)
+        return;
+
+    esl::Object* obj = nullptr;
+    obj = static_cast<esl::Object*>(object);
+
+    if (obj == nullptr)
+        return;
+
+    obj->decr_ref();
+}
+
+void esl::Vm::incr_obj (void* object)
+{
+    if (object == nullptr)
+        return;
+
+    esl::Object* obj = nullptr;
+    obj = static_cast<esl::Object*>(object);
+
+    if (obj == nullptr)
+        return;
+
+    obj->incr_ref();
+}
+
 void esl::Vm::pop()
 {
+    esl::ContentObject *content = nullptr;
+
     if (this->stack_->empty())
         throw esl::EmptyStackException();
 
-    /* Delete TOS */
-    delete this->stack_->top();
+    content = static_cast<esl::ContentObject*>(this->stack_->top());
+
+    if (content != nullptr)
+    {
+        decr_obj(content->content_get());
+        decr_obj(content);
+    }
+    else
+        /* Delete TOS */
+        delete this->stack_->top();
 
     /* Pop it */
     this->stack_->pop();
@@ -78,12 +128,14 @@ void esl::Vm::pop()
 
 void esl::Vm::function_return(esl::Bytecode *instr)
 {
-    esl::ContentObject *ret = NULL;
+    esl::ContentObject *ret = nullptr;
 
     if (this->stack_->top() && this->stack_->top()->type_get() == O_VALUE)
     {
         ret = this->stack_->top();
-        this->stack_->pop();
+        incr_obj(ret);
+        incr_obj(ret->content_get());
+        this->pop();
     }
 
     /* Delete the function context */
@@ -155,6 +207,7 @@ void esl::Vm::store(esl::Bytecode *instr)
         std::cout << "BUG ISSUE esl::Vm::store" << this->runtime_->pc_get() << std::endl;
 
     value = static_cast<esl::Value*>(this->stack_->top()->content_get());
+    incr_obj(value);
 
     if (value == nullptr)
         std::cout << "BUG ISSUE2 esl::Vm::store" << std::endl;
@@ -172,6 +225,7 @@ void esl::Vm::load(esl::Bytecode *instr)
     /* TODO: check existance */
 
     value = this->runtime_->variable_get(*var_name);
+    incr_obj(value);
 
     this->stack_->push(new esl::ContentObject(O_VALUE, value));
 }
@@ -204,13 +258,13 @@ void esl::Vm::print()
            this->stack_->top()->type_get() == O_VALUE)
     {
         if (this->stack_->top()->type_get() == O_NIL)
-            std::cout << "nill" << std::endl;
+            std::cout << "nil" << std::endl;
         else
         {
             value = (esl::Value*)this->stack_->top()->content_get();
             value->print();
         }
-        this->stack_->pop();
+        this->pop();
     }
 
     std::cout << std::endl;
