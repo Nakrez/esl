@@ -1,8 +1,7 @@
-function t(p)
+function t(p, r)
     p=12
     return (4)
 end
 
 val=0
-t(val)
-print(val)
+t(val, 4)

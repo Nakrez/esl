@@ -125,9 +125,9 @@ std::vector<esl::Bytecode *> *esl::Compiler::compile_return(esl::Ast *ast)
 std::vector<esl::Bytecode*>* esl::Compiler::compile_list(esl::Ast* ast)
 {
     std::vector<esl::Bytecode*>* code = new std::vector<esl::Bytecode*>;
-    std::vector<esl::Bytecode*>* ret_code = NULL;
-    esl::Ast* temp_ast = NULL;
-    std::string* value = NULL;
+    std::vector<esl::Bytecode*>* ret_code = nullptr;
+    esl::Ast* temp_ast = nullptr;
+    std::string* value = nullptr;
 
     temp_ast = ast->get_fson();
 
@@ -139,7 +139,7 @@ std::vector<esl::Bytecode*>* esl::Compiler::compile_list(esl::Ast* ast)
             code->push_back(new esl::Bytecode(STORE, new esl::Value(O_STRING,
                                                                     value)));
             code->push_back(new esl::Bytecode(POP, new esl::Value(O_NIL,
-                                                                  NULL)));
+                                                                  nullptr)));
         }
         else
         {
@@ -239,13 +239,13 @@ std::vector<esl::Bytecode *> *esl::Compiler::compile_call(esl::Ast *ast)
     /* Load args */
     if (ast->get_fson())
         temp_ast = ast->get_fson()->get_fson();
-    while (temp_ast)
-    {
+    //while (temp_ast)
+    //{
         ret_code = compile(ast->get_fson());
         code->insert(code->end(), ret_code->begin(), ret_code->end());
         delete ret_code;
-        temp_ast = temp_ast->get_rbro();
-    }
+        //temp_ast = temp_ast->get_rbro();
+    //}
 
     /* Build call instruction (check special code for built in) */
     code->push_back(make_call_instruction(ast));
@@ -295,7 +295,6 @@ std::vector<esl::Bytecode *> *esl::Compiler::compile_if(esl::Ast *ast)
     return code;
 }
 
-
 std::vector<esl::Bytecode *> *esl::Compiler::compile_assignement(esl::Ast *ast)
 {
     std::vector<esl::Bytecode *> *code = NULL;
@@ -311,7 +310,7 @@ std::vector<esl::Bytecode *> *esl::Compiler::compile_assignement(esl::Ast *ast)
 }
 
 std::vector<esl::Bytecode *> *esl::Compiler::compile_arith(esl::Ast *ast,
-                                                         enum instr i)
+                                                           enum instr i)
 {
     std::vector<esl::Bytecode *> *code = NULL;
     std::vector<esl::Bytecode *> *ret_code = NULL;

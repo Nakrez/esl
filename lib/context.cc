@@ -22,6 +22,21 @@ esl::Context::Context(const Context& context)
 esl::Context::~Context()
 {
     delete this->functions_;
+
+    for (auto it : *(this->variables_))
+    {
+        if (it.second == nullptr)
+            continue;
+
+        esl::Object* obj = nullptr;
+        obj = static_cast<esl::Object*>(it.second);
+
+        if (obj == nullptr)
+            return;
+
+        obj->decr_ref();
+    }
+
     delete this->variables_;
 }
 

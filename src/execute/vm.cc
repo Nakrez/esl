@@ -136,7 +136,7 @@ void esl::Vm::function_return(esl::Bytecode *instr)
         this->stack_->pop();
     }
 
-    decr_obj(this->runtime_);
+    delete this->runtime_;
 
     /* Restore the previous context */
     /* TODO: Check top of the stack is a context */
@@ -194,6 +194,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
         this->runtime_ = fun_runtime;
     }
 
+    delete params;
     /*
     ** Register the current function in the new context
     ** Use for recursive function)
@@ -202,20 +203,25 @@ void esl::Vm::call_function(esl::Bytecode *instr)
 
 void esl::Vm::store(esl::Bytecode *instr)
 {
-    std::string *var_name = NULL;
-    esl::Value *value = NULL;
+    std::string *var_name = nullptr;
+    esl::Value *value = nullptr;
 
     var_name = static_cast<std::string*>(instr->get_param()->content_get());
 
     /* TODO: check type of TOS */
     if (this->stack_->top()->type_get() != O_VALUE || var_name == nullptr)
-        std::cout << "BUG ISSUE esl::Vm::store" << this->runtime_->pc_get() << std::endl;
+    {
+
+    }
 
     value = static_cast<esl::Value*>(this->stack_->top()->content_get());
+    //decr_obj(this->stack_->top());
     incr_obj(value);
 
     if (value == nullptr)
+    {
         std::cout << "BUG ISSUE2 esl::Vm::store" << std::endl;
+    }
 
     this->runtime_->variable_set(*var_name, value);
 }

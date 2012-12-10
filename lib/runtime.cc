@@ -14,7 +14,6 @@ esl::Runtime::Runtime(const Runtime& runtime)
 
 esl::Runtime::~Runtime ()
 {
-    std::cout << "KILL RUNTIME" << std::endl;
 }
 
 size_t esl::Runtime::pc_get () const
