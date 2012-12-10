@@ -1,36 +1,36 @@
-#include <compile/esl_compiler.hh>
+#include "compiler.hh"
 
-esl_compiler::esl_compiler(esl_ast *ast)
+esl::Compiler::Compiler(esl::Ast *ast)
 {
-    this->gen_ast = ast;
+    this->gen_ast_ = ast;
 }
 
-esl_compiler::~esl_compiler()
+esl::Compiler::~Compiler()
 {
-    for (std::vector<esl_bytecode *>::iterator i = byte_code->begin(); i !=
-         byte_code->end(); ++ i)
+    for (std::vector<esl::Bytecode *>::iterator i = this->byte_code_->begin();
+         i != byte_code_->end(); ++ i)
         delete *i;
 
-    delete byte_code;
+    delete this->byte_code_;
 }
 
 /* Getter */
-std::vector<esl_bytecode *> *esl_compiler::get_bytecode()
+std::vector<esl::Bytecode *> *esl::Compiler::get_bytecode()
 {
-    return byte_code;
+    return this->byte_code_;
 }
 
-void esl_compiler::compile()
+void esl::Compiler::compile()
 {
-    this->byte_code = compile(this->gen_ast);
-    this->byte_code->push_back(new esl_bytecode(NOP, new esl_value(V_EMPTY,
-                                                                   NULL)));
+    this->byte_code_ = compile(this->gen_ast_);
+    this->byte_code_->push_back(new esl::Bytecode(NOP, new esl::Value(O_NIL,
+                                                                      NULL)));
 }
 
-void esl_compiler::export_bytecode(const std::string &filename)
+void esl::Compiler::export_bytecode(const std::string &filename)
 {
-    std::vector<esl_bytecode *>::iterator begin = this->byte_code->begin();
-    std::vector<esl_bytecode *>::iterator end = this->byte_code->end();
+    std::vector<esl::Bytecode *>::iterator begin = this->byte_code_->begin();
+    std::vector<esl::Bytecode *>::iterator end = this->byte_code_->end();
     std::ofstream file;
     int line = 0;
 
@@ -40,13 +40,15 @@ void esl_compiler::export_bytecode(const std::string &filename)
     {
         file << line << " " << instr_string[(*begin)->get_type()] << " ";
 
-        if ((*begin)->get_param()->get_type() != V_EMPTY)
+        if ((*begin)->get_param()->type_get() != O_NIL)
         {
             /* INT */
-            if ((*begin)->get_param()->get_type() == V_INT)
-                file << *((int *)((*begin)->get_param()->get_value())) << std::endl;
+            if ((*begin)->get_param()->type_get() == O_INT)
+                file << *((int *)((*begin)->get_param()->content_get()))
+                     << std::endl;
             else /* STRING */
-                file << *((std::string *)((*begin)->get_param()->get_value())) << std::endl;
+                file << *((std::string *)((*begin)->get_param()->content_get()))
+                     << std::endl;
         }
         else
             file << std::endl;
@@ -57,7 +59,7 @@ void esl_compiler::export_bytecode(const std::string &filename)
 
 /* Private Members */
 
-std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
+std::vector<esl::Bytecode *> *esl::Compiler::compile(esl::Ast *ast)
 {
     if (ast == NULL)
         return NULL;
@@ -85,10 +87,10 @@ std::vector<esl_bytecode *> *esl_compiler::compile(esl_ast *ast)
     return NULL;
 }
 
-std::vector<esl_bytecode *> *esl_compiler::compile_statements(esl_ast *ast)
+std::vector<esl::Bytecode *> *esl::Compiler::compile_statements(esl::Ast *ast)
 {
-    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
-    std::vector<esl_bytecode *> *ret_code = NULL;
+    std::vector<esl::Bytecode *> *code = new std::vector<esl::Bytecode *>;
+    std::vector<esl::Bytecode *> *ret_code = NULL;
 
     while (ast)
     {
@@ -98,8 +100,8 @@ std::vector<esl_bytecode *> *esl_compiler::compile_statements(esl_ast *ast)
         if (ast->get_token() == EXPR ||
             ast->get_token() == ASSIGNEMENT ||
             ast->get_token() == FUNCTION_CALL)
-            code->push_back(new esl_bytecode(POP, new esl_value(V_EMPTY,
-                                                                NULL)));
+            code->push_back(new esl::Bytecode(POP, new esl::Value(O_NIL,
+                                                                  NULL)));
 
         ret_code->clear();
         delete ret_code;
@@ -110,21 +112,22 @@ std::vector<esl_bytecode *> *esl_compiler::compile_statements(esl_ast *ast)
     return code;
 }
 
-std::vector<esl_bytecode *> *esl_compiler::compile_return(esl_ast *ast)
+std::vector<esl::Bytecode *> *esl::Compiler::compile_return(esl::Ast *ast)
 {
-    std::vector<esl_bytecode *> *code = NULL;
+    std::vector<esl::Bytecode *> *code = NULL;
 
     code = compile(ast->get_fson());
-    code->push_back(new esl_bytecode(RETURN, new esl_value(V_EMPTY, NULL)));
+    code->push_back(new esl::Bytecode(RETURN, new esl::Value(O_NIL, NULL)));
 
     return code;
 }
-std::vector<esl_bytecode *> *esl_compiler::compile_list(esl_ast *ast)
+
+std::vector<esl::Bytecode*>* esl::Compiler::compile_list(esl::Ast* ast)
 {
-    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
-    std::vector<esl_bytecode *> *ret_code = NULL;
-    esl_ast                     *temp_ast = NULL;
-    std::string                 *value = NULL;
+    std::vector<esl::Bytecode*>* code = new std::vector<esl::Bytecode*>;
+    std::vector<esl::Bytecode*>* ret_code = NULL;
+    esl::Ast* temp_ast = NULL;
+    std::string* value = NULL;
 
     temp_ast = ast->get_fson();
 
@@ -133,10 +136,10 @@ std::vector<esl_bytecode *> *esl_compiler::compile_list(esl_ast *ast)
         if (temp_ast->get_token() == ID)
         {
             value = new std::string(*(temp_ast->get_content()));
-            code->push_back(new esl_bytecode(STORE, new esl_value(V_STRING,
-                                                                  value)));
-            code->push_back(new esl_bytecode(POP, new esl_value(V_EMPTY,
-                                                                NULL)));
+            code->push_back(new esl::Bytecode(STORE, new esl::Value(O_STRING,
+                                                                    value)));
+            code->push_back(new esl::Bytecode(POP, new esl::Value(O_NIL,
+                                                                  NULL)));
         }
         else
         {
@@ -150,11 +153,11 @@ std::vector<esl_bytecode *> *esl_compiler::compile_list(esl_ast *ast)
     return code;
 }
 
-std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
+std::vector<esl::Bytecode *> *esl::Compiler::compile_function(esl::Ast *ast)
 {
-    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
-    std::vector<esl_bytecode *> *ret_code = NULL;
-    esl_bytecode                *jump = NULL;
+    std::vector<esl::Bytecode *> *code = new std::vector<esl::Bytecode *>;
+    std::vector<esl::Bytecode *> *ret_code = NULL;
+    esl::Bytecode                *jump = NULL;
     int                         *jump_addr = new int;
     int                         avoid = 1;
     std::string                 *value = NULL;
@@ -172,14 +175,14 @@ std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
     value = new std::string(*(ast->get_content()));
 
     /* Add instruction MAKE_FUNCTION */
-    code->push_back(new esl_bytecode(MAKE_FUNCTION, new esl_value(V_STRING,
-                                                                  value)));
+    code->push_back(new esl::Bytecode(MAKE_FUNCTION, new esl::Value(O_STRING,
+                                                                    value)));
 
     /*
     ** Add instruction JUMP after MAKE_FUNCTION
     ** The adress will be calculate after code compilation
     */
-    jump = new esl_bytecode(JUMP, new esl_value(V_INT, NULL));
+    jump = new esl::Bytecode(JUMP, new esl::Value(O_INT, NULL));
 
     code->push_back(jump);
 
@@ -200,37 +203,38 @@ std::vector<esl_bytecode *> *esl_compiler::compile_function(esl_ast *ast)
 
     *jump_addr += ret_code->size() + 1 + avoid;
 
-    jump->get_param()->set_value(jump_addr);
+    jump->get_param()->content_set(jump_addr);
 
     /* Add the function code to the generate code */
 
     code->insert(code->end(), ret_code->begin(), ret_code->end());
 
     /* Add instruction RETURN */
-    code->push_back(new esl_bytecode(RETURN, new esl_value(V_INT, new int(0))));
+    code->push_back(new esl::Bytecode(RETURN, new esl::Value(O_INT,
+                                                             new int(0))));
 
     delete ret_code;
 
     return code;
 }
 
-esl_bytecode *esl_compiler::make_call_instruction(esl_ast *ast)
+esl::Bytecode *esl::Compiler::make_call_instruction(esl::Ast *ast)
 {
     std::string *value = NULL;
 
     if (*(ast->get_content()) == std::string("print"))
-        return new esl_bytecode(PRINT, new esl_value(V_EMPTY, NULL));
+        return new esl::Bytecode(PRINT, new esl::Value(O_NIL, NULL));
 
     value = new std::string(*(ast->get_content()));
 
-    return new esl_bytecode(CALL_FUNCTION, new esl_value(V_STRING, value));
+    return new esl::Bytecode(CALL_FUNCTION, new esl::Value(O_STRING, value));
 }
 
-std::vector<esl_bytecode *> *esl_compiler::compile_call(esl_ast *ast)
+std::vector<esl::Bytecode *> *esl::Compiler::compile_call(esl::Ast *ast)
 {
-    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
-    std::vector<esl_bytecode *> *ret_code = NULL;
-    esl_ast                     *temp_ast = NULL;
+    std::vector<esl::Bytecode *> *code = new std::vector<esl::Bytecode *>;
+    std::vector<esl::Bytecode *> *ret_code = NULL;
+    esl::Ast                     *temp_ast = NULL;
 
     /* Load args */
     if (ast->get_fson())
@@ -249,12 +253,13 @@ std::vector<esl_bytecode *> *esl_compiler::compile_call(esl_ast *ast)
     return code;
 }
 
-std::vector<esl_bytecode *> *esl_compiler::compile_if(esl_ast *ast)
+std::vector<esl::Bytecode *> *esl::Compiler::compile_if(esl::Ast *ast)
 {
-    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
-    std::vector<esl_bytecode *> *ret_code = NULL;
-    esl_bytecode                *jump = new esl_bytecode(JUMP_IF_FALSE, new esl_value(V_INT, NULL));
-    int                         *jump_next = NULL;
+    std::vector<esl::Bytecode*>* code = new std::vector<esl::Bytecode *>;
+    std::vector<esl::Bytecode*> *ret_code = NULL;
+    esl::Bytecode* jump = new esl::Bytecode(JUMP_IF_FALSE,
+                                            new esl::Value(O_INT, NULL));
+    int* jump_next = NULL;
 
     ret_code = compile(ast->get_fson());
     code->insert(code->end(), ret_code->begin(), ret_code->end());
@@ -267,13 +272,13 @@ std::vector<esl_bytecode *> *esl_compiler::compile_if(esl_ast *ast)
 
     jump_next = new int;
     *jump_next = ret_code->size() + 2;
-    jump->get_param()->set_value(jump_next);
+    jump->get_param()->content_set(jump_next);
 
     delete ret_code;
 
     if (ast->get_fson()->get_rbro()->get_rbro())
     {
-        jump = new esl_bytecode(JUMP, new esl_value(V_INT, NULL));
+        jump = new esl::Bytecode(JUMP, new esl::Value(O_INT, NULL));
         code->push_back(jump);
 
         ret_code = compile(ast->get_fson()->get_rbro()->get_rbro());
@@ -281,7 +286,7 @@ std::vector<esl_bytecode *> *esl_compiler::compile_if(esl_ast *ast)
 
         jump_next = new int;
         *jump_next = ret_code->size() + 1;
-        jump->get_param()->set_value(jump_next);
+        jump->get_param()->content_set(jump_next);
 
 
         delete ret_code;
@@ -291,25 +296,25 @@ std::vector<esl_bytecode *> *esl_compiler::compile_if(esl_ast *ast)
 }
 
 
-std::vector<esl_bytecode *> *esl_compiler::compile_assignement(esl_ast *ast)
+std::vector<esl::Bytecode *> *esl::Compiler::compile_assignement(esl::Ast *ast)
 {
-    std::vector<esl_bytecode *> *code = NULL;
+    std::vector<esl::Bytecode *> *code = NULL;
     std::string                 *value = NULL;
 
     code = compile(ast->get_fson()->get_rbro());
 
     value = new std::string(*(ast->get_fson()->get_content()));
 
-    code->push_back(new esl_bytecode(STORE, new esl_value(V_STRING, value)));
+    code->push_back(new esl::Bytecode(STORE, new esl::Value(O_STRING, value)));
 
     return code;
 }
 
-std::vector<esl_bytecode *> *esl_compiler::compile_arith(esl_ast *ast,
+std::vector<esl::Bytecode *> *esl::Compiler::compile_arith(esl::Ast *ast,
                                                          enum instr i)
 {
-    std::vector<esl_bytecode *> *code = NULL;
-    std::vector<esl_bytecode *> *ret_code = NULL;
+    std::vector<esl::Bytecode *> *code = NULL;
+    std::vector<esl::Bytecode *> *ret_code = NULL;
 
     code = compile(ast->get_fson());
 
@@ -317,33 +322,33 @@ std::vector<esl_bytecode *> *esl_compiler::compile_arith(esl_ast *ast,
 
     code->insert(code->end(), ret_code->begin(), ret_code->end());
 
-    code->push_back(new esl_bytecode(i, NULL));
+    code->push_back(new esl::Bytecode(i, NULL));
 
     delete ret_code;
 
     return code;
 }
 
-std::vector<esl_bytecode *> *esl_compiler::compile_number(esl_ast *ast)
+std::vector<esl::Bytecode *> *esl::Compiler::compile_number(esl::Ast *ast)
 {
-    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
+    std::vector<esl::Bytecode *> *code = new std::vector<esl::Bytecode *>;
 
     int *value = new int;
 
-    *value = utils::atoi(*(ast->get_content()));
+    *value = esl::Utils::atoi(*(ast->get_content()));
 
-    code->push_back(new esl_bytecode(LOAD_CST, new esl_value(V_INT, value)));
+    code->push_back(new esl::Bytecode(LOAD_CST, new esl::Value(O_INT, value)));
 
     return code;
 }
 
-std::vector<esl_bytecode *> *esl_compiler::compile_identifier(esl_ast *ast)
+std::vector<esl::Bytecode *> *esl::Compiler::compile_identifier(esl::Ast *ast)
 {
-    std::vector<esl_bytecode *> *code = new std::vector<esl_bytecode *>;
+    std::vector<esl::Bytecode *> *code = new std::vector<esl::Bytecode *>;
 
-    std::string *value = new std::string(ast->get_content()->c_str());
+    std::string* value = new std::string(ast->get_content()->c_str());
 
-    code->push_back(new esl_bytecode(LOAD, new esl_value(V_STRING, value)));
+    code->push_back(new esl::Bytecode(LOAD, new esl::Value(O_STRING, value)));
 
     return code;
 

@@ -4,7 +4,7 @@
 # include <string>
 # include <iostream>
 
-# include <utils/esl_value.hh>
+# include "../../lib/value.hh"
 
 enum instr
 {
@@ -120,19 +120,21 @@ const static std::string instr_string[] =
     "PRINT"
 };
 
-class esl_bytecode
+namespace esl
 {
-    public:
-        esl_bytecode(enum instr type, esl_value *param);
-        ~esl_bytecode();
+    class Bytecode
+    {
+        public:
+            Bytecode(instr type, Value* param);
+            ~Bytecode();
 
-        enum instr  get_type();
-        esl_value   *get_param();
-        void        set_param(esl_value *);
+            instr get_type();
+            Value *get_param();
+            void set_param(Value *);
 
-    private:
-        enum instr  type;
-        esl_value   *param;
-};
-
+        private:
+            enum instr  type_;
+            Value   *param_;
+    };
+}
 #endif /* ESL_BYTECODE_H_ */

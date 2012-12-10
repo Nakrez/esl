@@ -2,10 +2,11 @@
 parser.cpp
 lexer.cpp
 parser.output
-*.dot
+tree.dot
 *.eslc
 *core*
 esl
 position.hh
 location.hh
 stack.hh
+*.so

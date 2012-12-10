@@ -1,6 +1,6 @@
-#include <utils/utils.hh>
+#include "utils.hh"
 
-int utils::atoi(const std::string &s)
+int esl::Utils::atoi(const std::string &s)
 {
     int numb;
     std::istringstream(s) >> numb;

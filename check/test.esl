@@ -1,7 +1,8 @@
-function lol(p)
-    print(0)
-    return 3
+function t(p)
+    p=12
+    return (4)
 end
 
-
-print(lol(1))
+val=0
+t(val)
+print(val)

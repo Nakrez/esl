@@ -7,34 +7,37 @@ FLEXFLAGS =
 CC = clang++
 CFLAGS = -Wall -Wextra -g -Isrc -std=c++11
 
-OBJ =   src/utils/esl_ast.o src/utils/esl_bytecode.o src/utils/utils.o\
-	src/utils/esl_value.o \
-	src/parser/parser.o src/parser/lexer.o src/parser/eslxx_driver.o \
-	src/compile/esl_compiler.o \
-	src/execute/esl_vm.o src/execute/esl_context.o \
-	src/execute/esl_stack_obj.o \
+OBJ =   src/utils/ast.o src/utils/bytecode.o src/utils/utils.o \
+	src/parser/parser.o src/parser/lexer.o src/parser/driver.o \
+	src/compile/compiler.o \
+	src/execute/vm.o \
 	src/main.o
 
 all: esl
 
-esl: $(OBJ)
-	$(CC) $(OBJ) -o $@
+esl: libesl $(OBJ)
+	$(CC) ./libesl.so $(OBJ) -o $@
 
-%.o: %.cpp
+libesl:
+	make -C lib
+
+%.o: %.cc
 	$(CC) $(CFLAGS) -c $< -o $@
 
-%.cpp: %.y
+
+%.cc: %.y
 	$(BISON) $(BISONFLAGS) -o $@ $<
 
-%.cpp: %.l
+%.cc: %.l
 	$(FLEX) $(FLEXFLAGS) -o $@ $<
 
 clean:
 	rm -f $(OBJ) src/parser/parser.output src/parser/location.hh \
 	src/parser/position.hh \
 	src/parser/stack.hh src/parser/parser.hpp src/parser/parser.cpp \
-	src/parser/lexer.cpp tree.dot tree.png esl *.eslc *core*
+	src/parser/lexer.cpp tree.dot tree.png esl *.eslc *core* tags libesl.so
 	make -C doc/vm clean
+	make -C lib clean
 
 ## -------------- ##
 ## Documentation. ##

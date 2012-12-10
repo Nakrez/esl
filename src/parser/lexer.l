@@ -1,6 +1,6 @@
 %{
-#include <parser/parser.hpp>
-#include <parser/eslxx_driver.hh>
+#include "parser.hh"
+#include "driver.hh"
 
 # undef yywrap
 # define yywrap() 1
@@ -57,17 +57,17 @@
 
 %%
 
-void eslxx_driver::scan_begin()
+void Driver::scan_begin()
 {
-    if (file.empty() || file == "-")
+    if (this->file_.empty() || this->file_ == "-")
         yyin = stdin;
-    else if (!(yyin = fopen(file.c_str(), "r")))
+    else if (!(yyin = fopen(this->file_.c_str(), "r")))
     {
-        std::cerr << "cannot open " << file << std::endl;
+        std::cerr << "cannot open " << this->file_ << std::endl;
         exit(EXIT_FAILURE);
     }
 }
-void eslxx_driver::scan_end()
+void Driver::scan_end()
 {
     fclose (yyin);
     yylex_destroy();
