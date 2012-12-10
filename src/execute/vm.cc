@@ -133,19 +133,18 @@ void esl::Vm::function_return(esl::Bytecode *instr)
     if (this->stack_->top() && this->stack_->top()->type_get() == O_VALUE)
     {
         ret = this->stack_->top();
-        incr_obj(ret);
-        incr_obj(ret->content_get());
-        this->pop();
+        this->stack_->pop();
     }
 
-    /* Delete the function context */
-    //delete this->runtime_;
+    decr_obj(this->runtime_);
 
     /* Restore the previous context */
     /* TODO: Check top of the stack is a context */
     this->runtime_ = (esl::Runtime*)(this->stack_->top()->content_get());
 
-    this->stack_->pop();
+    incr_obj(this->stack_->top()->content_get());
+
+    this->pop();
 
     if (ret)
         this->stack_->push(ret);
@@ -160,6 +159,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     std::pair<esl::Callback, int> fun;
     esl::Params* params = new esl::Params();
     esl::Runtime* fun_runtime = new esl::Runtime(*(this->runtime_));
+    esl::ContentObject* container = nullptr;
 
     /* Storing all args before context switch */
     while (!(this->stack_->empty()) &&
@@ -170,7 +170,12 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     }
 
     /* Push current context in the stack */
-    this->stack_->push(new esl::ContentObject(O_RUNTIME, this->runtime_));
+    container = new esl::ContentObject(O_RUNTIME, this->runtime_);
+
+    incr_obj(container);
+    incr_obj(this->runtime_);
+
+    this->stack_->push(container);
 
     /* TODO: Check fun_name is a string */
     fun_name = *((std::string *)(instr->get_param()->content_get()));
@@ -217,17 +222,21 @@ void esl::Vm::store(esl::Bytecode *instr)
 
 void esl::Vm::load(esl::Bytecode *instr)
 {
-    std::string *var_name = NULL;
-    esl::Value *value = NULL;
+    std::string* var_name = nullptr;
+    esl::Value* value = nullptr;
+    esl::ContentObject* container = nullptr;
 
     var_name = (std::string *)instr->get_param()->content_get();
 
     /* TODO: check existance */
 
     value = this->runtime_->variable_get(*var_name);
+    container = new esl::ContentObject(O_VALUE, value);
+
+    incr_obj(container);
     incr_obj(value);
 
-    this->stack_->push(new esl::ContentObject(O_VALUE, value));
+    this->stack_->push(container);
 }
 
 void esl::Vm::jump(esl::Bytecode *instr)

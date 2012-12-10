@@ -21,6 +21,8 @@ esl::Context::Context(const Context& context)
 
 esl::Context::~Context()
 {
+    delete this->functions_;
+    delete this->variables_;
 }
 
 std::pair<esl::Callback, int> esl::Context::function_get (const std::string& name) const
