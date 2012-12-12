@@ -9,8 +9,25 @@
 
 I) What is ESL
 
+ESL is a script programation langage. It goal is to be simple to learn, and
+powerfull to use.
+
 II) How to use it
+
+First of all you will have to make the executable.
+To create the esl executable just run
+    make
+It will generate to you an esl executable and a dynamic library.
+You then, just have to do a ./esl filename (where filename is a path to a .esl
+file), to execute an esl file
 
 III) Bugs
 
+Please report every bugs you found:
+    - By SourceForge : https://sourceforge.net/p/eslproject/tickets
+    - By mail : b.covolato@gmail.com
+
 IV) Contribute
+
+If you want to contribute to ESL feel free to contact me to be part of this
+project.
