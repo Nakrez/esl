@@ -12,17 +12,15 @@ esl::Value::Value(obj_type type, void* content)
 esl::Value::Value(const esl::Value& v)
     : esl::ContentObject (v.type_, v.content_)
 {
-
 }
 
 esl::Value::~Value()
 {
     if (this->type_ == O_INT)
-        delete ((int *)this->content_);
+        delete ((int*)this->content_);
     else if (this->type_ == O_STRING)
-        delete ((std::string *)this->content_);
+        delete ((std::string*)this->content_);
 }
-
 
 void esl::Value::print()
 {

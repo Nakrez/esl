@@ -28,6 +28,7 @@ namespace esl
             std::vector<Bytecode*>* compile_statements(Ast*);
             std::vector<Bytecode*>* compile_assignement(Ast*);
             std::vector<Bytecode*>* compile_arith(Ast*, instr);
+            std::vector<Bytecode*>* compile_loop(Ast*, instr);
             std::vector<Bytecode*>* compile_number(Ast*);
             std::vector<Bytecode*>* compile_identifier(Ast*);
             std::vector<Bytecode*>* compile_if(Ast*);

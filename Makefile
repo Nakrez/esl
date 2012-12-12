@@ -35,7 +35,8 @@ clean:
 	rm -f $(OBJ) src/parser/parser.output src/parser/location.hh \
 	src/parser/position.hh \
 	src/parser/stack.hh src/parser/parser.hpp src/parser/parser.cpp \
-	src/parser/lexer.cpp tree.dot tree.png esl *.eslc *core* tags libesl.so
+	src/parser/lexer.cpp tree.dot tree.png esl *.eslc *core* tags \
+	libesl.so src/tags
 	make -C doc/vm clean
 	make -C lib clean
 

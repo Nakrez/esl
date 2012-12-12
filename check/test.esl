@@ -1,7 +1,12 @@
-function t(p, r)
-    p=12
-    return (r)
-end
+i = 1
+j = 4
 
-val=0
-t(val, 4)
+if i then
+    i = 0
+end
+if j then
+    i = 4
+else
+    i = 5
+end
+print (i)

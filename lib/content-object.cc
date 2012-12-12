@@ -11,12 +11,10 @@ esl::ContentObject::ContentObject (obj_type type, void* content)
     , type_ (type)
     , content_ (content)
 {
-
 }
 
 esl::ContentObject::~ContentObject ()
 {
-
 }
 
 void* esl::ContentObject::content_get () const

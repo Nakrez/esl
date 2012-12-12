@@ -27,12 +27,11 @@ esl::Context::~Context()
     {
         if (it.second == nullptr)
             continue;
-
         esl::Object* obj = nullptr;
         obj = static_cast<esl::Object*>(it.second);
 
         if (obj == nullptr)
-            return;
+            continue;
 
         obj->decr_ref();
     }
@@ -47,6 +46,12 @@ std::pair<esl::Callback, int> esl::Context::function_get (const std::string& nam
 
 esl::Value* esl::Context::variable_get (const std::string& name) const
 {
+    if (this->variables_->find(name) == this->variables_->end())
+    {
+        std::cout << "Variable " << name << " not found" << std::endl;
+        exit(1);
+    }
+
     return this->variables_->at(name);
 }
 
