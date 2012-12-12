@@ -58,7 +58,7 @@ ast: check
 	sxiv tree.png
 
 check: all
-	./esl check/test.esl
+	./check/check.sh
 
 byte: check
 	cat byte.eslc

@@ -92,6 +92,16 @@ void esl::Vm::run()
             case ARITH_MINUS:
                 this->math(math_sous);
                 break;
+            case ARITH_MUL:
+                this->math(math_mul);
+                break;
+            case ARITH_DIV:
+                this->math(math_div);
+                break;
+            case ARITH_MOD:
+                this->math(math_mod);
+                break;
+
             default:
                 break;
         }

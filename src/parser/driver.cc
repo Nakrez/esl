@@ -3,6 +3,7 @@
 Driver::Driver()
 {
     this->gen_ast_ = new esl::Ast(STATEMENTS, "");
+    errors_ = 0;
 }
 
 Driver::~Driver()
@@ -17,6 +18,12 @@ void Driver::free()
 void Driver::error(const yy::location& l, const std::string& m)
 {
     std::cerr << l << ": " << m << std::endl;
+    ++errors_;
+}
+
+int Driver::errors_get ()
+{
+    return this->errors_;
 }
 
 esl::Ast *Driver::ast()

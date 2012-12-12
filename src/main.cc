@@ -15,14 +15,17 @@ int main(int argc, char **argv)
     driver.parser(argv[1]);
 
     /* Compile the AST given by the parser into bytecode */
-    compiler = new esl::Compiler(driver.ast());
-    compiler->compile();
+    if (!driver.errors_get())
+    {
+        compiler = new esl::Compiler(driver.ast());
+        compiler->compile();
 
-    compiler->export_bytecode("byte.eslc");
+        compiler->export_bytecode("byte.eslc");
 
-    vm = new esl::Vm(compiler->get_bytecode());
+        vm = new esl::Vm(compiler->get_bytecode());
 
-    vm->run();
+        vm->run();
+    }
 
     driver.free();
 
