@@ -1,0 +1,9 @@
+i = 0
+j = 5
+if i then
+    print(5)
+elif j then
+    print(4)
+else
+    print(6)
+end

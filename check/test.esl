@@ -1,0 +1,12 @@
+i = 1
+j = 4
+
+if i then
+    i = 0
+end
+if j then
+    i = 4
+else
+    i = 5
+end
+print (i)

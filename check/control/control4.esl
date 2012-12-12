@@ -1,0 +1,10 @@
+i=1
+j=0
+
+if i then
+    print(54)
+elif j then
+    print(35)
+else
+    print(9)
+end

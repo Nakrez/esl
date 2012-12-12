@@ -1,0 +1,25 @@
+- Option parser
+- Setup esl return values
+- Std Lib
+- Error handling
+- Add test suite
+- Write Documentation
+- Implement GC
+- Introduce for loop
+- Introduce foreach loop
+- Introduce boolean operators
+- Introduce Unary operators
+- Introduce "import" and "include" keywords
+- Introduce string
+- Introduce arrays
+- Introduce Objects
+- Introduce Comments
+- Introduce Bytecode optimizer
+- Review Code:
+    * Everything static except in the VM
+    * Use variants in parser
+    * Securise Cast with c++ cast and return check
+    * Replace NULL by nullptr
+
+Bugs:
+

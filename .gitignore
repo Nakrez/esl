@@ -1,0 +1,12 @@
+*.o
+parser.cpp
+lexer.cpp
+parser.output
+tree.dot
+*.eslc
+*core*
+esl
+position.hh
+location.hh
+stack.hh
+*.so
