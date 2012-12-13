@@ -41,6 +41,8 @@
 ">="                    return token::TOK_GE;
 "<"                     return token::TOK_LT;
 "<="                    return token::TOK_LE;
+"&&"                    return token::TOK_AND;
+"||"                    return token::TOK_OR;
 
 ","                     return token::TOK_COMA;
 "+"                     return token::TOK_PLUS;

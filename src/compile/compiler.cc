@@ -79,6 +79,8 @@ std::vector<esl::Bytecode *> *esl::Compiler::compile(esl::Ast *ast)
         case LE: return compile_arith(ast, BOOL_LE);
         case GT: return compile_arith(ast, BOOL_GT);
         case GE: return compile_arith(ast, BOOL_GE);
+        case OR: return compile_arith(ast, BOOL_OR);
+        case AND: return compile_arith(ast, BOOL_AND);
         case NUMBER: return compile_number(ast);
         case EXPR: return compile(ast->get_fson());
         case ID: return compile_identifier(ast);

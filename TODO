@@ -7,7 +7,6 @@
 - Implement GC
 - Introduce for loop
 - Introduce foreach loop
-- Introduce boolean operators
 - Introduce Unary operators
 - Introduce "import" and "include" keywords
 - Introduce string

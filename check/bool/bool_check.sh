@@ -1,7 +1,7 @@
 #! /bin/sh
 
 categorie="bool"
-count=12
+count=17
 curr=1
 win=0
 

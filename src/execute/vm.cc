@@ -94,6 +94,12 @@ void esl::Vm::run()
             case BOOL_LE:
                 this->math(std::less_equal<int>());
                 break;
+            case BOOL_OR:
+                this->math(std::logical_or<int>());
+                break;
+            case BOOL_AND:
+                this->math(std::logical_and<int>());
+                break;
             default:
                 break;
         }
