@@ -19,31 +19,6 @@ esl::Vm::~Vm()
     delete this->runtime_;
 }
 
-int math_add(int a, int b)
-{
-    return a + b;
-}
-
-int math_sous (int a, int b)
-{
-    return a - b;
-}
-
-int math_mul (int a, int b)
-{
-    return a * b;
-}
-
-int math_div (int a, int b)
-{
-    return a / b;
-}
-
-int math_mod (int a, int b)
-{
-    return a % b;
-}
-
 void esl::Vm::run()
 {
     esl::Bytecode *instr = nullptr;
@@ -87,75 +62,44 @@ void esl::Vm::run()
                 this->jump(instr, 0);
                 continue;
             case ARITH_ADD:
-                this->math(math_add);
+                this->math(std::plus<int>());
                 break;
             case ARITH_MINUS:
-                this->math(math_sous);
+                this->math(std::minus<int>());
                 break;
             case ARITH_MUL:
-                this->math(math_mul);
+                this->math(std::multiplies<int>());
                 break;
             case ARITH_DIV:
-                this->math(math_div);
+                this->math(std::divides<int>());
                 break;
             case ARITH_MOD:
-                this->math(math_mod);
+                this->math(std::modulus<int>());
                 break;
-
+            case BOOL_EQ:
+                this->math(std::equal_to<int>());
+                break;
+            case BOOL_DIFF:
+                this->math(std::not_equal_to<int>());
+                break;
+            case BOOL_GT:
+                this->math(std::greater<int>());
+                break;
+            case BOOL_GE:
+                this->math(std::greater_equal<int>());
+                break;
+            case BOOL_LT:
+                this->math(std::less<int>());
+                break;
+            case BOOL_LE:
+                this->math(std::less_equal<int>());
+                break;
             default:
                 break;
         }
 
         this->runtime_->pc_incr(1);
     }
-}
-
-void esl::Vm::math(int (*op)(int, int))
-{
-    esl::ContentObject* obj1 = nullptr;
-    esl::ContentObject* obj2 = nullptr;
-    esl::ContentObject* obj_ret = nullptr;
-    esl::Value* v1 = nullptr;
-    esl::Value* v2 = nullptr;
-    esl::Value* v_ret = nullptr;
-
-    obj1 = static_cast<esl::ContentObject*>(this->stack_->top());
-
-    if (obj1 == nullptr || obj1->type_get() != O_VALUE)
-        throw MathException();
-
-    v1 = static_cast<esl::Value*>(obj1->content_get());
-
-    if (obj1 == nullptr || v1 == nullptr)
-        throw MathException();
-
-    this->stack_->pop();
-
-    obj2 = static_cast<esl::ContentObject*>(this->stack_->top());
-
-    if (obj2 == nullptr || obj2->type_get() != O_VALUE)
-        throw MathException();
-
-    v2 = static_cast<esl::Value*>(obj2->content_get());
-
-    if (v2 == nullptr)
-        throw MathException();
-
-    this->stack_->pop();
-
-    int *op1 = static_cast<int*>(v1->content_get());
-    int *op2 = static_cast<int*>(v2->content_get());
-
-    if (op1 == nullptr || op2 == nullptr)
-        throw MathException();
-
-    int *result = new int;
-    *result = op(*op2, *op1);
-
-    v_ret = new esl::Value(O_INT, result);
-    obj_ret = new esl::ContentObject(O_VALUE, v_ret);
-
-    this->stack_->push(obj_ret);
 }
 
 void esl::Vm::load_cst (Bytecode* instr)
