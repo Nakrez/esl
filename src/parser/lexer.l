@@ -35,6 +35,13 @@
                             yylval->sval = new std::string(yytext);
                             return token::TOK_ID;
                         }
+"=="                    return token::TOK_BIN_EQ;
+"!="                    return token::TOK_DIFF;
+">"                     return token::TOK_GT;
+">="                    return token::TOK_GE;
+"<"                     return token::TOK_LT;
+"<="                    return token::TOK_LE;
+
 ","                     return token::TOK_COMA;
 "+"                     return token::TOK_PLUS;
 "-"                     return token::TOK_MINUS;

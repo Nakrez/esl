@@ -35,12 +35,15 @@ namespace esl
             void decr_obj (void*);
             void incr_obj (void*);
 
-            void math(int (*op)(int, int));
+            template<class Func>
+            void math(Func fun);
         private:
             std::vector<Bytecode*>* code_;
             esl::Runtime* runtime_;
             std::stack<esl::ContentObject*>* stack_;
     };
 }
+
+# include "vm.hxx"
 
 #endif /* !VM_HH */

@@ -39,6 +39,8 @@ class Driver;
 %token END       0 "end_of_file"
 %token TOK_NEWLINE "\n" TOK_EQ "="
 %token TOK_PLUS "+" TOK_MINUS "-" TOK_MUL "*" TOK_DIV "/" TOK_MOD "%"
+%token TOK_BIN_EQ "==" TOK_DIFF "!=" TOK_GT ">" TOK_GE ">="
+%token TOK_LT "<" TOK_LE "<="
 %token TOK_PAROPEN "(" TOK_PARCLOSE ")" TOK_COMA ","
 %token TOK_IF "if" TOK_THEN "then" TOK_ELSE "else" TOK_ELIF "elif"
 %token TOK_END "end"
@@ -52,6 +54,7 @@ class Driver;
 
 %type <lval> compound_list id_list param_list
 
+%left "==" "!=" "<" ">" "<=" ">="
 %left "+" "-"
 %left "*" "/" "%"
 
@@ -200,6 +203,42 @@ expr            :
                 |expr "%" expr
                                 {
                                     $$ = new esl::Ast(MOD, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+                |expr "==" expr
+                                {
+                                    $$ = new esl::Ast(EQ, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+                |expr "!=" expr
+                                {
+                                    $$ = new esl::Ast(DIFF, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+                |expr ">" expr
+                                {
+                                    $$ = new esl::Ast(GT, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+                |expr ">=" expr
+                                {
+                                    $$ = new esl::Ast(GE, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+                |expr "<" expr
+                                {
+                                    $$ = new esl::Ast(LT, "");
+                                    $$->add($1);
+                                    $$->add($3);
+                                }
+                |expr "<=" expr
+                                {
+                                    $$ = new esl::Ast(LE, "");
                                     $$->add($1);
                                     $$->add($3);
                                 }

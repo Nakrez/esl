@@ -26,6 +26,13 @@ enum token
     DIV,
     MOD,
 
+    EQ,
+    DIFF,
+    GT,
+    LT,
+    GE,
+    LE,
+
     ID,
     NUMBER,
     STRING
@@ -54,6 +61,13 @@ const static std::string token_string[] =
     "MUL",
     "DIV",
     "MOD",
+
+    "EQ",
+    "DIFF",
+    "GT",
+    "LT",
+    "GE",
+    "LE",
 
     "ID",
     "NUMBER",

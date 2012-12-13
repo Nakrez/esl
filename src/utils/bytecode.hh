@@ -33,6 +33,12 @@ enum instr
     ARITH_DIV,
     ARITH_MOD,
 
+    BOOL_EQ,
+    BOOL_DIFF,
+    BOOL_GT,
+    BOOL_GE,
+    BOOL_LT,
+    BOOL_LE,
     /*
     **
     */
@@ -102,11 +108,19 @@ const static std::string instr_string[] =
     "NOP",
     "POP",
     "DUP_TOP",
+
     "ARITH_ADD",
     "ARITH_MINUS",
     "ARITH_MUL",
     "ARITH_DIV",
     "ARITH_MOD",
+
+    "BOOL_EQ",
+    "BOOL_DIFF",
+    "BOOL_GT",
+    "BOOL_GE",
+    "BOOL_LT",
+    "BOOL_LE",
 
     "STORE",
     "LOAD",
