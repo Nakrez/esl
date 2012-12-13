@@ -39,6 +39,9 @@ enum instr
     BOOL_GE,
     BOOL_LT,
     BOOL_LE,
+
+    BOOL_AND,
+    BOOL_OR,
     /*
     **
     */
@@ -121,6 +124,9 @@ const static std::string instr_string[] =
     "BOOL_GE",
     "BOOL_LT",
     "BOOL_LE",
+
+    "BOOL_AND",
+    "BOOL_OR",
 
     "STORE",
     "LOAD",

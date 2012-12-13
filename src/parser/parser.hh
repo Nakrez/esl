@@ -114,22 +114,24 @@ namespace yy {
      TOK_GE = 268,
      TOK_LT = 269,
      TOK_LE = 270,
-     TOK_PAROPEN = 271,
-     TOK_PARCLOSE = 272,
-     TOK_COMA = 273,
-     TOK_IF = 274,
-     TOK_THEN = 275,
-     TOK_ELSE = 276,
-     TOK_ELIF = 277,
-     TOK_END = 278,
-     TOK_FUNCTION = 279,
-     TOK_RETURN = 280,
-     TOK_FOR = 281,
-     TOK_DO = 282,
-     TOK_WHILE = 283,
-     TOK_UNTIL = 284,
-     TOK_ID = 285,
-     TOK_DIGIT = 286
+     TOK_AND = 271,
+     TOK_OR = 272,
+     TOK_PAROPEN = 273,
+     TOK_PARCLOSE = 274,
+     TOK_COMA = 275,
+     TOK_IF = 276,
+     TOK_THEN = 277,
+     TOK_ELSE = 278,
+     TOK_ELIF = 279,
+     TOK_END = 280,
+     TOK_FUNCTION = 281,
+     TOK_RETURN = 282,
+     TOK_FOR = 283,
+     TOK_DO = 284,
+     TOK_WHILE = 285,
+     TOK_UNTIL = 286,
+     TOK_ID = 287,
+     TOK_DIGIT = 288
    };
 
     };
@@ -306,7 +308,7 @@ namespace yy {
 
 } // yy
 /* Line 36 of lalr1.cc  */
-#line 310 "src/parser/parser.hh"
+#line 312 "src/parser/parser.hh"
 
 
 

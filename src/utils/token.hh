@@ -32,6 +32,8 @@ enum token
     LT,
     GE,
     LE,
+    OR,
+    AND,
 
     ID,
     NUMBER,
@@ -68,6 +70,9 @@ const static std::string token_string[] =
     "LT",
     "GE",
     "LE",
+
+    "OR",
+    "AND",
 
     "ID",
     "NUMBER",
