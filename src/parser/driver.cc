@@ -31,7 +31,7 @@ esl::Ast *Driver::ast()
     return this->gen_ast_;
 }
 
-int Driver::parser(const std::string &f)
+int Driver::parser(const std::string& f)
 {
     this->file_ = f;
 

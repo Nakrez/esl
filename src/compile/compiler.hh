@@ -35,7 +35,9 @@ namespace esl
             std::vector<Bytecode*>* compile_function(Ast*);
             std::vector<Bytecode*>* compile_call(Ast*);
             std::vector<Bytecode*>* compile_list(Ast*);
+            std::vector<Bytecode*>* compile_import(Ast*);
             std::vector<Bytecode*>* compile_return(Ast*);
+            std::vector<Bytecode*>* compile_module_call(Ast*);
 
             Bytecode* make_call_instruction(Ast*);
 

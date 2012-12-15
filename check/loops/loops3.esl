@@ -1,5 +1,7 @@
+import "io"
+
 i=10
 while i do
-    print (i)
+    io.print (i)
     i=i-1
 end

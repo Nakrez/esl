@@ -1,2 +1,4 @@
+import "io"
+
 i=10*9+2
-print(i)
+io.print(i)

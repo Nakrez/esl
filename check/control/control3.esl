@@ -1,9 +1,11 @@
+import "io"
+
 i = 0
 j = 5
 if i then
-    print(5)
+    io.print(5)
 elif j then
-    print(4)
+    io.print(4)
 else
-    print(6)
+    io.print(6)
 end

@@ -1,5 +1,7 @@
+import "io"
+
 if 0 then
-    print(0)
+    io.print(0)
 else
-    print(2)
+    io.print(2)
 end

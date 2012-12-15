@@ -16,6 +16,9 @@ enum token
     UNTIL,
     WHILE,
 
+    IMPORT,
+    MODULE_CALL,
+
     IF,
 
     EXPR,
@@ -54,6 +57,8 @@ const static std::string token_string[] =
     "UNTIL",
     "WHILE",
 
+    "IMPORT",
+    "MODULE_CALL",
     "IF",
 
     "EXPR",

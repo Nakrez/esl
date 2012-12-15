@@ -15,11 +15,14 @@ OBJ =   src/utils/ast.o src/utils/bytecode.o src/utils/utils.o \
 
 all: esl
 
-esl: libesl $(OBJ)
+esl: libesl libstd $(OBJ)
 	$(CC) ./libesl.so $(OBJ) -o $@
 
 libesl:
 	make -C lib
+
+libstd:
+	make -C std
 
 %.o: %.cc
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -36,9 +39,10 @@ clean:
 	src/parser/position.hh \
 	src/parser/stack.hh src/parser/parser.hpp src/parser/parser.cpp \
 	src/parser/lexer.cpp tree.dot tree.png esl *.eslc *core* tags \
-	libesl.so src/tags
+	libesl.so src/tags *.eslm
 	make -C doc/vm clean
 	make -C lib clean
+	make -C std clean
 
 ## -------------- ##
 ## Documentation. ##
