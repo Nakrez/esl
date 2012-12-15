@@ -1,10 +1,12 @@
+import "io"
+
 i=1
 j=0
 
 if i then
-    print(54)
+    io.print(54)
 elif j then
-    print(35)
+    io.print(35)
 else
-    print(9)
+    io.print(9)
 end

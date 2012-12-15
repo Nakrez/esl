@@ -52,9 +52,6 @@ void esl::Vm::run()
             case RETURN:
                 this->function_return();
                 break;
-            case PRINT:
-                this->print();
-                break;
             case JUMP_IF_TRUE:
                 this->jump(instr, 1);
                 continue;
@@ -100,12 +97,64 @@ void esl::Vm::run()
             case BOOL_AND:
                 this->math(std::logical_and<int>());
                 break;
+            case OPEN:
+                this->setup_module(instr);
+                break;
+            case MODULE:
+                this->module(instr);
+                break;
+            case CALL_MODULE:
+                this->call_module(instr);
+                break;
             default:
                 break;
         }
 
         this->runtime_->pc_incr(1);
     }
+}
+
+void esl::Vm::setup_module (Bytecode* instr)
+{
+    esl::Module* module = nullptr;
+    std::string module_name = *((std::string*)((esl::Value*)(instr->get_param()))->content_get());
+    std::string path = "./" + module_name + ".eslm";
+
+    module = new esl::Module(path);
+    module->load();
+
+    this->runtime_->module_set(module_name, module);
+}
+
+void esl::Vm::module (Bytecode* instr)
+{
+    std::string* mod_name = static_cast<std::string*>(((esl::Value*)(instr->get_param()))->content_get());
+
+    /* TODO FIX TYPE */
+    this->stack_->push(new esl::ContentObject(O_RUNTIME, this->runtime_->module_get(*mod_name)));
+}
+
+void esl::Vm::call_module (Bytecode* instr)
+{
+    esl::Params* params = new esl::Params();
+    esl::Module* module = nullptr;
+    std::string* fun_name = static_cast<std::string*>(instr->get_param()->content_get());
+
+    module = static_cast<esl::Module*>(this->stack_->top()->content_get());
+    this->stack_->pop();
+
+    /* Storing all args before context switch */
+    while (!(this->stack_->empty()) &&
+           this->stack_->top()->type_get() != O_RUNTIME)
+    {
+        params->params_set((esl::Value*)this->stack_->top()->content_get());
+        this->stack_->pop();
+    }
+
+    this->stack_->push(new esl::ContentObject(O_VALUE,
+                                              module->call(*fun_name, params)));
+
+    delete params;
 }
 
 void esl::Vm::load_cst (Bytecode* instr)
@@ -297,28 +346,4 @@ void esl::Vm::register_function(esl::Bytecode *instr)
     this->runtime_->function_set(*var_name,
                                  esl::std_callback,
                                  this->runtime_->pc_get());
-}
-
-void esl::Vm::print()
-{
-    esl::Value* value = nullptr;
-
-    /* Print all the stack till the end or a context */
-    while (!(this->stack_->empty()) &&
-           this->stack_->top()->type_get() == O_VALUE)
-    {
-        if (this->stack_->top()->type_get() == O_NIL)
-            std::cout << "nil" << std::endl;
-        else
-        {
-            value = (esl::Value*)this->stack_->top()->content_get();
-            value->print();
-        }
-        this->pop();
-    }
-
-    std::cout << std::endl;
-
-    /* Push a return value */
-    this->stack_->push(new esl::ContentObject(O_NIL, nullptr));
 }

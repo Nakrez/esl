@@ -91,10 +91,40 @@ std::vector<esl::Bytecode *> *esl::Compiler::compile(esl::Ast *ast)
         case RETURN_STM: return compile_return(ast);
         case WHILE: return compile_loop(ast, JUMP_IF_FALSE);
         case UNTIL: return compile_loop(ast, JUMP_IF_TRUE);
+        case IMPORT: return compile_import(ast);
+        case MODULE_CALL: return compile_module_call(ast);
         default : return NULL; /* TODO: Throw exception */
     }
 
     return NULL;
+}
+
+std::vector<esl::Bytecode*>* esl::Compiler::compile_module_call(Ast* ast)
+{
+    std::vector<esl::Bytecode *> *code = new std::vector<esl::Bytecode *>;
+    std::vector<esl::Bytecode *> *ret_code = NULL;
+    esl::Ast                     *temp_ast = NULL;
+    std::string *module_name = new std::string(*((std::string*)(ast->get_content())));
+    std::string *fun_name = new std::string(*((std::string*)(ast->get_fson()->get_content())));
+
+    /* Load args */
+    if (ast->get_fson())
+        temp_ast = ast->get_fson()->get_fson();
+
+    if (temp_ast)
+    {
+        ret_code = compile(ast->get_fson()->get_fson());
+        code->insert(code->end(), ret_code->begin(), ret_code->end());
+        delete ret_code;
+    }
+
+    /* Build call instruction (check special code for built in) */
+    code->push_back(new esl::Bytecode(MODULE,
+                                      new esl::Value(O_STRING, module_name)));
+    code->push_back(new esl::Bytecode(CALL_MODULE,
+                                      new esl::Value(O_STRING, fun_name)));
+
+    return code;
 }
 
 std::vector<esl::Bytecode*>* esl::Compiler::compile_loop(Ast* ast, instr i)
@@ -132,7 +162,8 @@ std::vector<esl::Bytecode *> *esl::Compiler::compile_statements(esl::Ast *ast)
 
         if (ast->get_token() == EXPR ||
             ast->get_token() == ASSIGNEMENT ||
-            ast->get_token() == FUNCTION_CALL)
+            ast->get_token() == FUNCTION_CALL ||
+            ast->get_token() == MODULE_CALL)
             code->push_back(new esl::Bytecode(POP, new esl::Value(O_NIL,
                                                                   NULL)));
 
@@ -254,9 +285,6 @@ std::vector<esl::Bytecode*>* esl::Compiler::compile_function(esl::Ast* ast)
 esl::Bytecode *esl::Compiler::make_call_instruction(esl::Ast *ast)
 {
     std::string *value = NULL;
-
-    if (*(ast->get_content()) == std::string("print"))
-        return new esl::Bytecode(PRINT, new esl::Value(O_NIL, NULL));
 
     value = new std::string(*(ast->get_content()));
 
@@ -383,5 +411,16 @@ std::vector<esl::Bytecode *> *esl::Compiler::compile_identifier(esl::Ast *ast)
     code->push_back(new esl::Bytecode(LOAD, new esl::Value(O_STRING, value)));
 
     return code;
+}
 
+std::vector<esl::Bytecode *> *esl::Compiler::compile_import(esl::Ast *ast)
+{
+    std::vector<esl::Bytecode *> *code = new std::vector<esl::Bytecode *>;
+
+    std::string* value = new std::string(ast->get_content()->c_str());
+
+    code->push_back(new esl::Bytecode(OPEN,
+                                      new esl::Value(O_STRING, value)));
+
+    return code;
 }

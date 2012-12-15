@@ -10,6 +10,7 @@ esl::Context::Context()
 {
     this->functions_ = new std::map<std::string, std::pair<esl::Callback, int>>();
     this->variables_ = new std::map<std::string, esl::Value*>();
+    this->modules_ = new std::map<std::string, esl::Module*>();
 }
 
 esl::Context::Context(const Context& context)
@@ -17,6 +18,7 @@ esl::Context::Context(const Context& context)
 {
     this->functions_ = new std::map<std::string, std::pair<esl::Callback, int>>(*(context.functions_));
     this->variables_ = new std::map<std::string, esl::Value*>();
+    this->modules_ = new std::map<std::string, esl::Module*>(*(context.modules_));
 }
 
 esl::Context::~Context()
@@ -55,6 +57,11 @@ esl::Value* esl::Context::variable_get (const std::string& name) const
     return this->variables_->at(name);
 }
 
+esl::Module* esl::Context::module_get (const std::string& name) const
+{
+    return this->modules_->at(name);
+}
+
 void esl::Context::variable_set (const std::string& name, esl::Value* value)
 {
     if (this->variables_->find(name) != this->variables_->end())
@@ -68,4 +75,9 @@ void esl::Context::function_set (const std::string& name,
                                  int addr)
 {
     (*(this->functions_))[name] = std::pair<esl::Callback, int>(call, addr);
+}
+
+void esl::Context::module_set (const std::string& name, Module* module)
+{
+    (*(this->modules_))[name] = module;
 }

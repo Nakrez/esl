@@ -61,6 +61,8 @@
 "="                     return token::TOK_EQ;
 "("                     return token::TOK_PAROPEN;
 ")"                     return token::TOK_PARCLOSE;
+"."                     return token::TOK_DOT;
+
 [0-9]+                  {
                             yylval->sval = new std::string(yytext);
                             return token::TOK_DIGIT;
@@ -84,6 +86,7 @@ void Driver::scan_begin()
         exit(EXIT_FAILURE);
     }
 }
+
 void Driver::scan_end()
 {
     fclose (yyin);

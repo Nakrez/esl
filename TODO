@@ -8,7 +8,7 @@
 - Introduce for loop
 - Introduce foreach loop
 - Introduce Unary operators
-- Introduce "import" and "include" keywords
+- Introduce "include" keywords
 - Introduce string
 - Introduce arrays
 - Introduce Objects
@@ -20,6 +20,8 @@
     * Use variants in parser
     * Securise Cast with c++ cast and return check
     * Replace NULL by nullptr
+    * Rewrite Context
+    * Rewrite Compiler
 
 Bugs:
 

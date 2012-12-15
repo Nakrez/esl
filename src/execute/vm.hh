@@ -9,6 +9,7 @@
 # include "../../lib/params.hh"
 # include "../../lib/empty-stack-exception.hh"
 # include "../../lib/math-exception.hh"
+# include "../../lib/module.hh"
 # include "../utils/bytecode.hh"
 
 namespace esl
@@ -34,9 +35,13 @@ namespace esl
             void print ();
             void decr_obj (void*);
             void incr_obj (void*);
+            void setup_module(Bytecode* instr);
+            void module(Bytecode* instr);
+            void call_module(Bytecode* instr);
 
             template<class Func>
             void math(Func fun);
+
         private:
             std::vector<Bytecode*>* code_;
             esl::Runtime* runtime_;

@@ -1,9 +1,11 @@
+import "io"
+
 if 1 then
     if 0 then
-        print(1)
+        io.print(1)
     else
-        print(2)
+        io.print(2)
     end
 else
-    print(3)
+    io.print(3)
 end

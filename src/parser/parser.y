@@ -37,7 +37,7 @@ class Driver;
 }
 
 %token END       0 "end_of_file"
-%token TOK_NEWLINE "\n" TOK_EQ "="
+%token TOK_NEWLINE "\n" TOK_EQ "=" TOK_DOT "."
 %token TOK_PLUS "+" TOK_MINUS "-" TOK_MUL "*" TOK_DIV "/" TOK_MOD "%"
 %token TOK_BIN_EQ "==" TOK_DIFF "!=" TOK_GT ">" TOK_GE ">="
 %token TOK_LT "<" TOK_LE "<="
@@ -50,7 +50,7 @@ class Driver;
 
 %token <sval> TOK_ID "identifier" TOK_DIGIT "digit" TOK_STRING "string"
 
-%type <ast> instr expr simple_instr functions esl_command
+%type <ast> instr expr simple_instr functions esl_command fun_call
 %type <ast> rule_while rule_until rule_if do_group else_group
 
 %type <lval> compound_list id_list param_list
@@ -71,7 +71,7 @@ instr   :
         |functions "\n" { $$ = $1; }
         |esl_command "\n" { $$ = $1; }
         |"\n" { $$ = NULL; }
-        |"import" "string" "\n"
+        |"import" "string" "\n" { $$ = new esl::Ast(IMPORT, *$2); delete $2; }
         |"include" "string" "\n"
         |error "\n" { $$ = NULL; }
         ;
@@ -132,9 +132,8 @@ id_list         :
                              }
                 ;
 
-simple_instr    :
-                expr { $$ = new esl::Ast(EXPR, ""); $$->add($1); }
-                |"identifier" "(" ")" {
+fun_call        :
+                "identifier" "(" ")" {
                                         $$ = new esl::Ast(FUNCTION_CALL,
                                                          std::string(*$1));
                                         delete $1;
@@ -147,7 +146,10 @@ simple_instr    :
                                         $$->get_fson()->set_token(LIST);
                                         delete $1;
                                       }
-
+                ;
+simple_instr    :
+                expr { $$ = new esl::Ast(EXPR, ""); $$->add($1); }
+                |fun_call { $$ = $1; }
                 |"identifier" "=" simple_instr {
                                          $$ = new esl::Ast(ASSIGNEMENT, "");
                                          $$->add(new esl::Ast(ID, *$1));
@@ -158,6 +160,13 @@ simple_instr    :
                                     $$ = new esl::Ast(RETURN_STM, "");
                                     $$->add($2);
                                 }
+                |"identifier" "." fun_call
+                                         {
+                                            $$ = new esl::Ast(MODULE_CALL, *$1);
+                                            $$->add($3);
+                                            delete $1;
+                                         }
+
                 ;
 functions       :
                 "function" "identifier" "(" ")" "\n" compound_list "end"

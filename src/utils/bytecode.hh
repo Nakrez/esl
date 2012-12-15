@@ -68,7 +68,9 @@ enum instr
     /*
     **
     */
-
+    OPEN,
+    MODULE,
+    CALL_MODULE,
     /*
     ** Jump at target adress if the top of the stack is true
     ** The top of the stack is POP
@@ -131,6 +133,10 @@ const static std::string instr_string[] =
     "STORE",
     "LOAD",
     "LOAD_CST",
+
+    "OPEN",
+    "MODULE",
+    "CALL_MODULE",
     "JUMP_IF_TRUE",
     "JUMP_IF_FALSE",
     "JUMP",
