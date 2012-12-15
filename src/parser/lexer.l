@@ -30,6 +30,14 @@
 "while"                 return token::TOK_WHILE;
 "until"                 return token::TOK_UNTIL;
 "return"                return token::TOK_RETURN;
+"import"                return token::TOK_IMPORT;
+"include"               return token::TOK_INCLUDE;
+\"(\\.|[^\\"])*\"       {
+                            yylval->sval = new std::string(yytext,
+                                                           1,
+                                                           yyleng - 2);
+                            return token::TOK_STRING;
+                        }
 
 [a-z_A-Z][a-zA-Z_0-9]*  {
                             yylval->sval = new std::string(yytext);

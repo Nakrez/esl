@@ -44,11 +44,11 @@ class Driver;
 %token TOK_AND "&&" TOK_OR "||"
 %token TOK_PAROPEN "(" TOK_PARCLOSE ")" TOK_COMA ","
 %token TOK_IF "if" TOK_THEN "then" TOK_ELSE "else" TOK_ELIF "elif"
-%token TOK_END "end"
+%token TOK_END "end" TOK_IMPORT "import" TOK_INCLUDE "include"
 %token TOK_FUNCTION "function" TOK_RETURN "return"
 %token TOK_FOR "for" TOK_DO "do" TOK_WHILE "while" TOK_UNTIL "until"
 
-%token <sval> TOK_ID "identifier" TOK_DIGIT "digit"
+%token <sval> TOK_ID "identifier" TOK_DIGIT "digit" TOK_STRING "string"
 
 %type <ast> instr expr simple_instr functions esl_command
 %type <ast> rule_while rule_until rule_if do_group else_group
@@ -71,6 +71,8 @@ instr   :
         |functions "\n" { $$ = $1; }
         |esl_command "\n" { $$ = $1; }
         |"\n" { $$ = NULL; }
+        |"import" "string" "\n"
+        |"include" "string" "\n"
         |error "\n" { $$ = NULL; }
         ;
 

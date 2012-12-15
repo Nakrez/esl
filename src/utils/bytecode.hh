@@ -149,12 +149,12 @@ namespace esl
             ~Bytecode();
 
             instr get_type();
-            Value *get_param();
-            void set_param(Value *);
+            Value* get_param();
+            void set_param(Value*);
 
         private:
-            enum instr  type_;
-            Value   *param_;
+            enum instr type_;
+            Value* param_;
     };
 }
 #endif /* ESL_BYTECODE_H_ */

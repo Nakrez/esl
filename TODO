@@ -14,8 +14,9 @@
 - Introduce Objects
 - Introduce Comments
 - Introduce Bytecode optimizer
+- Introduce true, false keywords
 - Review Code:
-    * Everything static except in the VM
+    * Less dynamic allocation
     * Use variants in parser
     * Securise Cast with c++ cast and return check
     * Replace NULL by nullptr
