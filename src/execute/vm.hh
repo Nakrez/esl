@@ -17,7 +17,7 @@ namespace esl
     class Vm
     {
         public:
-            Vm (std::vector<Bytecode* > *);
+            Vm (const std::vector<Bytecode*>&);
             ~Vm ();
 
             void run();
@@ -43,7 +43,7 @@ namespace esl
             void math(Func fun);
 
         private:
-            std::vector<Bytecode*>* code_;
+            std::vector<Bytecode*> code_;
             esl::Runtime* runtime_;
             std::stack<esl::ContentObject*>* stack_;
     };

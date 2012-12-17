@@ -1,6 +1,6 @@
 #include "vm.hh"
 
-esl::Vm::Vm (std::vector<esl::Bytecode*>* code)
+esl::Vm::Vm (const std::vector<esl::Bytecode*>& code)
 {
     this->code_ = code;
     this->runtime_ = new esl::ExecutableContext();
@@ -23,9 +23,9 @@ void esl::Vm::run()
 {
     esl::Bytecode *instr = nullptr;
 
-    while (this->runtime_->pc_get() < this->code_->size())
+    while (this->runtime_->pc_get() < this->code_.size())
     {
-        instr = this->code_->at(this->runtime_->pc_get());
+        instr = this->code_.at(this->runtime_->pc_get());
         switch (instr->get_type())
         {
             case POP:
