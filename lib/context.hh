@@ -3,17 +3,20 @@
 
 # include <string>
 # include <map>
+# include <memory>
 
 # include "object.hh"
 # include "value.hh"
+# include "module.hh"
 
 namespace esl
 {
     class Params;
     class Runtime;
-    class Module;
 
     using Callback = ContentObject* (*)(Runtime*, Params*);
+    using ModulePtr = std::shared_ptr<Module>;
+    using ValuePtr = std::shared_ptr<Value>;
 
     ContentObject* std_callback (Runtime*, Params*);
 
@@ -33,9 +36,9 @@ namespace esl
             void module_set (const std::string&, Module*);
 
         private:
-            std::map<std::string, std::pair<Callback, int>>* functions_;
-            std::map<std::string, Value*>* variables_;
-            std::map<std::string, Module*>* modules_;
+            std::map<std::string, std::pair<Callback, int>> functions_;
+            std::map<std::string, ValuePtr> variables_;
+            std::map<std::string, ModulePtr> modules_;
     };
 }
 #endif /* !CONTEXT_H_ */

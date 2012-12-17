@@ -4,12 +4,11 @@
 # include <dlfcn.h>
 # include <string>
 
-# include "context.hh"
 # include "extension.hh"
 
 namespace esl
 {
-    class Module : public Context
+    class Module
     {
         public:
             Module (const std::string&);

@@ -23,7 +23,6 @@ namespace esl
             void run();
 
         private:
-            void pop ();
             void store (Bytecode* instr);
             void load (Bytecode* instr);
             void load_cst (Bytecode* instr);
@@ -33,8 +32,6 @@ namespace esl
             void call_function (Bytecode* instr);
             void function_return ();
             void print ();
-            void decr_obj (void*);
-            void incr_obj (void*);
             void setup_module(Bytecode* instr);
             void module(Bytecode* instr);
             void call_module(Bytecode* instr);
@@ -43,9 +40,9 @@ namespace esl
             void math(Func fun);
 
         private:
+            std::stack<esl::ContentObject*> stack_;
             std::vector<Bytecode*> code_;
             esl::Runtime* runtime_;
-            std::stack<esl::ContentObject*>* stack_;
     };
 }
 

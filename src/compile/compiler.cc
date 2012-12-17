@@ -221,7 +221,7 @@ void esl::Compiler::compile_list(esl::Ast* ast)
 void esl::Compiler::compile_function(esl::Ast* ast)
 {
     esl::Bytecode* jump = nullptr;
-    int* jump_addr = new int;
+    int* jump_addr = new int(0);
     int code_size;
     int avoid = 1;
     std::string* value = nullptr;

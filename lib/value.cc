@@ -12,6 +12,8 @@ esl::Value::Value(obj_type type, void* content)
 esl::Value::Value(const esl::Value& v)
     : esl::ContentObject (v.type_, v.content_)
 {
+    if (v.type_ == O_INT)
+        this->content_ = new int(*(static_cast<int*> (v.content_)));
 }
 
 esl::Value::~Value()
