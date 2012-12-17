@@ -21,29 +21,27 @@ namespace esl
             void compile();
             void export_bytecode(const std::string &filename);
 
-            std::vector<Bytecode*>* get_bytecode();
+            std::vector<Bytecode*> get_bytecode();
 
         private:
-            std::vector<Bytecode*>* compile(Ast*);
-            std::vector<Bytecode*>* compile_statements(Ast*);
-            std::vector<Bytecode*>* compile_assignement(Ast*);
-            std::vector<Bytecode*>* compile_arith(Ast*, instr);
-            std::vector<Bytecode*>* compile_loop(Ast*, instr);
-            std::vector<Bytecode*>* compile_number(Ast*);
-            std::vector<Bytecode*>* compile_identifier(Ast*);
-            std::vector<Bytecode*>* compile_if(Ast*);
-            std::vector<Bytecode*>* compile_function(Ast*);
-            std::vector<Bytecode*>* compile_call(Ast*);
-            std::vector<Bytecode*>* compile_list(Ast*);
-            std::vector<Bytecode*>* compile_import(Ast*);
-            std::vector<Bytecode*>* compile_return(Ast*);
-            std::vector<Bytecode*>* compile_module_call(Ast*);
-
-            Bytecode* make_call_instruction(Ast*);
+            void compile(Ast*);
+            void compile_statements(Ast*);
+            void compile_assignement(Ast*);
+            void compile_operation(Ast*, instr);
+            void compile_loop(Ast*, instr);
+            void compile_number(Ast*);
+            void compile_identifier(Ast*);
+            void compile_if(Ast*);
+            void compile_function(Ast*);
+            void compile_call(Ast*);
+            void compile_list(Ast*);
+            void compile_import(Ast*);
+            void compile_return(Ast*);
+            void compile_module_call(Ast*);
 
         private:
             Ast* gen_ast_;
-            std::vector<Bytecode*>* byte_code_;
+            std::vector<Bytecode*> byte_code_;
     };
 }
 #endif /* COMPILER_HH */

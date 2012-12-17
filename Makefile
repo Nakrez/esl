@@ -8,14 +8,15 @@ CC = clang++
 CFLAGS = -Wall -Wextra -g -Isrc -std=c++11
 
 OBJ =   src/utils/ast.o src/utils/bytecode.o src/utils/utils.o \
+	src/utils/ro-data.o \
 	src/parser/parser.o src/parser/lexer.o src/parser/driver.o \
 	src/compile/compiler.o \
 	src/execute/vm.o \
 	src/main.o
 
-all: esl
+all: esl libstd
 
-esl: libesl libstd $(OBJ)
+esl: libesl $(OBJ)
 	$(CC) ./libesl.so $(OBJ) -o $@
 
 libesl:
