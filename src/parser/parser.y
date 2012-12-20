@@ -70,10 +70,10 @@ instr   :
         simple_instr "\n" { $$ = $1; }
         |functions "\n" { $$ = $1; }
         |esl_command "\n" { $$ = $1; }
-        |"\n" { $$ = NULL; }
+        |"\n" { $$ = nullptr; }
         |"import" "string" "\n" { $$ = new esl::Ast(IMPORT, *$2); delete $2; }
         |"include" "string" "\n"
-        |error "\n" { $$ = NULL; }
+        |error "\n" { $$ = nullptr; }
         ;
 
 compound_list   :

@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 2.6.5.  */
+/* A Bison parser, made by GNU Bison 2.7.  */
 
 /* Skeleton interface for Bison LALR(1) parsers in C++
    
@@ -41,7 +41,7 @@
 # define YY_YY_SRC_PARSER_PARSER_HH_INCLUDED
 
 /* "%code requires" blocks.  */
-/* Line 36 of lalr1.cc  */
+/* Line 33 of lalr1.cc  */
 #line 3 "src/parser/parser.y"
 
 #include <string>
@@ -52,7 +52,7 @@
 class Driver;
 
 
-/* Line 36 of lalr1.cc  */
+/* Line 33 of lalr1.cc  */
 #line 57 "src/parser/parser.hh"
 
 
@@ -68,7 +68,7 @@ class Driver;
 
 
 namespace yy {
-/* Line 36 of lalr1.cc  */
+/* Line 33 of lalr1.cc  */
 #line 73 "src/parser/parser.hh"
 
   /// A Bison parser.
@@ -79,7 +79,7 @@ namespace yy {
 #ifndef YYSTYPE
     union semantic_type
     {
-/* Line 36 of lalr1.cc  */
+/* Line 33 of lalr1.cc  */
 #line 28 "src/parser/parser.y"
 
     std::string *sval;
@@ -87,7 +87,7 @@ namespace yy {
     std::list<esl::Ast *> *lval;
 
 
-/* Line 36 of lalr1.cc  */
+/* Line 33 of lalr1.cc  */
 #line 92 "src/parser/parser.hh"
     };
 #else
@@ -282,6 +282,7 @@ namespace yy {
 
     /// \brief Reclaim the memory associated to a symbol.
     /// \param yymsg        Why this token is reclaimed.
+    ///                     If null, do not display the symbol, just free it.
     /// \param yytype       The symbol type.
     /// \param yyvaluep     Its semantic value.
     /// \param yylocationp  Its location.
@@ -311,8 +312,8 @@ namespace yy {
   };
 
 } // yy
-/* Line 36 of lalr1.cc  */
-#line 316 "src/parser/parser.hh"
+/* Line 33 of lalr1.cc  */
+#line 317 "src/parser/parser.hh"
 
 
 

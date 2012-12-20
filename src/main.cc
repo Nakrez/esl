@@ -8,8 +8,8 @@
 int main(int argc, char **argv)
 {
     Driver    driver;
-    esl::Compiler    *compiler = NULL;
-    esl::Vm          *vm = NULL;
+    esl::Compiler    *compiler = nullptr;
+    esl::Vm          *vm = nullptr;
 
     if (argc < 2)
         return (1);
@@ -27,12 +27,12 @@ int main(int argc, char **argv)
 
             long useconds;
 
-            gettimeofday(&start, NULL);
+            gettimeofday(&start, nullptr);
         #endif /* !BENCH */
         compiler->compile();
 
         #if BENCH == 1
-            gettimeofday(&end, NULL);
+            gettimeofday(&end, nullptr);
             useconds = end.tv_usec - start.tv_usec;
 
             std::cout << "Compilation time : " << useconds << std::endl;

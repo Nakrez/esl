@@ -21,7 +21,6 @@
     * Securise Cast with c++ cast and return check
     * Replace NULL by nullptr
     * Rewrite Context
-    * Rewrite Compiler
 
 Bugs:
 
