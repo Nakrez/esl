@@ -1,5 +1,5 @@
 %{
-#include "parser.hh"
+#include "esl-parser.hh"
 #include "driver.hh"
 
 # undef yywrap

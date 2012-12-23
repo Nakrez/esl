@@ -16,7 +16,10 @@ II) How to use it
 
 First of all you will have to make the executable.
 To create the esl executable just run
+    ./bootstrap
+    ./configure
     make
+    make install (optional, just if you want to install it on your computer)
 It will generate to you an esl executable and a dynamic library.
 You then, just have to do a ./esl filename (where filename is a path to a .esl
 file), to execute an esl file

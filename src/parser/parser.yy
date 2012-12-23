@@ -1,6 +1,8 @@
+%require "2.4"
 %skeleton "lalr1.cc"
 %code requires
 {
+
 #include <string>
 #include <list>
 
@@ -11,7 +13,7 @@ class Driver;
 
 %define parser_class_name "eslxx_parser"
 %debug
-
+%defines
 /* No conflict accepted */
 %expect 0
 
