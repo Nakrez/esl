@@ -1,5 +1,5 @@
 %{
-#include "parser.hh"
+#include "esl-parser.hh"
 #include "driver.hh"
 
 # undef yywrap
@@ -7,11 +7,15 @@
 # define yyterminate() return token::END
 %}
 
-%option nounput noyywrap noinput
+%option nounput noyywrap noinput stack
 
 %{
 # define YY_USER_ACTION  yylloc->columns (yyleng);
 %}
+
+%x COMMENT_SIMPLE
+%x COMMENT_MULTI
+
 %%
 %{
     yylloc->step();
@@ -19,6 +23,25 @@
 %{
     typedef yy::eslxx_parser::token token;
 %}
+
+<COMMENT_MULTI>"]#"     yy_pop_state();
+<COMMENT_MULTI>.*       yylloc->step();
+<COMMENT_MULTI>"\n"     {
+                            yylloc->lines(yyleng);
+                            yylloc->step();
+                            return token::TOK_NEWLINE;
+                        }
+<COMMENT_SIMPLE>"\n"    {
+                            BEGIN(INITIAL);
+                            yylloc->lines(yyleng);
+                            yylloc->step();
+                            return token::TOK_NEWLINE;
+                        }
+<COMMENT_SIMPLE>.*
+
+"#["                    yy_push_state(COMMENT_MULTI);
+"#"                     BEGIN(COMMENT_SIMPLE);
+
 
 "if"                    return token::TOK_IF;
 "then"                  return token::TOK_THEN;

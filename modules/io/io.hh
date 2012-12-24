@@ -1,7 +1,7 @@
 #ifndef IO_HH
 # define IO_HH
 
-#include "../lib/extension.hh"
+#include "../../lib/extension.hh"
 
 class Io: public esl::Extension
 {

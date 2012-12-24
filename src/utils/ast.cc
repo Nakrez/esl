@@ -4,16 +4,16 @@
 esl::Ast::Ast()
 {
     this->tok_ = EMPTY;
-    this->rbro_ = NULL;
-    this->fson_ = NULL;
+    this->rbro_ = nullptr;
+    this->fson_ = nullptr;
 }
 
 esl::Ast::Ast(token tok, const std::string &content)
 {
     this->tok_ = tok;
     this->content_ = new std::string(content);
-    this->rbro_ = NULL;
-    this->fson_ = NULL;
+    this->rbro_ = nullptr;
+    this->fson_ = nullptr;
 }
 
 esl::Ast::~Ast()
@@ -63,7 +63,7 @@ void esl::Ast::set_token(token tok)
 /* Public members */
 void esl::Ast::add(esl::Ast *ast)
 {
-    esl::Ast *temp = NULL;
+    esl::Ast *temp = nullptr;
 
     if (this->tok_ == EMPTY)
     {
@@ -73,13 +73,13 @@ void esl::Ast::add(esl::Ast *ast)
         this->fson_ = ast->fson_;
         delete ast;
     }
-    else if (this->fson_ == NULL)
+    else if (this->fson_ == nullptr)
         this->fson_ = ast;
     else
     {
         temp = this->fson_;
 
-        while (temp->rbro_ != NULL)
+        while (temp->rbro_ != nullptr)
             temp = temp->rbro_;
 
         temp->rbro_ = ast;
@@ -116,9 +116,9 @@ void esl::Ast::print_node(esl::Ast *node, std::ofstream &file)
 
 void esl::Ast::print_sons(esl::Ast *sons, int id_father, std::ofstream &file)
 {
-    esl::Ast *temp = NULL;
+    esl::Ast *temp = nullptr;
 
-    if (sons != NULL)
+    if (sons != nullptr)
     {
         temp = sons;
         do

@@ -6,7 +6,7 @@
 # include <iostream>
 # include <fstream>
 
-# include <utils/token.hh>
+# include "token.hh"
 
 namespace esl
 {
