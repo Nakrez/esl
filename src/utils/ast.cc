@@ -6,19 +6,42 @@ esl::Ast::Ast()
     this->tok_ = EMPTY;
     this->rbro_ = nullptr;
     this->fson_ = nullptr;
+    this->content_ = -1;
 }
 
-esl::Ast::Ast(token tok, const std::string &content)
+esl::Ast::Ast(token tok)
 {
     this->tok_ = tok;
-    this->content_ = new std::string(content);
     this->rbro_ = nullptr;
     this->fson_ = nullptr;
+    this->content_ = -1;
+}
+
+esl::Ast::Ast(token tok, int content)
+{
+    this->tok_ = tok;
+    this->rbro_ = nullptr;
+    this->fson_ = nullptr;
+    this->content_ = content;
+}
+
+esl::Ast::Ast(token tok, std::string *content)
+{
+    this->tok_ = tok;
+    this->rbro_ = nullptr;
+    this->fson_ = nullptr;
+    this->content_ = -1;
+
+    bool temp = false;
+
+    content_ = RoData::instance_get()->store(content, temp);
+
+    if (temp)
+        delete content;
 }
 
 esl::Ast::~Ast()
 {
-    delete content_;
     delete rbro_;
     delete fson_;
 }
@@ -34,7 +57,7 @@ token esl::Ast::get_token()
     return this->tok_;
 }
 
-std::string *esl::Ast::get_content()
+int esl::Ast::get_content()
 {
     return this->content_;
 }
@@ -98,7 +121,7 @@ int esl::Ast::unique_id(int reset)
     return id;
 }
 
-void esl::Ast::add(token tok, const std::string &content)
+void esl::Ast::add(token tok, std::string *content)
 {
     add(new esl::Ast(tok, content));
 }
@@ -107,9 +130,6 @@ void esl::Ast::print_node(esl::Ast *node, std::ofstream &file)
 {
     file << "N_" << node->get_id() << " [label=\"";
     file << token_string[node->get_token()];
-
-    if (*(node->get_content()) != std::string(""))
-        file << ", " << node->get_content()->c_str();
 
     file << "\"]" << std::endl;
 }
@@ -154,14 +174,14 @@ void esl::Ast::print()
 
 /* Static members */
 
-esl::Ast *esl::Ast::create_node(token tok, const std::string &content)
+esl::Ast *esl::Ast::create_node(token tok, std::string *content)
 {
     return new esl::Ast(tok, content);
 }
 
 esl::Ast *esl::Ast::ast_from_list(std::list<esl::Ast *> *l)
 {
-    esl::Ast *ast = new esl::Ast(STATEMENTS, "");
+    esl::Ast *ast = new esl::Ast(STATEMENTS);
 
     for (std::list<esl::Ast *>::iterator i = l->begin(); i != l->end(); ++i)
         ast->add(*i);

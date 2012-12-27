@@ -31,6 +31,8 @@ namespace esl
             RoData ();
             ~RoData ();
 
+            int exists (const std::string* data) const;
+
             std::vector<std::string*> stored_;
 
             static RoData* instance_;

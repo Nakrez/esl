@@ -52,19 +52,13 @@ enum instr
     ** Don't perfrom POP
     */
     STORE,
-
     /*
     ** Push the value of the variable name in the stack
     */
     LOAD,
 
-    /*
-    ** Push a constant value in the stack
-    **
-    ** 1 param : the constant value
-    */
-    LOAD_CST,
-
+    LOAD_INT,
+    LOAD_STR,
     /*
     **
     */
@@ -101,49 +95,6 @@ enum instr
     MAKE_FUNCTION,
 
     CALL_FUNCTION,
-
-    /*
-    ** Print everything on the stack
-    */
-    PRINT
-};
-
-const static std::string instr_string[] =
-{
-    "NOP",
-    "POP",
-    "DUP_TOP",
-
-    "ARITH_ADD",
-    "ARITH_MINUS",
-    "ARITH_MUL",
-    "ARITH_DIV",
-    "ARITH_MOD",
-
-    "BOOL_EQ",
-    "BOOL_DIFF",
-    "BOOL_GT",
-    "BOOL_GE",
-    "BOOL_LT",
-    "BOOL_LE",
-
-    "BOOL_AND",
-    "BOOL_OR",
-
-    "STORE",
-    "LOAD",
-    "LOAD_CST",
-
-    "OPEN",
-    "MODULE",
-    "CALL_MODULE",
-    "JUMP_IF_TRUE",
-    "JUMP_IF_FALSE",
-    "JUMP",
-    "RETURN",
-    "MAKE_FUNCTION",
-    "CALL_FUNCTION",
-    "PRINT"
 };
 
 namespace esl
@@ -151,16 +102,20 @@ namespace esl
     class Bytecode
     {
         public:
-            Bytecode(instr type, Value* param);
-            ~Bytecode();
+            Bytecode (instr type);
+            Bytecode (instr type, int param);
+            ~Bytecode ();
 
-            instr get_type();
-            Value* get_param();
-            void set_param(Value*);
+            instr get_type () const;
+            int get_param () const;
+            void set_param (int);
 
         private:
             enum instr type_;
-            Value* param_;
+            int param_;
     };
 }
+
+std::ostream& operator<< (std::ostream& os, const esl::Bytecode& instr);
+
 #endif /* ESL_BYTECODE_H_ */

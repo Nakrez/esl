@@ -33,8 +33,11 @@ void esl::Vm::run()
             case JUMP:
                 this->jump(instr);
                 continue;
-            case LOAD_CST:
-                this->load_cst(instr);
+            case LOAD_STR:
+                this->load_str(instr);
+                break;
+            case LOAD_INT:
+                this->load_int(instr);
                 break;
             case LOAD:
                 this->load(instr);
@@ -116,28 +119,29 @@ void esl::Vm::run()
 void esl::Vm::setup_module (Bytecode* instr)
 {
     esl::Module* module = nullptr;
-    std::string module_name = *((std::string*)((esl::Value*)(instr->get_param()))->content_get());
-    std::string path = "./" + module_name + ".eslm";
+    std::string* module_name = RoData::instance_get()->get(instr->get_param());
+    std::string path = "./" + *module_name + ".eslm";
 
     module = new esl::Module(path);
     module->load();
 
-    this->runtime_->module_set(module_name, module);
+    this->runtime_->module_set(*module_name, module);
 }
 
 void esl::Vm::module (Bytecode* instr)
 {
-    std::string* mod_name = static_cast<std::string*>(((esl::Value*)(instr->get_param()))->content_get());
+    std::string* mod_name = RoData::instance_get()->get(instr->get_param());
 
     /* TODO FIX TYPE */
-    this->stack_.push(new esl::ContentObject(O_RUNTIME, this->runtime_->module_get(*mod_name)));
+    this->stack_.push(new esl::ContentObject(O_RUNTIME,
+                                             this->runtime_->module_get(*mod_name)));
 }
 
 void esl::Vm::call_module (Bytecode* instr)
 {
     esl::Params* params = new esl::Params();
     esl::Module* module = nullptr;
-    std::string* fun_name = static_cast<std::string*>(instr->get_param()->content_get());
+    std::string* fun_name = RoData::instance_get()->get(instr->get_param());
 
     module = static_cast<esl::Module*>(this->stack_.top()->content_get());
     this->stack_.pop();
@@ -155,11 +159,16 @@ void esl::Vm::call_module (Bytecode* instr)
     delete params;
 }
 
-void esl::Vm::load_cst (Bytecode* instr)
+void esl::Vm::load_int (Bytecode* instr)
 {
-    esl::Value* v = new esl::Value(*(static_cast<esl::Value*> (instr->get_param())));
+    esl::Value* v = new esl::Value(O_INT, new int (instr->get_param()));
 
     this->stack_.push(v);
+}
+
+void esl::Vm::load_str (Bytecode* instr)
+{
+    std::cout << "LOAD_STR not implemented will probably crash." << std::endl;
 }
 
 void esl::Vm::function_return()
@@ -208,7 +217,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     this->stack_.push(container);
 
     /* TODO: Check fun_name is a string */
-    fun_name = *((std::string *)(instr->get_param()->content_get()));
+    fun_name = *(RoData::instance_get()->get(instr->get_param()));
 
     /* TODO: Check that function is registerd */
     fun = this->runtime_->function_get(fun_name);
@@ -232,15 +241,15 @@ void esl::Vm::store(esl::Bytecode *instr)
     std::string *var_name = nullptr;
     esl::Value *value = nullptr;
 
-    var_name = static_cast<std::string*>(instr->get_param()->content_get());
+    var_name = RoData::instance_get()->get(instr->get_param());
 
     /* TODO: check type of TOS */
-    if (this->stack_.top()->type_get() != O_VALUE || var_name == nullptr)
+    if (this->stack_.top()->type_get() != O_INT || var_name == nullptr)
     {
-
+        std::cout << "BUG ISSUE esl::VM::Store" << std::endl;
     }
 
-    value = static_cast<esl::Value*>(this->stack_.top()->content_get());
+    value = static_cast<esl::Value*>(this->stack_.top());
 
     if (value == nullptr)
     {
@@ -255,8 +264,10 @@ void esl::Vm::load(esl::Bytecode *instr)
     std::string* var_name = nullptr;
     esl::Value* value = nullptr;
 
-    var_name = (std::string *)instr->get_param()->content_get();
+    var_name = RoData::instance_get()->get(instr->get_param());
 
+    if (var_name == nullptr)
+        std::cout << " BUG esl::Vm::load" << std::endl;
     /* TODO: check existance */
 
     value = this->runtime_->variable_get(*var_name);
@@ -282,16 +293,14 @@ void esl::Vm::jump(esl::Bytecode *instr, int val)
 
 void esl::Vm::jump(esl::Bytecode *instr)
 {
-    int *addr = (int *)instr->get_param()->content_get();
-
-    this->runtime_->pc_incr(*addr);
+    this->runtime_->pc_incr(instr->get_param());
 }
 
 void esl::Vm::register_function(esl::Bytecode *instr)
 {
     std::string     *var_name = nullptr;
 
-    var_name = (std::string *)instr->get_param()->content_get();
+    var_name = RoData::instance_get()->get(instr->get_param());
 
     /* TODO: Register Function */
     this->runtime_->function_set(*var_name,

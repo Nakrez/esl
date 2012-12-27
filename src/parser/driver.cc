@@ -2,7 +2,7 @@
 
 Driver::Driver()
 {
-    this->gen_ast_ = new esl::Ast(STATEMENTS, "");
+    this->gen_ast_ = new esl::Ast(STATEMENTS);
     errors_ = 0;
 }
 

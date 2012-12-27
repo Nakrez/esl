@@ -87,7 +87,7 @@
 "."                     return token::TOK_DOT;
 
 [0-9]+                  {
-                            yylval->sval = new std::string(yytext);
+                            yylval->ival = atoi(yytext);
                             return token::TOK_DIGIT;
                         }
 "\n"                    {

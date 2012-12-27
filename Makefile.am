@@ -56,6 +56,7 @@ clear: distclean
 	rm -rf src/.libs
 	rm -f src/parser/lexer.cc
 	rm -f *.eslc
+	rm -f *.png
 
 esl-check:
 	./check/check.sh

@@ -11,6 +11,7 @@
 # include "../../lib/math-exception.hh"
 # include "../../lib/module.hh"
 # include "../utils/bytecode.hh"
+# include "../utils/ro-data.hh"
 
 namespace esl
 {
@@ -25,7 +26,8 @@ namespace esl
         private:
             void store (Bytecode* instr);
             void load (Bytecode* instr);
-            void load_cst (Bytecode* instr);
+            void load_int (Bytecode* instr);
+            void load_str (Bytecode* instr);
             void jump (Bytecode* instr);
             void jump (Bytecode* instr, int);
             void register_function (Bytecode* instr);

@@ -28,22 +28,30 @@ esl::RoData::~RoData ()
 
 }
 
+int esl::RoData::exists (const std::string* data) const
+{
+    for (unsigned int i = 0; i < stored_.size(); ++i)
+        if (*(stored_.at(i)) == *data)
+            return i;
+
+    return -1;
+}
+
 unsigned int esl::RoData::store (std::string* data,
                                  bool& exist)
 {
-    DataIt it = std::find (stored_.begin (),
-                           stored_.end (),
-                           data);
+    int pos = exists(data);
 
-    exist = it != stored_.end ();
+    exist = true;
 
-    if (!exist)
+    if (pos == -1)
     {
+        exist = false;
         stored_.push_back (data);
-        return stored_.size ();
+        return stored_.size () - 1;
     }
     else
-        return it - stored_.begin ();
+        return pos;
 }
 
 std::string* esl::RoData::get (unsigned int key) const
@@ -63,11 +71,12 @@ std::ostream& operator<< (std::ostream& os, const esl::RoData& rodata)
 {
     int i = 0;
 
-    os << "; RO DATA SECTION" << std::endl;
+    os << "; RO DATA SECTION (" << rodata.stored_get().size() << ")"
+       << std::endl;
 
     for (auto str : rodata.stored_get ())
     {
-        std::cout << i << "->" << *str << std::endl;
+        os << i << "->" << *str << std::endl;
         ++i;
     }
 

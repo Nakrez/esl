@@ -7,15 +7,18 @@ void esl::Vm::math(Func fun)
 
     obj1 = static_cast<esl::Value*>(this->stack_.top());
 
-    if (obj1 == nullptr)
+    if (obj1 == nullptr || obj1->type_get() != O_INT)
         throw MathException();
 
     this->stack_.pop();
 
     obj2 = static_cast<esl::Value*>(this->stack_.top());
 
-    if (obj2 == nullptr || obj2->type_get() != O_VALUE)
+    if (obj2 == nullptr || obj2->type_get() != O_INT)
+    {
+        std::cout << obj2->type_get() << std::endl;
         throw MathException();
+    }
 
     this->stack_.pop();
 

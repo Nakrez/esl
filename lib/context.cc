@@ -49,9 +49,6 @@ esl::Module* esl::Context::module_get (const std::string& name) const
 
 void esl::Context::variable_set (const std::string& name, esl::Value* value)
 {
-    if (this->variables_.find(name) != this->variables_.end())
-        this->variables_.at(name)->decr_ref();
-
     this->variables_[name] = ValuePtr(value);
 }
 

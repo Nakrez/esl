@@ -6,6 +6,7 @@
 # include <iostream>
 # include <fstream>
 
+# include "ro-data.hh"
 # include "token.hh"
 
 namespace esl
@@ -14,18 +15,20 @@ namespace esl
     {
         public:
             Ast();
-            Ast(token tok, const std::string &content);
+            Ast(token tok);
+            Ast(token tok, std::string *content);
+            Ast(token tok, int content);
             ~Ast();
 
             void print();
             void add(Ast *ast);
-            void add(token tok, const std::string &content);
+            void add(token tok, std::string *content);
 
-            Ast *create_node(token tok, const std::string &content);
+            Ast *create_node(token tok, std::string *content);
 
             int get_id();
             token get_token();
-            std::string *get_content();
+            int get_content();
             Ast *get_fson();
             Ast *get_rbro();
 
@@ -44,7 +47,7 @@ namespace esl
         private:
             int id_ast_;
             token tok_;
-            std::string *content_;
+            int content_;
             Ast *rbro_;
             Ast *fson_;
     };
