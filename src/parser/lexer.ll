@@ -62,6 +62,13 @@
 "or"                    return token::TOK_OR;
 
 <LITTERAL>"\""          BEGIN(INITIAL); return token::TOK_STRING;
+<LITTERAL>\\[\\"nr]     {
+                            yylloc->step();
+                            if (yylval->sval)
+                                *(yylval->sval) += yytext;
+                            else
+                                yylval->sval = new std::string(yytext);
+                        }
 <LITTERAL>\\.           {
                           std::string err = "scan error, unreconized escape : ";
                           err += yytext;
