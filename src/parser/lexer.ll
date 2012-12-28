@@ -57,6 +57,9 @@
 "include"               return token::TOK_INCLUDE;
 "true"                  yylval->ival = 1; return token::TOK_DIGIT;
 "false"                 yylval->ival = 0; return token::TOK_DIGIT;
+"and"                   return token::TOK_AND;
+"or"                    return token::TOK_OR;
+
 \"(\\.|[^\\"])*\"       {
                             yylval->sval = new std::string(yytext,
                                                            1,
@@ -76,7 +79,6 @@
 "<="                    return token::TOK_LE;
 "&&"                    return token::TOK_AND;
 "||"                    return token::TOK_OR;
-
 ","                     return token::TOK_COMA;
 "+"                     return token::TOK_PLUS;
 "-"                     return token::TOK_MINUS;
