@@ -257,6 +257,7 @@ expr            :
 
                 |"(" expr ")"   { $$ = $2; }
                 |"digit" { $$ = new esl::Ast(NUMBER, $1); }
+                |"string" { $$ = new esl::Ast(STRING, $1); }
                 |"identifier" { $$ = new esl::Ast(ID, $1); }
                 ;
 
