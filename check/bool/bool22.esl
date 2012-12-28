@@ -1,0 +1,4 @@
+import "io"
+
+i = 2
+io.print(i < 10 and i < 60)
