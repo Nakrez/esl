@@ -18,6 +18,8 @@ namespace esl
             static int diff_int (const int*, const int*);
             static int diff_str (const std::string*, const std::string*);
 
+            static int gt_int (const int*, const int*);
+            static int gt_str (const std::string*, const std::string*);
     };
 }
 

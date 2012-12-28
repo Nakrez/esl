@@ -85,7 +85,8 @@ void esl::Vm::run()
                                      esl::Operation::diff_str);
                 break;
             case BOOL_GT:
-                this->math(std::greater<int>());
+                this->bool_operation(esl::Operation::gt_int,
+                                     esl::Operation::gt_str);
                 break;
             case BOOL_GE:
                 this->math(std::greater_equal<int>());

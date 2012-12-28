@@ -21,7 +21,6 @@ int esl::Operation::eq_str (const std::string* a, const std::string* b)
     return *a == *b;
 }
 
-
 int esl::Operation::diff_int (const int* a, const int* b)
 {
     return *a != *b;
@@ -30,4 +29,14 @@ int esl::Operation::diff_int (const int* a, const int* b)
 int esl::Operation::diff_str (const std::string* a, const std::string* b)
 {
     return *a != *b;
+}
+
+int esl::Operation::gt_int (const int* a, const int* b)
+{
+    return *a > *b;
+}
+
+int esl::Operation::gt_str (const std::string* a, const std::string* b)
+{
+    return *a > *b;
 }
