@@ -2,6 +2,7 @@
 [ESL] Error handling
 [DOC] Write Documentation
 [VM] Implement GC
+[VM] Implement + for strings
 [LEXER/PARSER/COMPILER] Introduce for loop
 [LEXER/PARSER/COMPILER/VM] Introduce foreach loop
 [PARSER] Introduce Unary operators
@@ -16,6 +17,7 @@
 [PARSER/COMPILER/VM] break statement
 [PARSER/COMPILER/VM] continue statement
 [VM] Update import (path looking)
+[LIB] API ESL -> C++
 
 [STD] Std Lib
 

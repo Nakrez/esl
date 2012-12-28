@@ -61,7 +61,8 @@ void esl::Vm::run()
                 this->jump(instr, 0);
                 continue;
             case ARITH_ADD:
-                this->math(std::plus<int>());
+                this->operation(esl::Operation::add_int,
+                                esl::Operation::add_str);
                 break;
             case ARITH_MINUS:
                 this->math(std::minus<int>());
@@ -113,6 +114,42 @@ void esl::Vm::run()
         }
 
         this->runtime_->pc_incr(1);
+    }
+}
+
+void esl::Vm::operation(int_operation int_op, str_operation str_op)
+{
+    esl::Value* obj1 = nullptr;
+    esl::Value* obj2 = nullptr;
+
+    obj1 = static_cast<esl::Value*>(this->stack_.top());
+    this->stack_.pop();
+
+    obj2 = static_cast<esl::Value*>(this->stack_.top());
+    this->stack_.pop();
+
+    if (obj1 == nullptr || obj2 == nullptr ||
+        obj1->type_get() != obj2->type_get())
+    {
+        std::cout << "Bad Operation" << std::endl;
+        exit (3);
+    }
+
+    if (obj1->type_get() == O_INT)
+    {
+        int *res = new int;
+
+        *res = int_op((int*)obj2->content_get(), (int*)obj1->content_get());
+        this->stack_.push(new esl::Value(O_INT, res));
+    }
+    else /* TODO: check if it is string */
+    {
+        std::string* res = new std::string;
+
+        *res = str_op((std::string*)obj2->content_get(),
+                      (std::string*)obj1->content_get());
+
+        this->stack_.push(new esl::Value(O_STRING, res));
     }
 }
 
