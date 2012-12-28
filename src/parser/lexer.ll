@@ -55,6 +55,8 @@
 "return"                return token::TOK_RETURN;
 "import"                return token::TOK_IMPORT;
 "include"               return token::TOK_INCLUDE;
+"true"                  yylval->ival = 1; return token::TOK_DIGIT;
+"false"                 yylval->ival = 0; return token::TOK_DIGIT;
 \"(\\.|[^\\"])*\"       {
                             yylval->sval = new std::string(yytext,
                                                            1,

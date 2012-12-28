@@ -1,0 +1,7 @@
+import "io"
+
+if false then
+    io.print (1)
+else
+    io.print (false)
+end
