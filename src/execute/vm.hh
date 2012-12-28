@@ -51,6 +51,7 @@ namespace esl
             void math_operation (int_operation, str_operation);
             void bool_operation (int_operation, str_bool_operation);
             void operation (esl::Value*& obj1, esl::Value*& obj2);
+
         private:
             std::stack<esl::ContentObject*> stack_;
             std::vector<Bytecode*> code_;

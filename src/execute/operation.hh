@@ -15,6 +15,9 @@ namespace esl
             static int eq_int (const int*, const int*);
             static int eq_str (const std::string*, const std::string*);
 
+            static int diff_int (const int*, const int*);
+            static int diff_str (const std::string*, const std::string*);
+
     };
 }
 

@@ -81,7 +81,8 @@ void esl::Vm::run()
                                      esl::Operation::eq_str);
                 break;
             case BOOL_DIFF:
-                this->math(std::not_equal_to<int>());
+                this->bool_operation(esl::Operation::diff_int,
+                                     esl::Operation::diff_str);
                 break;
             case BOOL_GT:
                 this->math(std::greater<int>());
