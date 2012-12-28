@@ -1,5 +1,16 @@
 #include "vm.hh"
 
+const std::string esl::Vm::path_lib_[] =
+{
+    "/usr/lib/esl/",
+    "/usr/openwin/lib/esl/",
+    "/usr/dt/lib/esl/",
+    "/usr/4lib/esl/",
+    "/usr/ucblib/esl/",
+    "/usr/local/lib/esl/",
+    "./"
+};
+
 esl::Vm::Vm (const std::vector<esl::Bytecode*>& code)
     : stack_ ()
 {
@@ -181,11 +192,32 @@ void esl::Vm::operation (esl::Value*& obj1, esl::Value*& obj2)
     }
 }
 
+std::string esl::Vm::module_path(const std::string& mod_name)
+{
+    for (int i = 0; i < 7; ++i)
+    {
+        std::string path_file(path_lib_[i] + mod_name + ".eslm");
+        std::ifstream exist(path_file);
+
+        if (exist)
+            return path_file;
+    }
+
+    return "";
+}
+
 void esl::Vm::setup_module (Bytecode* instr)
 {
     esl::Module* module = nullptr;
     std::string* module_name = RoData::instance_get()->get(instr->get_param());
-    std::string path = "./" + *module_name + ".eslm";
+
+    std::string path = module_path(*module_name);
+
+    if (path == "")
+    {
+        std::cout << "Module " << *module_name << " not found." << std::endl;
+        exit (4);
+    }
 
     module = new esl::Module(path);
     module->load();

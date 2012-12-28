@@ -1,6 +1,7 @@
 #ifndef VM_HH
 # define VM_HH
 
+# include <fstream>
 # include <vector>
 # include <stack>
 
@@ -48,6 +49,8 @@ namespace esl
             template<class Func>
             void math (Func fun);
 
+            std::string module_path(const std::string&);
+
             void math_operation (int_operation, str_operation);
             void bool_operation (int_operation, str_bool_operation);
             void operation (esl::Value*& obj1, esl::Value*& obj2);
@@ -56,6 +59,8 @@ namespace esl
             std::stack<esl::ContentObject*> stack_;
             std::vector<Bytecode*> code_;
             esl::Runtime* runtime_;
+
+            static const std::string path_lib_[];
     };
 }
 

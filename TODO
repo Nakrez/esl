@@ -18,7 +18,6 @@
 [PARSER] Introduce +=, -=, *=, /=, %= operators
 [PARSER/COMPILER/VM] break statement
 [PARSER/COMPILER/VM] continue statement
-[VM] Update import (path looking)
 [LIB] API ESL -> C++
 
 [STD] Std Lib
@@ -32,3 +31,7 @@
 
 Bugs:
 
+
+DONE:
+
+[VM] Update import (path looking) 28/12/2012 21H10
