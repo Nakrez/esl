@@ -248,7 +248,9 @@ void esl::Vm::store(esl::Bytecode *instr)
     var_name = RoData::instance_get()->get(instr->get_param());
 
     /* TODO: check type of TOS */
-    if (this->stack_.top()->type_get() != O_INT || var_name == nullptr)
+    if ((this->stack_.top()->type_get() != O_INT &&
+        this->stack_.top()->type_get() != O_STRING) ||
+        var_name == nullptr)
     {
         std::cout << "BUG ISSUE esl::VM::Store" << std::endl;
     }

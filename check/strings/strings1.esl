@@ -1,2 +1,4 @@
+import "io"
+
 test="sboob"
-print(test)
+io.print(test)
