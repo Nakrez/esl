@@ -277,7 +277,7 @@ void esl::Vm::load(esl::Bytecode *instr)
 
 void esl::Vm::jump(esl::Bytecode *instr, int val)
 {
-    if (this->stack_.top()->type_get() == O_VALUE)
+    if (this->stack_.top()->type_get() == O_INT)
     {
         esl::Value* value = (esl::Value*)this->stack_.top();
         int* v = (int*)value->content_get();

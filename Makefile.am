@@ -58,5 +58,5 @@ clear: distclean
 	rm -f *.eslc
 	rm -f *.png
 
-esl-check:
+esl-check: all
 	./check/check.sh

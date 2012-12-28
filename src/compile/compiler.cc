@@ -262,7 +262,7 @@ void esl::Compiler::compile_if(esl::Ast *ast)
 
     compile(ast->get_fson()->get_rbro());
 
-    jump_next = byte_code_.size() - jump_next + 1;
+    jump_next = byte_code_.size() - jump_next + 2;
     jump->set_param(jump_next);
 
     if (ast->get_fson()->get_rbro()->get_rbro())
