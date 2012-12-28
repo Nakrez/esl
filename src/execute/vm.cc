@@ -89,13 +89,16 @@ void esl::Vm::run()
                                      esl::Operation::gt_str);
                 break;
             case BOOL_GE:
-                this->math(std::greater_equal<int>());
+                this->bool_operation(esl::Operation::ge_int,
+                                     esl::Operation::ge_str);
                 break;
             case BOOL_LT:
-                this->math(std::less<int>());
+                this->bool_operation(esl::Operation::lt_int,
+                                     esl::Operation::lt_str);
                 break;
             case BOOL_LE:
-                this->math(std::less_equal<int>());
+                this->bool_operation(esl::Operation::le_int,
+                                     esl::Operation::le_str);
                 break;
             case BOOL_OR:
                 this->math(std::logical_or<int>());

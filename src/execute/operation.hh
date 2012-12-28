@@ -20,6 +20,15 @@ namespace esl
 
             static int gt_int (const int*, const int*);
             static int gt_str (const std::string*, const std::string*);
+
+            static int ge_int (const int*, const int*);
+            static int ge_str (const std::string*, const std::string*);
+
+            static int lt_int (const int*, const int*);
+            static int lt_str (const std::string*, const std::string*);
+
+            static int le_int (const int*, const int*);
+            static int le_str (const std::string*, const std::string*);
     };
 }
 
