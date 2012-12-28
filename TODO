@@ -1,20 +1,24 @@
-- Option parser
-- Setup esl return values
-- Std Lib
-- Error handling
-- Add test suite
-- Write Documentation
-- Implement GC
-- Introduce for loop
-- Introduce foreach loop
-- Introduce Unary operators
-- Introduce "include" keywords
-- Introduce string
-- Introduce arrays
-- Introduce Objects
-- Introduce Comments
-- Introduce Bytecode optimizer
-- Introduce true, false keywords
+[ESL] Option parser
+[ESL] Error handling
+[DOC] Write Documentation
+[VM] Implement GC
+[LEXER/PARSER/COMPILER] Introduce for loop
+[LEXER/PARSER/COMPILER/VM] Introduce foreach loop
+[PARSER] Introduce Unary operators
+[LEXER/PARSER] Introduce "include" keywords
+[LEXER/PARSER/COMPILER/VM] Introduce arrays
+[LEXER/PARSER/COMPILER/VM] Introduce Objects
+[LEXER 50%] Introduce Comments
+[COMPILER] Introduce Bytecode optimizer
+[COMPILER] Introduce AST checker to provide bad operation (-, /, ... on strings, ...)
+[PARSER] Introduce post/pre incrementation/decrementation
+[PARSER] Introduce +=, -=, *=, /=, %= operators
+[PARSER/COMPILER/VM] break statement
+[PARSER/COMPILER/VM] continue statement
+[VM] Update import (path looking)
+
+[STD] Std Lib
+
 - Review Code:
     * Less dynamic allocation
     * Use variants in parser
