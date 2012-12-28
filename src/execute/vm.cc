@@ -168,7 +168,11 @@ void esl::Vm::load_int (Bytecode* instr)
 
 void esl::Vm::load_str (Bytecode* instr)
 {
-    std::cout << "LOAD_STR not implemented will probably crash." << std::endl;
+    esl::Value* v = new esl::Value(O_STRING, nullptr);
+
+    v->content_set(RoData::instance_get()->get(instr->get_param()));
+
+    this->stack_.push(v);
 }
 
 void esl::Vm::function_return()
