@@ -15,6 +15,7 @@
 
 %x COMMENT_SIMPLE
 %x COMMENT_MULTI
+%x LITTERAL
 
 %%
 %{
@@ -60,12 +61,20 @@
 "and"                   return token::TOK_AND;
 "or"                    return token::TOK_OR;
 
-\"(\\.|[^\\"])*\"       {
-                            yylval->sval = new std::string(yytext,
-                                                           1,
-                                                           yyleng - 2);
-                            return token::TOK_STRING;
+<LITTERAL>"\""          BEGIN(INITIAL); return token::TOK_STRING;
+<LITTERAL>\\.           {
+                          std::string err = "scan error, unreconized escape : ";
+                          err += yytext;
+                          driver.error(*yylloc, err);
                         }
+<LITTERAL>[^\\"]*       {
+                            yylloc->step();
+                            if (yylval->sval)
+                                *(yylval->sval) += yytext;
+                            else
+                                yylval->sval = new std::string(yytext);
+                        }
+"\""                    BEGIN(LITTERAL);
 
 [a-z_A-Z][a-zA-Z_0-9]*  {
                             yylval->sval = new std::string(yytext);
@@ -101,6 +110,11 @@
                         }
 [ \t]+                  yylloc->step();
 
+.                       {
+                          std::string err = "scan error, unknow character : ";
+                          err += yytext;
+                          driver.error(*yylloc, err); 
+                        }
 %%
 
 void Driver::scan_begin()

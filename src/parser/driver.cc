@@ -17,7 +17,7 @@ void Driver::free()
 
 void Driver::error(const yy::location& l, const std::string& m)
 {
-    std::cerr << l << ": " << m << std::endl;
+    std::cerr << file_ << ":" << l << ": " << m << std::endl;
     ++errors_;
 }
 
