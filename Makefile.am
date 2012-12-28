@@ -1,3 +1,5 @@
+export libdir
+
 AM_CFLAGS = 
 SUBDIRS = . modules
 ACLOCAL_AMFLAGS = -I m4

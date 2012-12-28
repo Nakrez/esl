@@ -2,6 +2,7 @@
 #include "parser/driver.hh"
 #include "compile/compiler.hh"
 #include "execute/vm.hh"
+#include "utils/ro-data.hh"
 
 # define BENCH 0
 
@@ -43,6 +44,8 @@ int main(int argc, char **argv)
         vm = new esl::Vm(compiler->get_bytecode());
 
         vm->run();
+
+        esl::RoData::instance_delete();
     }
 
     driver.free();
