@@ -10,6 +10,7 @@ namespace esl
     {
         public:
             static int atoi(const std::string &);
+            static std::string itoa(int);
     };
 }
 

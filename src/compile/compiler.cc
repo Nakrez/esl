@@ -84,6 +84,8 @@ void esl::Compiler::compile(esl::Ast *ast)
                    break;
         case NUMBER:  compile_number(ast);
                       break;
+        case STRING:  compile_string(ast);
+                      break;
         case EXPR:  compile(ast->get_fson());
                     break;
         case ID:  compile_identifier(ast);
@@ -301,6 +303,11 @@ void esl::Compiler::compile_operation (esl::Ast* ast, enum instr i)
 void esl::Compiler::compile_number(esl::Ast *ast)
 {
     byte_code_.push_back(new esl::Bytecode(LOAD_INT, ast->get_content()));
+}
+
+void esl::Compiler::compile_string(esl::Ast *ast)
+{
+    byte_code_.push_back(new esl::Bytecode(LOAD_STR, ast->get_content()));
 }
 
 void esl::Compiler::compile_identifier(esl::Ast *ast)

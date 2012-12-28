@@ -12,11 +12,18 @@
 # include "../../lib/module.hh"
 # include "../utils/bytecode.hh"
 # include "../utils/ro-data.hh"
+# include "operation.hh"
 
 namespace esl
 {
     class Vm
     {
+        using int_operation = int (*)(const int*, const int*);
+        using str_operation = std::string (*)(const std::string*,
+                                              const std::string*);
+        using str_bool_operation = int (*)(const std::string*,
+                                           const std::string*);
+
         public:
             Vm (const std::vector<Bytecode*>&);
             ~Vm ();
@@ -39,7 +46,11 @@ namespace esl
             void call_module(Bytecode* instr);
 
             template<class Func>
-            void math(Func fun);
+            void math (Func fun);
+
+            void math_operation (int_operation, str_operation);
+            void bool_operation (int_operation, str_bool_operation);
+            void operation (esl::Value*& obj1, esl::Value*& obj2);
 
         private:
             std::stack<esl::ContentObject*> stack_;

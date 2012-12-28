@@ -61,7 +61,8 @@ void esl::Vm::run()
                 this->jump(instr, 0);
                 continue;
             case ARITH_ADD:
-                this->math(std::plus<int>());
+                this->math_operation(esl::Operation::add_int,
+                                     esl::Operation::add_str);
                 break;
             case ARITH_MINUS:
                 this->math(std::minus<int>());
@@ -76,22 +77,28 @@ void esl::Vm::run()
                 this->math(std::modulus<int>());
                 break;
             case BOOL_EQ:
-                this->math(std::equal_to<int>());
+                this->bool_operation(esl::Operation::eq_int,
+                                     esl::Operation::eq_str);
                 break;
             case BOOL_DIFF:
-                this->math(std::not_equal_to<int>());
+                this->bool_operation(esl::Operation::diff_int,
+                                     esl::Operation::diff_str);
                 break;
             case BOOL_GT:
-                this->math(std::greater<int>());
+                this->bool_operation(esl::Operation::gt_int,
+                                     esl::Operation::gt_str);
                 break;
             case BOOL_GE:
-                this->math(std::greater_equal<int>());
+                this->bool_operation(esl::Operation::ge_int,
+                                     esl::Operation::ge_str);
                 break;
             case BOOL_LT:
-                this->math(std::less<int>());
+                this->bool_operation(esl::Operation::lt_int,
+                                     esl::Operation::lt_str);
                 break;
             case BOOL_LE:
-                this->math(std::less_equal<int>());
+                this->bool_operation(esl::Operation::le_int,
+                                     esl::Operation::le_str);
                 break;
             case BOOL_OR:
                 this->math(std::logical_or<int>());
@@ -113,6 +120,64 @@ void esl::Vm::run()
         }
 
         this->runtime_->pc_incr(1);
+    }
+}
+
+void esl::Vm::math_operation(int_operation int_op, str_operation str_op)
+{
+    esl::Value* obj1 = nullptr;
+    esl::Value* obj2 = nullptr;
+
+    operation(obj1, obj2);
+
+    if (obj1->type_get() == O_INT)
+    {
+        int *res = new int;
+
+        *res = int_op((int*)obj2->content_get(), (int*)obj1->content_get());
+        this->stack_.push(new esl::Value(O_INT, res));
+    }
+    else /* TODO: check if it is string */
+    {
+        std::string* res = new std::string;
+
+        *res = str_op((std::string*)obj2->content_get(),
+                      (std::string*)obj1->content_get());
+
+        this->stack_.push(new esl::Value(O_STRING, res));
+    }
+}
+
+void esl::Vm::bool_operation(int_operation int_op, str_bool_operation str_op)
+{
+    esl::Value* obj1 = nullptr;
+    esl::Value* obj2 = nullptr;
+    int *res = new int;
+
+    operation(obj1, obj2);
+
+    if (obj1->type_get() == O_INT)
+        *res = int_op((int*)obj2->content_get(), (int*)obj1->content_get());
+    else /* TODO: check if it is string */
+        *res = str_op((std::string*)obj2->content_get(),
+                      (std::string*)obj1->content_get());
+
+    this->stack_.push(new esl::Value(O_INT, res));
+}
+
+void esl::Vm::operation (esl::Value*& obj1, esl::Value*& obj2)
+{
+    obj1 = static_cast<esl::Value*>(this->stack_.top());
+    this->stack_.pop();
+
+    obj2 = static_cast<esl::Value*>(this->stack_.top());
+    this->stack_.pop();
+
+    if (obj1 == nullptr || obj2 == nullptr ||
+        obj1->type_get() != obj2->type_get())
+    {
+        std::cout << "Bad Operation" << std::endl;
+        exit (3);
     }
 }
 
@@ -168,7 +233,11 @@ void esl::Vm::load_int (Bytecode* instr)
 
 void esl::Vm::load_str (Bytecode* instr)
 {
-    std::cout << "LOAD_STR not implemented will probably crash." << std::endl;
+    esl::Value* v = new esl::Value(O_STRING, nullptr);
+
+    v->content_set(RoData::instance_get()->get(instr->get_param()));
+
+    this->stack_.push(v);
 }
 
 void esl::Vm::function_return()
@@ -244,7 +313,9 @@ void esl::Vm::store(esl::Bytecode *instr)
     var_name = RoData::instance_get()->get(instr->get_param());
 
     /* TODO: check type of TOS */
-    if (this->stack_.top()->type_get() != O_INT || var_name == nullptr)
+    if ((this->stack_.top()->type_get() != O_INT &&
+        this->stack_.top()->type_get() != O_STRING) ||
+        var_name == nullptr)
     {
         std::cout << "BUG ISSUE esl::VM::Store" << std::endl;
     }

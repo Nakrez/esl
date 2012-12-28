@@ -31,6 +31,7 @@ esl_SOURCES =   src/utils/ast.cc src/utils/ast.hh \
 		src/parser/driver.cc src/parser/driver.hh \
 		src/compile/compiler.cc src/compile/compiler.hh \
 		src/execute/vm.cc src/execute/vm.hh src/execute/vm.hxx \
+		src/execute/operation.cc src/execute/operation.hh \
 		src/main.cc
 
 esl_CXXFLAGS = -pedantic -Wall -Wextra -std=c++0x
@@ -57,6 +58,8 @@ clear: distclean
 	rm -f src/parser/lexer.cc
 	rm -f *.eslc
 	rm -f *.png
+	rm -f tags
+	rm -f src/tags
 
 esl-check: all
 	./check/check.sh

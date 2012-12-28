@@ -15,6 +15,7 @@
 
 %x COMMENT_SIMPLE
 %x COMMENT_MULTI
+%x LITTERAL
 
 %%
 %{
@@ -60,18 +61,35 @@
 "and"                   return token::TOK_AND;
 "or"                    return token::TOK_OR;
 
-\"(\\.|[^\\"])*\"       {
-                            yylval->sval = new std::string(yytext,
-                                                           1,
-                                                           yyleng - 2);
-                            return token::TOK_STRING;
+<LITTERAL>"\""          BEGIN(INITIAL); return token::TOK_STRING;
+<LITTERAL>\\[\\"nr]     {
+                            if (yylval->sval)
+                                *(yylval->sval) += yytext;
+                            else
+                                yylval->sval = new std::string(yytext);
+                            yylloc->step();
                         }
+<LITTERAL>\\.           {
+                          std::string err = "scan error, unreconized escape : ";
+                          err += yytext;
+                          driver.error(*yylloc, err);
+                          yylloc->step();
+                        }
+<LITTERAL>[^\\"]*       {
+                            if (yylval->sval)
+                                *(yylval->sval) += yytext;
+                            else
+                                yylval->sval = new std::string(yytext);
+                            yylloc->step();
+                        }
+"\""                    BEGIN(LITTERAL); yylval->sval = nullptr;
 
 [a-z_A-Z][a-zA-Z_0-9]*  {
                             yylval->sval = new std::string(yytext);
                             return token::TOK_ID;
                         }
 "=="                    return token::TOK_BIN_EQ;
+"<>"                    return token::TOK_DIFF;
 "!="                    return token::TOK_DIFF;
 ">"                     return token::TOK_GT;
 ">="                    return token::TOK_GE;
@@ -101,6 +119,12 @@
                         }
 [ \t]+                  yylloc->step();
 
+.                       {
+                          std::string err = "scan error, unknow character : '";
+                          err += yytext;
+                          err += "'";
+                          driver.error(*yylloc, err); 
+                        }
 %%
 
 void Driver::scan_begin()

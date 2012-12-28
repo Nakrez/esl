@@ -30,6 +30,7 @@ namespace esl
             void compile_operation(Ast*, instr);
             void compile_loop(Ast*, instr);
             void compile_number(Ast*);
+            void compile_string(Ast*);
             void compile_identifier(Ast*);
             void compile_if(Ast*);
             void compile_function(Ast*);
@@ -44,4 +45,4 @@ namespace esl
             std::vector<Bytecode*> byte_code_;
     };
 }
-#endif /* COMPILER_HH */
+#endif /* !COMPILER_HH */
