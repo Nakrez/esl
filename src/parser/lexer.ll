@@ -89,6 +89,7 @@
                             return token::TOK_ID;
                         }
 "=="                    return token::TOK_BIN_EQ;
+"<>"                    return token::TOK_DIFF;
 "!="                    return token::TOK_DIFF;
 ">"                     return token::TOK_GT;
 ">="                    return token::TOK_GE;
