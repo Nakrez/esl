@@ -308,8 +308,10 @@ void esl::Vm::load_int (Bytecode* instr)
 void esl::Vm::load_str (Bytecode* instr)
 {
     esl::Value* v = new esl::Value(O_STRING, nullptr);
+    std::string* str = new std::string;
 
-    v->content_set(RoData::instance_get()->get(instr->get_param()));
+    *str = *(RoData::instance_get()->get(instr->get_param()));
+    v->content_set(str);
 
     this->stack_.push(v);
 }

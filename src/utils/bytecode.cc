@@ -52,8 +52,6 @@ esl::Bytecode::Bytecode (instr type, int param)
 {
     this->type_ = type;
     this->param_ = param;
-    if (type == STORE && param == -1)
-        std::cout << "FDSF" << std::endl;
 }
 
 esl::Bytecode::~Bytecode ()

@@ -21,6 +21,7 @@
 [PARSER/COMPILER/VM] continue statement
 [AST/BYTECODE/VM] Add locations info
 [LEXER] Add escape chars in strings
+[PARSER/COMPILER] Add array declaration with { }
 [VM] Type float instead of int
 [VM] O_PRIVATE_TYPE for internal type of APIs that cannot be used
 [LIB] API ESL -> C++

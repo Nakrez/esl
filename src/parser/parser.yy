@@ -50,6 +50,7 @@ class Driver;
 %token TOK_END "end" TOK_IMPORT "import" TOK_INCLUDE "include"
 %token TOK_FUNCTION "function" TOK_RETURN "return"
 %token TOK_FOR "for" TOK_DO "do" TOK_WHILE "while" TOK_UNTIL "until"
+%token TOK_BRACKET_OP "[" TOK_BRACKET_CL "]"
 
 %token <sval> TOK_ID "identifier"  TOK_STRING "string"
 %token <ival> TOK_DIGIT "digit"
