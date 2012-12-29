@@ -40,6 +40,17 @@ esl::Ast::Ast(token tok, std::string *content)
         delete content;
 }
 
+esl::Ast::Ast(token tok, esl::Ast* son)
+{
+    this->tok_ = tok;
+    this->rbro_ = nullptr;
+    this->fson_ = nullptr;
+    this->content_ = -1;
+
+    add(son);
+}
+
+
 esl::Ast::~Ast()
 {
     delete rbro_;

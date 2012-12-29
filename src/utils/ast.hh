@@ -16,7 +16,8 @@ namespace esl
         public:
             Ast();
             Ast(token tok);
-            Ast(token tok, std::string *content);
+            Ast(token tok, std::string* content);
+            Ast(token tok, Ast* content);
             Ast(token tok, int content);
             ~Ast();
 

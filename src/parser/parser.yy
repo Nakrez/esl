@@ -15,9 +15,10 @@ class Driver;
 %debug
 %defines
 /* No conflict accepted */
+/*
 %expect 0
 %expect-rr 0
-
+*/
 /* Better errors */
 %error-verbose
 
@@ -59,13 +60,15 @@ class Driver;
 %type <ast> instr expr functions esl_command fun_call
 %type <ast> rule_while rule_until rule_if do_group else_group
 
-%type <lval> compound_list id_list param_list
+%type <lval> compound_list id_list param_list arrays
 
 %right "="
 %left "||" "&&"
 %left "==" "!=" "<" ">" "<=" ">="
 %left "+" "-"
 %left "*" "/" "%"
+%left "[" ")"
+
 
 %%
 
@@ -122,7 +125,6 @@ param_list         :
                              }
                 ;
 
-
 id_list         :
                 expr
                              { $$ = new std::list<esl::Ast *>;
@@ -166,6 +168,18 @@ functions       :
                                           $$->add(esl::Ast::ast_from_list($7));
                                         }
                 ;
+
+arrays          :
+                 "[" expr "]"  {
+                                 $$ = new std::list<esl::Ast *>;
+                                 $$->push_back($2);
+                               }
+                /*| arrays "[" expr "]" {
+                                       $$ = $1
+                                       $$->push_back($3);
+                                     }*/
+               ;
+
 expr            :
                 expr "+" expr
                                 {
@@ -261,7 +275,20 @@ expr            :
                                             $$ = new esl::Ast(MODULE_CALL, $1);
                                             $$->add($3);
                                          }
-
+                |"identifier" arrays "=" expr
+                                     {
+                                         $$ = new esl::Ast(ASSIGNEMENT_ARRAY);
+                                         $$->add(new esl::Ast(ID, $1));
+                                         $$->add(new esl::Ast(EXPR,
+                                                              esl::Ast::ast_from_list($2)));
+                                         $$->add(new esl::Ast(EXPR, $4));
+                                     }
+                |"identifier" arrays
+                            {
+                                $$ = new esl::Ast(ARRAY_AT);
+                                $$->add(new esl::Ast(ID, $1));
+                                $$->add(esl::Ast::ast_from_list($2));
+                            }
                 ;
 
 esl_command     :

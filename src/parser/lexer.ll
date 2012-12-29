@@ -107,6 +107,8 @@
 "("                     return token::TOK_PAROPEN;
 ")"                     return token::TOK_PARCLOSE;
 "."                     return token::TOK_DOT;
+"["                     return token::TOK_BRACKET_OP;
+"]"                     return token::TOK_BRACKET_CL;
 
 [0-9]+                  {
                             yylval->ival = atoi(yytext);

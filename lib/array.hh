@@ -11,7 +11,7 @@ namespace esl
     class Array
     {
         public:
-            Array ();
+            Array (unsigned int size);
             ~Array ();
 
             esl::Value* at (unsigned int);

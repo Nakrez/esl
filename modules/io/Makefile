@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Wextra -std=c++0x -fPIC
+CFLAGS = -g -Wall -Wextra -std=c++0x -fPIC
 
 OBJ = io.o
 

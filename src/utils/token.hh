@@ -10,6 +10,8 @@ enum token
     LIST_ID,
 
     ASSIGNEMENT,
+    ASSIGNEMENT_ARRAY,
+
     FUNCTION_CALL,
 
     FUNCTION_DECL,
@@ -23,6 +25,7 @@ enum token
 
     IF,
 
+    ARRAY_AT,
     EXPR,
 
     ADD,
@@ -54,6 +57,8 @@ const static std::string token_string[] =
     "LIST_ID",
 
     "ASSIGNEMENT",
+    "ASSIGNEMENT_ARRAY",
+
     "FUNCTION_CALL",
 
     "FUNCTION_DECL",
@@ -64,6 +69,8 @@ const static std::string token_string[] =
     "IMPORT",
     "MODULE_CALL",
     "IF",
+
+    "ARRAY_AT",
 
     "EXPR",
 

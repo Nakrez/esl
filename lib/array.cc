@@ -1,8 +1,9 @@
 #include "array.hh"
 
-esl::Array::Array ()
+esl::Array::Array (unsigned int size)
 {
-
+    for (unsigned i = 0; i < size; ++i)
+        data_.push_back(new esl::Value(O_NIL, nullptr));
 }
 
 esl::Array::~Array ()

@@ -151,7 +151,7 @@ void esl::Vm::store_stk ()
     tos1 = static_cast<esl::Value*>(this->stack_.top());
 
     tos->type_set(tos1->type_get());
-    tos->content_set(tos->content_get());
+    tos->content_set(tos1->content_get());
 }
 
 void esl::Vm::array_val ()
@@ -167,12 +167,18 @@ void esl::Vm::array_val ()
 
     if (tos1->type_get() != O_ARRAY ||
         tos->type_get() != O_INT)
+    {
+        std::cout << *((int*)(tos1->content_get())) << std::endl;
+        std::cout << *((int*)(tos->content_get())) << std::endl;
+
         throw Exception ("Illegal array access. Is this an array ? Or the \
                           access a number ?");
+    }
 
     int* value = static_cast<int*> (tos->content_get());
     esl::Array* array = static_cast<esl::Array*> (tos1->content_get());
 
+    //std::cout << "AR_VAL "<< *((int*)(array->at (*value)->content_get())) << std::endl;
     this->stack_.push(array->at (*value));
 }
 
@@ -393,7 +399,8 @@ void esl::Vm::store(esl::Bytecode *instr)
 
     /* TODO: check type of TOS */
     if ((this->stack_.top()->type_get() != O_INT &&
-        this->stack_.top()->type_get() != O_STRING) ||
+         this->stack_.top()->type_get() != O_STRING &&
+         this->stack_.top()->type_get() != O_ARRAY) ||
         var_name == nullptr)
     {
         std::cout << "BUG ISSUE esl::VM::Store" << std::endl;
