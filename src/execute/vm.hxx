@@ -8,17 +8,14 @@ void esl::Vm::math(Func fun)
     obj1 = static_cast<esl::Value*>(this->stack_.top());
 
     if (obj1 == nullptr || obj1->type_get() != O_INT)
-        throw MathException();
+        throw Exception ("Illegal operation -- Wrong type ?");
 
     this->stack_.pop();
 
     obj2 = static_cast<esl::Value*>(this->stack_.top());
 
     if (obj2 == nullptr || obj2->type_get() != O_INT)
-    {
-        std::cout << obj2->type_get() << std::endl;
-        throw MathException();
-    }
+        throw Exception ("Illegal operation -- Wrong type ?");
 
     this->stack_.pop();
 
@@ -26,7 +23,7 @@ void esl::Vm::math(Func fun)
     int *op2 = static_cast<int*>(obj2->content_get());
 
     if (op1 == nullptr || op2 == nullptr)
-        throw MathException();
+        throw Exception ("Illegal operation -- Wrong type ?");
 
     int *result = new int;
     *result = fun(*op2, *op1);

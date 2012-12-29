@@ -10,6 +10,8 @@ enum obj_type
     O_VALUE,
     O_INT,
     O_STRING,
+    O_ARRAY,
+    O_PRIVATE_DATA,
     O_RUNTIME
 };
 

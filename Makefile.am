@@ -16,7 +16,9 @@ libesl_la_SOURCES = lib/class-def.cc lib/class-def.hh \
 		    lib/executable-context.cc lib/executable-context.hh \
 		    lib/params.cc lib/params.hh \
 		    lib/object.cc lib/object.hh \
-		    lib/module.cc lib/module.hh
+		    lib/module.cc lib/module.hh \
+		    lib/array.cc lib/array.hh \
+		    lib/exception.cc lib/exception.hh
 
 libesl_la_LDFLAGS = -version-info 1:0:0
 libesl_la_CXXFLAGS = -Wall -Wextra -std=c++0x

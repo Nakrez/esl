@@ -9,7 +9,7 @@
 # include "../../lib/executable-context.hh"
 # include "../../lib/params.hh"
 # include "../../lib/empty-stack-exception.hh"
-# include "../../lib/math-exception.hh"
+# include "../../lib/exception.hh"
 # include "../../lib/module.hh"
 # include "../utils/bytecode.hh"
 # include "../utils/ro-data.hh"
