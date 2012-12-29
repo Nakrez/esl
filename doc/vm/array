@@ -24,19 +24,21 @@ Implementation
 
 name[0] =>
 LOAD name
-ARRAY_VAL 0
+LOAD_CST
+ARRAY_VAL
 
----> Load esl::Value* contains in case 0
+---> Load esl::Value* contains in case TOS1[TOS]
 
 name[0] = 1 =>
 LOAD_INT 1
 LOAD name
-ARRAY_VAL 0
+LOAD_CST 0
+ARRAY_VAL
 STORE_STK
 
-ARRAY_VAL i =>
+ARRAY_VAL =>
 
-Push in the stack TOS[i]
+Push in the stack TOS1[TOS]
 
 ---
 

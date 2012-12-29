@@ -11,9 +11,11 @@
 # include "../../lib/empty-stack-exception.hh"
 # include "../../lib/exception.hh"
 # include "../../lib/module.hh"
+# include "../../lib/array.hh"
 # include "../utils/bytecode.hh"
 # include "../utils/ro-data.hh"
 # include "operation.hh"
+
 
 namespace esl
 {
@@ -33,15 +35,20 @@ namespace esl
 
         private:
             void store (Bytecode* instr);
+            void store_stk ();
+
             void load (Bytecode* instr);
             void load_int (Bytecode* instr);
             void load_str (Bytecode* instr);
+            void array_val ();
+
             void jump (Bytecode* instr);
             void jump (Bytecode* instr, int);
+
             void register_function (Bytecode* instr);
             void call_function (Bytecode* instr);
             void function_return ();
-            void print ();
+
             void setup_module(Bytecode* instr);
             void module(Bytecode* instr);
             void call_module(Bytecode* instr);

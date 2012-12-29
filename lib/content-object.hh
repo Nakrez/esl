@@ -28,6 +28,7 @@ namespace esl
             obj_type type_get () const;
 
             void content_set (void* content);
+            void type_set (obj_type);
 
         protected:
             obj_type type_;

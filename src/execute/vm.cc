@@ -53,8 +53,14 @@ void esl::Vm::run()
             case LOAD:
                 this->load(instr);
                 break;
+            case ARRAY_VAL:
+                this->array_val();
+                break;
             case STORE:
                 this->store(instr);
+                break;
+            case STORE_STK:
+                this->store_stk();
                 break;
             case MAKE_FUNCTION:
                 this->register_function(instr);
@@ -132,6 +138,42 @@ void esl::Vm::run()
 
         this->runtime_->pc_incr(1);
     }
+}
+
+void esl::Vm::store_stk ()
+{
+    esl::Value* tos = nullptr;
+    esl::Value* tos1 = nullptr;
+
+    tos = static_cast<esl::Value*>(this->stack_.top());
+    this->stack_.pop();
+
+    tos1 = static_cast<esl::Value*>(this->stack_.top());
+
+    tos->type_set(tos1->type_get());
+    tos->content_set(tos->content_get());
+}
+
+void esl::Vm::array_val ()
+{
+    esl::Value* tos = nullptr;
+    esl::Value* tos1 = nullptr;
+
+    tos = static_cast<esl::Value*>(this->stack_.top());
+    this->stack_.pop();
+
+    tos1 = static_cast<esl::Value*>(this->stack_.top());
+    this->stack_.pop();
+
+    if (tos1->type_get() != O_ARRAY ||
+        tos->type_get() != O_INT)
+        throw Exception ("Illegal array access. Is this an array ? Or the \
+                          access a number ?");
+
+    int* value = static_cast<int*> (tos->content_get());
+    esl::Array* array = static_cast<esl::Array*> (tos1->content_get());
+
+    this->stack_.push(array->at (*value));
 }
 
 void esl::Vm::math_operation(int_operation int_op, str_operation str_op)

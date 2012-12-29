@@ -31,3 +31,8 @@ void esl::ContentObject::content_set (void* content)
 {
     this->content_ = content;
 }
+
+void esl::ContentObject::type_set (obj_type type)
+{
+    this->type_ = type;
+}

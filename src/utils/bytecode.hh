@@ -52,6 +52,7 @@ enum instr
     ** Don't perfrom POP
     */
     STORE,
+    STORE_STK,
     /*
     ** Push the value of the variable name in the stack
     */
@@ -59,9 +60,9 @@ enum instr
 
     LOAD_INT,
     LOAD_STR,
-    /*
-    **
-    */
+
+    ARRAY_VAL,
+
     OPEN,
     MODULE,
     CALL_MODULE,

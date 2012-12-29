@@ -23,9 +23,13 @@ const static std::string instr_string[] =
     "BOOL_OR",
 
     "STORE",
+    "SOTRE_STK",
+
     "LOAD",
     "LOAD_INT",
     "LOAD_STR",
+
+    "ARRAY_VAL",
 
     "OPEN",
     "MODULE",
