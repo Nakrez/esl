@@ -98,6 +98,8 @@ void esl::Compiler::compile(esl::Ast *ast)
                              break;
         case LIST:  compile_list(ast);
                     break;
+        case LIST_ID:  compile_list_id(ast);
+                    break;
         case RETURN_STM:  compile_return(ast);
                           break;
         case WHILE:  compile_loop(ast, JUMP_IF_FALSE);
@@ -172,6 +174,22 @@ void esl::Compiler::compile_return(esl::Ast* ast)
     byte_code_.push_back(new esl::Bytecode(RETURN));
 }
 
+void esl::Compiler::compile_list_id(esl::Ast* ast)
+{
+    esl::Ast* temp_ast = nullptr;
+
+    temp_ast = ast->get_fson();
+
+    while (temp_ast)
+    {
+        byte_code_.push_back(new esl::Bytecode(STORE,
+                                               temp_ast->get_content()));
+        byte_code_.push_back(new esl::Bytecode(POP));
+
+        temp_ast = temp_ast->get_rbro();
+    }
+}
+
 void esl::Compiler::compile_list(esl::Ast* ast)
 {
     esl::Ast* temp_ast = nullptr;
@@ -180,14 +198,7 @@ void esl::Compiler::compile_list(esl::Ast* ast)
 
     while (temp_ast)
     {
-        if (temp_ast->get_token() == ID)
-        {
-            byte_code_.push_back(new esl::Bytecode(STORE,
-                                                   temp_ast->get_content()));
-            byte_code_.push_back(new esl::Bytecode(POP));
-        }
-        else
-            compile(temp_ast);
+        compile(temp_ast);
 
         temp_ast = temp_ast->get_rbro();
     }

@@ -5,7 +5,9 @@ enum token
 {
     EMPTY,
     STATEMENTS,
+
     LIST,
+    LIST_ID,
 
     ASSIGNEMENT,
     FUNCTION_CALL,
@@ -47,7 +49,9 @@ const static std::string token_string[] =
 {
     "EMPTY",
     "STATEMENTS",
+
     "LIST",
+    "LIST_ID",
 
     "ASSIGNEMENT",
     "FUNCTION_CALL",

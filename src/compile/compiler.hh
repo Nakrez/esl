@@ -36,6 +36,7 @@ namespace esl
             void compile_function(Ast*);
             void compile_call(Ast*);
             void compile_list(Ast*);
+            void compile_list_id(Ast*);
             void compile_import(Ast*);
             void compile_return(Ast*);
             void compile_module_call(Ast*);
