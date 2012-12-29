@@ -56,6 +56,10 @@ void esl::Compiler::compile(esl::Ast *ast)
                          break;
         case ASSIGNEMENT: compile_assignement(ast);
                           break;
+        case ASSIGNEMENT_ARRAY: compile_assignement_array(ast);
+                          break;
+        case ARRAY_AT: compile_array_at(ast);
+                       break;
         case ADD: compile_operation(ast, ARITH_ADD);
                   break;
         case MINUS: compile_operation(ast, ARITH_MINUS);
@@ -98,6 +102,8 @@ void esl::Compiler::compile(esl::Ast *ast)
                              break;
         case LIST:  compile_list(ast);
                     break;
+        case LIST_ID:  compile_list_id(ast);
+                       break;
         case RETURN_STM:  compile_return(ast);
                           break;
         case WHILE:  compile_loop(ast, JUMP_IF_FALSE);
@@ -109,6 +115,39 @@ void esl::Compiler::compile(esl::Ast *ast)
         case MODULE_CALL:  compile_module_call(ast);
                            break;
         default : break;
+    }
+}
+
+void esl::Compiler::compile_assignement_array(Ast* ast)
+{
+    esl::Ast* temp_ast = ast->get_fson()->get_rbro()->get_fson();
+
+    compile(ast->get_fson()->get_rbro()->get_rbro());
+
+    compile(ast->get_fson());
+
+    while (temp_ast)
+    {
+        compile(temp_ast);
+        byte_code_.push_back(new esl::Bytecode(ARRAY_VAL));
+        temp_ast = temp_ast->get_rbro();
+    }
+
+    byte_code_.push_back(new esl::Bytecode(STORE_STK));
+    byte_code_.push_back(new esl::Bytecode(POP));
+}
+
+void esl::Compiler::compile_array_at(Ast* ast)
+{
+    esl::Ast* temp_ast = ast->get_fson()->get_rbro();
+
+    compile(ast->get_fson());
+
+    while (temp_ast)
+    {
+        compile(temp_ast);
+        byte_code_.push_back(new esl::Bytecode(ARRAY_VAL));
+        temp_ast = temp_ast->get_rbro();
     }
 }
 
@@ -172,6 +211,22 @@ void esl::Compiler::compile_return(esl::Ast* ast)
     byte_code_.push_back(new esl::Bytecode(RETURN));
 }
 
+void esl::Compiler::compile_list_id(esl::Ast* ast)
+{
+    esl::Ast* temp_ast = nullptr;
+
+    temp_ast = ast->get_fson();
+
+    while (temp_ast)
+    {
+        byte_code_.push_back(new esl::Bytecode(STORE,
+                                               temp_ast->get_content()));
+        byte_code_.push_back(new esl::Bytecode(POP));
+
+        temp_ast = temp_ast->get_rbro();
+    }
+}
+
 void esl::Compiler::compile_list(esl::Ast* ast)
 {
     esl::Ast* temp_ast = nullptr;
@@ -180,14 +235,7 @@ void esl::Compiler::compile_list(esl::Ast* ast)
 
     while (temp_ast)
     {
-        if (temp_ast->get_token() == ID)
-        {
-            byte_code_.push_back(new esl::Bytecode(STORE,
-                                                   temp_ast->get_content()));
-            byte_code_.push_back(new esl::Bytecode(POP));
-        }
-        else
-            compile(temp_ast);
+        compile(temp_ast);
 
         temp_ast = temp_ast->get_rbro();
     }
@@ -215,7 +263,7 @@ void esl::Compiler::compile_function(esl::Ast* ast)
     /* If there is param LOAD them in the stack */
     if (ast->get_fson()->get_token() != EMPTY)
     {
-        compile_list(ast->get_fson());
+        compile_list_id(ast->get_fson());
         jump_addr = byte_code_.size() - code_size - 1;
         avoid = 0;
     }

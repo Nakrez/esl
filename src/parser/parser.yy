@@ -15,8 +15,10 @@ class Driver;
 %debug
 %defines
 /* No conflict accepted */
+/*
 %expect 0
-
+%expect-rr 0
+*/
 /* Better errors */
 %error-verbose
 
@@ -50,19 +52,23 @@ class Driver;
 %token TOK_END "end" TOK_IMPORT "import" TOK_INCLUDE "include"
 %token TOK_FUNCTION "function" TOK_RETURN "return"
 %token TOK_FOR "for" TOK_DO "do" TOK_WHILE "while" TOK_UNTIL "until"
+%token TOK_BRACKET_OP "[" TOK_BRACKET_CL "]"
 
 %token <sval> TOK_ID "identifier"  TOK_STRING "string"
 %token <ival> TOK_DIGIT "digit"
 
-%type <ast> instr expr simple_instr functions esl_command fun_call
+%type <ast> instr expr functions esl_command fun_call
 %type <ast> rule_while rule_until rule_if do_group else_group
 
-%type <lval> compound_list id_list param_list
+%type <lval> compound_list id_list param_list arrays
 
+%right "="
 %left "||" "&&"
 %left "==" "!=" "<" ">" "<=" ">="
 %left "+" "-"
 %left "*" "/" "%"
+%left "[" ")"
+
 
 %%
 
@@ -71,7 +77,7 @@ input   :
         ;
 
 instr   :
-        simple_instr "\n" { $$ = $1; }
+        expr "\n" { $$ = $1; }
         |functions "\n" { $$ = $1; }
         |esl_command "\n" { $$ = $1; }
         |"\n" { $$ = nullptr; }
@@ -81,11 +87,18 @@ instr   :
         ;
 
 compound_list   :
-                simple_instr "\n" { $$ = new std::list<esl::Ast *>;
+                expr "\n" { $$ = new std::list<esl::Ast *>;
                                     $$->push_back($1); }
+                |"return" expr "\n"
+                        {
+                          $$ = new std::list<esl::Ast*>;
+                          esl::Ast* tmp = new esl::Ast(RETURN_STM);
+                          tmp->add($2);
+                          $$->push_back(tmp);
+                        }
                 |esl_command "\n"  { $$ = new std::list<esl::Ast *>;
                                     $$->push_back($1); }
-                | compound_list simple_instr "\n"
+                | compound_list expr "\n"
                                     { $$ = $1;
                                     $$->push_back($2); }
                 | compound_list esl_command "\n"
@@ -112,21 +125,20 @@ param_list         :
                              }
                 ;
 
-
 id_list         :
-                simple_instr
+                expr
                              { $$ = new std::list<esl::Ast *>;
                                $$->push_back($1);
                              }
-                |simple_instr "\n"
+                |expr "\n"
                              { $$ = new std::list<esl::Ast *>;
                                $$->push_back($1);
                              }
-                | id_list "," simple_instr
+                | id_list "," expr
                              { $$ = $1;
                                $$->push_back($3);
                              }
-                | id_list "," simple_instr "\n"
+                | id_list "," expr "\n"
                              { $$ = $1;
                                $$->push_back($3);
                              }
@@ -141,25 +153,6 @@ fun_call        :
                                         $$->get_fson()->set_token(LIST);
                                       }
                 ;
-simple_instr    :
-                expr { $$ = new esl::Ast(EXPR); $$->add($1); }
-                |fun_call { $$ = $1; }
-                |"identifier" "=" simple_instr {
-                                         $$ = new esl::Ast(ASSIGNEMENT);
-                                         $$->add(new esl::Ast(ID, $1));
-                                         $$->add($3);
-                                       }
-                |"return" expr  {
-                                    $$ = new esl::Ast(RETURN_STM);
-                                    $$->add($2);
-                                }
-                |"identifier" "." fun_call
-                                         {
-                                            $$ = new esl::Ast(MODULE_CALL, $1);
-                                            $$->add($3);
-                                         }
-
-                ;
 functions       :
                 "function" "identifier" "(" ")" "\n" compound_list "end"
                                         {
@@ -171,10 +164,22 @@ functions       :
                                         {
                                           $$ = new esl::Ast(FUNCTION_DECL, $2);
                                           $$->add(esl::Ast::ast_from_list($4));
-                                          $$->get_fson()->set_token(LIST);
+                                          $$->get_fson()->set_token(LIST_ID);
                                           $$->add(esl::Ast::ast_from_list($7));
                                         }
                 ;
+
+arrays          :
+                 "[" expr "]"  {
+                                 $$ = new std::list<esl::Ast *>;
+                                 $$->push_back($2);
+                               }
+                /*| arrays "[" expr "]" {
+                                       $$ = $1
+                                       $$->push_back($3);
+                                     }*/
+               ;
+
 expr            :
                 expr "+" expr
                                 {
@@ -259,6 +264,31 @@ expr            :
                 |"digit" { $$ = new esl::Ast(NUMBER, $1); }
                 |"string" { $$ = new esl::Ast(STRING, $1); }
                 |"identifier" { $$ = new esl::Ast(ID, $1); }
+                |fun_call { $$ = $1; }
+                |"identifier" "=" expr {
+                                         $$ = new esl::Ast(ASSIGNEMENT);
+                                         $$->add(new esl::Ast(ID, $1));
+                                         $$->add($3);
+                                       }
+                |"identifier" "." fun_call
+                                         {
+                                            $$ = new esl::Ast(MODULE_CALL, $1);
+                                            $$->add($3);
+                                         }
+                |"identifier" arrays "=" expr
+                                     {
+                                         $$ = new esl::Ast(ASSIGNEMENT_ARRAY);
+                                         $$->add(new esl::Ast(ID, $1));
+                                         $$->add(new esl::Ast(EXPR,
+                                                              esl::Ast::ast_from_list($2)));
+                                         $$->add(new esl::Ast(EXPR, $4));
+                                     }
+                |"identifier" arrays
+                            {
+                                $$ = new esl::Ast(ARRAY_AT);
+                                $$->add(new esl::Ast(ID, $1));
+                                $$->add(esl::Ast::ast_from_list($2));
+                            }
                 ;
 
 esl_command     :
@@ -268,7 +298,7 @@ esl_command     :
                 ;
 
 rule_if         :
-                "if" simple_instr "then" "\n" compound_list else_group "end"
+                "if" expr "then" "\n" compound_list else_group "end"
                                                     {
                                                       $$ = new esl::Ast(IF);
                                                       $$->add($2);
@@ -276,7 +306,7 @@ rule_if         :
                                                       $$->add($6);
                                                     }
 
-                |"if" simple_instr "then" "\n" compound_list "end"
+                |"if" expr "then" "\n" compound_list "end"
                                                     {
                                                       $$ = new esl::Ast(IF);
                                                       $$->add($2);
@@ -286,13 +316,13 @@ rule_if         :
 
 else_group      :
                 "else" "\n" compound_list { $$ = esl::Ast::ast_from_list($3); }
-                |"elif" simple_instr "then" "\n" compound_list
+                |"elif" expr "then" "\n" compound_list
                                                 {
                                                   $$ = new esl::Ast(IF);
                                                   $$->add($2);
                                                   $$->add(esl::Ast::ast_from_list($5));
                                                 }
-                |"elif" simple_instr "then" "\n" compound_list else_group
+                |"elif" expr "then" "\n" compound_list else_group
                                                 {
                                                   $$ = new esl::Ast(IF);
                                                   $$->add($2);
@@ -302,7 +332,7 @@ else_group      :
                 ;
 
 rule_while      :
-                "while" simple_instr do_group {
+                "while" expr do_group {
                                                 $$ = new esl::Ast(WHILE);
                                                 $$->add($2);
                                                 $$->add($3);
@@ -310,7 +340,7 @@ rule_while      :
                 ;
 
 rule_until      :
-                "until" simple_instr do_group {
+                "until" expr do_group {
                                                 $$ = new esl::Ast(UNTIL);
                                                 $$->add($2);
                                                 $$->add($3);

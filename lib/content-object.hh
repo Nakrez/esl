@@ -10,6 +10,8 @@ enum obj_type
     O_VALUE,
     O_INT,
     O_STRING,
+    O_ARRAY,
+    O_PRIVATE_DATA,
     O_RUNTIME
 };
 
@@ -26,6 +28,7 @@ namespace esl
             obj_type type_get () const;
 
             void content_set (void* content);
+            void type_set (obj_type);
 
         protected:
             obj_type type_;

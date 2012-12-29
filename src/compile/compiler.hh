@@ -27,6 +27,8 @@ namespace esl
             void compile(Ast*);
             void compile_statements(Ast*);
             void compile_assignement(Ast*);
+            void compile_assignement_array(Ast*);
+            void compile_array_at(Ast*);
             void compile_operation(Ast*, instr);
             void compile_loop(Ast*, instr);
             void compile_number(Ast*);
@@ -36,6 +38,7 @@ namespace esl
             void compile_function(Ast*);
             void compile_call(Ast*);
             void compile_list(Ast*);
+            void compile_list_id(Ast*);
             void compile_import(Ast*);
             void compile_return(Ast*);
             void compile_module_call(Ast*);

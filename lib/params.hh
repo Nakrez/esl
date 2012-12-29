@@ -1,7 +1,7 @@
 #ifndef ESL_PARAMS_HH
 # define ESL_PARAMS_HH
 
-# include <vector>
+# include <deque>
 
 # include "object.hh"
 # include "value.hh"
@@ -20,7 +20,7 @@ namespace esl
             void params_set (Value*);
 
         private:
-            std::vector<Value*> params_;
+            std::deque<Value*> params_;
     };
 }
 

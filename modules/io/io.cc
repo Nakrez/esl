@@ -10,14 +10,14 @@ esl::ContentObject* Io::print (esl::Params* params)
     for (int i = 0; i < params->count(); ++i)
     {
         if (params->get_params(i + 1)->type_get() == O_INT)
-            std::cout << *((int*)(params->get_params(i + 1)->content_get()))
-                      << std::endl;
+            std::cout << *((int*)(params->get_params(i + 1)->content_get()));
         else if (params->get_params(i + 1)->type_get() == O_STRING)
-            std::cout << *((std::string*)(params->get_params(i + 1)->content_get()))
-                      << std::endl;
+            std::cout << *((std::string*)(params->get_params(i + 1)->content_get()));
         else
-            std::cout << "nil" << std::endl;
+            std::cout << "nil";
     }
+
+    std::cout << std::endl;
 
     return new esl::ContentObject(O_NIL, nullptr);
 }

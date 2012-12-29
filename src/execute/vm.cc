@@ -53,8 +53,14 @@ void esl::Vm::run()
             case LOAD:
                 this->load(instr);
                 break;
+            case ARRAY_VAL:
+                this->array_val();
+                break;
             case STORE:
                 this->store(instr);
+                break;
+            case STORE_STK:
+                this->store_stk();
                 break;
             case MAKE_FUNCTION:
                 this->register_function(instr);
@@ -134,6 +140,48 @@ void esl::Vm::run()
     }
 }
 
+void esl::Vm::store_stk ()
+{
+    esl::Value* tos = nullptr;
+    esl::Value* tos1 = nullptr;
+
+    tos = static_cast<esl::Value*>(this->stack_.top());
+    this->stack_.pop();
+
+    tos1 = static_cast<esl::Value*>(this->stack_.top());
+
+    tos->type_set(tos1->type_get());
+    tos->content_set(tos1->content_get());
+}
+
+void esl::Vm::array_val ()
+{
+    esl::Value* tos = nullptr;
+    esl::Value* tos1 = nullptr;
+
+    tos = static_cast<esl::Value*>(this->stack_.top());
+    this->stack_.pop();
+
+    tos1 = static_cast<esl::Value*>(this->stack_.top());
+    this->stack_.pop();
+
+    if (tos1->type_get() != O_ARRAY ||
+        tos->type_get() != O_INT)
+    {
+        std::cout << *((int*)(tos1->content_get())) << std::endl;
+        std::cout << *((int*)(tos->content_get())) << std::endl;
+
+        throw Exception ("Illegal array access. Is this an array ? Or the \
+                          access a number ?");
+    }
+
+    int* value = static_cast<int*> (tos->content_get());
+    esl::Array* array = static_cast<esl::Array*> (tos1->content_get());
+
+    //std::cout << "AR_VAL "<< *((int*)(array->at (*value)->content_get())) << std::endl;
+    this->stack_.push(array->at (*value));
+}
+
 void esl::Vm::math_operation(int_operation int_op, str_operation str_op)
 {
     esl::Value* obj1 = nullptr;
@@ -186,10 +234,7 @@ void esl::Vm::operation (esl::Value*& obj1, esl::Value*& obj2)
 
     if (obj1 == nullptr || obj2 == nullptr ||
         obj1->type_get() != obj2->type_get())
-    {
-        std::cout << "Bad Operation" << std::endl;
-        exit (3);
-    }
+        throw Exception("Bad Operation");
 }
 
 std::string esl::Vm::module_path(const std::string& mod_name)
@@ -214,10 +259,7 @@ void esl::Vm::setup_module (Bytecode* instr)
     std::string path = module_path(*module_name);
 
     if (path == "")
-    {
-        std::cout << "Module " << *module_name << " not found." << std::endl;
-        exit (4);
-    }
+        throw Exception ("Module " + *module_name + " not found.");
 
     module = new esl::Module(path);
     module->load();
@@ -266,19 +308,21 @@ void esl::Vm::load_int (Bytecode* instr)
 void esl::Vm::load_str (Bytecode* instr)
 {
     esl::Value* v = new esl::Value(O_STRING, nullptr);
+    std::string* str = new std::string;
 
-    v->content_set(RoData::instance_get()->get(instr->get_param()));
+    *str = *(RoData::instance_get()->get(instr->get_param()));
+    v->content_set(str);
 
     this->stack_.push(v);
 }
 
 void esl::Vm::function_return()
 {
-    esl::ContentObject *ret = nullptr;
+    std::stack<esl::ContentObject*> ret;
 
-    if (this->stack_.top() && this->stack_.top()->type_get() == O_VALUE)
+    while (this->stack_.top() && this->stack_.top()->type_get() != O_RUNTIME)
     {
-        ret = this->stack_.top();
+        ret.push(this->stack_.top());
         this->stack_.pop();
     }
 
@@ -286,12 +330,21 @@ void esl::Vm::function_return()
 
     /* Restore the previous context */
     /* TODO: Check top of the stack is a context */
-    this->runtime_ = (esl::Runtime*)(this->stack_.top()->content_get());
+    this->runtime_ = static_cast<esl::Runtime*> (this->stack_.top()->content_get());
+
+    if (this->runtime_ == nullptr)
+        throw Exception("Internal error : null runtime");
 
     this->stack_.pop();
 
-    if (ret)
-        this->stack_.push(ret);
+    if (!ret.empty())
+    {
+        while (!ret.empty())
+        {
+            this->stack_.push(ret.top());
+            ret.pop();
+        }
+    }
     else
         this->stack_.push(new esl::ContentObject(O_NIL, nullptr));
 }
@@ -346,7 +399,8 @@ void esl::Vm::store(esl::Bytecode *instr)
 
     /* TODO: check type of TOS */
     if ((this->stack_.top()->type_get() != O_INT &&
-        this->stack_.top()->type_get() != O_STRING) ||
+         this->stack_.top()->type_get() != O_STRING &&
+         this->stack_.top()->type_get() != O_ARRAY) ||
         var_name == nullptr)
     {
         std::cout << "BUG ISSUE esl::VM::Store" << std::endl;

@@ -23,9 +23,13 @@ const static std::string instr_string[] =
     "BOOL_OR",
 
     "STORE",
+    "SOTRE_STK",
+
     "LOAD",
     "LOAD_INT",
     "LOAD_STR",
+
+    "ARRAY_VAL",
 
     "OPEN",
     "MODULE",
@@ -48,8 +52,6 @@ esl::Bytecode::Bytecode (instr type, int param)
 {
     this->type_ = type;
     this->param_ = param;
-    if (type == STORE && param == -1)
-        std::cout << "FDSF" << std::endl;
 }
 
 esl::Bytecode::~Bytecode ()

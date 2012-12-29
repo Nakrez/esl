@@ -19,7 +19,16 @@
 [PARSER] Introduce +=, -=, *=, /=, %= operators
 [PARSER/COMPILER/VM] break statement
 [PARSER/COMPILER/VM] continue statement
+[AST/BYTECODE/VM] Add locations info
+[LEXER] Add escape chars in strings
+[PARSER/COMPILER] Add array declaration with { }
+[PARSER] Update grammar for arrays
+[VM] Type float instead of int
+[VM] O_PRIVATE_TYPE for internal type of APIs that cannot be used
+[VM] Improve function call and return handling
+[PARSER] Add alternative syntax for multidimensional array [,]
 [LIB] API ESL -> C++
+[LIB] Rename module array class as ArrayModule
 
 [STD] Std Lib
 
