@@ -27,5 +27,5 @@ esl::Value* esl::Params::get_params (int number) const
 
 void esl::Params::params_set (Value* value)
 {
-    return this->params_.push_back(value);
+    return this->params_.push_front(value);
 }

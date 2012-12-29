@@ -312,7 +312,7 @@ void esl::Vm::load_str (Bytecode* instr)
 
 void esl::Vm::function_return()
 {
-    std::queue<esl::ContentObject*> ret;
+    std::stack<esl::ContentObject*> ret;
 
     while (this->stack_.top() && this->stack_.top()->type_get() != O_RUNTIME)
     {
@@ -335,7 +335,7 @@ void esl::Vm::function_return()
     {
         while (!ret.empty())
         {
-            this->stack_.push(ret.front());
+            this->stack_.push(ret.top());
             ret.pop();
         }
     }
@@ -373,7 +373,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     /* Setup new context */
     if (fun.first(fun_runtime, params) == nullptr) /* std_callback */
     {
-        for (int i = params->count() - 1; i >= 0; --i)
+        for (int i = 0; i < params->count(); ++i)
             this->stack_.push(params->get_params(i + 1));
 
         fun_runtime->pc_set(fun.second + 1);
