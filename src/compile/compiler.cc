@@ -99,7 +99,7 @@ void esl::Compiler::compile(esl::Ast *ast)
         case LIST:  compile_list(ast);
                     break;
         case LIST_ID:  compile_list_id(ast);
-                    break;
+                       break;
         case RETURN_STM:  compile_return(ast);
                           break;
         case WHILE:  compile_loop(ast, JUMP_IF_FALSE);
@@ -226,7 +226,7 @@ void esl::Compiler::compile_function(esl::Ast* ast)
     /* If there is param LOAD them in the stack */
     if (ast->get_fson()->get_token() != EMPTY)
     {
-        compile_list(ast->get_fson());
+        compile_list_id(ast->get_fson());
         jump_addr = byte_code_.size() - code_size - 1;
         avoid = 0;
     }

@@ -43,7 +43,14 @@ int main(int argc, char **argv)
 
         vm = new esl::Vm(compiler->get_bytecode());
 
-        vm->run();
+        try
+        {
+            vm->run();
+        }
+        catch (esl::Exception& e)
+        {
+            std::cout << e.message() << std::endl;
+        }
 
         esl::RoData::instance_delete();
     }

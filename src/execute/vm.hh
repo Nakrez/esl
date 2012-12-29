@@ -4,6 +4,7 @@
 # include <fstream>
 # include <vector>
 # include <stack>
+# include <queue>
 
 # include "../../lib/content-object.hh"
 # include "../../lib/executable-context.hh"

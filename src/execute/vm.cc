@@ -228,10 +228,7 @@ void esl::Vm::operation (esl::Value*& obj1, esl::Value*& obj2)
 
     if (obj1 == nullptr || obj2 == nullptr ||
         obj1->type_get() != obj2->type_get())
-    {
-        std::cout << "Bad Operation" << std::endl;
-        exit (3);
-    }
+        throw Exception("Bad Operation");
 }
 
 std::string esl::Vm::module_path(const std::string& mod_name)
@@ -256,10 +253,7 @@ void esl::Vm::setup_module (Bytecode* instr)
     std::string path = module_path(*module_name);
 
     if (path == "")
-    {
-        std::cout << "Module " << *module_name << " not found." << std::endl;
-        exit (4);
-    }
+        throw Exception ("Module " + *module_name + " not found.");
 
     module = new esl::Module(path);
     module->load();
@@ -318,11 +312,11 @@ void esl::Vm::load_str (Bytecode* instr)
 
 void esl::Vm::function_return()
 {
-    esl::ContentObject *ret = nullptr;
+    std::queue<esl::ContentObject*> ret;
 
-    if (this->stack_.top() && this->stack_.top()->type_get() == O_VALUE)
+    while (this->stack_.top() && this->stack_.top()->type_get() != O_RUNTIME)
     {
-        ret = this->stack_.top();
+        ret.push(this->stack_.top());
         this->stack_.pop();
     }
 
@@ -330,12 +324,21 @@ void esl::Vm::function_return()
 
     /* Restore the previous context */
     /* TODO: Check top of the stack is a context */
-    this->runtime_ = (esl::Runtime*)(this->stack_.top()->content_get());
+    this->runtime_ = static_cast<esl::Runtime*> (this->stack_.top()->content_get());
+
+    if (this->runtime_ == nullptr)
+        throw Exception("Internal error : null runtime");
 
     this->stack_.pop();
 
-    if (ret)
-        this->stack_.push(ret);
+    if (!ret.empty())
+    {
+        while (!ret.empty())
+        {
+            this->stack_.push(ret.front());
+            ret.pop();
+        }
+    }
     else
         this->stack_.push(new esl::ContentObject(O_NIL, nullptr));
 }
@@ -370,7 +373,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     /* Setup new context */
     if (fun.first(fun_runtime, params) == nullptr) /* std_callback */
     {
-        for (int i = 0; i < params->count(); ++i)
+        for (int i = params->count() - 1; i >= 0; --i)
             this->stack_.push(params->get_params(i + 1));
 
         fun_runtime->pc_set(fun.second + 1);
