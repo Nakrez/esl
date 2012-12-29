@@ -5,6 +5,7 @@
 [VM] Implement + for strings
 [VM] Properly handle "nil"
 [CHECK] String check
+[CHECK] Array check
 [LEXER/PARSER/COMPILER] Introduce for loop
 [LEXER/PARSER/COMPILER/VM] Introduce foreach loop
 [PARSER] Introduce Unary operators
