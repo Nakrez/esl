@@ -1,0 +1,11 @@
+import "io"
+
+test = 2
+
+function a(test)
+    test = 4
+    return test
+end
+
+io.print(a(test))
+

@@ -1,0 +1,7 @@
+import "io"
+
+function a()
+    return 1
+end
+
+io.print(a())
