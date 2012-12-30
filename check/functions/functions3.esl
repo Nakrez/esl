@@ -1,0 +1,8 @@
+import "io"
+
+function a(b, c)
+    return b + c
+end
+
+io.print(a(1, 2))
+io.print(a("Hello ", "World!"), "r")

@@ -379,7 +379,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     /* Setup new context */
     if (fun.first(fun_runtime, params) == nullptr) /* std_callback */
     {
-        for (int i = 0; i < params->count(); ++i)
+        for (int i = params->count() - 1; i >= 0; --i)
             this->stack_.push(params->get_params(i + 1));
 
         fun_runtime->pc_set(fun.second + 1);
