@@ -15,10 +15,10 @@ class Driver;
 %debug
 %defines
 /* No conflict accepted */
-/*
+
 %expect 0
 %expect-rr 0
-*/
+
 /* Better errors */
 %error-verbose
 
@@ -174,11 +174,11 @@ arrays          :
                                  $$ = new std::list<esl::Ast *>;
                                  $$->push_back($2);
                                }
-                /*| arrays "[" expr "]" {
-                                       $$ = $1
-                                       $$->push_back($3);
-                                     }*/
-               ;
+                | arrays "[" expr "]" {
+                                        $$ = $1;
+                                        $$->push_back($3);
+                                      }
+                ;
 
 expr            :
                 expr "+" expr

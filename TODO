@@ -10,7 +10,6 @@
 [LEXER/PARSER/COMPILER/VM] Introduce foreach loop
 [PARSER] Introduce Unary operators
 [LEXER/PARSER] Introduce "include" keywords
-[LEXER/PARSER/COMPILER/VM] Introduce arrays
 [LEXER/PARSER/COMPILER/VM] Type forcing
 [LEXER/PARSER/COMPILER/VM] Introduce Objects
 [LEXER 50%] Introduce Comments
@@ -46,3 +45,4 @@ Bugs:
 DONE:
 
 [VM] Update import (path looking) 28/12/2012 21H10
+[LEXER/PARSER/COMPILER/VM] Introduce arrays 30/12/2012 11h30
