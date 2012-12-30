@@ -1,7 +1,6 @@
 #include "params.hh"
 
 esl::Params::Params ()
-    : Object ()
 {
 
 }

@@ -6,16 +6,14 @@ esl::ContentObject* esl::std_callback (esl::Runtime*, esl::Params*)
 }
 
 esl::Context::Context()
-    : Object ()
-    , functions_ ()
+    : functions_ ()
     , variables_ ()
     , modules_ ()
 {
 }
 
 esl::Context::Context(const Context& context)
-    : Object ()
-    , functions_ (context.functions_)
+    : functions_ (context.functions_)
     , variables_ (context.variables_)
     , modules_ (context.modules_)
 {

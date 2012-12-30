@@ -3,12 +3,11 @@
 
 # include <deque>
 
-# include "object.hh"
 # include "value.hh"
 
 namespace esl
 {
-    class Params : public Object
+    class Params
     {
         public:
             Params ();

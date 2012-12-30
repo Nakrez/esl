@@ -3,8 +3,8 @@
 
 # include <vector>
 
-# include "value.hh"
-# include "exception.hh"
+# include "../value.hh"
+# include "../exception.hh"
 
 namespace esl
 {

@@ -3,8 +3,6 @@
 
 # include <memory>
 
-# include "object.hh"
-
 enum obj_type
 {
     O_NIL,
@@ -19,7 +17,7 @@ enum obj_type
 
 namespace esl
 {
-    class ContentObject : public Object
+    class ContentObject
     {
         public:
             ContentObject ();
