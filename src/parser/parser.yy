@@ -87,15 +87,15 @@ instr   :
         ;
 
 compound_list   :
-                expr "\n" { $$ = new std::list<esl::Ast *>;
-                                    $$->push_back($1); }
-                |"return" expr "\n"
+                "return" expr "\n"
                         {
                           $$ = new std::list<esl::Ast*>;
                           esl::Ast* tmp = new esl::Ast(RETURN_STM);
                           tmp->add($2);
                           $$->push_back(tmp);
                         }
+                |expr "\n" { $$ = new std::list<esl::Ast *>;
+                                    $$->push_back($1); }
                 |esl_command "\n"  { $$ = new std::list<esl::Ast *>;
                                     $$->push_back($1); }
                 | compound_list expr "\n"

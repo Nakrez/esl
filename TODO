@@ -2,7 +2,6 @@
 [ESL] Error handling
 [DOC] Write Documentation
 [VM] Implement GC
-[VM] Implement + for strings
 [VM] Properly handle "nil"
 [CHECK] String check
 [CHECK] Array check
@@ -27,10 +26,11 @@
 [VM] O_PRIVATE_TYPE for internal type of APIs that cannot be used
 [VM] Improve function call and return handling
 [PARSER] Add alternative syntax for multidimensional array [,]
-[LIB] API ESL -> C++
+[LIB] Module IO
+[LIB] Module Array
+[LIB] Module Utils
+[LIB] Module String
 [LIB] Rename module array class as ArrayModule
-
-[STD] Std Lib
 
 - Review Code:
     * Less dynamic allocation
@@ -46,3 +46,4 @@ DONE:
 
 [VM] Update import (path looking) 28/12/2012 21H10
 [LEXER/PARSER/COMPILER/VM] Introduce arrays 30/12/2012 11h30
+[VM] Implement + for strings 28/12/2012 21h
