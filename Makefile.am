@@ -14,8 +14,11 @@ libesl_la_SOURCES = lib/content-object.cc lib/content-object.hh \
 		    lib/executable-context.cc lib/executable-context.hh \
 		    lib/params.cc lib/params.hh \
 		    lib/module.cc lib/module.hh \
-		    lib/type/array.cc lib/type/array.hh \
 		    lib/exception.cc lib/exception.hh \
+		    lib/type/int.cc lib/type/int.hh \
+		    lib/type/string.cc lib/type/string.hh \
+		    lib/type/array.cc lib/type/array.hh \
+		    lib/type/type.cc lib/type/type.hh \
 		    lib/gc/memory-object.cc lib/gc/memory-object.hh
 
 libesl_la_LDFLAGS = -version-info 1:0:0
