@@ -120,7 +120,7 @@ void esl::Compiler::compile(esl::Ast *ast)
 
 void esl::Compiler::compile_assignement_array(Ast* ast)
 {
-    esl::Ast* temp_ast = ast->get_fson()->get_rbro()->get_fson();
+    esl::Ast* temp_ast = ast->get_fson()->get_rbro()->get_fson()->get_fson();
 
     compile(ast->get_fson()->get_rbro()->get_rbro());
 
@@ -139,7 +139,7 @@ void esl::Compiler::compile_assignement_array(Ast* ast)
 
 void esl::Compiler::compile_array_at(Ast* ast)
 {
-    esl::Ast* temp_ast = ast->get_fson()->get_rbro();
+    esl::Ast* temp_ast = ast->get_fson()->get_rbro()->get_fson();
 
     compile(ast->get_fson());
 

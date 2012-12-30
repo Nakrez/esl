@@ -10,26 +10,24 @@ esl::Value::Value(obj_type type, void* content)
 }
 
 esl::Value::Value(const esl::Value& v)
-    : esl::ContentObject (v.type_, v.content_)
+    : esl::ContentObject (v.type_, v.content_get())
 {
-    if (v.type_ == O_INT)
-        this->content_ = new int(*(static_cast<int*> (v.content_)));
 }
 
 esl::Value::~Value()
 {
-    if (this->type_ == O_INT)
+    /*if (this->type_ == O_INT)
         delete ((int*)this->content_);
     else if (this->type_ == O_STRING)
-        delete ((std::string*)this->content_);
+        delete ((std::string*)this->content_);*/
 }
 
 void esl::Value::print()
 {
     if (this->type_ == O_INT)
-        std::cout << *((int *)this->content_);
+        std::cout << *((int *)this->content_get());
     else if (this->type_ == O_STRING)
-        std::cout << *((std::string *)this->content_);
+        std::cout << *((std::string *)this->content_get());
     else if (this->type_ == O_NIL)
         std::cout << "nil";
 }

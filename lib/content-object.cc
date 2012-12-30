@@ -2,15 +2,16 @@
 
 esl::ContentObject::ContentObject ()
     : esl::Object ()
+    , type_ (O_NIL)
+    , null (true)
 {
-
 }
 
 esl::ContentObject::ContentObject (obj_type type, void* content)
     : esl::Object ()
     , type_ (type)
-    , content_ (content)
 {
+    content_set(content);
 }
 
 esl::ContentObject::~ContentObject ()
@@ -19,7 +20,9 @@ esl::ContentObject::~ContentObject ()
 
 void* esl::ContentObject::content_get () const
 {
-    return this->content_;
+    if (null)
+        return nullptr;
+    return this->content_.get();
 }
 
 obj_type esl::ContentObject::type_get () const
@@ -29,7 +32,15 @@ obj_type esl::ContentObject::type_get () const
 
 void esl::ContentObject::content_set (void* content)
 {
-    this->content_ = content;
+    if (!content)
+    {
+        null = true;
+        return;
+    }
+    else
+        null = false;
+
+    this->content_ = std::shared_ptr<void> (content);
 }
 
 void esl::ContentObject::type_set (obj_type type)

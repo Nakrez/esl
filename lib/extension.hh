@@ -25,6 +25,11 @@ namespace esl
             {
             }
 
+            virtual ~Delegate ()
+            {
+                delete obj_;
+            }
+
             virtual ContentObject* Call(Params* params)
             {
                 return (obj_->*fun_)(params);

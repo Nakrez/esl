@@ -1,6 +1,8 @@
 #ifndef CONTENT_OBJECT_HH
 # define CONTENT_OBJECT_HH
 
+# include <memory>
+
 # include "object.hh"
 
 enum obj_type
@@ -32,7 +34,8 @@ namespace esl
 
         protected:
             obj_type type_;
-            void* content_;
+            std::shared_ptr<void> content_;
+            bool null;
 
     };
 }

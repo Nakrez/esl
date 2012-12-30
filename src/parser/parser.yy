@@ -15,10 +15,10 @@ class Driver;
 %debug
 %defines
 /* No conflict accepted */
-/*
+
 %expect 0
 %expect-rr 0
-*/
+
 /* Better errors */
 %error-verbose
 
@@ -87,15 +87,15 @@ instr   :
         ;
 
 compound_list   :
-                expr "\n" { $$ = new std::list<esl::Ast *>;
-                                    $$->push_back($1); }
-                |"return" expr "\n"
+                "return" expr "\n"
                         {
                           $$ = new std::list<esl::Ast*>;
                           esl::Ast* tmp = new esl::Ast(RETURN_STM);
                           tmp->add($2);
                           $$->push_back(tmp);
                         }
+                |expr "\n" { $$ = new std::list<esl::Ast *>;
+                                    $$->push_back($1); }
                 |esl_command "\n"  { $$ = new std::list<esl::Ast *>;
                                     $$->push_back($1); }
                 | compound_list expr "\n"
@@ -174,11 +174,11 @@ arrays          :
                                  $$ = new std::list<esl::Ast *>;
                                  $$->push_back($2);
                                }
-                /*| arrays "[" expr "]" {
-                                       $$ = $1
-                                       $$->push_back($3);
-                                     }*/
-               ;
+                | arrays "[" expr "]" {
+                                        $$ = $1;
+                                        $$->push_back($3);
+                                      }
+                ;
 
 expr            :
                 expr "+" expr
