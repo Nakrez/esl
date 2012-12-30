@@ -3,12 +3,13 @@
 
 # include <vector>
 
+# include "type.hh"
 # include "../value.hh"
 # include "../exception.hh"
 
 namespace esl
 {
-    class Array
+    class Array : public Type
     {
         public:
             Array (unsigned int size);

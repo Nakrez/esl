@@ -19,7 +19,7 @@ libesl_la_SOURCES = lib/content-object.cc lib/content-object.hh \
 		    lib/type/string.cc lib/type/string.hh \
 		    lib/type/array.cc lib/type/array.hh \
 		    lib/type/type.cc lib/type/type.hh \
-		    lib/gc/memory-object.cc lib/gc/memory-object.hh
+		    lib/gc/memory-object.hh
 
 libesl_la_LDFLAGS = -version-info 1:0:0
 libesl_la_CXXFLAGS = -Wall -Wextra -std=c++0x

@@ -1,4 +1,5 @@
 #include "array.hh"
+# include "../gc/memory-object.hh"
 
 esl::Array::Array (unsigned int size)
 {
