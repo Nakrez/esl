@@ -26,6 +26,7 @@
 [VM] O_PRIVATE_TYPE for internal type of APIs that cannot be used
 [VM] Improve function call and return handling
 [PARSER] Add alternative syntax for multidimensional array [,]
+[LIBESL] Reorder
 [LIB] Module IO
 [LIB] Module Array
 [LIB] Module Utils

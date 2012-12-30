@@ -5,7 +5,6 @@
 # include <map>
 # include <memory>
 
-# include "object.hh"
 # include "value.hh"
 # include "module.hh"
 
@@ -20,7 +19,7 @@ namespace esl
 
     ContentObject* std_callback (Runtime*, Params*);
 
-    class Context : public Object
+    class Context
     {
         public:
             Context();

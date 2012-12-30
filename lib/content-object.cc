@@ -1,15 +1,13 @@
 #include "content-object.hh"
 
 esl::ContentObject::ContentObject ()
-    : esl::Object ()
-    , type_ (O_NIL)
+    : type_ (O_NIL)
     , null (true)
 {
 }
 
 esl::ContentObject::ContentObject (obj_type type, void* content)
-    : esl::Object ()
-    , type_ (type)
+    : type_ (type)
 {
     content_set(content);
 }
