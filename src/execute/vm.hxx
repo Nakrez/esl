@@ -20,6 +20,6 @@ void esl::Vm::math(Func fun)
 
     esl::Int* result = new esl::Int(fun(obj2->data_get(), obj1->data_get()));
 
-    this->stack_.push(new esl::MemoryObject<esl::Int>(result));
+    this->stack_.push(new esl::MemoryObject<esl::Content>(result));
 }
 

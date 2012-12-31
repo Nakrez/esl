@@ -7,7 +7,7 @@ namespace esl
     {
         public:
             Content () {}
-            ~Content () {}
+            virtual ~Content () {}
     };
 }
 

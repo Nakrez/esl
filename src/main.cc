@@ -8,9 +8,9 @@
 
 int main(int argc, char **argv)
 {
-    Driver    driver;
-    esl::Compiler    *compiler = nullptr;
-    esl::Vm          *vm = nullptr;
+    Driver driver;
+    esl::Compiler *compiler = nullptr;
+    esl::Vm *vm = nullptr;
 
     if (argc < 2)
         return (1);
@@ -25,11 +25,11 @@ int main(int argc, char **argv)
 
         #if BENCH == 1
             struct timeval start, end;
-
             long useconds;
 
             gettimeofday(&start, nullptr);
         #endif /* !BENCH */
+
         compiler->compile();
 
         #if BENCH == 1

@@ -1,6 +1,7 @@
 #ifndef STRING_HH
 # define STRING_HH
 
+# include <iostream>
 # include <string>
 
 # include "type.hh"
@@ -16,6 +17,7 @@ namespace esl
             const std::string& data_get () const;
             void data_set (const std::string& data);
 
+            virtual void print () const;
         private:
             std::string data_;
     };

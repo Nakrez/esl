@@ -1,13 +1,16 @@
 #ifndef IO_HH
 # define IO_HH
 
-#include "../../lib/extension.hh"
+# include <iostream>
+
+# include "../../lib/type/esl-types.hh"
+# include "../../lib/extension.hh"
 
 class Io: public esl::Extension
 {
     public:
         void init ();
-        esl::ContentObject* print (esl::Params*);
+        esl::MemoryObject<esl::Content>* print (const esl::Params&);
 };
 
 extern "C" Io* get ();

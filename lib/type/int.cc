@@ -20,3 +20,8 @@ void esl::Int::data_set (int data)
 {
     data_ = data;
 }
+
+void esl::Int::print () const
+{
+    std::cout << data_;
+}

@@ -1,6 +1,6 @@
 #include "context.hh"
 
-esl::ContentObject* esl::std_callback (esl::Runtime*, esl::Params*)
+esl::MemoryObject<esl::Content>* esl::std_callback (esl::Runtime*, const esl::Params&)
 {
     return nullptr;
 }
@@ -29,7 +29,7 @@ std::pair<esl::Callback, int> esl::Context::function_get (const std::string& nam
     return this->functions_.at(name);
 }
 
-esl::Value* esl::Context::variable_get (const std::string& name) const
+esl::VarContent esl::Context::variable_get (const std::string& name) const
 {
     if (this->variables_.find(name) == this->variables_.end())
     {
@@ -37,7 +37,7 @@ esl::Value* esl::Context::variable_get (const std::string& name) const
         exit(1);
     }
 
-    return this->variables_.at(name).get();
+    return this->variables_.at(name);
 }
 
 esl::Module* esl::Context::module_get (const std::string& name) const
@@ -45,9 +45,9 @@ esl::Module* esl::Context::module_get (const std::string& name) const
     return this->modules_.at(name).get();
 }
 
-void esl::Context::variable_set (const std::string& name, esl::Value* value)
+void esl::Context::variable_set (const std::string& name, VarContent value)
 {
-    this->variables_[name] = ValuePtr(value);
+    this->variables_[name] = value;
 }
 
 void esl::Context::function_set (const std::string& name,

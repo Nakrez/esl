@@ -19,12 +19,12 @@ int esl::Params::count () const
     return this->params_.size();
 }
 
-esl::Value* esl::Params::get_params (int number) const
+esl::MemoryObject<esl::Content>* esl::Params::get_params (int number) const
 {
     return this->params_.at(number - 1);
 }
 
-void esl::Params::params_set (Value* value)
+void esl::Params::params_set (esl::MemoryObject<esl::Content>* value)
 {
     return this->params_.push_front(value);
 }

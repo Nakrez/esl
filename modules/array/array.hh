@@ -8,7 +8,7 @@ class Array: public esl::Extension
 {
     public:
         void init ();
-        esl::ContentObject* create (esl::Params*);
+        esl::MemoryObject<esl::Content>* create (const esl::Params&);
 };
 
 extern "C" Array* get ();

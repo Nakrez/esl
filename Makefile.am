@@ -6,11 +6,9 @@ ACLOCAL_AMFLAGS = -I m4
 
 # libesl
 lib_LTLIBRARIES = libesl.la
-libesl_la_SOURCES = lib/content-object.cc lib/content-object.hh \
-		    lib/context.cc lib/context.hh \
+libesl_la_SOURCES = lib/context.cc lib/context.hh \
 		    lib/extension.cc lib/extension.hh \
 		    lib/runtime.cc lib/runtime.hh \
-		    lib/value.cc lib/value.hh \
 		    lib/executable-context.cc lib/executable-context.hh \
 		    lib/params.cc lib/params.hh \
 		    lib/module.cc lib/module.hh \

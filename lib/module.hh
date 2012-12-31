@@ -3,19 +3,23 @@
 
 # include <dlfcn.h>
 # include <string>
+# include <iostream>
 
+# include "content.hh"
+# include "gc/memory-object.hh"
 # include "extension.hh"
 
 namespace esl
 {
-    class Module
+    class Module : public Content
     {
         public:
             Module (const std::string&);
             ~Module ();
 
             void load ();
-            ContentObject* call(const std::string& name, esl::Params* params);
+            MemoryObject<Content>* call(const std::string& name,
+                                        const Params& params);
 
         private:
             std::string path_;

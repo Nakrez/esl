@@ -10,6 +10,8 @@ namespace esl
         public:
             Type ();
             ~Type ();
+
+            virtual void print () const = 0;
     };
 }
 
