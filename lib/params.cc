@@ -28,3 +28,9 @@ void esl::Params::params_set (esl::MemoryObject<esl::Content>* value)
 {
     return this->params_.push_front(value);
 }
+
+void esl::Params::decr ()
+{
+    for (auto obj : params_)
+        obj->decr();
+}

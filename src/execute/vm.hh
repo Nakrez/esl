@@ -61,6 +61,7 @@ namespace esl
             void math_operation (int_operation, str_operation);
             void bool_operation (int_operation, str_bool_operation);
 
+            void pop ();
         private:
             std::stack<esl::MemoryObject<esl::Content>*> stack_;
             std::vector<Bytecode*> code_;

@@ -39,7 +39,7 @@ void esl::Vm::run()
         switch (instr->get_type())
         {
             case POP:
-                this->stack_.pop();
+                pop();
                 break;
             case JUMP:
                 this->jump(instr);
@@ -140,6 +140,12 @@ void esl::Vm::run()
     }
 }
 
+void esl::Vm::pop()
+{
+    this->stack_.top()->decr();
+    this->stack_.pop();
+}
+
 void esl::Vm::store_stk ()
 {
     esl::MemoryObject<esl::Content>* tos = nullptr;
@@ -201,6 +207,9 @@ void esl::Vm::math_operation(int_operation int_op, str_operation str_op)
 
         this->stack_.push(new esl::MemoryObject<esl::Content>(res));
     }
+
+    obj1->decr();
+    obj2->decr();
 }
 
 void esl::Vm::bool_operation(int_operation int_op, str_bool_operation str_op)
@@ -253,7 +262,7 @@ void esl::Vm::setup_module (Bytecode* instr)
     module = new esl::Module(path);
     module->load();
 
-    this->runtime_->module_set(*module_name, module);
+    this->runtime_->module_set(*module_name, new esl::MemoryObject<esl::Content>(module));
 }
 
 void esl::Vm::module (Bytecode* instr)
@@ -261,7 +270,7 @@ void esl::Vm::module (Bytecode* instr)
     std::string* mod_name = RoData::instance_get()->get(instr->get_param());
 
     /* TODO FIX TYPE */
-    this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_->module_get(*mod_name)));
+    this->stack_.push(this->runtime_->module_get(*mod_name));
 }
 
 void esl::Vm::call_module (Bytecode* instr)
@@ -282,6 +291,8 @@ void esl::Vm::call_module (Bytecode* instr)
     }
 
     this->stack_.push(module->call(*fun_name, params));
+
+    params.decr();
 }
 
 void esl::Vm::load_int (Bytecode* instr)
@@ -372,6 +383,8 @@ void esl::Vm::call_function(esl::Bytecode *instr)
 
         this->runtime_ = fun_runtime;
     }
+
+    params.decr();
 }
 
 void esl::Vm::store(esl::Bytecode *instr)
@@ -402,6 +415,7 @@ void esl::Vm::load(esl::Bytecode *instr)
     /* TODO: check existance */
 
     value = this->runtime_->variable_get(*var_name);
+    value->incr();
 
     this->stack_.push(value);
 }
@@ -418,7 +432,7 @@ void esl::Vm::jump(esl::Bytecode *instr, int val)
         else
             this->runtime_->pc_incr(1);
 
-        this->stack_.pop();
+        this->pop();
     }
 }
 

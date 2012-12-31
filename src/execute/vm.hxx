@@ -9,16 +9,17 @@ void esl::Vm::math(Func fun)
     if (obj1 == nullptr)
         throw Exception ("Illegal operation -- Wrong type ?");
 
-    this->stack_.pop();
+    int data1 = obj1->data_get();
+    this->pop();
 
     obj2 = dynamic_cast<esl::Int*>(this->stack_.top()->data_get());
 
     if (obj2 == nullptr)
         throw Exception ("Illegal operation -- Wrong type ?");
 
-    this->stack_.pop();
+    esl::Int* result = new esl::Int(fun(obj2->data_get(), data1));
 
-    esl::Int* result = new esl::Int(fun(obj2->data_get(), obj1->data_get()));
+    this->pop();
 
     this->stack_.push(new esl::MemoryObject<esl::Content>(result));
 }

@@ -16,8 +16,11 @@ namespace esl
 
             bool empty () const;
             int count () const;
+
             MemoryObject<Content>* get_params (int) const;
             void params_set (MemoryObject<Content>*);
+
+            void decr ();
 
         private:
             std::deque<MemoryObject<Content>*> params_;
