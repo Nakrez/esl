@@ -6,16 +6,16 @@
 # include <stack>
 # include <queue>
 
-# include "../../lib/content-object.hh"
+# include "../../lib/gc/memory-object.hh"
+# include "../../lib/type/esl-types.hh"
+# include "../../lib/content.hh"
 # include "../../lib/executable-context.hh"
 # include "../../lib/params.hh"
 # include "../../lib/exception.hh"
 # include "../../lib/module.hh"
-# include "../../lib/type/array.hh"
 # include "../utils/bytecode.hh"
 # include "../utils/ro-data.hh"
 # include "operation.hh"
-
 
 namespace esl
 {
@@ -63,7 +63,7 @@ namespace esl
             void operation (esl::Value*& obj1, esl::Value*& obj2);
 
         private:
-            std::stack<esl::ContentObject*> stack_;
+            std::stack<esl::MemoryObject<esl::Content>*> stack_;
             std::vector<Bytecode*> code_;
             esl::Runtime* runtime_;
 

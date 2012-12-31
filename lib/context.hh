@@ -7,6 +7,7 @@
 
 # include "value.hh"
 # include "module.hh"
+# include "content.hh"
 
 namespace esl
 {
@@ -19,7 +20,7 @@ namespace esl
 
     ContentObject* std_callback (Runtime*, Params*);
 
-    class Context
+    class Context : public Content
     {
         public:
             Context();
