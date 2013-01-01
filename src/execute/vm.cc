@@ -332,6 +332,7 @@ void esl::Vm::function_return()
     if (this->runtime_ == nullptr)
         throw Exception("Internal error : null runtime");
 
+    this->stack_.top()->free();
     this->stack_.pop();
 
     if (!ret.empty())

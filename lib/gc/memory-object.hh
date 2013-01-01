@@ -17,10 +17,12 @@ namespace esl
             T* data_get () const;
             void data_set (T*);
 
+            void free ();
         private:
             int count_;
             T* data_;
             bool privacy_;
+            bool free_;
     };
 }
 

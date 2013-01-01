@@ -3,6 +3,7 @@ esl::MemoryObject<T>::MemoryObject (T* data)
     : count_ (1)
     , data_ (data)
     , privacy_ (false)
+    , free_ (false)
 {
 
 }
@@ -12,6 +13,7 @@ esl::MemoryObject<T>::MemoryObject (T* data, bool privacy)
     : count_ (1)
     , data_ (data)
     , privacy_ (privacy)
+    , free_ (false)
 {
 
 }
@@ -19,7 +21,8 @@ esl::MemoryObject<T>::MemoryObject (T* data, bool privacy)
 template<class T>
 esl::MemoryObject<T>::~MemoryObject ()
 {
-    delete data_;
+    if (!free_)
+        delete data_;
 }
 
 template<class T>
@@ -47,4 +50,11 @@ template<class T>
 void esl::MemoryObject<T>::data_set (T* data)
 {
     data_ = data;
+}
+
+template<class T>
+void esl::MemoryObject<T>::free ()
+{
+    free_ = true;
+    delete this;
 }
