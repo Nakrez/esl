@@ -4,7 +4,6 @@
 # include <string>
 # include <map>
 
-# include "content-object.hh"
 # include "params.hh"
 
 namespace esl
@@ -12,13 +11,13 @@ namespace esl
     class DelegateBase
     {
         public:
-            virtual ContentObject* Call(Params*) = 0;
+            virtual MemoryObject<Content>* Call(const Params&) = 0;
     };
 
     template <class Class> class Delegate: public DelegateBase
     {
         public:
-            typedef ContentObject* (Class::*Function)(Params*);
+            typedef MemoryObject<Content>* (Class::*Function)(const Params&);
             Delegate(Class* object, Function f)
                 : obj_ (object)
                 , fun_ (f)
@@ -30,7 +29,7 @@ namespace esl
                 delete obj_;
             }
 
-            virtual ContentObject* Call(Params* params)
+            virtual MemoryObject<Content>* Call(const Params& params)
             {
                 return (obj_->*fun_)(params);
             }
@@ -48,7 +47,8 @@ namespace esl
 
             virtual void init () = 0;
 
-            ContentObject* call(const std::string&, Params*);
+            MemoryObject<Content>* call(const std::string&,
+                                        const Params&);
 
         protected:
             void register_function (const std::string&, DelegateBase*);

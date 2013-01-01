@@ -4,8 +4,6 @@
 # include <string>
 # include <iostream>
 
-# include "../../lib/value.hh"
-
 enum instr
 {
     NOP,

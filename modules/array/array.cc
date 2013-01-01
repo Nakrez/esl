@@ -6,15 +6,12 @@ void Array::init ()
                                                           &Array::create));
 }
 
-esl::ContentObject* Array::create (esl::Params* params)
+esl::MemoryObject<esl::Content>* Array::create (const esl::Params& params)
 {
-    esl::ContentObject* ret = new esl::ContentObject(O_ARRAY, nullptr);
-    int* size = static_cast<int*> (params->get_params(1)->content_get());
-    esl::Array* array = new esl::Array(*size);
+    esl::Int* size = static_cast<esl::Int*> (params.get_params(1)->data_get());
+    esl::Array* array = new esl::Array(size->data_get());
 
-    ret->content_set(array);
-
-    return ret;
+    return new esl::MemoryObject<esl::Content> (array);
 }
 
 extern "C"

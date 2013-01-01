@@ -5,6 +5,7 @@
 [VM] Properly handle "nil"
 [CHECK] String check
 [CHECK] Array check
+[CHECK] Functions check
 [LEXER/PARSER/COMPILER] Introduce for loop
 [LEXER/PARSER/COMPILER/VM] Introduce foreach loop
 [PARSER] Introduce Unary operators
@@ -26,6 +27,7 @@
 [VM] O_PRIVATE_TYPE for internal type of APIs that cannot be used
 
 !!!! [VM] Improve function call and return handling
+[VM] Improve function design
 
 [PARSER] Add alternative syntax for multidimensional array [,]
 [LIBESL] Reorder

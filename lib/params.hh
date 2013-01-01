@@ -3,7 +3,8 @@
 
 # include <deque>
 
-# include "value.hh"
+# include "content.hh"
+# include "gc/memory-object.hh"
 
 namespace esl
 {
@@ -15,11 +16,14 @@ namespace esl
 
             bool empty () const;
             int count () const;
-            Value* get_params (int) const;
-            void params_set (Value*);
+
+            MemoryObject<Content>* get_params (int) const;
+            void params_set (MemoryObject<Content>*);
+
+            void decr ();
 
         private:
-            std::deque<Value*> params_;
+            std::deque<MemoryObject<Content>*> params_;
     };
 }
 

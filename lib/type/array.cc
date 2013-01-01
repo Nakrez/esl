@@ -1,9 +1,10 @@
 #include "array.hh"
+# include "../gc/memory-object.hh"
 
 esl::Array::Array (unsigned int size)
 {
     for (unsigned i = 0; i < size; ++i)
-        data_.push_back(new esl::Value(O_NIL, nullptr));
+        data_.push_back(new esl::MemoryObject<esl::Content>(new Int(0)));
 }
 
 esl::Array::~Array ()
@@ -12,10 +13,17 @@ esl::Array::~Array ()
         delete v;
 }
 
-esl::Value* esl::Array::at (unsigned int pos)
+esl::MemoryObject<esl::Content>* esl::Array::at (unsigned int pos)
 {
     if (pos >= data_.size ())
         throw Exception ("Illegal access : out of bound");
 
     return data_.at (pos);
+}
+
+void esl::Array::print () const
+{
+    std::cout << "[" << std::endl;
+
+    std::cout << "]" << std::endl;
 }

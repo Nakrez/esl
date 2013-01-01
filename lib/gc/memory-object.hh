@@ -3,20 +3,27 @@
 
 namespace esl
 {
+    template<class T>
     class MemoryObject
     {
         public:
-            MemoryObject (void*);
-            MemoryObject (void*, bool);
+            MemoryObject (T*);
+            MemoryObject (T*, bool);
+            ~MemoryObject ();
 
             void incr ();
             void decr ();
 
+            T* data_get () const;
+            void data_set (T*);
+
         private:
             int count_;
-            void* data_;
+            T* data_;
             bool privacy_;
     };
 }
+
+# include "memory-object.hxx"
 
 #endif /* !MEMORY_OBJECT_HH */

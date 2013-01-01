@@ -17,8 +17,8 @@ void esl::Extension::register_function (const std::string& name,
     functions_[name] = func;
 }
 
-esl::ContentObject* esl::Extension::call (const std::string& name,
-                                          esl::Params* params)
+esl::MemoryObject<esl::Content> *esl::Extension::call (const std::string& name,
+                                                       const esl::Params& params)
 {
     return functions_.at(name)->Call(params);
 }

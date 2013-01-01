@@ -1,23 +1,28 @@
 #ifndef ARRAY_HH
 # define ARRAY_HH
 
+# include <iostream>
 # include <vector>
 
-# include "../value.hh"
+# include "type.hh"
+# include "int.hh"
+# include "../gc/memory-object.hh"
 # include "../exception.hh"
 
 namespace esl
 {
-    class Array
+    class Array : public Type
     {
         public:
             Array (unsigned int size);
             ~Array ();
 
-            esl::Value* at (unsigned int);
+            esl::MemoryObject<esl::Content>* at (unsigned int);
+
+            virtual void print () const;
 
         private:
-            std::vector<esl::Value*> data_;
+            std::vector<esl::MemoryObject<esl::Content>*> data_;
     };
 }
 

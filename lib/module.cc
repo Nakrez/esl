@@ -50,7 +50,8 @@ void esl::Module::load ()
     ext_->init();
 }
 
-esl::ContentObject* esl::Module::call(const std::string& name, esl::Params* params)
+esl::MemoryObject<esl::Content>* esl::Module::call(const std::string& name,
+                                                   const esl::Params& params)
 {
     return ext_->call(name, params);
 }
