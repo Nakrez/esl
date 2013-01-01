@@ -104,6 +104,13 @@ compound_list   :
                 | compound_list esl_command "\n"
                                     { $$ = $1;
                                     $$->push_back($2); }
+                | compound_list "return" expr "\n"
+                                    { $$ = $1;
+                                      esl::Ast* tmp = new esl::Ast(RETURN_STM);
+                                      tmp->add($3);
+                                      $$->push_back(tmp);
+                                    }
+
                 ;
 
 param_list         :

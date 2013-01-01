@@ -2,13 +2,13 @@
 # define ARRAY_MODULE_HH
 
 #include "../../lib/extension.hh"
-#include "../../lib/array.hh"
+#include "../../lib/type/array.hh"
 
 class Array: public esl::Extension
 {
     public:
         void init ();
-        esl::ContentObject* create (esl::Params*);
+        esl::MemoryObject<esl::Content>* create (const esl::Params&);
 };
 
 extern "C" Array* get ();

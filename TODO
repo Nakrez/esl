@@ -1,10 +1,10 @@
 [ESL] Option parser
 [ESL] Error handling
 [DOC] Write Documentation
-[VM] Implement GC
 [VM] Properly handle "nil"
 [CHECK] String check
 [CHECK] Array check
+[CHECK] Functions check
 [LEXER/PARSER/COMPILER] Introduce for loop
 [LEXER/PARSER/COMPILER/VM] Introduce foreach loop
 [PARSER] Introduce Unary operators
@@ -24,8 +24,13 @@
 [PARSER] Update grammar for arrays
 [VM] Type float instead of int
 [VM] O_PRIVATE_TYPE for internal type of APIs that cannot be used
-[VM] Improve function call and return handling
+
+!!!! [VM] Improve function call and return handling
+[VM] Improve function design
+[GC] Improve leaks on functions call
+
 [PARSER] Add alternative syntax for multidimensional array [,]
+[LIBESL] Reorder
 [LIB] Module IO
 [LIB] Module Array
 [LIB] Module Utils
@@ -47,3 +52,4 @@ DONE:
 [VM] Update import (path looking) 28/12/2012 21H10
 [LEXER/PARSER/COMPILER/VM] Introduce arrays 30/12/2012 11h30
 [VM] Implement + for strings 28/12/2012 21h
+[VM] Implement GC 01/01/2013 23h

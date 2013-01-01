@@ -1,0 +1,11 @@
+import "io"
+
+function a()
+    return "Hello "
+end
+
+function b()
+    return a() + "World!"
+end
+
+io.print(b())

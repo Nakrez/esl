@@ -1,24 +1,21 @@
 export libdir
 
-AM_CFLAGS = 
 SUBDIRS = . modules
 ACLOCAL_AMFLAGS = -I m4
-
 # libesl
 lib_LTLIBRARIES = libesl.la
-libesl_la_SOURCES = lib/class-def.cc lib/class-def.hh \
-		    lib/content-object.cc lib/content-object.hh \
-		    lib/context.cc lib/context.hh \
+libesl_la_SOURCES = lib/context.cc lib/context.hh \
 		    lib/extension.cc lib/extension.hh \
-		    lib/object-instance.hh lib/object-instance.cc \
 		    lib/runtime.cc lib/runtime.hh \
-		    lib/value.cc lib/value.hh \
 		    lib/executable-context.cc lib/executable-context.hh \
 		    lib/params.cc lib/params.hh \
-		    lib/object.cc lib/object.hh \
 		    lib/module.cc lib/module.hh \
-		    lib/array.cc lib/array.hh \
-		    lib/exception.cc lib/exception.hh
+		    lib/exception.cc lib/exception.hh \
+		    lib/type/int.cc lib/type/int.hh \
+		    lib/type/string.cc lib/type/string.hh \
+		    lib/type/array.cc lib/type/array.hh \
+		    lib/type/type.cc lib/type/type.hh \
+		    lib/gc/memory-object.hh
 
 libesl_la_LDFLAGS = -version-info 1:0:0
 libesl_la_CXXFLAGS = -Wall -Wextra -std=c++0x

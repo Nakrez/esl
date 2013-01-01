@@ -5,22 +5,21 @@
 # include <map>
 # include <memory>
 
-# include "object.hh"
-# include "value.hh"
 # include "module.hh"
+# include "content.hh"
+# include "exception.hh"
 
 namespace esl
 {
     class Params;
     class Runtime;
 
-    using Callback = ContentObject* (*)(Runtime*, Params*);
-    using ModulePtr = std::shared_ptr<Module>;
-    using ValuePtr = std::shared_ptr<Value>;
+    using Callback = MemoryObject<Content>* (*)(Runtime*, const Params&);
+    using MemContent = MemoryObject<Content>*;
 
-    ContentObject* std_callback (Runtime*, Params*);
+    MemoryObject<Content>* std_callback (Runtime*, const Params&);
 
-    class Context : public Object
+    class Context : public Content
     {
         public:
             Context();
@@ -28,17 +27,17 @@ namespace esl
             ~Context();
 
             std::pair<Callback, int> function_get (const std::string& name) const;
-            Value* variable_get (const std::string& name) const;
-            Module* module_get (const std::string&) const;
+            MemContent variable_get (const std::string& name) const;
+            MemContent module_get (const std::string&) const;
 
-            void variable_set (const std::string&, Value*);
+            void variable_set (const std::string&, MemContent);
             void function_set (const std::string&, Callback, int);
-            void module_set (const std::string&, Module*);
+            void module_set (const std::string&, MemContent);
 
         private:
             std::map<std::string, std::pair<Callback, int>> functions_;
-            std::map<std::string, ValuePtr> variables_;
-            std::map<std::string, ModulePtr> modules_;
+            std::map<std::string, MemContent> variables_;
+            std::map<std::string, MemContent> modules_;
     };
 }
 #endif /* !CONTEXT_H_ */
