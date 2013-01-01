@@ -15,7 +15,6 @@ esl::Context::Context()
 
 esl::Context::Context(const Context& context)
     : functions_ (context.functions_)
-    , variables_ (context.variables_)
 {
     for (auto mod : context.modules_)
         mod.second->incr();
@@ -27,7 +26,7 @@ esl::Context::~Context()
     for (auto mod : modules_)
         mod.second->decr();
     for (auto var : variables_)
-        delete var.second;
+        var.second->decr();
 }
 
 std::pair<esl::Callback, int> esl::Context::function_get (const std::string& name) const
@@ -52,7 +51,7 @@ void esl::Context::variable_set (const std::string& name, MemContent value)
 {
     value->incr();
 
-    if (this->variables_[name])
+    if (this->variables_.find(name) != this->variables_.end())
         this->variables_[name]->decr();
 
     this->variables_[name] = value;
