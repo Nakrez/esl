@@ -242,6 +242,9 @@ void esl::Vm::bool_operation(int_operation int_op, str_bool_operation str_op)
                                      ((esl::String*)obj1->data_get())->data_get()));
 
     this->stack_.push(new esl::MemoryObject<esl::Content>(res));
+
+    obj1->decr();
+    obj2->decr();
 }
 
 std::string esl::Vm::module_path(const std::string& mod_name)
@@ -444,6 +447,8 @@ void esl::Vm::jump(esl::Bytecode *instr, int val)
 
         this->pop();
     }
+    else
+        throw Exception("Conditional jump exception ! Is this a boolean expression ?");
 }
 
 void esl::Vm::jump(esl::Bytecode *instr)

@@ -1,3 +1,4 @@
 02/02/2013:
 
 - Fix function parameters issues (Stack delimiter)
+- Fix leaks on conditional statements
