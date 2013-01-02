@@ -153,6 +153,8 @@ void esl::Compiler::compile_array_at(Ast* ast)
 
 void esl::Compiler::compile_module_call(Ast* ast)
 {
+    byte_code_.push_back(new esl::Bytecode(DELIM));
+
     if (ast->get_fson() && ast->get_fson()->get_fson())
         compile(ast->get_fson()->get_fson());
 
@@ -292,6 +294,8 @@ void esl::Compiler::compile_call(esl::Ast* ast)
     /* Load args */
     if (ast->get_fson())
         temp_ast = ast->get_fson()->get_fson();
+
+    byte_code_.push_back(new esl::Bytecode(DELIM));
 
     if (temp_ast)
         compile(ast->get_fson());

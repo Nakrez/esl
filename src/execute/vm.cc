@@ -132,12 +132,21 @@ void esl::Vm::run()
             case CALL_MODULE:
                 this->call_module(instr);
                 break;
+            case DELIM:
+                this->add_delim();
+                break;
             default:
                 break;
         }
 
         this->runtime_->pc_incr(1);
     }
+}
+
+void esl::Vm::add_delim ()
+{
+    esl::StackDelimiter* delim = new esl::StackDelimiter();
+    this->stack_.push(new esl::MemoryObject<esl::Content>(delim));
 }
 
 void esl::Vm::pop()
@@ -233,6 +242,9 @@ void esl::Vm::bool_operation(int_operation int_op, str_bool_operation str_op)
                                      ((esl::String*)obj1->data_get())->data_get()));
 
     this->stack_.push(new esl::MemoryObject<esl::Content>(res));
+
+    obj1->decr();
+    obj2->decr();
 }
 
 std::string esl::Vm::module_path(const std::string& mod_name)
@@ -283,12 +295,13 @@ void esl::Vm::call_module (Bytecode* instr)
     this->stack_.pop();
 
     /* Storing all args before context switch */
-    while (!(this->stack_.empty()) &&
-           !dynamic_cast<esl::Module*> (this->stack_.top()->data_get()))
+    while (!dynamic_cast<esl::StackDelimiter*> (this->stack_.top()->data_get()))
     {
         params.params_set(this->stack_.top());
         this->stack_.pop();
     }
+
+    this->pop();
 
     this->stack_.push(module->call(*fun_name, params));
 
@@ -356,13 +369,13 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     esl::MemoryObject<esl::Content>* container = nullptr;
 
     /* Storing all args before context switch */
-    while (!(this->stack_.empty()) &&
-           !dynamic_cast<esl::Runtime*>(this->stack_.top()->data_get()))
+    while (!dynamic_cast<esl::StackDelimiter*>(this->stack_.top()->data_get()))
     {
-        this->stack_.top()->incr();
         params.params_set(this->stack_.top());
         this->stack_.pop();
     }
+
+    this->pop();
 
     /* Push current context in the stack */
     container = new esl::MemoryObject<esl::Content>(this->runtime_);
@@ -385,8 +398,6 @@ void esl::Vm::call_function(esl::Bytecode *instr)
 
         this->runtime_ = fun_runtime;
     }
-
-    params.decr();
 }
 
 void esl::Vm::store(esl::Bytecode *instr)
@@ -436,6 +447,8 @@ void esl::Vm::jump(esl::Bytecode *instr, int val)
 
         this->pop();
     }
+    else
+        throw Exception("Conditional jump exception ! Is this a boolean expression ?");
 }
 
 void esl::Vm::jump(esl::Bytecode *instr)

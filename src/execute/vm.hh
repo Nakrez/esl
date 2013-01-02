@@ -13,6 +13,7 @@
 # include "../../lib/params.hh"
 # include "../../lib/exception.hh"
 # include "../../lib/module.hh"
+# include "../../lib/stack-delimiter.hh"
 # include "../utils/bytecode.hh"
 # include "../utils/ro-data.hh"
 # include "operation.hh"
@@ -62,6 +63,8 @@ namespace esl
             void bool_operation (int_operation, str_bool_operation);
 
             void pop ();
+            void add_delim ();
+
         private:
             std::stack<esl::MemoryObject<esl::Content>*> stack_;
             std::vector<Bytecode*> code_;

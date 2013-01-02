@@ -1,7 +1,7 @@
 #! /bin/sh
 
 categorie="mix"
-count=0
+count=1
 curr=1
 win=0
 

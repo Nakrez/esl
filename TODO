@@ -14,7 +14,8 @@
 [LEXER 50%] Introduce Comments
 [COMPILER] Introduce Bytecode optimizer
 [COMPILER] Introduce AST checker to provide bad operation (-, /, ... on strings, ...)
-[PARSER] Introduce post/pre incrementation/decrementation
+[LEXER/PARSER/COMPILER/VM] Introduce post/pre incrementation/decrementation
+                           (add specific bytecode)
 [PARSER] Introduce +=, -=, *=, /=, %= operators
 [PARSER/COMPILER/VM] break statement
 [PARSER/COMPILER/VM] continue statement
@@ -24,11 +25,7 @@
 [PARSER] Update grammar for arrays
 [VM] Type float instead of int
 [VM] O_PRIVATE_TYPE for internal type of APIs that cannot be used
-
-!!!! [VM] Improve function call and return handling
 [VM] Improve function design
-[GC] Improve leaks on functions call
-
 [PARSER] Add alternative syntax for multidimensional array [,]
 [LIBESL] Reorder
 [LIB] Module IO
@@ -36,6 +33,10 @@
 [LIB] Module Utils
 [LIB] Module String
 [LIB] Rename module array class as ArrayModule
+[PARSER/VM] Module call start with capitals letters
+[LEXER/PARSER/COMPILER/VM] Add object paradigm
+
+[API] Improve API
 
 - Review Code:
     * Less dynamic allocation
@@ -46,10 +47,3 @@
 
 Bugs:
 
-
-DONE:
-
-[VM] Update import (path looking) 28/12/2012 21H10
-[LEXER/PARSER/COMPILER/VM] Introduce arrays 30/12/2012 11h30
-[VM] Implement + for strings 28/12/2012 21h
-[VM] Implement GC 01/01/2013 23h
