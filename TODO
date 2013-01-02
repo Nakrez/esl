@@ -39,7 +39,6 @@
 [API] Improve API
 
 - Review Code:
-    * Static MemoryObject instead of dynamic
     * Less dynamic allocation
     * Use variants in parser
     * Securise Cast with c++ cast and return check
