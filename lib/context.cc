@@ -31,6 +31,9 @@ esl::Context::~Context()
 
 std::pair<esl::Callback, int> esl::Context::function_get (const std::string& name) const
 {
+    if (this->functions_.find(name) == this->functions_.end())
+        throw Exception("Function " + name + " not found");
+
     return this->functions_.at(name);
 }
 

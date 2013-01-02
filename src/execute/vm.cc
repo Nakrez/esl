@@ -359,7 +359,6 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     while (!(this->stack_.empty()) &&
            !dynamic_cast<esl::Runtime*>(this->stack_.top()->data_get()))
     {
-        this->stack_.top()->incr();
         params.params_set(this->stack_.top());
         this->stack_.pop();
     }
@@ -385,8 +384,6 @@ void esl::Vm::call_function(esl::Bytecode *instr)
 
         this->runtime_ = fun_runtime;
     }
-
-    params.decr();
 }
 
 void esl::Vm::store(esl::Bytecode *instr)
