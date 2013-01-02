@@ -1,4 +1,4 @@
 import "io"
 
 i=10*9+2
-io.print(i)
+Io.print(i)

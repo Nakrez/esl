@@ -7,4 +7,4 @@ function pow (x, y)
     return x * pow(x, y - 1)
 end
 
-io.print("2 pow 12 = ", pow(2,12))
+Io.print("2 pow 12 = ", pow(2,12))

@@ -30,13 +30,11 @@
 <COMMENT_MULTI>"\n"     {
                             yylloc->lines(yyleng);
                             yylloc->step();
-                            return token::TOK_NEWLINE;
                         }
 <COMMENT_SIMPLE>"\n"    {
                             BEGIN(INITIAL);
                             yylloc->lines(yyleng);
                             yylloc->step();
-                            return token::TOK_NEWLINE;
                         }
 <COMMENT_SIMPLE>.*
 
@@ -113,6 +111,7 @@
 "."                     return token::TOK_DOT;
 "["                     return token::TOK_BRACKET_OP;
 "]"                     return token::TOK_BRACKET_CL;
+";"                     return token::TOK_SEPARATOR;
 
 [0-9]+                  {
                             yylval->ival = atoi(yytext);
@@ -121,7 +120,6 @@
 "\n"                    {
                             yylloc->lines(yyleng);
                             yylloc->step();
-                            return token::TOK_NEWLINE;
                         }
 [ \t]+                  yylloc->step();
 

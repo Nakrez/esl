@@ -4,4 +4,4 @@ function a()
     return 1
 end
 
-io.print(a())
+Io.print(a())
