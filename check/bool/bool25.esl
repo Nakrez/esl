@@ -2,4 +2,4 @@ import "io"
 
 i = 20
 
-io.print(i > 30 or i >= 40 || i > 100)
+Io.print(i > 30 or i >= 40 || i > 100)

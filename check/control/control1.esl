@@ -1,5 +1,5 @@
 import "io"
 
 if 1 then
-    io.print(1)
+    Io.print(1)
 end

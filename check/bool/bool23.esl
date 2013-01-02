@@ -1,4 +1,4 @@
 import "io"
 
 i = 2
-io.print(i < 1 and i < 60)
+Io.print(i < 1 and i < 60)
