@@ -1,0 +1,10 @@
+import "io"
+
+function pow (x, y)
+    if y == 0 then
+        return 1
+    end
+    return x * pow(x, y - 1)
+end
+
+io.print("2 pow 12 = ", pow(2,12))

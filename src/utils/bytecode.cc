@@ -40,6 +40,7 @@ const static std::string instr_string[] =
     "RETURN",
     "MAKE_FUNCTION",
     "CALL_FUNCTION",
+    "DELIM"
 };
 
 esl::Bytecode::Bytecode (instr type)

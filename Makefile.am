@@ -11,6 +11,7 @@ libesl_la_SOURCES = lib/context.cc lib/context.hh \
 		    lib/params.cc lib/params.hh \
 		    lib/module.cc lib/module.hh \
 		    lib/exception.cc lib/exception.hh \
+		    lib/stack-delimiter.cc lib/stack-delimiter.hh \
 		    lib/type/int.cc lib/type/int.hh \
 		    lib/type/string.cc lib/type/string.hh \
 		    lib/type/array.cc lib/type/array.hh \

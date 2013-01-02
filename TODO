@@ -49,7 +49,6 @@
 Bugs:
 
 [GC] Fix leaks on functions call
-[VM] Fix function parameters issues (Stackt delimiter)
 
 DONE:
 
@@ -57,3 +56,4 @@ DONE:
 [LEXER/PARSER/COMPILER/VM] Introduce arrays 30/12/2012 11h30
 [VM] Implement + for strings 28/12/2012 21h
 [VM] Implement GC 01/01/2013 23h
+[VM] Fix function parameters issues (Stack delimiter) 02/01/2013 13h30

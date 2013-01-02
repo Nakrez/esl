@@ -94,6 +94,8 @@ enum instr
     MAKE_FUNCTION,
 
     CALL_FUNCTION,
+
+    DELIM
 };
 
 namespace esl
