@@ -84,6 +84,10 @@
                         }
 "\""                    BEGIN(LITTERAL); yylval->sval = nullptr;
 
+[A-Z][a-zA-Z_]*          {
+                            yylval->sval = new std::string(yytext);
+                            return token::TOK_MOD_ID;
+                        }
 [a-z_A-Z][a-zA-Z_0-9]*  {
                             yylval->sval = new std::string(yytext);
                             return token::TOK_ID;

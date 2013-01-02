@@ -33,7 +33,6 @@
 [LIB] Module Utils
 [LIB] Module String
 [LIB] Rename module array class as ArrayModule
-[PARSER/VM] Module call start with capitals letters
 [LEXER/PARSER/COMPILER/VM] Add object paradigm
 
 [API] Improve API

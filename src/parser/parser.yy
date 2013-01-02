@@ -54,7 +54,7 @@ class Driver;
 %token TOK_FOR "for" TOK_DO "do" TOK_WHILE "while" TOK_UNTIL "until"
 %token TOK_BRACKET_OP "[" TOK_BRACKET_CL "]"
 
-%token <sval> TOK_ID "identifier"  TOK_STRING "string"
+%token <sval> TOK_ID "identifier" TOK_STRING "string" TOK_MOD_ID "mod_id"
 %token <ival> TOK_DIGIT "digit"
 
 %type <ast> instr expr functions esl_command fun_call
@@ -277,7 +277,7 @@ expr            :
                                          $$->add(new esl::Ast(ID, $1));
                                          $$->add($3);
                                        }
-                |"identifier" "." fun_call
+                |"mod_id" "." fun_call
                                          {
                                             $$ = new esl::Ast(MODULE_CALL, $1);
                                             $$->add($3);

@@ -269,7 +269,7 @@ void esl::Vm::setup_module (Bytecode* instr)
     std::string path = module_path(*module_name);
 
     if (path == "")
-        throw Exception ("Module " + *module_name + " not found.");
+        throw Exception ("Module " + *module_name + " not found");
 
     module = new esl::Module(path);
     module->load();

@@ -47,6 +47,9 @@ esl::MemContent esl::Context::variable_get (const std::string& name) const
 
 esl::MemContent esl::Context::module_get (const std::string& name) const
 {
+    if (this->modules_.find(name) == this->modules_.end())
+        throw Exception("Module " + name + " not found");
+
     return this->modules_.at(name);
 }
 
@@ -69,5 +72,9 @@ void esl::Context::function_set (const std::string& name,
 
 void esl::Context::module_set (const std::string& name, MemContent module)
 {
-    this->modules_[name] = module;
+    std::string str = name;
+
+    str[0] = str[0] - 'a' + 'A';
+
+    this->modules_[str] = module;
 }
