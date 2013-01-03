@@ -9,6 +9,22 @@ esl::Type::Type ()
     register_method("operator+",
                     new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::plus_op)),
                     PUBLIC);
+
+    register_method("operator-",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::minus_op)),
+                    PUBLIC);
+
+    register_method("operator*",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::mul_op)),
+                    PUBLIC);
+
+    register_method("operator/",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::div_op)),
+                    PUBLIC);
+
+    register_method("operator%",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::mod_op)),
+                    PUBLIC);
 }
 
 esl::Type::~Type ()
@@ -32,6 +48,42 @@ esl::MemoryObject<esl::Content>* esl::Type::plus_op (const Params&)
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide + operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::minus_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide - operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::mul_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide * operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::div_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide / operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::mod_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide % operator");
 
     return new MemoryObject<esl::Content>(nullptr);
 }

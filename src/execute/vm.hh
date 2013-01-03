@@ -54,9 +54,6 @@ namespace esl
             void module(Bytecode* instr);
             void call_module(Bytecode* instr);
 
-            template<class Func>
-            void math (Func fun);
-
             std::string module_path (const std::string&);
 
             void math_operation (int_operation, str_operation);
@@ -74,7 +71,5 @@ namespace esl
             static const std::string path_lib_[];
     };
 }
-
-# include "vm.hxx"
 
 #endif /* !VM_HH */

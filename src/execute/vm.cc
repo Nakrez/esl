@@ -82,16 +82,16 @@ void esl::Vm::run()
                 this->operation("operator+");
                 break;
             case ARITH_MINUS:
-                this->math(std::minus<int>());
+                this->operation("operator-");
                 break;
             case ARITH_MUL:
-                this->math(std::multiplies<int>());
+                this->operation("operator*");
                 break;
             case ARITH_DIV:
-                this->math(std::divides<int>());
+                this->operation("operator/");
                 break;
             case ARITH_MOD:
-                this->math(std::modulus<int>());
+                this->operation("operator%");
                 break;
             case BOOL_EQ:
                 this->bool_operation(esl::Operation::eq_int,
@@ -118,10 +118,10 @@ void esl::Vm::run()
                                      esl::Operation::le_str);
                 break;
             case BOOL_OR:
-                this->math(std::logical_or<int>());
+                //this->math(std::logical_or<int>());
                 break;
             case BOOL_AND:
-                this->math(std::logical_and<int>());
+                //this->math(std::logical_and<int>());
                 break;
             case OPEN:
                 this->setup_module(instr);

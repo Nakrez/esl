@@ -68,4 +68,4 @@ esl-check: all
 
 count:
 	cat lib/*.{hh,cc} lib/type/*.{cc,hh} lib/gc/*.{hh,hxx} src/main.cc \
-	    src/**/*.{cc,hh} src/execute/vm.hxx | wc -l
+	    src/**/*.{cc,hh} | wc -l
