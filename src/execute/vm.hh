@@ -16,18 +16,11 @@
 # include "../../lib/stack-delimiter.hh"
 # include "../utils/bytecode.hh"
 # include "../utils/ro-data.hh"
-# include "operation.hh"
 
 namespace esl
 {
     class Vm
     {
-        using int_operation = int (*)(int, int);
-        using str_operation = std::string (*)(const std::string&,
-                                              const std::string&);
-        using str_bool_operation = int (*)(const std::string&,
-                                           const std::string&);
-
         public:
             Vm (const std::vector<Bytecode*>&);
             ~Vm ();
@@ -56,8 +49,6 @@ namespace esl
 
             std::string module_path (const std::string&);
 
-            void math_operation (int_operation, str_operation);
-            void bool_operation (int_operation, str_bool_operation);
             void operation (const std::string&);
 
             void pop ();

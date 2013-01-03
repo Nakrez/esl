@@ -25,6 +25,39 @@ esl::Type::Type ()
     register_method("operator%",
                     new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::mod_op)),
                     PUBLIC);
+
+    register_method("operator==",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::eq_op)),
+                    PUBLIC);
+
+    register_method("operator!=",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::diff_op)),
+                    PUBLIC);
+
+    register_method("operator>",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::gt_op)),
+                    PUBLIC);
+
+    register_method("operator>=",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::ge_op)),
+                    PUBLIC);
+
+    register_method("operator<",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::lt_op)),
+                    PUBLIC);
+
+    register_method("operator<=",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::le_op)),
+                    PUBLIC);
+
+
+    register_method("operator&&",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::and_op)),
+                    PUBLIC);
+
+    register_method("operator||",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::or_op)),
+                    PUBLIC);
 }
 
 esl::Type::~Type ()
@@ -84,6 +117,78 @@ esl::MemoryObject<esl::Content>* esl::Type::mod_op (const Params&)
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide % operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::and_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide && (and) operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::or_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide || (or) operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::eq_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide == operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::diff_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide != (<>) operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::gt_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide > operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::ge_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide >= operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::lt_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide < operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::le_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide <= operator");
 
     return new MemoryObject<esl::Content>(nullptr);
 }

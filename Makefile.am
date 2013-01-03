@@ -33,7 +33,6 @@ esl_SOURCES =   src/utils/ast.cc src/utils/ast.hh \
 		src/parser/driver.cc src/parser/driver.hh \
 		src/compile/compiler.cc src/compile/compiler.hh \
 		src/execute/vm.cc src/execute/vm.hh src/execute/vm.hxx \
-		src/execute/operation.cc src/execute/operation.hh \
 		src/main.cc
 
 esl_CXXFLAGS = -pedantic -Wall -Wextra -std=c++0x -Wno-delete-non-virtual-dtor
