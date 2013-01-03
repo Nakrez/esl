@@ -49,12 +49,16 @@ class Driver;
 %token TOK_BIN_EQ "==" TOK_DIFF "!=" TOK_GT ">" TOK_GE ">="
 %token TOK_LT "<" TOK_LE "<="
 %token TOK_AND "&&" TOK_OR "||"
+%token TOK_DOUBLEP ":"
 %token TOK_PAROPEN "(" TOK_PARCLOSE ")" TOK_COMA ","
 %token TOK_IF "if" TOK_THEN "then" TOK_ELSE "else" TOK_ELIF "elif"
 %token TOK_END "end" TOK_IMPORT "import" TOK_INCLUDE "include"
 %token TOK_FUNCTION "function" TOK_RETURN "return"
 %token TOK_FOR "for" TOK_DO "do" TOK_WHILE "while" TOK_UNTIL "until"
 %token TOK_BRACKET_OP "[" TOK_BRACKET_CL "]"
+
+%token TOK_CLASS "class" TOK_PUBLIC "public" TOK_PRIVATE "private"
+%token TOK_PROTECTED "protected"
 
 %token <sval> TOK_ID "identifier" TOK_STRING "string" TOK_MOD_ID "mod_id"
 %token <ival> TOK_DIGIT "digit"
@@ -81,11 +85,27 @@ input   :
 instr   :
         expr { $$ = $1; }
         |functions { $$ = $1; }
+        |class_decl { $$ = nullptr; }
         |esl_command { $$ = $1; }
         |"import" "string" { $$ = new esl::Ast(IMPORT, $2); }
         |"include" "string"
         ;
 
+class_decl:
+          "class" "identifier" class_components "end"
+          |"class" "identifier" ":" "(" param_list ")" class_component "end"
+          ;
+
+class_component:
+                "public" functions
+                |"protected" functions
+                |"private" functions
+                |functions
+
+class_components:
+                class_component
+                |class_components class_component
+                ;
 compound_list   :
                 "return" expr
                         {
