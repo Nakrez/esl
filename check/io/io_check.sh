@@ -1,6 +1,6 @@
 #! /bin/sh
 
-categorie="print"
+categorie="io"
 count=1
 curr=1
 win=0

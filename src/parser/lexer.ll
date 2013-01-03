@@ -13,8 +13,8 @@
 # define YY_USER_ACTION  yylloc->columns (yyleng);
 %}
 
-%x COMMENT_SIMPLE
 %x COMMENT_MULTI
+%x COMMENT_SIMPLE
 %x LITTERAL
 
 %%
@@ -25,22 +25,22 @@
     typedef yy::eslxx_parser::token token;
 %}
 
+#\[                     yy_push_state(COMMENT_MULTI);
+
 <COMMENT_MULTI>"]#"     yy_pop_state();
-<COMMENT_MULTI>.*       yylloc->step();
 <COMMENT_MULTI>"\n"     {
                             yylloc->lines(yyleng);
                             yylloc->step();
                         }
+<COMMENT_MULTI>.*
+
+"#"                     BEGIN(COMMENT_SIMPLE);
 <COMMENT_SIMPLE>"\n"    {
                             BEGIN(INITIAL);
                             yylloc->lines(yyleng);
                             yylloc->step();
                         }
-<COMMENT_SIMPLE>.*
-
-"#["                    yy_push_state(COMMENT_MULTI);
-"#"                     BEGIN(COMMENT_SIMPLE);
-
+<COMMENT_SIMPLE>[^\n]*
 
 "if"                    return token::TOK_IF;
 "then"                  return token::TOK_THEN;
