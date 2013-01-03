@@ -32,3 +32,11 @@ std::string esl::String::type_name_get () const
 {
     return "String";
 }
+
+esl::MemoryObject<esl::Content>* esl::String::plus_op (const Params& params)
+{
+    esl::String* op2 = dynamic_cast<esl::String*>(params.get_params(2)->data_get());
+    std::string value = op2->data_get();
+
+    return new esl::MemoryObject<esl::Content>(new esl::String(data_ + value));
+}

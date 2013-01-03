@@ -49,7 +49,7 @@ int main(int argc, char **argv)
         }
         catch (esl::Exception& e)
         {
-            std::cout << e.message() << std::endl;
+            std::cout << "ESL exception: " << e.message() << std::endl;
         }
 
         esl::RoData::instance_delete();

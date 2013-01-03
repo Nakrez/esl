@@ -16,6 +16,8 @@ namespace esl
             virtual MemoryObject<Content>* print (const Params&);
             virtual std::string type_name_get () const;
 
+            virtual MemoryObject<Content>* plus_op (const Params&);
+
             int data_get () const;
             void data_set (int data);
 

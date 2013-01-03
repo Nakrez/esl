@@ -61,6 +61,7 @@ namespace esl
 
             void math_operation (int_operation, str_operation);
             void bool_operation (int_operation, str_bool_operation);
+            void operation (const std::string&);
 
             void pop ();
             void add_delim ();

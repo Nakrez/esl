@@ -4,6 +4,7 @@
 # include <string>
 # include <map>
 
+# include "../exception.hh"
 # include "../content.hh"
 # include "../gc/memory-object.hh"
 # include "../delegate.hh"
@@ -31,6 +32,8 @@ namespace esl
             virtual MemoryObject<Content>* plus_op (const Params&);
 
             void register_method (const std::string&, Method*, Visibility);
+            MemoryObject<Content>* call_method (const std::string&,
+                                                const esl::Params&);
         protected:
             std::map<std::string, std::pair<Method*, Visibility>> method_;
             std::map<std::string,

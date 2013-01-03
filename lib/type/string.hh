@@ -18,6 +18,8 @@ namespace esl
             virtual MemoryObject<Content>* print (const Params&);
             virtual std::string type_name_get () const;
 
+            virtual MemoryObject<Content>* plus_op (const Params&);
+
             const std::string& data_get () const;
             void data_set (const std::string& data);
         private:

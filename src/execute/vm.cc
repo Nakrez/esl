@@ -79,8 +79,7 @@ void esl::Vm::run()
                 this->jump(instr, 0);
                 continue;
             case ARITH_ADD:
-                this->math_operation(esl::Operation::add_int,
-                                     esl::Operation::add_str);
+                this->operation("operator+");
                 break;
             case ARITH_MINUS:
                 this->math(std::minus<int>());
@@ -142,6 +141,36 @@ void esl::Vm::run()
 
         this->runtime_->pc_incr(1);
     }
+}
+
+void esl::Vm::operation (const std::string& name)
+{
+    esl::MemoryObject<esl::Content>* obj1 = nullptr;
+    esl::MemoryObject<esl::Content>* obj2 = nullptr;
+
+    obj1 = this->stack_.top();
+    this->stack_.pop();
+
+    obj2 = this->stack_.top();
+    this->stack_.pop();
+
+    esl::Type* value1 = dynamic_cast<esl::Type*> (obj1->data_get());
+    esl::Type* value2 = dynamic_cast<esl::Type*> (obj2->data_get());
+
+    if (value1 && value2 && value1->type_name_get() == value2->type_name_get())
+    {
+        esl::Params params;
+
+        params.params_set(obj1);
+        params.params_set(obj2);
+
+        this->stack_.push(value2->call_method(name, params));
+    }
+    else
+        throw esl::Exception("ESL is not able yet to handle different type operations");
+
+    obj1->decr();
+    obj2->decr();
 }
 
 void esl::Vm::add_delim ()
