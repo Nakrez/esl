@@ -9,7 +9,8 @@ esl::Type::Type ()
 
 esl::Type::~Type ()
 {
-
+    for (auto method : method_)
+        method.second.first->decr();
 }
 
 void esl::Type::register_method (const std::string& name,
@@ -20,4 +21,9 @@ void esl::Type::register_method (const std::string& name,
         this->method_[name].first->decr();
 
     this->method_[name] = std::pair<Method*, Visibility>(method, visibility);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::plus_op (const Params&)
+{
+    return new MemoryObject<esl::Content>(nullptr);
 }

@@ -15,8 +15,6 @@ esl::MemoryObject<esl::Content>* Io::print (const esl::Params& params)
 
         obj = dynamic_cast<esl::Type*> (params.get_params(i + 1)->data_get());
 
-
-
         if (obj)
         {
             mem = new esl::MemoryObject<esl::Content>(obj);

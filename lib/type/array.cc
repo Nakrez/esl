@@ -39,5 +39,3 @@ std::string esl::Array::type_name_get () const
 {
     return "Array";
 }
-
-

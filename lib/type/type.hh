@@ -23,10 +23,12 @@ namespace esl
     {
         public:
             Type ();
-            ~Type ();
+            virtual ~Type ();
 
             virtual MemoryObject<Content>* print (const Params&) = 0;
             virtual std::string type_name_get() const = 0;
+
+            virtual MemoryObject<Content>* plus_op (const Params&);
 
             void register_method (const std::string&, Method*, Visibility);
         protected:
