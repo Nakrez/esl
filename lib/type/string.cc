@@ -21,7 +21,14 @@ void esl::String::data_set (const std::string& data)
     data_ = data;
 }
 
-void esl::String::print () const
+esl::MemoryObject<esl::Content>* esl::String::print (const esl::Params&)
 {
     std::cout << data_;
+
+    return new esl::MemoryObject<esl::Content> (new esl::Int(0));
+}
+
+std::string esl::String::type_name_get () const
+{
+    return "String";
 }

@@ -5,6 +5,7 @@
 # include <string>
 
 # include "type.hh"
+# include "int.hh"
 
 namespace esl
 {
@@ -14,10 +15,11 @@ namespace esl
             String (const std::string& data);
             ~String ();
 
+            virtual MemoryObject<Content>* print (const Params&);
+            virtual std::string type_name_get () const;
+
             const std::string& data_get () const;
             void data_set (const std::string& data);
-
-            virtual void print () const;
         private:
             std::string data_;
     };

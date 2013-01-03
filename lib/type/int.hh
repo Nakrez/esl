@@ -13,10 +13,12 @@ namespace esl
             Int (int data);
             ~Int ();
 
+            virtual MemoryObject<Content>* print (const Params&);
+            virtual std::string type_name_get () const;
+
             int data_get () const;
             void data_set (int data);
 
-            virtual void print () const;
         private:
             int data_;
     };

@@ -19,7 +19,7 @@ libesl_la_SOURCES = lib/context.cc lib/context.hh \
 		    lib/gc/memory-object.hh
 
 libesl_la_LDFLAGS = -version-info 1:0:0
-libesl_la_CXXFLAGS = -Wall -Wextra -std=c++0x
+libesl_la_CXXFLAGS = -Wall -Wextra -std=c++0x -Wdelete-non-virtual-dtor
 
 # esl
 bin_PROGRAMS= esl
@@ -36,7 +36,7 @@ esl_SOURCES =   src/utils/ast.cc src/utils/ast.hh \
 		src/execute/operation.cc src/execute/operation.hh \
 		src/main.cc
 
-esl_CXXFLAGS = -pedantic -Wall -Wextra -std=c++0x
+esl_CXXFLAGS = -pedantic -Wall -Wextra -std=c++0x -Wdelete-non-virtual-dtor
 esl_LDFLAGS = -lfl
 esl_YFLAGS = -W -Wall --report=all
 esl_LDADD = libesl.la

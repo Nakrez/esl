@@ -10,7 +10,12 @@ esl::Array::Array (unsigned int size)
 esl::Array::~Array ()
 {
     for (auto v : data_)
-        delete v;
+        v->decr();
+}
+
+esl::MemoryObject<esl::Content>* esl::Array::instanciate ()
+{
+    return new esl::MemoryObject<esl::Content>(new esl::Array(0));
 }
 
 esl::MemoryObject<esl::Content>* esl::Array::at (unsigned int pos)
@@ -21,9 +26,18 @@ esl::MemoryObject<esl::Content>* esl::Array::at (unsigned int pos)
     return data_.at (pos);
 }
 
-void esl::Array::print () const
+esl::MemoryObject<esl::Content>* esl::Array::print (const esl::Params&)
 {
     std::cout << "[" << std::endl;
 
     std::cout << "]" << std::endl;
+
+    return new esl::MemoryObject<esl::Content> (new esl::Int(0));
 }
+
+std::string esl::Array::type_name_get () const
+{
+    return "Array";
+}
+
+

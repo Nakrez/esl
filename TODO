@@ -9,8 +9,6 @@
 [LEXER/PARSER/COMPILER/VM] Introduce foreach loop
 [PARSER] Introduce Unary operators
 [LEXER/PARSER] Introduce "include" keywords
-[LEXER/PARSER/COMPILER/VM] Type forcing
-[LEXER/PARSER/COMPILER/VM] Introduce Objects
 [LEXER 50%] Introduce Comments
 [COMPILER] Introduce Bytecode optimizer
 [COMPILER] Introduce AST checker to provide bad operation (-, /, ... on strings, ...)
@@ -31,9 +29,11 @@
 [LIB] Module IO
 [LIB] Module Array
 [LIB] Module Utils
+[LIB] Cast function
 [LIB] Module String
 [LIB] Rename module array class as ArrayModule
 [LEXER/PARSER/COMPILER/VM] Add object paradigm
+[LEXER/PARSER/COMPILER/VM] Type forcing (multi type)
 
 [API] Improve API
 

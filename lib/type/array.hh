@@ -17,9 +17,11 @@ namespace esl
             Array (unsigned int size);
             ~Array ();
 
-            esl::MemoryObject<esl::Content>* at (unsigned int);
+            static MemoryObject<Content>* instanciate ();
+            virtual MemoryObject<Content>* print (const Params&);
+            virtual std::string type_name_get () const;
 
-            virtual void print () const;
+            esl::MemoryObject<esl::Content>* at (unsigned int);
 
         private:
             std::vector<esl::MemoryObject<esl::Content>*> data_;

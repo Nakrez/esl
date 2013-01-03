@@ -16,6 +16,7 @@ esl::Vm::Vm (const std::vector<esl::Bytecode*>& code)
 {
     this->code_ = code;
     this->runtime_ = new esl::ExecutableContext();
+    this->runtime_->type_set("Array", esl::Array::instanciate);
 }
 
 esl::Vm::~Vm()
