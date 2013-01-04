@@ -62,9 +62,17 @@ clear: distclean
 	rm -f tags
 	rm -f src/tags
 
-esl-check: all
-	./check/check.sh
-
 count:
 	cat lib/*.{hh,cc} lib/type/*.{cc,hh} lib/gc/*.{hh,hxx} src/main.cc \
 	    src/**/*.{cc,hh} | wc -l
+#! /bin/bash
+
+TESTS=	./check/io/io_check.sh \
+	./check/int/int_check.sh \
+	./check/strings/strings_check.sh \
+	./check/control/control_check.sh \
+	./check/loops/loops_check.sh \
+	./check/functions/functions_check.sh \
+	./check/array/array_check.sh \
+	./check/comment/comment_check.sh \
+	./check/mix/mix_check.sh

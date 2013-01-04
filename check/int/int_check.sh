@@ -1,7 +1,7 @@
 #! /bin/sh
 
-categorie="bool"
-count=25
+categorie="int"
+count=28
 curr=1
 win=0
 
@@ -12,6 +12,7 @@ while test $curr -le $count; do
         win=$(($win+1))
     else
         echo "File $file in $categorie failed"
+        exit 1
     fi
     curr=$(($curr+1));
 done

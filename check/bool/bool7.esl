@@ -1,3 +1,0 @@
-import "io"
-
-Io.print(5>=5)
