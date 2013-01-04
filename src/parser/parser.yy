@@ -134,14 +134,9 @@ compound_list   :
 
                 ;
 
-object_call_base:
-                "identifier"
-                |fun_call
-                ;
-
 object_call_list:
-                object_call_base "->" "identifier"
-                |object_call_base "->" fun_call
+                expr "->" "identifier"
+                |expr "->" fun_call
                 |object_call_list "->" "identifier"
                 |object_call_list "->" fun_call
 
