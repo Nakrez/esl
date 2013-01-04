@@ -62,6 +62,7 @@
 "public"                return token::TOK_PUBLIC;
 "protected"             return token::TOK_PROTECTED;
 "private"               return token::TOK_PRIVATE;
+"new"                   return token::TOK_NEW;
 
 <LITTERAL>"\""          BEGIN(INITIAL); return token::TOK_STRING;
 <LITTERAL>\\[\\"nr]     {
@@ -117,6 +118,7 @@
 "]"                     return token::TOK_BRACKET_CL;
 ";"                     return token::TOK_SEPARATOR;
 ":"                     return token::TOK_DOUBLEP;
+"->"                    return token::TOK_ARROW;
 
 [0-9]+                  {
                             yylval->ival = atoi(yytext);

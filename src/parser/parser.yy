@@ -49,7 +49,7 @@ class Driver;
 %token TOK_BIN_EQ "==" TOK_DIFF "!=" TOK_GT ">" TOK_GE ">="
 %token TOK_LT "<" TOK_LE "<="
 %token TOK_AND "&&" TOK_OR "||"
-%token TOK_DOUBLEP ":"
+%token TOK_DOUBLEP ":" TOK_ARROW "->" TOK_NEW "new"
 %token TOK_PAROPEN "(" TOK_PARCLOSE ")" TOK_COMA ","
 %token TOK_IF "if" TOK_THEN "then" TOK_ELSE "else" TOK_ELIF "elif"
 %token TOK_END "end" TOK_IMPORT "import" TOK_INCLUDE "include"
@@ -101,11 +101,12 @@ class_component:
                 |"protected" functions
                 |"private" functions
                 |functions
-
+                ;
 class_components:
                 class_component
                 |class_components class_component
                 ;
+
 compound_list   :
                 "return" expr
                         {
@@ -133,7 +134,19 @@ compound_list   :
 
                 ;
 
-param_list         :
+object_call_base:
+                "identifier"
+                |fun_call
+                ;
+
+object_call_list:
+                object_call_base "->" "identifier"
+                |object_call_base "->" fun_call
+                |object_call_list "->" "identifier"
+                |object_call_list "->" fun_call
+
+                ;
+param_list      :
                 "identifier"
                              { $$ = new std::list<esl::Ast *>;
                                $$->push_back(new esl::Ast(ID, $1));
@@ -276,6 +289,8 @@ expr            :
                 |"string" { $$ = new esl::Ast(STRING, $1); }
                 |"identifier" { $$ = new esl::Ast(ID, $1); }
                 |fun_call { $$ = $1; }
+                |object_call_list
+                |"new" fun_call
                 |"identifier" "=" expr {
                                          $$ = new esl::Ast(ASSIGNEMENT);
                                          $$->add(new esl::Ast(ID, $1));
