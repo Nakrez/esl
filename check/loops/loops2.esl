@@ -1,5 +1,5 @@
 import "io"
 
 until 1 do
-    io.print(5)
+    Io.print(5)
 end

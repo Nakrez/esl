@@ -7,5 +7,4 @@ function a(test)
     return test
 end
 
-io.print(a(test+1))
-
+Io.print(a(test+1))

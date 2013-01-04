@@ -1,4 +1,15 @@
-02/02/2013:
+Nightly 04/01/2013
+
+- Update check
+- Object parsing
+
+Nightly 03/01/2013:
+
+- Module call start with capitals letters
+- Update restrictive grammar with line jump
+- Start object implementation
+
+Nightly 02/01/2013:
 
 - Fix function parameters issues (Stack delimiter)
 - Fix leaks on conditional statements

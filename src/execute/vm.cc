@@ -16,6 +16,7 @@ esl::Vm::Vm (const std::vector<esl::Bytecode*>& code)
 {
     this->code_ = code;
     this->runtime_ = new esl::ExecutableContext();
+    this->runtime_->type_set("Array", esl::Array::instanciate);
 }
 
 esl::Vm::~Vm()
@@ -78,50 +79,43 @@ void esl::Vm::run()
                 this->jump(instr, 0);
                 continue;
             case ARITH_ADD:
-                this->math_operation(esl::Operation::add_int,
-                                     esl::Operation::add_str);
+                this->operation("operator+");
                 break;
             case ARITH_MINUS:
-                this->math(std::minus<int>());
+                this->operation("operator-");
                 break;
             case ARITH_MUL:
-                this->math(std::multiplies<int>());
+                this->operation("operator*");
                 break;
             case ARITH_DIV:
-                this->math(std::divides<int>());
+                this->operation("operator/");
                 break;
             case ARITH_MOD:
-                this->math(std::modulus<int>());
+                this->operation("operator%");
                 break;
             case BOOL_EQ:
-                this->bool_operation(esl::Operation::eq_int,
-                                     esl::Operation::eq_str);
+                this->operation("operator==");
                 break;
             case BOOL_DIFF:
-                this->bool_operation(esl::Operation::diff_int,
-                                     esl::Operation::diff_str);
+                this->operation("operator!=");
                 break;
             case BOOL_GT:
-                this->bool_operation(esl::Operation::gt_int,
-                                     esl::Operation::gt_str);
+                this->operation("operator>");
                 break;
             case BOOL_GE:
-                this->bool_operation(esl::Operation::ge_int,
-                                     esl::Operation::ge_str);
+                this->operation("operator>=");
                 break;
             case BOOL_LT:
-                this->bool_operation(esl::Operation::lt_int,
-                                     esl::Operation::lt_str);
+                this->operation("operator<");
                 break;
             case BOOL_LE:
-                this->bool_operation(esl::Operation::le_int,
-                                     esl::Operation::le_str);
+                this->operation("operator<=");
                 break;
             case BOOL_OR:
-                this->math(std::logical_or<int>());
+                this->operation("operator||");
                 break;
             case BOOL_AND:
-                this->math(std::logical_and<int>());
+                this->operation("operator&&");
                 break;
             case OPEN:
                 this->setup_module(instr);
@@ -141,6 +135,36 @@ void esl::Vm::run()
 
         this->runtime_->pc_incr(1);
     }
+}
+
+void esl::Vm::operation (const std::string& name)
+{
+    esl::MemoryObject<esl::Content>* obj1 = nullptr;
+    esl::MemoryObject<esl::Content>* obj2 = nullptr;
+
+    obj1 = this->stack_.top();
+    this->stack_.pop();
+
+    obj2 = this->stack_.top();
+    this->stack_.pop();
+
+    esl::Type* value1 = dynamic_cast<esl::Type*> (obj1->data_get());
+    esl::Type* value2 = dynamic_cast<esl::Type*> (obj2->data_get());
+
+    if (value1 && value2 && value1->type_name_get() == value2->type_name_get())
+    {
+        esl::Params params;
+
+        params.params_set(obj1);
+        params.params_set(obj2);
+
+        this->stack_.push(value2->call_method(name, params));
+    }
+    else
+        throw esl::Exception("ESL is not able yet to handle different type operations");
+
+    obj1->decr();
+    obj2->decr();
 }
 
 void esl::Vm::add_delim ()
@@ -186,67 +210,6 @@ void esl::Vm::array_val ()
     this->stack_.push(array->at (value->data_get()));
 }
 
-void esl::Vm::math_operation(int_operation int_op, str_operation str_op)
-{
-    esl::MemoryObject<esl::Content>* obj1 = nullptr;
-    esl::MemoryObject<esl::Content>* obj2 = nullptr;
-
-    obj1 = this->stack_.top();
-    this->stack_.pop();
-
-    obj2 = this->stack_.top();
-    this->stack_.pop();
-
-    if (dynamic_cast<esl::Int*> (obj1->data_get()) &&
-        dynamic_cast<esl::Int*> (obj2->data_get()))
-    {
-        esl::Int* res = nullptr;
-
-        res = new esl::Int(int_op(((esl::Int*)obj2->data_get())->data_get(),
-                                  ((esl::Int*)obj1->data_get())->data_get()));
-
-        this->stack_.push(new esl::MemoryObject<esl::Content>(res));
-    }
-    else /* TODO: check if it is string */
-    {
-        esl::String* res = nullptr;
-
-        res = new esl::String(str_op(((esl::String*)obj2->data_get())->data_get(),
-                                     ((esl::String*)obj1->data_get())->data_get()));
-
-        this->stack_.push(new esl::MemoryObject<esl::Content>(res));
-    }
-
-    obj1->decr();
-    obj2->decr();
-}
-
-void esl::Vm::bool_operation(int_operation int_op, str_bool_operation str_op)
-{
-    esl::MemoryObject<esl::Content>* obj1 = nullptr;
-    esl::MemoryObject<esl::Content>* obj2 = nullptr;
-    esl::Int *res = nullptr;
-
-    obj1 = this->stack_.top();
-    this->stack_.pop();
-
-    obj2 = this->stack_.top();
-    this->stack_.pop();
-
-    if (dynamic_cast<esl::Int*> (obj1->data_get()) &&
-        dynamic_cast<esl::Int*> (obj2->data_get()))
-        res = new esl::Int(int_op(((esl::Int*)obj2->data_get())->data_get(),
-                                  ((esl::Int*)obj1->data_get())->data_get()));
-    else /* TODO: check if it is string */
-        res = new esl::Int(str_op(((esl::String*)obj2->data_get())->data_get(),
-                                     ((esl::String*)obj1->data_get())->data_get()));
-
-    this->stack_.push(new esl::MemoryObject<esl::Content>(res));
-
-    obj1->decr();
-    obj2->decr();
-}
-
 std::string esl::Vm::module_path(const std::string& mod_name)
 {
     for (int i = 0; i < 7; ++i)
@@ -269,7 +232,7 @@ void esl::Vm::setup_module (Bytecode* instr)
     std::string path = module_path(*module_name);
 
     if (path == "")
-        throw Exception ("Module " + *module_name + " not found.");
+        throw Exception ("Module " + *module_name + " not found");
 
     module = new esl::Module(path);
     module->load();

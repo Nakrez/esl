@@ -13,8 +13,8 @@
 # define YY_USER_ACTION  yylloc->columns (yyleng);
 %}
 
-%x COMMENT_SIMPLE
 %x COMMENT_MULTI
+%x COMMENT_SIMPLE
 %x LITTERAL
 
 %%
@@ -25,24 +25,22 @@
     typedef yy::eslxx_parser::token token;
 %}
 
+#\[                     yy_push_state(COMMENT_MULTI);
+
 <COMMENT_MULTI>"]#"     yy_pop_state();
-<COMMENT_MULTI>.*       yylloc->step();
 <COMMENT_MULTI>"\n"     {
                             yylloc->lines(yyleng);
                             yylloc->step();
-                            return token::TOK_NEWLINE;
                         }
+<COMMENT_MULTI>.*
+
+"#"                     BEGIN(COMMENT_SIMPLE);
 <COMMENT_SIMPLE>"\n"    {
                             BEGIN(INITIAL);
                             yylloc->lines(yyleng);
                             yylloc->step();
-                            return token::TOK_NEWLINE;
                         }
-<COMMENT_SIMPLE>.*
-
-"#["                    yy_push_state(COMMENT_MULTI);
-"#"                     BEGIN(COMMENT_SIMPLE);
-
+<COMMENT_SIMPLE>[^\n]*
 
 "if"                    return token::TOK_IF;
 "then"                  return token::TOK_THEN;
@@ -60,6 +58,11 @@
 "false"                 yylval->ival = 0; return token::TOK_DIGIT;
 "and"                   return token::TOK_AND;
 "or"                    return token::TOK_OR;
+"class"                 return token::TOK_CLASS;
+"public"                return token::TOK_PUBLIC;
+"protected"             return token::TOK_PROTECTED;
+"private"               return token::TOK_PRIVATE;
+"new"                   return token::TOK_NEW;
 
 <LITTERAL>"\""          BEGIN(INITIAL); return token::TOK_STRING;
 <LITTERAL>\\[\\"nr]     {
@@ -84,6 +87,10 @@
                         }
 "\""                    BEGIN(LITTERAL); yylval->sval = nullptr;
 
+[A-Z][a-zA-Z_]*          {
+                            yylval->sval = new std::string(yytext);
+                            return token::TOK_MOD_ID;
+                        }
 [a-z_A-Z][a-zA-Z_0-9]*  {
                             yylval->sval = new std::string(yytext);
                             return token::TOK_ID;
@@ -109,6 +116,9 @@
 "."                     return token::TOK_DOT;
 "["                     return token::TOK_BRACKET_OP;
 "]"                     return token::TOK_BRACKET_CL;
+";"                     return token::TOK_SEPARATOR;
+":"                     return token::TOK_DOUBLEP;
+"->"                    return token::TOK_ARROW;
 
 [0-9]+                  {
                             yylval->ival = atoi(yytext);
@@ -117,7 +127,6 @@
 "\n"                    {
                             yylloc->lines(yyleng);
                             yylloc->step();
-                            return token::TOK_NEWLINE;
                         }
 [ \t]+                  yylloc->step();
 

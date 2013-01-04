@@ -1,0 +1,3 @@
+import "io"
+
+Io.print(1 < 0 or 1 > 0)

@@ -19,7 +19,7 @@ libesl_la_SOURCES = lib/context.cc lib/context.hh \
 		    lib/gc/memory-object.hh
 
 libesl_la_LDFLAGS = -version-info 1:0:0
-libesl_la_CXXFLAGS = -Wall -Wextra -std=c++0x
+libesl_la_CXXFLAGS = -Wall -Wextra -std=c++0x -Wno-delete-non-virtual-dtor
 
 # esl
 bin_PROGRAMS= esl
@@ -33,10 +33,9 @@ esl_SOURCES =   src/utils/ast.cc src/utils/ast.hh \
 		src/parser/driver.cc src/parser/driver.hh \
 		src/compile/compiler.cc src/compile/compiler.hh \
 		src/execute/vm.cc src/execute/vm.hh src/execute/vm.hxx \
-		src/execute/operation.cc src/execute/operation.hh \
 		src/main.cc
 
-esl_CXXFLAGS = -pedantic -Wall -Wextra -std=c++0x
+esl_CXXFLAGS = -pedantic -Wall -Wextra -std=c++0x -Wno-delete-non-virtual-dtor
 esl_LDFLAGS = -lfl
 esl_YFLAGS = -W -Wall --report=all
 esl_LDADD = libesl.la
@@ -63,9 +62,17 @@ clear: distclean
 	rm -f tags
 	rm -f src/tags
 
-esl-check: all
-	./check/check.sh
-
 count:
 	cat lib/*.{hh,cc} lib/type/*.{cc,hh} lib/gc/*.{hh,hxx} src/main.cc \
-	    src/**/*.{cc,hh} src/execute/vm.hxx | wc -l
+	    src/**/*.{cc,hh} | wc -l
+#! /bin/bash
+
+TESTS=	./check/io/io_check.sh \
+	./check/int/int_check.sh \
+	./check/strings/strings_check.sh \
+	./check/control/control_check.sh \
+	./check/loops/loops_check.sh \
+	./check/functions/functions_check.sh \
+	./check/array/array_check.sh \
+	./check/comment/comment_check.sh \
+	./check/mix/mix_check.sh

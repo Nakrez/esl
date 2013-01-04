@@ -1,0 +1,18 @@
+#[
+    Import IO module to print a value
+]#
+
+import "io"
+
+#[ Declaration ]#
+
+r = 0
+
+#[
+
+
+    Print
+
+]#
+
+Io.print(r)

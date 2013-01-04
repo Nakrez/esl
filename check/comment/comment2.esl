@@ -1,0 +1,21 @@
+#import
+import "io"
+
+# function name = test
+# 1 param
+#
+#
+
+function test(a)
+    #param 1 = a
+
+    return a
+    #return a value
+end
+#end keyword #####
+
+#####################
+# Print the value 9 #
+#####################
+
+Io.print(test(9))

@@ -4,5 +4,5 @@ function a(b, c)
     return b + c
 end
 
-io.print(a(1, 2))
-io.print(a("Hello ", "World!"), "r")
+Io.print(a(1, 2))
+Io.print(a("Hello ", "World!"), "r")

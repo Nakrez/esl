@@ -16,3 +16,5 @@ install:
 
 uninstall:
 	rm -rf $(libdir)/esl
+
+check:

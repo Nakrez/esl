@@ -8,4 +8,4 @@ function b()
     return a() + "World!"
 end
 
-io.print(b())
+Io.print(b())

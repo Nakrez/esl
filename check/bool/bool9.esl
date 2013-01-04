@@ -1,3 +1,0 @@
-import "io"
-
-io.print(4<5)

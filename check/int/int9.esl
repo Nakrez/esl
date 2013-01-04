@@ -1,0 +1,3 @@
+import "io"
+
+Io.print(4<5)

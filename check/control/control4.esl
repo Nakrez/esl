@@ -4,9 +4,9 @@ i=1
 j=0
 
 if i then
-    io.print(54)
+    Io.print(54)
 elif j then
-    io.print(35)
+    Io.print(35)
 else
-    io.print(9)
+    Io.print(9)
 end

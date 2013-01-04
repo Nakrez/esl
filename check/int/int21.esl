@@ -1,0 +1,5 @@
+import "io"
+
+if true then
+    Io.print (1)
+end

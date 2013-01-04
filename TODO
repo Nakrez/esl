@@ -9,8 +9,6 @@
 [LEXER/PARSER/COMPILER/VM] Introduce foreach loop
 [PARSER] Introduce Unary operators
 [LEXER/PARSER] Introduce "include" keywords
-[LEXER/PARSER/COMPILER/VM] Type forcing
-[LEXER/PARSER/COMPILER/VM] Introduce Objects
 [LEXER 50%] Introduce Comments
 [COMPILER] Introduce Bytecode optimizer
 [COMPILER] Introduce AST checker to provide bad operation (-, /, ... on strings, ...)
@@ -23,6 +21,7 @@
 [LEXER] Add escape chars in strings
 [PARSER/COMPILER] Add array declaration with { }
 [PARSER] Update grammar for arrays
+[PARSER] Rewrite grammar
 [VM] Type float instead of int
 [VM] O_PRIVATE_TYPE for internal type of APIs that cannot be used
 [VM] Improve function design
@@ -31,10 +30,12 @@
 [LIB] Module IO
 [LIB] Module Array
 [LIB] Module Utils
+[LIB] Cast function
 [LIB] Module String
 [LIB] Rename module array class as ArrayModule
-[PARSER/VM] Module call start with capitals letters
 [LEXER/PARSER/COMPILER/VM] Add object paradigm
+[LEXER/PARSER/COMPILER/VM] Type forcing (multi type separate with ,)
+[BYTECODE] Rename operators instruction in OPERATOR_[name]
 
 [API] Improve API
 
