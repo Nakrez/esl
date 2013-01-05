@@ -1,6 +1,7 @@
 Nightly 06/01/2013
 
 - Fix bug with operator||
+- Update function handling (preparation for OO)
 
 Nightly 05/01/2013
 

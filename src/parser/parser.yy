@@ -63,10 +63,10 @@ class Driver;
 %token <sval> TOK_ID "identifier" TOK_STRING "string" TOK_MOD_ID "mod_id"
 %token <ival> TOK_DIGIT "digit"
 
-%type <ast> instr expr functions esl_command fun_call
-%type <ast> rule_while rule_until rule_if do_group else_group
+%type <ast> instr expr functions esl_command fun_call class_decl
+%type <ast> rule_while rule_until rule_if do_group else_group class_component
 
-%type <lval> compound_list id_list param_list arrays
+%type <lval> compound_list id_list param_list arrays class_components
 
 %right "="
 %left "||" "&&"
@@ -85,7 +85,7 @@ input   :
 instr   :
         expr { $$ = $1; }
         |functions { $$ = $1; }
-        |class_decl { $$ = nullptr; }
+        |class_decl { $$ = $1; }
         |esl_command { $$ = $1; }
         |"import" "string" { $$ = new esl::Ast(IMPORT, $2); }
         |"include" "string"
@@ -93,6 +93,10 @@ instr   :
 
 class_decl:
           "class" "identifier" class_components "end"
+          {
+            $$ = new esl::Ast(CLASS_DECL, $2);
+            $$->add(esl::Ast::ast_from_list($3));
+          }
           |"class" "identifier" ":" "(" param_list ")" class_components "end"
           ;
 
@@ -103,14 +107,27 @@ visibility :
            ;
 
 class_component:
-                visibility functions
-                |visibility "identifier"
+                visibility functions { $$ = $2; }
+                |visibility "identifier" { $$ = new esl::Ast(ID, $2); }
                 |visibility "identifier" "=" expr
+                {
+                  $$ = new esl::Ast(ASSIGNEMENT);
+                  $$->add(new esl::Ast(ID, $2));
+                  $$->add($4);
+                }
                 ;
 
 class_components:
                 class_component
+                {
+                    $$ = new std::list<esl::Ast*>;
+                    $$->push_back($1);
+                }
                 |class_components class_component
+                {
+                    $$ = $1;
+                    $$->push_back($2);
+                }
                 ;
 
 compound_list   :
