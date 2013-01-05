@@ -73,7 +73,7 @@ class Driver;
 %left "==" "!=" "<" ">" "<=" ">="
 %left "+" "-"
 %left "*" "/" "%"
-%left "[" ")"
+%left "[" ")" "->" "("
 
 
 %%
@@ -93,15 +93,21 @@ instr   :
 
 class_decl:
           "class" "identifier" class_components "end"
-          |"class" "identifier" ":" "(" param_list ")" class_component "end"
+          |"class" "identifier" ":" "(" param_list ")" class_components "end"
           ;
 
+visibility :
+           | "public"
+           | "private"
+           | "protected"
+           ;
+
 class_component:
-                "public" functions
-                |"protected" functions
-                |"private" functions
-                |functions
+                visibility functions
+                |visibility "identifier"
+                |visibility "identifier" "=" expr
                 ;
+
 class_components:
                 class_component
                 |class_components class_component
