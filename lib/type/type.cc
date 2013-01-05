@@ -2,65 +2,6 @@
 
 esl::Type::Type ()
 {
-    register_method("print",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::print)),
-                    PUBLIC);
-
-    register_method("operator+",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::plus_op)),
-                    PUBLIC);
-
-    register_method("operator-",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::minus_op)),
-                    PUBLIC);
-
-    register_method("operator*",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::mul_op)),
-                    PUBLIC);
-
-    register_method("operator/",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::div_op)),
-                    PUBLIC);
-
-    register_method("operator%",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::mod_op)),
-                    PUBLIC);
-
-    register_method("operator==",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::eq_op)),
-                    PUBLIC);
-
-    register_method("operator!=",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::diff_op)),
-                    PUBLIC);
-
-    register_method("operator>",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::gt_op)),
-                    PUBLIC);
-
-    register_method("operator>=",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::ge_op)),
-                    PUBLIC);
-
-    register_method("operator<",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::lt_op)),
-                    PUBLIC);
-
-    register_method("operator<=",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::le_op)),
-                    PUBLIC);
-
-    register_method("operator&&",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::and_op)),
-                    PUBLIC);
-
-    register_method("operator||",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::or_op)),
-                    PUBLIC);
-
-    register_method("operator[]",
-                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::bracket_op)),
-                    PUBLIC);
 }
 
 esl::Type::~Type ()
@@ -208,6 +149,41 @@ esl::MemoryObject<esl::Content>* esl::Type::bracket_op (const Params&)
 esl::MemoryObject<esl::Content>* esl::Type::call_method (const std::string& name,
                                                          const esl::Params& params)
 {
+
+    if (name == "print")
+        return this->print(params);
+    if (name.find("operator") != std::string::npos)
+    {
+        if (name == "operator+")
+            return this->plus_op(params);
+        if ("operator-" == name)
+            return this->minus_op(params);
+        if ("operator*" == name)
+            return this->mul_op(params);
+        if ("operator/" == name)
+            return this->div_op(params);
+        if ("operator%" == name)
+            return this->mod_op(params);
+        if ("operator==" == name)
+            return this->eq_op(params);
+        if ("operator!=" == name)
+            return this->diff_op(params);
+        if ("operator>" == name)
+            return this->gt_op(params);
+        if ("operator>=" == name)
+            return this->ge_op(params);
+        if ("operator<" == name)
+            return this->lt_op(params);
+        if ("operator<=" == name)
+            return this->le_op(params);
+        if ("operator&&" == name)
+            return this->and_op(params);
+        if ("operator||" == name)
+            return this->and_op(params);
+        if ("operator[]" == name)
+            return this->bracket_op(params);
+    }
+
     if (this->method_.find(name) == this->method_.end())
         throw esl::Exception("Method "
                              + name

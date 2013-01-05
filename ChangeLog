@@ -1,3 +1,8 @@
+Nightly 05/01/2013
+
+- Add operator[]
+- Optimize built in types
+
 Nightly 04/01/2013
 
 - Update check
