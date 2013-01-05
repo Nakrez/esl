@@ -21,7 +21,7 @@ namespace esl
             virtual MemoryObject<Content>* print (const Params&);
             virtual std::string type_name_get () const;
 
-            esl::MemoryObject<esl::Content>* at (unsigned int);
+            virtual MemoryObject<Content>* bracket_op (const Params&);
 
         private:
             std::vector<esl::MemoryObject<esl::Content>*> data_;

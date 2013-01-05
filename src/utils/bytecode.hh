@@ -25,21 +25,22 @@ enum instr
     /*
     ** Perform an addition
     */
-    ARITH_ADD,
-    ARITH_MINUS,
-    ARITH_MUL,
-    ARITH_DIV,
-    ARITH_MOD,
+    OP_ADD,
+    OP_MINUS,
+    OP_MUL,
+    OP_DIV,
+    OP_MOD,
 
-    BOOL_EQ,
-    BOOL_DIFF,
-    BOOL_GT,
-    BOOL_GE,
-    BOOL_LT,
-    BOOL_LE,
+    OP_EQ,
+    OP_DIFF,
+    OP_GT,
+    OP_GE,
+    OP_LT,
+    OP_LE,
 
-    BOOL_AND,
-    BOOL_OR,
+    OP_AND,
+    OP_OR,
+    OP_BRACKET,
     /*
     **
     */
@@ -55,15 +56,17 @@ enum instr
     ** Push the value of the variable name in the stack
     */
     LOAD,
-
     LOAD_INT,
     LOAD_STR,
+    LOAD_ATTR,
 
-    ARRAY_VAL,
 
     OPEN,
     MODULE,
     CALL_MODULE,
+    CALL_FUNCTION,
+    CALL_METHOD,
+
     /*
     ** Jump at target adress if the top of the stack is true
     ** The top of the stack is POP
@@ -92,8 +95,6 @@ enum instr
     RETURN,
 
     MAKE_FUNCTION,
-
-    CALL_FUNCTION,
 
     DELIM
 };

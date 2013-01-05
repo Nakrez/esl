@@ -58,3 +58,16 @@ void esl::MemoryObject<T>::free ()
     free_ = true;
     delete this;
 }
+
+template<class T>
+int esl::MemoryObject<T>::count_get () const
+{
+    return count_;
+}
+
+template<class T>
+void esl::MemoryObject<T>::count_set (int data)
+{
+    count_ = data;
+}
+

@@ -15,7 +15,7 @@ esl::Vm::Vm (const std::vector<esl::Bytecode*>& code)
     : stack_ ()
 {
     this->code_ = code;
-    this->runtime_ = new esl::ExecutableContext();
+    this->runtime_ = new esl::Context();
     this->runtime_->type_set("Array", esl::Array::instanciate);
 }
 
@@ -54,8 +54,8 @@ void esl::Vm::run()
             case LOAD:
                 this->load(instr);
                 break;
-            case ARRAY_VAL:
-                this->array_val();
+            case OP_BRACKET:
+                this->operation("operator[]");
                 break;
             case STORE:
                 this->store(instr);
@@ -78,43 +78,43 @@ void esl::Vm::run()
             case JUMP_IF_FALSE:
                 this->jump(instr, 0);
                 continue;
-            case ARITH_ADD:
+            case OP_ADD:
                 this->operation("operator+");
                 break;
-            case ARITH_MINUS:
+            case OP_MINUS:
                 this->operation("operator-");
                 break;
-            case ARITH_MUL:
+            case OP_MUL:
                 this->operation("operator*");
                 break;
-            case ARITH_DIV:
+            case OP_DIV:
                 this->operation("operator/");
                 break;
-            case ARITH_MOD:
+            case OP_MOD:
                 this->operation("operator%");
                 break;
-            case BOOL_EQ:
+            case OP_EQ:
                 this->operation("operator==");
                 break;
-            case BOOL_DIFF:
+            case OP_DIFF:
                 this->operation("operator!=");
                 break;
-            case BOOL_GT:
+            case OP_GT:
                 this->operation("operator>");
                 break;
-            case BOOL_GE:
+            case OP_GE:
                 this->operation("operator>=");
                 break;
-            case BOOL_LT:
+            case OP_LT:
                 this->operation("operator<");
                 break;
-            case BOOL_LE:
+            case OP_LE:
                 this->operation("operator<=");
                 break;
-            case BOOL_OR:
+            case OP_OR:
                 this->operation("operator||");
                 break;
-            case BOOL_AND:
+            case OP_AND:
                 this->operation("operator&&");
                 break;
             case OPEN:
@@ -151,7 +151,7 @@ void esl::Vm::operation (const std::string& name)
     esl::Type* value1 = dynamic_cast<esl::Type*> (obj1->data_get());
     esl::Type* value2 = dynamic_cast<esl::Type*> (obj2->data_get());
 
-    if (value1 && value2 && value1->type_name_get() == value2->type_name_get())
+    if (value1 && value2)
     {
         esl::Params params;
 
@@ -188,26 +188,10 @@ void esl::Vm::store_stk ()
     this->stack_.pop();
 
     tos1 = this->stack_.top();
+    tos1->incr();
 
     tos->data_set(tos1->data_get());
-}
-
-void esl::Vm::array_val ()
-{
-    esl::Int* value = nullptr;
-    esl::Array* array = nullptr;
-
-    value = dynamic_cast<esl::Int*> (this->stack_.top()->data_get());
-    this->stack_.pop ();
-
-    array = dynamic_cast<esl::Array*> (this->stack_.top()->data_get());
-    this->stack_.pop ();
-
-    if (!value || !array)
-        throw Exception ("Illegal array access. Is this an array ? Or the \
-                          access a number ?");
-
-    this->stack_.push(array->at (value->data_get()));
+    tos->count_set(tos1->count_get());
 }
 
 std::string esl::Vm::module_path(const std::string& mod_name)
@@ -293,7 +277,7 @@ void esl::Vm::function_return()
     std::stack<esl::MemoryObject<esl::Content>*> ret;
 
     while (this->stack_.top() &&
-           !dynamic_cast<esl::Runtime*> (this->stack_.top()->data_get()))
+           !dynamic_cast<esl::Context*> (this->stack_.top()->data_get()))
     {
         ret.push(this->stack_.top());
         this->stack_.pop();
@@ -303,7 +287,7 @@ void esl::Vm::function_return()
 
     /* Restore the previous context */
     /* TODO: Check top of the stack is a context */
-    this->runtime_ = dynamic_cast<esl::Runtime*> (this->stack_.top()->data_get());
+    this->runtime_ = dynamic_cast<esl::Context*> (this->stack_.top()->data_get());
 
     if (this->runtime_ == nullptr)
         throw Exception("Internal error : null runtime");
@@ -328,7 +312,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     std::string fun_name;
     std::pair<esl::Callback, int> fun;
     esl::Params params;
-    esl::Runtime* fun_runtime = new esl::Runtime(*(this->runtime_));
+    esl::Context* fun_runtime = new esl::Context(*(this->runtime_));
     esl::MemoryObject<esl::Content>* container = nullptr;
 
     /* Storing all args before context switch */
@@ -370,7 +354,7 @@ void esl::Vm::store(esl::Bytecode *instr)
     var_name = RoData::instance_get()->get(instr->get_param());
 
     /* TODO: check type of TOS */
-    if (!dynamic_cast<esl::Runtime*> (this->stack_.top()->data_get()) &&
+    if (!dynamic_cast<esl::Context*> (this->stack_.top()->data_get()) &&
         var_name == nullptr)
     {
         std::cout << "BUG ISSUE esl::VM::Store" << std::endl;

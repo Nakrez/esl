@@ -50,13 +50,16 @@ esl::Type::Type ()
                     new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::le_op)),
                     PUBLIC);
 
-
     register_method("operator&&",
                     new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::and_op)),
                     PUBLIC);
 
     register_method("operator||",
                     new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::or_op)),
+                    PUBLIC);
+
+    register_method("operator[]",
+                    new esl::Method(new esl::Delegate<esl::Type>(this, &esl::Type::bracket_op)),
                     PUBLIC);
 }
 
@@ -189,6 +192,15 @@ esl::MemoryObject<esl::Content>* esl::Type::le_op (const Params&)
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide <= operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::bracket_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide [] operator");
 
     return new MemoryObject<esl::Content>(nullptr);
 }

@@ -9,10 +9,9 @@
 # include "../../lib/gc/memory-object.hh"
 # include "../../lib/type/esl-types.hh"
 # include "../../lib/content.hh"
-# include "../../lib/executable-context.hh"
 # include "../../lib/params.hh"
 # include "../../lib/exception.hh"
-# include "../../lib/module.hh"
+# include "../../lib/context.hh"
 # include "../../lib/stack-delimiter.hh"
 # include "../utils/bytecode.hh"
 # include "../utils/ro-data.hh"
@@ -34,7 +33,6 @@ namespace esl
             void load (Bytecode* instr);
             void load_int (Bytecode* instr);
             void load_str (Bytecode* instr);
-            void array_val ();
 
             void jump (Bytecode* instr);
             void jump (Bytecode* instr, int);
@@ -57,7 +55,7 @@ namespace esl
         private:
             std::stack<esl::MemoryObject<esl::Content>*> stack_;
             std::vector<Bytecode*> code_;
-            esl::Runtime* runtime_;
+            esl::Context* runtime_;
 
             static const std::string path_lib_[];
     };
