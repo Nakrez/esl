@@ -17,6 +17,9 @@ namespace esl
             T* data_get () const;
             void data_set (T*);
 
+            int count_get () const;
+            void count_set(int);
+
             void free ();
         private:
             int count_;

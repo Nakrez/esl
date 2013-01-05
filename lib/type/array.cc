@@ -18,10 +18,15 @@ esl::MemoryObject<esl::Content>* esl::Array::instanciate ()
     return new esl::MemoryObject<esl::Content>(new esl::Array(0));
 }
 
-esl::MemoryObject<esl::Content>* esl::Array::at (unsigned int pos)
+esl::MemoryObject<esl::Content>* esl::Array::bracket_op (const Params& params)
 {
+    esl::Int* op2 = dynamic_cast<esl::Int*>(params.get_params(2)->data_get());
+    unsigned int pos = op2->data_get();
+
     if (pos >= data_.size ())
         throw Exception ("Illegal access : out of bound");
+
+    data_.at (pos)->incr ();
 
     return data_.at (pos);
 }

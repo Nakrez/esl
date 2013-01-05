@@ -45,6 +45,8 @@ namespace esl
             virtual MemoryObject<Content>* and_op (const Params&);
             virtual MemoryObject<Content>* or_op (const Params&);
 
+            virtual MemoryObject<Content>* bracket_op (const Params&);
+
             void register_method (const std::string&, Method*, Visibility);
             MemoryObject<Content>* call_method (const std::string&,
                                                 const esl::Params&);

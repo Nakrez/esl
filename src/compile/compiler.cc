@@ -60,31 +60,31 @@ void esl::Compiler::compile(esl::Ast *ast)
                           break;
         case ARRAY_AT: compile_array_at(ast);
                        break;
-        case ADD: compile_operation(ast, ARITH_ADD);
+        case ADD: compile_operation(ast, OP_ADD);
                   break;
-        case MINUS: compile_operation(ast, ARITH_MINUS);
+        case MINUS: compile_operation(ast, OP_MINUS);
                     break;
-        case MUL: compile_operation(ast, ARITH_MUL);
+        case MUL: compile_operation(ast, OP_MUL);
                   break;
-        case DIV: compile_operation(ast, ARITH_DIV);
+        case DIV: compile_operation(ast, OP_DIV);
                   break;
-        case MOD: compile_operation(ast, ARITH_MOD);
+        case MOD: compile_operation(ast, OP_MOD);
                   break;
-        case EQ: compile_operation(ast, BOOL_EQ);
+        case EQ: compile_operation(ast, OP_EQ);
                  break;
-        case DIFF: compile_operation(ast, BOOL_DIFF);
+        case DIFF: compile_operation(ast, OP_DIFF);
                    break;
-        case LT: compile_operation(ast, BOOL_LT);
+        case LT: compile_operation(ast, OP_LT);
                  break;
-        case LE: compile_operation(ast, BOOL_LE);
+        case LE: compile_operation(ast, OP_LE);
                  break;
-        case GT:  compile_operation(ast, BOOL_GT);
+        case GT:  compile_operation(ast, OP_GT);
                   break;
-        case GE:  compile_operation(ast, BOOL_GE);
+        case GE:  compile_operation(ast, OP_GE);
                   break;
-        case OR:  compile_operation(ast, BOOL_OR);
+        case OR:  compile_operation(ast, OP_OR);
                   break;
-        case AND:  compile_operation(ast, BOOL_AND);
+        case AND:  compile_operation(ast, OP_AND);
                    break;
         case NUMBER:  compile_number(ast);
                       break;
@@ -129,7 +129,7 @@ void esl::Compiler::compile_assignement_array(Ast* ast)
     while (temp_ast)
     {
         compile(temp_ast);
-        byte_code_.push_back(new esl::Bytecode(ARRAY_VAL));
+        byte_code_.push_back(new esl::Bytecode(OP_BRACKET));
         temp_ast = temp_ast->get_rbro();
     }
 
@@ -146,7 +146,7 @@ void esl::Compiler::compile_array_at(Ast* ast)
     while (temp_ast)
     {
         compile(temp_ast);
-        byte_code_.push_back(new esl::Bytecode(ARRAY_VAL));
+        byte_code_.push_back(new esl::Bytecode(OP_BRACKET));
         temp_ast = temp_ast->get_rbro();
     }
 }

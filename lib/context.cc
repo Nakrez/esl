@@ -1,6 +1,6 @@
 #include "context.hh"
 
-esl::MemoryObject<esl::Content>* esl::std_callback (esl::Runtime*,
+esl::MemoryObject<esl::Content>* esl::std_callback (esl::Context*,
                                                     const esl::Params&)
 {
     return nullptr;
@@ -10,6 +10,8 @@ esl::Context::Context()
     : functions_ ()
     , variables_ ()
     , modules_ ()
+    , types_ ()
+    , pc_ (0)
 {
 }
 
@@ -18,6 +20,7 @@ esl::Context::Context(const Context& context)
 {
     for (auto mod : context.modules_)
         mod.second->incr();
+
     modules_ = context.modules_;
 }
 
@@ -90,4 +93,19 @@ void esl::Context::module_set (const std::string& name, MemContent module)
 void esl::Context::type_set (const std::string& name, Constructor value)
 {
     this->types_[name] = value;
+}
+
+size_t esl::Context::pc_get () const
+{
+    return this->pc_;
+}
+
+void esl::Context::pc_set (size_t pc)
+{
+    this->pc_ = pc;
+}
+
+void esl::Context::pc_incr (int incr)
+{
+    this->pc_ += incr;
 }

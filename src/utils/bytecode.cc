@@ -6,21 +6,23 @@ const static std::string instr_string[] =
     "POP",
     "DUP_TOP",
 
-    "ARITH_ADD",
-    "ARITH_MINUS",
-    "ARITH_MUL",
-    "ARITH_DIV",
-    "ARITH_MOD",
+    "OP_ADD",
+    "OP_MINUS",
+    "OP_MUL",
+    "OP_DIV",
+    "OP_MOD",
 
-    "BOOL_EQ",
-    "BOOL_DIFF",
-    "BOOL_GT",
-    "BOOL_GE",
-    "BOOL_LT",
-    "BOOL_LE",
+    "OP_EQ",
+    "OP_DIFF",
+    "OP_GT",
+    "OP_GE",
+    "OP_LT",
+    "OP_LE",
 
-    "BOOL_AND",
-    "BOOL_OR",
+    "OP_AND",
+    "OP_OR",
+
+    "OP_BRACKET",
 
     "STORE",
     "SOTRE_STK",
@@ -28,18 +30,20 @@ const static std::string instr_string[] =
     "LOAD",
     "LOAD_INT",
     "LOAD_STR",
-
-    "ARRAY_VAL",
+    "LOAD_ATTR",
 
     "OPEN",
     "MODULE",
+
     "CALL_MODULE",
+    "CALL_FUNCTION",
+    "CALL_METHOD",
+
     "JUMP_IF_TRUE",
     "JUMP_IF_FALSE",
     "JUMP",
     "RETURN",
     "MAKE_FUNCTION",
-    "CALL_FUNCTION",
     "DELIM"
 };
 
