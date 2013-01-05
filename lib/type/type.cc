@@ -149,6 +149,8 @@ esl::MemoryObject<esl::Content>* esl::Type::bracket_op (const Params&)
 esl::MemoryObject<esl::Content>* esl::Type::call_method (const std::string& name,
                                                          const esl::Params& params)
 {
+    if (this->method_.find(name) != this->method_.end())
+        return this->method_[name].first->data_get()->Call(params);
 
     if (name == "print")
         return this->print(params);
@@ -179,15 +181,10 @@ esl::MemoryObject<esl::Content>* esl::Type::call_method (const std::string& name
         if ("operator&&" == name)
             return this->and_op(params);
         if ("operator||" == name)
-            return this->and_op(params);
+            return this->or_op(params);
         if ("operator[]" == name)
             return this->bracket_op(params);
     }
 
-    if (this->method_.find(name) == this->method_.end())
-        throw esl::Exception("Method "
-                             + name
-                             + " not found in " + type_name_get());
-
-    return this->method_[name].first->data_get()->Call(params);
+    throw esl::Exception("Method " + name + " not found in " + type_name_get());
 }
