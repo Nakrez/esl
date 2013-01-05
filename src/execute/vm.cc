@@ -1,4 +1,5 @@
 #include "vm.hh"
+#include "../../lib/function.hh"
 
 const std::string esl::Vm::path_lib_[] =
 {
@@ -314,10 +315,9 @@ void esl::Vm::function_return()
 void esl::Vm::call_function(esl::Bytecode *instr)
 {
     std::string fun_name;
-    std::pair<esl::Callback, int> fun;
+    esl::Function* fun;
     esl::Params params;
     esl::Context* fun_runtime = new esl::Context(*(this->runtime_));
-    esl::MemoryObject<esl::Content>* container = nullptr;
 
     /* Storing all args before context switch */
     while (!dynamic_cast<esl::StackDelimiter*>(this->stack_.top()->data_get()))
@@ -329,23 +329,19 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     this->pop();
 
     /* Push current context in the stack */
-    container = new esl::MemoryObject<esl::Content>(this->runtime_);
-
-    this->stack_.push(container);
+    this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_));
 
     /* TODO: Check fun_name is a string */
     fun_name = *(RoData::instance_get()->get(instr->get_param()));
 
     /* TODO: Check that function is registerd */
-    fun = this->runtime_->function_get(fun_name);
+    fun = dynamic_cast<esl::Function*>(runtime_->function_get(fun_name)->data_get());
 
     /* Setup new context */
-    if (fun.first(fun_runtime, params) == nullptr) /* std_callback */
+    if (fun->call(fun_runtime, params) == nullptr)
     {
         for (int i = params.count() - 1; i >= 0; --i)
             this->stack_.push(params.get_params(i + 1));
-
-        fun_runtime->pc_set(fun.second + 1);
 
         this->runtime_ = fun_runtime;
     }
@@ -409,12 +405,13 @@ void esl::Vm::jump(esl::Bytecode *instr)
 
 void esl::Vm::register_function(esl::Bytecode *instr)
 {
-    std::string     *var_name = nullptr;
+    std::string* fun_name = nullptr;
+    esl::Function* fun = nullptr;
 
-    var_name = RoData::instance_get()->get(instr->get_param());
+    fun_name = RoData::instance_get()->get(instr->get_param());
+
+    fun = new esl::Function(this->runtime_->pc_get());
 
     /* TODO: Register Function */
-    this->runtime_->function_set(*var_name,
-                                 esl::std_callback,
-                                 this->runtime_->pc_get());
+    this->runtime_->function_set(*fun_name, new esl::MemoryObject<esl::Content>(fun));
 }

@@ -1,11 +1,5 @@
 #include "context.hh"
 
-esl::MemoryObject<esl::Content>* esl::std_callback (esl::Context*,
-                                                    const esl::Params&)
-{
-    return nullptr;
-}
-
 esl::Context::Context()
     : functions_ ()
     , variables_ ()
@@ -16,12 +10,15 @@ esl::Context::Context()
 }
 
 esl::Context::Context(const Context& context)
-    : functions_ (context.functions_)
 {
     for (auto mod : context.modules_)
         mod.second->incr();
 
+    for (auto fun : context.functions_)
+        fun.second->incr();
+
     modules_ = context.modules_;
+    functions_ = context.functions_;
 }
 
 esl::Context::~Context()
@@ -30,9 +27,11 @@ esl::Context::~Context()
         mod.second->decr();
     for (auto var : variables_)
         var.second->decr();
+    for (auto fun : functions_)
+        fun.second->decr();
 }
 
-std::pair<esl::Callback, int> esl::Context::function_get (const std::string& name) const
+esl::MemContent esl::Context::function_get (const std::string& name) const
 {
     if (this->functions_.find(name) == this->functions_.end())
         throw Exception("Function " + name + " not found");
@@ -75,10 +74,9 @@ void esl::Context::variable_set (const std::string& name, MemContent value)
 }
 
 void esl::Context::function_set (const std::string& name,
-                                 esl::Callback call,
-                                 int addr)
+                                 MemContent function)
 {
-    this->functions_[name] = std::pair<esl::Callback, int>(call, addr);
+    this->functions_[name] = function;
 }
 
 void esl::Context::module_set (const std::string& name, MemContent module)

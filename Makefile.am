@@ -8,6 +8,7 @@ libesl_la_SOURCES = lib/context.cc lib/context.hh \
 		    lib/extension.cc lib/extension.hh \
 		    lib/params.cc lib/params.hh \
 		    lib/module.cc lib/module.hh \
+		    lib/function.cc lib/function.hh \
 		    lib/exception.cc lib/exception.hh \
 		    lib/stack-delimiter.cc lib/stack-delimiter.hh \
 		    lib/type/int.cc lib/type/int.hh \
