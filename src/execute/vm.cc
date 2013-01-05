@@ -188,10 +188,14 @@ void esl::Vm::store_stk ()
     this->stack_.pop();
 
     tos1 = this->stack_.top();
-    tos1->incr();
+    this->stack_.pop();
 
+    delete tos->data_get();
     tos->data_set(tos1->data_get());
-    tos->count_set(tos1->count_get());
+
+    tos1->free();
+
+    this->stack_.push(tos);
 }
 
 std::string esl::Vm::module_path(const std::string& mod_name)
