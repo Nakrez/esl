@@ -50,6 +50,7 @@ void esl::Compiler::compile(esl::Ast *ast)
     if (ast == nullptr)
         return;
 
+    // Test the type of the ast node and call the right method to compile it
     switch (ast->get_token())
     {
         case STATEMENTS: compile_statements(ast->get_fson());
@@ -122,18 +123,25 @@ void esl::Compiler::compile(esl::Ast *ast)
 
 void esl::Compiler::compile_method_call (Ast* ast)
 {
+    // Compile the left part of the call (before "->")
     compile(ast->get_fson());
+
+    // Compile the right part of the call (after "->")
     compile_call(ast->get_fson()->get_rbro(), true);
 }
 
 void esl::Compiler::compile_assignement_array (Ast* ast)
 {
+    // Node containing the expr inside []
     esl::Ast* temp_ast = ast->get_fson()->get_rbro()->get_fson()->get_fson();
 
+    // Compile value received
     compile(ast->get_fson()->get_rbro()->get_rbro());
 
+    // Compile array name
     compile(ast->get_fson());
 
+    // Compile everything between []
     while (temp_ast)
     {
         compile(temp_ast);
@@ -142,15 +150,19 @@ void esl::Compiler::compile_assignement_array (Ast* ast)
     }
 
     byte_code_.push_back(new esl::Bytecode(STORE_STK));
+    // Pop the result because it's not used
     byte_code_.push_back(new esl::Bytecode(POP));
 }
 
 void esl::Compiler::compile_array_at(Ast* ast)
 {
+    // Node containing the expr inside []
     esl::Ast* temp_ast = ast->get_fson()->get_rbro()->get_fson();
 
+    // Compile array name
     compile(ast->get_fson());
 
+    // Compile everything between []
     while (temp_ast)
     {
         compile(temp_ast);
@@ -161,12 +173,14 @@ void esl::Compiler::compile_array_at(Ast* ast)
 
 void esl::Compiler::compile_module_call(Ast* ast)
 {
+    // For parameter delimitation
     byte_code_.push_back(new esl::Bytecode(DELIM));
 
+    // If the module call got params then compile it
     if (ast->get_fson() && ast->get_fson()->get_fson())
         compile(ast->get_fson()->get_fson());
 
-    /* Build call instruction (check special code for built in) */
+    // Build call instruction
     byte_code_.push_back(new esl::Bytecode(MODULE, ast->get_content()));
     byte_code_.push_back(new esl::Bytecode(CALL_MODULE,
                                            ast->get_fson()->get_content()));
@@ -174,9 +188,13 @@ void esl::Compiler::compile_module_call(Ast* ast)
 
 void esl::Compiler::compile_loop(Ast* ast, instr i)
 {
+    // The instruction that return to the condition
     esl::Bytecode* instruction_back = nullptr;
+    // The instruction that perform the condition
     esl::Bytecode* instruction_false = nullptr;
+    // The adress of the back jump
     int jump_addr_back = 0;
+    // The adress if the condition is false
     int jump_addr_false = 0;
 
     jump_addr_back = byte_code_.size();
@@ -188,12 +206,15 @@ void esl::Compiler::compile_loop(Ast* ast, instr i)
     instruction_false = new esl::Bytecode(i);
     byte_code_.push_back(instruction_false);
 
+    // Compile the loop code
     compile(ast->get_fson()->get_rbro());
 
+    // Calculate jump back adress
     jump_addr_back = - (byte_code_.size() - jump_addr_back);
 
     instruction_back = new esl::Bytecode(JUMP, jump_addr_back);
 
+    // Calculate jump if false adress
     jump_addr_false = byte_code_.size() - jump_addr_false + 1;
     instruction_false->set_param(jump_addr_false);
 
@@ -206,17 +227,20 @@ void esl::Compiler::compile_statements(esl::Ast* ast)
     {
         compile(ast);
 
+        // Push a pop because result is not used
         if (ast->get_token() == EXPR ||
             ast->get_token() == ASSIGNEMENT ||
             ast->get_token() == FUNCTION_CALL ||
             ast->get_token() == MODULE_CALL)
             byte_code_.push_back(new esl::Bytecode(POP));
+
         ast = ast->get_rbro();
     }
 }
 
 void esl::Compiler::compile_return(esl::Ast* ast)
 {
+    // Compile the expression returned
     compile(ast->get_fson());
     byte_code_.push_back(new esl::Bytecode(RETURN));
 }
@@ -225,8 +249,10 @@ void esl::Compiler::compile_list_id(esl::Ast* ast)
 {
     esl::Ast* temp_ast = nullptr;
 
+    // The first id
     temp_ast = ast->get_fson();
 
+    // Compiling all ID
     while (temp_ast)
     {
         byte_code_.push_back(new esl::Bytecode(STORE,
@@ -241,8 +267,10 @@ void esl::Compiler::compile_list(esl::Ast* ast)
 {
     esl::Ast* temp_ast = nullptr;
 
+    // The first element of the list
     temp_ast = ast->get_fson();
 
+    // Compile all the element in the list
     while (temp_ast)
     {
         compile(temp_ast);
@@ -280,14 +308,13 @@ void esl::Compiler::compile_function(esl::Ast* ast)
 
     code_size = byte_code_.size();
 
-    /* Get the code of the function */
+    // Get the code of the function
     compile(ast->get_fson()->get_rbro());
 
     /*
     ** Calculate the JUMP adress
     ** The +1 is to JUMP after RETURN instruction
     */
-
     jump_addr += byte_code_.size() - code_size + 1 + avoid;
     jump->set_param(jump_addr);
 
@@ -299,16 +326,17 @@ void esl::Compiler::compile_call(esl::Ast* ast, bool method)
 {
     esl::Ast *temp_ast = nullptr;
 
-    /* Load args */
+    // Load args
     if (ast->get_fson())
         temp_ast = ast->get_fson()->get_fson();
 
     byte_code_.push_back(new esl::Bytecode(DELIM));
 
+    // Compile args if there is some
     if (temp_ast)
         compile(ast->get_fson());
 
-
+    // If the call is a method call
     if (method)
         byte_code_.push_back(new esl::Bytecode(CALL_METHOD,
                                                ast->get_content()));
@@ -329,19 +357,24 @@ void esl::Compiler::compile_if(esl::Ast *ast)
 
     compile(ast->get_fson()->get_rbro());
 
+    // Calculate the jump if the if is false
     jump_next = byte_code_.size() - jump_next + 1 +
                 ((ast->get_fson()->get_rbro()->get_rbro()) ? 1 : 0);
 
     jump->set_param(jump_next);
 
+    // If there is a else or a else if
     if (ast->get_fson()->get_rbro()->get_rbro())
     {
         jump_next = 0;
 
+        // Jump to avoid else/else if, if the if condition is true
         jump = new esl::Bytecode(JUMP);
         byte_code_.push_back(jump);
 
         jump_next = byte_code_.size();
+
+        //Compile else if/else
         compile(ast->get_fson()->get_rbro()->get_rbro());
 
         jump_next = byte_code_.size() - jump_next + 1;
@@ -351,6 +384,7 @@ void esl::Compiler::compile_if(esl::Ast *ast)
 
 void esl::Compiler::compile_assignement(esl::Ast* ast)
 {
+    // Compile the value assigned
     compile(ast->get_fson()->get_rbro());
 
     byte_code_.push_back(new esl::Bytecode(STORE,
@@ -359,12 +393,14 @@ void esl::Compiler::compile_assignement(esl::Ast* ast)
 
 void esl::Compiler::compile_operation (esl::Ast* ast, enum instr i)
 {
+    // Compile left operand
     compile(ast->get_fson());
 
+    // Compile right operand
     compile(ast->get_fson()->get_rbro());
 
+    // Add the operation's bytecode
     byte_code_.push_back(new esl::Bytecode(i));
-
 }
 
 void esl::Compiler::compile_number(esl::Ast *ast)

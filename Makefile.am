@@ -60,11 +60,15 @@ clear: distclean
 	rm -f *.png
 	rm -f tags
 	rm -f src/tags
+	rm -rf doc/html
+	rm -rf doc/latex
 
 count:
 	cat lib/*.{hh,cc} lib/type/*.{cc,hh} lib/gc/*.{hh,hxx} src/main.cc \
 	    src/**/*.{cc,hh} | wc -l
-#! /bin/bash
+
+doxygen-doc:
+	doxygen doc/Doxyfile
 
 TESTS=	./check/io/io_check.sh \
 	./check/int/int_check.sh \
