@@ -4,7 +4,6 @@ const static std::string instr_string[] =
 {
     "NOP",
     "POP",
-    "DUP_TOP",
 
     "OP_ADD",
     "OP_MINUS",
@@ -30,7 +29,6 @@ const static std::string instr_string[] =
     "LOAD",
     "LOAD_INT",
     "LOAD_STR",
-    "LOAD_ATTR",
 
     "OPEN",
     "MODULE",
