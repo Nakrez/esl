@@ -1,5 +1,5 @@
 #include "array.hh"
-# include "../gc/memory-object.hh"
+#include "string.hh"
 
 esl::Array::Array (unsigned int size)
 {
@@ -38,6 +38,11 @@ esl::MemoryObject<esl::Content>* esl::Array::print (const esl::Params&)
     std::cout << "]" << std::endl;
 
     return new esl::MemoryObject<esl::Content> (new esl::Int(0));
+}
+
+esl::MemoryObject<esl::Content>* esl::Array::to_string (const esl::Params&)
+{
+    return new esl::MemoryObject<esl::Content> (new esl::String("Array"));
 }
 
 std::string esl::Array::type_name_get () const

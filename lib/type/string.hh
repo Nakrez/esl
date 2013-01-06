@@ -15,8 +15,10 @@ namespace esl
             String (const std::string& data);
             ~String ();
 
-            virtual MemoryObject<Content>* print (const Params&);
             virtual std::string type_name_get () const;
+
+            virtual MemoryObject<Content>* print (const Params&);
+            virtual MemoryObject<Content>* to_string (const Params&);
 
             virtual MemoryObject<Content>* plus_op (const Params&);
 

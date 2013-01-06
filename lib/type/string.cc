@@ -28,6 +28,11 @@ esl::MemoryObject<esl::Content>* esl::String::print (const esl::Params&)
     return new esl::MemoryObject<esl::Content> (new esl::Int(0));
 }
 
+esl::MemoryObject<esl::Content>* esl::String::to_string (const esl::Params&)
+{
+    return new esl::MemoryObject<esl::Content> (new esl::String(data_));
+}
+
 std::string esl::String::type_name_get () const
 {
     return "String";

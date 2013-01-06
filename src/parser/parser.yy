@@ -65,8 +65,9 @@ class Driver;
 
 %type <ast> instr expr functions esl_command fun_call
 %type <ast> rule_while rule_until rule_if do_group else_group
+%type <ast> class_decl class_component object_call_list
 
-%type <lval> compound_list id_list param_list arrays
+%type <lval> compound_list id_list param_list arrays class_components
 
 %right "="
 %left "||" "&&"
@@ -85,7 +86,7 @@ input   :
 instr   :
         expr { $$ = $1; }
         |functions { $$ = $1; }
-        |class_decl { $$ = nullptr; }
+        |class_decl { $$ = $1; }
         |esl_command { $$ = $1; }
         |"import" "string" { $$ = new esl::Ast(IMPORT, $2); }
         |"include" "string"
@@ -93,6 +94,10 @@ instr   :
 
 class_decl:
           "class" "identifier" class_components "end"
+          {
+            $$ = new esl::Ast(CLASS_DECL, $2);
+            $$->add(esl::Ast::ast_from_list($3));
+          }
           |"class" "identifier" ":" "(" param_list ")" class_components "end"
           ;
 
@@ -103,14 +108,27 @@ visibility :
            ;
 
 class_component:
-                visibility functions
-                |visibility "identifier"
+                visibility functions { $$ = $2; }
+                |visibility "identifier" { $$ = new esl::Ast(ID, $2); }
                 |visibility "identifier" "=" expr
+                {
+                  $$ = new esl::Ast(ASSIGNEMENT);
+                  $$->add(new esl::Ast(ID, $2));
+                  $$->add($4);
+                }
                 ;
 
 class_components:
                 class_component
+                {
+                    $$ = new std::list<esl::Ast*>;
+                    $$->push_back($1);
+                }
                 |class_components class_component
+                {
+                    $$ = $1;
+                    $$->push_back($2);
+                }
                 ;
 
 compound_list   :
@@ -143,9 +161,18 @@ compound_list   :
 object_call_list:
                 expr "->" "identifier"
                 |expr "->" fun_call
+                {
+                    $$ = new esl::Ast(METHOD_CALL);
+                    $$->add($1);
+                    $$->add($3);
+                }
                 |object_call_list "->" "identifier"
                 |object_call_list "->" fun_call
-
+                {
+                    $$ = new esl::Ast(METHOD_CALL);
+                    $$->add($1);
+                    $$->add($3);
+                }
                 ;
 param_list      :
                 "identifier"
@@ -290,7 +317,7 @@ expr            :
                 |"string" { $$ = new esl::Ast(STRING, $1); }
                 |"identifier" { $$ = new esl::Ast(ID, $1); }
                 |fun_call { $$ = $1; }
-                |object_call_list
+                |object_call_list { $$ = $1; }
                 |"new" fun_call
                 |"identifier" "=" expr {
                                          $$ = new esl::Ast(ASSIGNEMENT);

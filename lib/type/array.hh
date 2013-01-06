@@ -18,8 +18,11 @@ namespace esl
             ~Array ();
 
             static MemoryObject<Content>* instanciate ();
-            virtual MemoryObject<Content>* print (const Params&);
+
             virtual std::string type_name_get () const;
+
+            virtual MemoryObject<Content>* print (const Params&);
+            virtual MemoryObject<Content>* to_string (const Params&);
 
             virtual MemoryObject<Content>* bracket_op (const Params&);
 

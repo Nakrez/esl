@@ -1,3 +1,11 @@
+Nightly 06/01/2013
+
+- Fix bug with operator||
+- Update function handling (preparation for OO)
+- Add method call from built in objects
+- Add some documentation
+- Add some code comments
+
 Nightly 05/01/2013
 
 - Add operator[]

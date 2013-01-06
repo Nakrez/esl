@@ -1,4 +1,5 @@
 #include "vm.hh"
+#include "../../lib/function.hh"
 
 const std::string esl::Vm::path_lib_[] =
 {
@@ -34,8 +35,10 @@ void esl::Vm::run()
 {
     esl::Bytecode *instr = nullptr;
 
+    // While PC is pointing on an instruction
     while (this->runtime_->pc_get() < this->code_.size())
     {
+        // Call the right function to execute the current instruction
         instr = this->code_.at(this->runtime_->pc_get());
         switch (instr->get_type())
         {
@@ -126,6 +129,9 @@ void esl::Vm::run()
             case CALL_MODULE:
                 this->call_module(instr);
                 break;
+            case CALL_METHOD:
+                this->call_method(instr);
+                break;
             case DELIM:
                 this->add_delim();
                 break;
@@ -135,6 +141,60 @@ void esl::Vm::run()
 
         this->runtime_->pc_incr(1);
     }
+}
+
+void esl::Vm::call_method(esl::Bytecode *instr)
+{
+    std::string fun_name;
+    esl::MemoryObject<esl::Content>* object_container = nullptr;
+    esl::MemoryObject<esl::Content>* ret_value = nullptr;
+    esl::Type* object = nullptr;
+    esl::Context* fun_runtime = new esl::Context(*(this->runtime_));
+    esl::Params params;
+
+    // Storing all args before context switch
+    while (!dynamic_cast<esl::StackDelimiter*>(this->stack_.top()->data_get()))
+    {
+        params.params_set(this->stack_.top());
+        this->stack_.pop();
+    }
+
+    // POP the delimiter
+    this->pop();
+
+    // Get the object
+    object_container = this->stack_.top();
+    object = dynamic_cast<esl::Type*> (object_container->data_get());
+    this->stack_.pop();
+
+    if (object == nullptr)
+        throw esl::Exception("Method call on non object value");
+
+    // Get the method name
+    fun_name = *(RoData::instance_get()->get(instr->get_param()));
+
+    // Perform the call
+    if ((ret_value = object->call_method(fun_name, fun_runtime, params)) == nullptr)
+    {
+        // This is a ESL coded function
+
+        for (int i = params.count() - 1; i >= 0; --i)
+            this->stack_.push(params.get_params(i + 1));
+
+        // Push current context in the stack
+        this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_));
+
+        // Set function runtime as current runtime
+        this->runtime_ = fun_runtime;
+    }
+    else // External function call
+    {
+        delete fun_runtime;
+        this->stack_.push(ret_value);
+    }
+
+    // Decrement object counter since it has been poped
+    object_container->decr();
 }
 
 void esl::Vm::operation (const std::string& name)
@@ -148,6 +208,7 @@ void esl::Vm::operation (const std::string& name)
     obj2 = this->stack_.top();
     this->stack_.pop();
 
+    // Get the 2 operands
     esl::Type* value1 = dynamic_cast<esl::Type*> (obj1->data_get());
     esl::Type* value2 = dynamic_cast<esl::Type*> (obj2->data_get());
 
@@ -155,10 +216,23 @@ void esl::Vm::operation (const std::string& name)
     {
         esl::Params params;
 
+        // Setup params for operator call
         params.params_set(obj1);
         params.params_set(obj2);
 
-        this->stack_.push(value2->call_method(name, params));
+        esl::Context* fun_context = new esl::Context();
+        esl::MemoryObject<esl::Content>* ret_value = nullptr;
+
+        // Call operator function
+        if ((ret_value = value2->call_method(name, fun_context, params)) == nullptr)
+        {
+            /* TODO: operator override with ESL code */
+        }
+        else
+        {
+            delete fun_context;
+            this->stack_.push(ret_value);
+        }
     }
     else
         throw esl::Exception("ESL is not able yet to handle different type operations");
@@ -190,9 +264,13 @@ void esl::Vm::store_stk ()
     tos1 = this->stack_.top();
     this->stack_.pop();
 
+    // Delete overrided data
     delete tos->data_get();
+
+    // Setup new data
     tos->data_set(tos1->data_get());
 
+    // Delete tos1 object without it data
     tos1->free();
 
     this->stack_.push(tos);
@@ -200,6 +278,7 @@ void esl::Vm::store_stk ()
 
 std::string esl::Vm::module_path(const std::string& mod_name)
 {
+    // Try to locate the called module
     for (int i = 0; i < 7; ++i)
     {
         std::string path_file(path_lib_[i] + mod_name + ".eslm");
@@ -222,6 +301,7 @@ void esl::Vm::setup_module (Bytecode* instr)
     if (path == "")
         throw Exception ("Module " + *module_name + " not found");
 
+    // Setup new module and load it
     module = new esl::Module(path);
     module->load();
 
@@ -245,17 +325,20 @@ void esl::Vm::call_module (Bytecode* instr)
     module = dynamic_cast<esl::Module*>(this->stack_.top()->data_get());
     this->stack_.pop();
 
-    /* Storing all args before context switch */
+    // Storing all args
     while (!dynamic_cast<esl::StackDelimiter*> (this->stack_.top()->data_get()))
     {
         params.params_set(this->stack_.top());
         this->stack_.pop();
     }
 
+    // POP the delimiter
     this->pop();
 
+    // Perform the call
     this->stack_.push(module->call(*fun_name, params));
 
+    // Decrement reference count on all params (since they have been poped)
     params.decr();
 }
 
@@ -269,6 +352,7 @@ void esl::Vm::load_int (Bytecode* instr)
 void esl::Vm::load_str (Bytecode* instr)
 {
     esl::String* v = nullptr;
+    // Get string in RoData
     std::string str = *(RoData::instance_get()->get(instr->get_param()));
 
     v = new esl::String(str);
@@ -287,10 +371,10 @@ void esl::Vm::function_return()
         this->stack_.pop();
     }
 
+    // Delete the current runtime since it is not needed anymore
     delete this->runtime_;
 
-    /* Restore the previous context */
-    /* TODO: Check top of the stack is a context */
+    // Restore the previous context
     this->runtime_ = dynamic_cast<esl::Context*> (this->stack_.top()->data_get());
 
     if (this->runtime_ == nullptr)
@@ -314,38 +398,34 @@ void esl::Vm::function_return()
 void esl::Vm::call_function(esl::Bytecode *instr)
 {
     std::string fun_name;
-    std::pair<esl::Callback, int> fun;
+    esl::Function* fun;
     esl::Params params;
     esl::Context* fun_runtime = new esl::Context(*(this->runtime_));
-    esl::MemoryObject<esl::Content>* container = nullptr;
 
-    /* Storing all args before context switch */
+    // Storing all args before context switch
     while (!dynamic_cast<esl::StackDelimiter*>(this->stack_.top()->data_get()))
     {
         params.params_set(this->stack_.top());
         this->stack_.pop();
     }
 
+    // POP delimiter
     this->pop();
 
-    /* Push current context in the stack */
-    container = new esl::MemoryObject<esl::Content>(this->runtime_);
+    // Push current context in the stack
+    this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_));
 
-    this->stack_.push(container);
-
-    /* TODO: Check fun_name is a string */
+    // Get function name in RoData
     fun_name = *(RoData::instance_get()->get(instr->get_param()));
 
-    /* TODO: Check that function is registerd */
-    fun = this->runtime_->function_get(fun_name);
+    // Get function
+    fun = dynamic_cast<esl::Function*>(runtime_->function_get(fun_name)->data_get());
 
-    /* Setup new context */
-    if (fun.first(fun_runtime, params) == nullptr) /* std_callback */
+    // Perform the call
+    if (fun->call(fun_runtime, params) == nullptr)
     {
         for (int i = params.count() - 1; i >= 0; --i)
             this->stack_.push(params.get_params(i + 1));
-
-        fun_runtime->pc_set(fun.second + 1);
 
         this->runtime_ = fun_runtime;
     }
@@ -355,15 +435,13 @@ void esl::Vm::store(esl::Bytecode *instr)
 {
     std::string *var_name = nullptr;
 
+    // Get the var name in RoData
     var_name = RoData::instance_get()->get(instr->get_param());
 
-    /* TODO: check type of TOS */
-    if (!dynamic_cast<esl::Context*> (this->stack_.top()->data_get()) &&
-        var_name == nullptr)
-    {
-        std::cout << "BUG ISSUE esl::VM::Store" << std::endl;
-    }
+    if (dynamic_cast<esl::Context*> (this->stack_.top()->data_get()))
+        throw esl::Exception("Internal error on store value");
 
+    // Store the value
     this->runtime_->variable_set(*var_name, this->stack_.top());
 }
 
@@ -372,13 +450,13 @@ void esl::Vm::load(esl::Bytecode *instr)
     std::string* var_name = nullptr;
     esl::MemoryObject<esl::Content>* value = nullptr;
 
+    // Get variable name in RoData
     var_name = RoData::instance_get()->get(instr->get_param());
 
-    if (var_name == nullptr)
-        std::cout << " BUG esl::Vm::load" << std::endl;
-    /* TODO: check existance */
-
+    // Get the value of the variable
     value = this->runtime_->variable_get(*var_name);
+
+    // Increment the reference count since it will be pushed on the stack
     value->incr();
 
     this->stack_.push(value);
@@ -386,11 +464,13 @@ void esl::Vm::load(esl::Bytecode *instr)
 
 void esl::Vm::jump(esl::Bytecode *instr, int val)
 {
+    // Check if conditional jump is performed over boolean expression
     if (dynamic_cast<esl::Int*> (this->stack_.top()->data_get()))
     {
         esl::Int* value = dynamic_cast<esl::Int*> (this->stack_.top()->data_get());
         int v = value->data_get();
 
+        // If val is equal to TOS jump
         if (v == val)
             jump(instr);
         else
@@ -409,12 +489,14 @@ void esl::Vm::jump(esl::Bytecode *instr)
 
 void esl::Vm::register_function(esl::Bytecode *instr)
 {
-    std::string     *var_name = nullptr;
+    std::string* fun_name = nullptr;
+    esl::Function* fun = nullptr;
 
-    var_name = RoData::instance_get()->get(instr->get_param());
+    // Get the function name in RoData
+    fun_name = RoData::instance_get()->get(instr->get_param());
 
-    /* TODO: Register Function */
-    this->runtime_->function_set(*var_name,
-                                 esl::std_callback,
-                                 this->runtime_->pc_get());
+    // Create the function
+    fun = new esl::Function(this->runtime_->pc_get());
+
+    this->runtime_->function_set(*fun_name, new esl::MemoryObject<esl::Content>(fun));
 }
