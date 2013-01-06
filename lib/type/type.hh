@@ -8,6 +8,7 @@
 # include "../content.hh"
 # include "../gc/memory-object.hh"
 # include "../delegate.hh"
+# include "../function.hh"
 
 enum Visibility
 {
@@ -26,8 +27,10 @@ namespace esl
             Type ();
             virtual ~Type ();
 
-            virtual MemoryObject<Content>* print (const Params&) = 0;
             virtual std::string type_name_get() const = 0;
+
+            virtual MemoryObject<Content>* print (const Params&) = 0;
+            virtual MemoryObject<Content>* to_string (const Params&) = 0;
 
             virtual MemoryObject<Content>* plus_op (const Params&);
             virtual MemoryObject<Content>* minus_op (const Params&);
@@ -47,11 +50,14 @@ namespace esl
 
             virtual MemoryObject<Content>* bracket_op (const Params&);
 
-            void register_method (const std::string&, Method*, Visibility);
+            void register_method (const std::string&,
+                                  MemoryObject<Function>*, Visibility);
             MemoryObject<Content>* call_method (const std::string&,
+                                                Context*,
                                                 const esl::Params&);
         protected:
-            std::map<std::string, std::pair<Method*, Visibility>> method_;
+            std::map<std::string,
+                     std::pair<MemoryObject<Function>*, Visibility>> method_;
             std::map<std::string,
                      std::pair<MemoryObject<esl::Content>*,
                                Visibility>> attribut_;

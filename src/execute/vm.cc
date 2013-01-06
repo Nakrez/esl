@@ -127,6 +127,9 @@ void esl::Vm::run()
             case CALL_MODULE:
                 this->call_module(instr);
                 break;
+            case CALL_METHOD:
+                this->call_method(instr);
+                break;
             case DELIM:
                 this->add_delim();
                 break;
@@ -136,6 +139,53 @@ void esl::Vm::run()
 
         this->runtime_->pc_incr(1);
     }
+}
+
+void esl::Vm::call_method(esl::Bytecode *instr)
+{
+    std::string fun_name;
+    esl::MemoryObject<esl::Content>* object_container = nullptr;
+    esl::MemoryObject<esl::Content>* ret_value = nullptr;
+    esl::Type* object = nullptr;
+    esl::Context* fun_runtime = new esl::Context(*(this->runtime_));
+    esl::Params params;
+
+    /* Storing all args before context switch */
+    while (!dynamic_cast<esl::StackDelimiter*>(this->stack_.top()->data_get()))
+    {
+        params.params_set(this->stack_.top());
+        this->stack_.pop();
+    }
+
+    this->pop();
+
+    object_container = this->stack_.top();
+    object = dynamic_cast<esl::Type*> (object_container->data_get());
+    this->stack_.pop();
+
+    if (object == nullptr)
+        throw esl::Exception("Method call on non object value");
+
+    /* TODO: Check fun_name is a string */
+    fun_name = *(RoData::instance_get()->get(instr->get_param()));
+
+    /* Setup new context */
+    if ((ret_value = object->call_method(fun_name, fun_runtime, params)) == nullptr)
+    {
+        for (int i = params.count() - 1; i >= 0; --i)
+            this->stack_.push(params.get_params(i + 1));
+
+        /* Push current context in the stack */
+        this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_));
+        this->runtime_ = fun_runtime;
+    }
+    else /* API call */
+    {
+        delete fun_runtime;
+        this->stack_.push(ret_value);
+    }
+
+    object_container->decr();
 }
 
 void esl::Vm::operation (const std::string& name)
@@ -159,7 +209,18 @@ void esl::Vm::operation (const std::string& name)
         params.params_set(obj1);
         params.params_set(obj2);
 
-        this->stack_.push(value2->call_method(name, params));
+        esl::Context* fun_context = new esl::Context();
+        esl::MemoryObject<esl::Content>* ret_value = nullptr;
+
+        if ((ret_value = value2->call_method(name, fun_context, params)) == nullptr)
+        {
+            /* TODO: operator override with ESL code */
+        }
+        else
+        {
+            delete fun_context;
+            this->stack_.push(ret_value);
+        }
     }
     else
         throw esl::Exception("ESL is not able yet to handle different type operations");

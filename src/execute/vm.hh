@@ -49,6 +49,8 @@ namespace esl
 
             void operation (const std::string&);
 
+            void call_method (Bytecode* bytecode);
+
             void pop ();
             void add_delim ();
 

@@ -1,4 +1,5 @@
 #include "int.hh"
+#include "string.hh"
 
 esl::Int::Int (int data)
     : data_ (data)
@@ -26,6 +27,11 @@ esl::MemoryObject<esl::Content>* esl::Int::print (const Params&)
     std::cout << data_;
 
     return new esl::MemoryObject<esl::Content> (new esl::Int(0));
+}
+
+esl::MemoryObject<esl::Content>* esl::Int::to_string (const Params&)
+{
+    return new esl::MemoryObject<esl::Content> (new esl::String("Int"));
 }
 
 std::string esl::Int::type_name_get () const
