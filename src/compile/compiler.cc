@@ -98,8 +98,10 @@ void esl::Compiler::compile(esl::Ast *ast)
                   break;
         case FUNCTION_DECL:  compile_function(ast);
                              break;
-        case FUNCTION_CALL:  compile_call(ast);
+        case FUNCTION_CALL:  compile_call(ast, false);
                              break;
+        case METHOD_CALL: compile_method_call(ast);
+                          break;
         case LIST:  compile_list(ast);
                     break;
         case LIST_ID:  compile_list_id(ast);
@@ -118,7 +120,13 @@ void esl::Compiler::compile(esl::Ast *ast)
     }
 }
 
-void esl::Compiler::compile_assignement_array(Ast* ast)
+void esl::Compiler::compile_method_call (Ast* ast)
+{
+    compile(ast->get_fson());
+    compile_call(ast->get_fson()->get_rbro(), true);
+}
+
+void esl::Compiler::compile_assignement_array (Ast* ast)
 {
     esl::Ast* temp_ast = ast->get_fson()->get_rbro()->get_fson()->get_fson();
 
@@ -287,7 +295,7 @@ void esl::Compiler::compile_function(esl::Ast* ast)
     byte_code_.push_back(new esl::Bytecode(RETURN));
 }
 
-void esl::Compiler::compile_call(esl::Ast* ast)
+void esl::Compiler::compile_call(esl::Ast* ast, bool method)
 {
     esl::Ast *temp_ast = nullptr;
 
@@ -300,8 +308,13 @@ void esl::Compiler::compile_call(esl::Ast* ast)
     if (temp_ast)
         compile(ast->get_fson());
 
-    /* Build call instruction (check special code for built in) */
-    byte_code_.push_back(new esl::Bytecode(CALL_FUNCTION, ast->get_content()));
+
+    if (method)
+        byte_code_.push_back(new esl::Bytecode(CALL_METHOD,
+                                               ast->get_content()));
+    else
+        byte_code_.push_back(new esl::Bytecode(CALL_FUNCTION,
+                                               ast->get_content()));
 }
 
 void esl::Compiler::compile_if(esl::Ast *ast)
