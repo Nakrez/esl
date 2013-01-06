@@ -2,17 +2,6 @@ template<class T>
 esl::MemoryObject<T>::MemoryObject (T* data)
     : count_ (1)
     , data_ (data)
-    , privacy_ (false)
-    , free_ (false)
-{
-
-}
-
-template<class T>
-esl::MemoryObject<T>::MemoryObject (T* data, bool privacy)
-    : count_ (1)
-    , data_ (data)
-    , privacy_ (privacy)
     , free_ (false)
 {
 
