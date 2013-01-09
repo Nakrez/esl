@@ -110,6 +110,7 @@
 "*"                     return token::TOK_MUL;
 "/"                     return token::TOK_DIV;
 "%"                     return token::TOK_MOD;
+"^"                     return token::TOK_POW;
 "="                     return token::TOK_EQ;
 "("                     return token::TOK_PAROPEN;
 ")"                     return token::TOK_PARCLOSE;

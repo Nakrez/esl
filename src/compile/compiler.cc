@@ -71,6 +71,8 @@ void esl::Compiler::compile(esl::Ast *ast)
                   break;
         case MOD: compile_operation(ast, OP_MOD);
                   break;
+        case POW: compile_operation(ast, OP_POW);
+                  break;
         case EQ: compile_operation(ast, OP_EQ);
                  break;
         case DIFF: compile_operation(ast, OP_DIFF);

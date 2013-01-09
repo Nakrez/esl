@@ -10,6 +10,7 @@ const static std::string instr_string[] =
     "OP_MUL",
     "OP_DIV",
     "OP_MOD",
+    "OP_POW",
 
     "OP_EQ",
     "OP_DIFF",

@@ -36,6 +36,7 @@ enum token
     MUL,
     DIV,
     MOD,
+    POW,
 
     EQ,
     DIFF,

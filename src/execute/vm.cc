@@ -96,6 +96,9 @@ void esl::Vm::run()
             case OP_MOD:
                 this->operation("operator%");
                 break;
+            case OP_POW:
+                this->operation("operator^");
+                break;
             case OP_EQ:
                 this->operation("operator==");
                 break;

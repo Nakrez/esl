@@ -33,6 +33,9 @@ enum instr
     /// TOS % TOS1
     OP_MOD,
 
+    /// TOS ^ TOS1
+    OP_POW,
+
     /// TOS == TOS1
     OP_EQ,
 

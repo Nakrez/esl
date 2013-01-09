@@ -1,3 +1,7 @@
+Nightly 09/01/2013
+
+- Add math pow function (a^b)
+
 Nightly 06/01/2013
 
 - Fix bug with operator||

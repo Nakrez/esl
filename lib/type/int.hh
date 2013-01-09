@@ -23,6 +23,7 @@ namespace esl
             virtual MemoryObject<Content>* mul_op (const Params&);
             virtual MemoryObject<Content>* div_op (const Params&);
             virtual MemoryObject<Content>* mod_op (const Params&);
+            virtual MemoryObject<Content>* pow_op (const Params&);
 
             virtual MemoryObject<Content>* eq_op (const Params&);
             virtual MemoryObject<Content>* diff_op (const Params&);

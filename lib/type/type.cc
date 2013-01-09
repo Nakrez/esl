@@ -66,6 +66,15 @@ esl::MemoryObject<esl::Content>* esl::Type::mod_op (const Params&)
     return new MemoryObject<esl::Content>(nullptr);
 }
 
+esl::MemoryObject<esl::Content>* esl::Type::pow_op (const Params&)
+{
+    throw esl::Exception("Type "
+                         + type_name_get()
+                         + " does not provide ^ operator");
+
+    return new MemoryObject<esl::Content>(nullptr);
+}
+
 esl::MemoryObject<esl::Content>* esl::Type::and_op (const Params&)
 {
     throw esl::Exception("Type "
@@ -170,6 +179,8 @@ esl::MemoryObject<esl::Content>* esl::Type::call_method (const std::string& name
             return this->div_op(params);
         if ("operator%" == name)
             return this->mod_op(params);
+        if ("operator^" == name)
+            return this->pow_op(params);
         if ("operator==" == name)
             return this->eq_op(params);
         if ("operator!=" == name)
