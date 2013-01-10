@@ -84,8 +84,9 @@ esl::MemoryObject<esl::Content>* esl::Int::pow_op (const Params& params)
 {
     esl::Int* op2 = dynamic_cast<esl::Int*>(params.get_params(2)->data_get());
     int value = op2->data_get();
+    int powered = pow(data_, value);
 
-    return new esl::MemoryObject<esl::Content>(new esl::Int(pow(data_, value)));
+    return new esl::MemoryObject<esl::Content>(new esl::Int(powered));
 }
 
 esl::MemoryObject<esl::Content>* esl::Int::eq_op (const Params& params)

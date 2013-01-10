@@ -86,6 +86,7 @@ const static std::string token_string[] =
     "MUL",
     "DIV",
     "MOD",
+    "POW",
 
     "EQ",
     "DIFF",
