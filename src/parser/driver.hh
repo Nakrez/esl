@@ -19,7 +19,7 @@ class Driver
         ~Driver ();
         void error (const yy::eslxx_parser::location_type& l,
                     const std::string& m);
-        int parser (const std::string &f);
+        int parser (const std::string &f, const std::string &t);
         void scan_begin ();
         void scan_end ();
         esl::Ast* ast ();

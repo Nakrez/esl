@@ -3,6 +3,8 @@
 #include "compile/compiler.hh"
 #include "execute/vm.hh"
 #include "utils/ro-data.hh"
+#include <cstring>
+#include <iostream>
 
 # define BENCH 0
 
@@ -14,9 +16,14 @@ int main(int argc, char **argv)
 
     if (argc < 2)
         return (1);
-
-    /* Parser the file given in arg */
-    driver.parser(argv[1]);
+    for(int i=1; i<argc; i++){
+        std::string arg=argv[i];
+	if(arg.find("--")==0){
+            std::cout << "PARAM:" << arg << std::endl;
+        }else{
+            driver.parser(argv[i], "file");
+	}
+    }
 
     /* Compile the AST given by the parser into bytecode */
     if (!driver.errors_get())
