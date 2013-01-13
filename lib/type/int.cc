@@ -3,7 +3,8 @@
 #include <cmath>
 
 esl::Int::Int (int data)
-    : data_ (data)
+    : Type ("Int")
+    , data_ (data)
 {
 
 }

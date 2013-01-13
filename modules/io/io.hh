@@ -5,6 +5,9 @@
 
 # include "../../lib/type/esl-types.hh"
 # include "../../lib/extension.hh"
+# include "../../lib/type/object.hh"
+
+# include "../../src/execute/vm.hh"
 
 class Io: public esl::Extension
 {

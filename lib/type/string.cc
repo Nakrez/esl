@@ -1,7 +1,8 @@
 #include "string.hh"
 
 esl::String::String (const std::string& data)
-    : data_ (data)
+    : Type ("String")
+    , data_ (data)
 {
 
 }

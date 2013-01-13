@@ -3,6 +3,7 @@
 #include "compile/compiler.hh"
 #include "execute/vm.hh"
 #include "utils/ro-data.hh"
+#include "lib/type/squeleton.hh"
 
 # define BENCH 0
 
@@ -10,7 +11,6 @@ int main(int argc, char **argv)
 {
     Driver driver;
     esl::Compiler *compiler = nullptr;
-    esl::Vm *vm = nullptr;
 
     if (argc < 2)
         return (1);
@@ -41,11 +41,21 @@ int main(int argc, char **argv)
 
         compiler->export_bytecode("byte.eslc");
 
-        vm = new esl::Vm(compiler->get_bytecode());
+        #if BENCH == 1
+            gettimeofday(&start, nullptr);
+        #endif /* !BENCH */
+
+        #if BENCH == 1
+            gettimeofday(&end, nullptr);
+            useconds = end.tv_usec - start.tv_usec;
+
+            std::cout << "Execution time : " << useconds << std::endl;
+        #endif /* !BENCH */
 
         try
         {
-            vm->run();
+            esl::Vm::instanciate(compiler->get_bytecode());
+            esl::Vm::get()->run();
         }
         catch (esl::Exception& e)
         {
@@ -58,7 +68,8 @@ int main(int argc, char **argv)
     driver.free();
 
     delete compiler;
-    delete vm;
+    esl::Vm::free();
+    esl::Squeleton::free();
 
     return (0);
 }

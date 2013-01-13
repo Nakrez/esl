@@ -2,6 +2,7 @@
 #include "string.hh"
 
 esl::Array::Array (unsigned int size)
+    : Type ("Array")
 {
     for (unsigned i = 0; i < size; ++i)
         data_.push_back(new esl::MemoryObject<esl::Content>(new Int(0)));

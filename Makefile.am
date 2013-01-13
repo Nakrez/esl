@@ -15,6 +15,10 @@ libesl_la_SOURCES = lib/context.cc lib/context.hh \
 		    lib/type/string.cc lib/type/string.hh \
 		    lib/type/array.cc lib/type/array.hh \
 		    lib/type/type.cc lib/type/type.hh \
+		    lib/type/squeleton.cc lib/type/squeleton.hh \
+		    lib/type/object.cc lib/type/object.hh \
+		    lib/type/int-object.cc lib/type/int-object.hh \
+		    src/execute/vm.cc src/execute/vm.hh src/execute/vm.hxx \
 		    lib/gc/memory-object.hh
 
 libesl_la_LDFLAGS = -version-info 1:0:0
@@ -31,7 +35,6 @@ esl_SOURCES =   src/utils/ast.cc src/utils/ast.hh \
 		src/parser/lexer.ll \
 		src/parser/driver.cc src/parser/driver.hh \
 		src/compile/compiler.cc src/compile/compiler.hh \
-		src/execute/vm.cc src/execute/vm.hh src/execute/vm.hxx \
 		src/main.cc
 
 esl_CXXFLAGS = -pedantic -Wall -Wextra -std=c++0x -Wno-delete-non-virtual-dtor
