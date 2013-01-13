@@ -5,7 +5,6 @@
 # include <vector>
 
 # include "type.hh"
-# include "int.hh"
 # include "../gc/memory-object.hh"
 # include "../exception.hh"
 

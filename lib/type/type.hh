@@ -10,6 +10,7 @@
 # include <map>
 
 # include "squeleton.hh"
+# include "../function.hh"
 # include "../content.hh"
 # include "../gc/memory-object.hh"
 

@@ -37,6 +37,8 @@ namespace esl
             /// @brief Run the virtual machine
             void run();
 
+            void external_call (Function* fun, const Params& params);
+
         private:
             /// @brief Constructor
             /// @param code The bytecode to execute

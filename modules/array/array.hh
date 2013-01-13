@@ -3,6 +3,7 @@
 
 #include "../../lib/extension.hh"
 #include "../../lib/type/array.hh"
+#include "../../lib/type/int-object.hh"
 
 class Array: public esl::Extension
 {

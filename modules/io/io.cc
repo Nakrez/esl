@@ -20,8 +20,8 @@ esl::MemoryObject<esl::Content>* Io::print (const esl::Params& params)
             mem = new esl::MemoryObject<esl::Content>(obj);
             print_params.params_set(mem);
 
-            esl::Vm::get();
-            //obj->print(print_params)->decr();
+            esl::Vm::get()->external_call(obj->get_method("print"),
+                                          print_params);
 
             mem->free();
         }
@@ -32,7 +32,7 @@ esl::MemoryObject<esl::Content>* Io::print (const esl::Params& params)
 
     std::cout << std::endl;
 
-    return new esl::MemoryObject<esl::Content> (new esl::Int(0));
+    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
 }
 
 extern "C"

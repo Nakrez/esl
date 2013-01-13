@@ -20,8 +20,11 @@ namespace esl
             Object (const std::string& type);
 
             MemContent call_method (const std::string& fun_name,
-                                     Context* context,
-                                     const Params& params);
+                                    Context* context,
+                                    const Params& params);
+
+            Function* get_method (const std::string& fun_name);
+
         private:
             std::string type_;
 

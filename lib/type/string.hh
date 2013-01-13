@@ -5,7 +5,6 @@
 # include <string>
 
 # include "type.hh"
-# include "int.hh"
 
 namespace esl
 {

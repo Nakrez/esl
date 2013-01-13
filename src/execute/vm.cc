@@ -41,7 +41,8 @@ esl::Vm::Vm (const std::vector<esl::Bytecode*>& code)
 {
     this->code_ = code;
     this->runtime_ = new esl::Context();
-    this->runtime_->type_set("Array", esl::Array::instanciate);
+
+    (new esl::Int())->init();
 }
 
 esl::Vm::~Vm()
@@ -170,6 +171,22 @@ void esl::Vm::run()
     }
 }
 
+void esl::Vm::external_call (esl::Function* fun, const esl::Params& params)
+{
+    esl::MemoryObject<esl::Content>* ret_value = nullptr;
+    esl::Context* fun_runtime = new esl::Context(*(this->runtime_));
+
+    if ((ret_value = fun->call(fun_runtime, params)) == nullptr)
+    {
+        // This is a ESL coded function
+    }
+    else
+    {
+        delete fun_runtime;
+        this->stack_.push(ret_value);
+    }
+}
+
 void esl::Vm::call_method(esl::Bytecode *instr)
 {
     std::string fun_name;
@@ -193,6 +210,9 @@ void esl::Vm::call_method(esl::Bytecode *instr)
     object_container = this->stack_.top();
     object = dynamic_cast<esl::Object*> (object_container->data_get());
     this->stack_.pop();
+
+    // Set the the object itself as first param
+    params.params_set(object_container);
 
     if (object == nullptr)
         throw esl::Exception("Method call on non object value");

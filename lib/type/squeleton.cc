@@ -1,4 +1,5 @@
 #include "squeleton.hh"
+#include "type.hh"
 
 esl::Squeleton* esl::Squeleton::instance_ = nullptr;
 
@@ -9,7 +10,8 @@ esl::Squeleton::Squeleton ()
 
 esl::Squeleton::~Squeleton ()
 {
-
+    for (auto type : declared_type_)
+        delete type.second;
 }
 
 esl::Squeleton* esl::Squeleton::get ()
@@ -40,8 +42,7 @@ void esl::Squeleton::register_type (const std::string& name, Type* ptr)
 
 inline void esl::Squeleton::type_existance (const std::string& name)
 {
-    if (this->object_methods_.find(name) == this->object_methods_.end() &&
-        this->object_attributs_.find(name) == this->object_attributs_.end())
+    if (this->declared_type_.find(name) == this->declared_type_.end())
         throw esl::Exception ("unknow type " + name);
 }
 
@@ -52,7 +53,7 @@ esl::Function* esl::Squeleton::method_get(const std::string& type,
 
     if (this->object_methods_.at(type).find(name) ==
         this->object_methods_.at(type).end())
-        throw esl::Exception ("unknow method " + name + " int type " + type);
+        throw esl::Exception ("unknow method " + name + " in type " + type);
 
     return this->object_methods_.at(type).at(name).first;
 }
@@ -62,5 +63,5 @@ void esl::Squeleton::register_method (const std::string& type,
                                       const std::string& name,
                                       Function* fun)
 {
-    this->object_methods_.at(type)[name] = Method(fun, PUBLIC);
+    this->object_methods_[type][name] = Method(fun, PUBLIC);
 }

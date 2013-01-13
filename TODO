@@ -36,6 +36,7 @@
 [LEXER/PARSER/COMPILER/VM] Add object paradigm
 [LEXER/PARSER/COMPILER/VM] Type forcing (multi type separate with ,)
 [BYTECODE] Rename operators instruction in OPERATOR_[name]
+[VM] Allow external call for esl coded functions !!!!
 
 [API] Improve API
 
