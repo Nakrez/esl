@@ -18,6 +18,7 @@ libesl_la_SOURCES = lib/context.cc lib/context.hh \
 		    lib/type/squeleton.cc lib/type/squeleton.hh \
 		    lib/type/object.cc lib/type/object.hh \
 		    lib/type/int-object.cc lib/type/int-object.hh \
+		    lib/type/string-object.cc lib/type/string-object.hh \
 		    src/execute/vm.cc src/execute/vm.hh src/execute/vm.hxx \
 		    lib/gc/memory-object.hh
 

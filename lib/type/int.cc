@@ -1,5 +1,5 @@
 #include "int.hh"
-#include "string.hh"
+#include "string-object.hh"
 #include "int-object.hh"
 #include <cmath>
 
@@ -14,6 +14,11 @@ esl::Int::~Int ()
 
 }
 
+esl::MemoryObject<esl::Content>* esl::Int::construct (const Params&)
+{
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(0));
+}
+
 esl::MemoryObject<esl::Content>* esl::Int::print (const Params& params)
 {
     esl::IntObject* obj = dynamic_cast<esl::IntObject*>(params.get_params(1)->data_get());
@@ -24,7 +29,7 @@ esl::MemoryObject<esl::Content>* esl::Int::print (const Params& params)
 
 esl::MemoryObject<esl::Content>* esl::Int::to_string (const Params&)
 {
-    return new esl::MemoryObject<esl::Content> (new esl::String("Int"));
+    return new esl::MemoryObject<esl::Content> (new esl::StringObject("Int"));
 }
 
 std::string esl::Int::type_name_get () const

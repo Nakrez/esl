@@ -1,5 +1,5 @@
 #include "array.hh"
-#include "string.hh"
+#include "string-object.hh"
 #include "int-object.hh"
 
 esl::Array::Array (unsigned int size)
@@ -13,6 +13,11 @@ esl::Array::~Array ()
 {
     for (auto v : data_)
         v->decr();
+}
+
+esl::MemoryObject<esl::Content>* esl::Array::construct (const Params&)
+{
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(0));
 }
 
 esl::MemoryObject<esl::Content>* esl::Array::instanciate ()
@@ -44,7 +49,7 @@ esl::MemoryObject<esl::Content>* esl::Array::print (const esl::Params&)
 
 esl::MemoryObject<esl::Content>* esl::Array::to_string (const esl::Params&)
 {
-    return new esl::MemoryObject<esl::Content> (new esl::String("Array"));
+    return new esl::MemoryObject<esl::Content> (new esl::StringObject("Array"));
 }
 
 std::string esl::Array::type_name_get () const

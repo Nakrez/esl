@@ -27,6 +27,8 @@ namespace esl
 
             virtual std::string type_name_get() const = 0;
 
+            virtual MemoryObject<Content>* construct (const Params&) = 0;
+
             virtual MemoryObject<Content>* print (const Params&) = 0;
             virtual MemoryObject<Content>* to_string (const Params&) = 0;
 

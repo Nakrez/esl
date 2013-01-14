@@ -18,6 +18,8 @@ namespace esl
 
             static MemoryObject<Content>* instanciate ();
 
+            virtual MemoryObject<Content>* construct (const Params&);
+        
             virtual std::string type_name_get () const;
 
             virtual MemoryObject<Content>* print (const Params&);

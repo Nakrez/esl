@@ -43,6 +43,7 @@ esl::Vm::Vm (const std::vector<esl::Bytecode*>& code)
     this->runtime_ = new esl::Context();
 
     (new esl::Int())->init();
+    (new esl::String())->init();
 }
 
 esl::Vm::~Vm()
@@ -398,11 +399,11 @@ void esl::Vm::load_int (Bytecode* instr)
 
 void esl::Vm::load_str (Bytecode* instr)
 {
-    esl::String* v = nullptr;
+    esl::StringObject* v = nullptr;
     // Get string in RoData
     std::string str = *(RoData::instance_get()->get(instr->get_param()));
 
-    v = new esl::String(str);
+    v = new esl::StringObject(str);
 
     this->stack_.push(new esl::MemoryObject<esl::Content>(v));
 }

@@ -11,10 +11,12 @@ namespace esl
     class String : public Type
     {
         public:
-            String (const std::string& data);
+            String ();
             ~String ();
 
             virtual std::string type_name_get () const;
+
+            virtual MemoryObject<Content>* construct (const Params&);
 
             virtual MemoryObject<Content>* print (const Params&);
             virtual MemoryObject<Content>* to_string (const Params&);
@@ -27,11 +29,6 @@ namespace esl
             virtual MemoryObject<Content>* ge_op (const Params&);
             virtual MemoryObject<Content>* lt_op (const Params&);
             virtual MemoryObject<Content>* le_op (const Params&);
-
-            const std::string& data_get () const;
-            void data_set (const std::string& data);
-        private:
-            std::string data_;
     };
 }
 

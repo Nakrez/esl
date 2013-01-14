@@ -1,9 +1,9 @@
 #include "string.hh"
 #include "int-object.hh"
+#include "string-object.hh"
 
-esl::String::String (const std::string& data)
+esl::String::String ()
     : Type ("String")
-    , data_ (data)
 {
 
 }
@@ -13,85 +13,98 @@ esl::String::~String ()
 
 }
 
-const std::string& esl::String::data_get () const
+esl::MemoryObject<esl::Content>* esl::String::construct (const Params&)
 {
-    return data_;
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(0));
 }
 
-void esl::String::data_set (const std::string& data)
+esl::MemoryObject<esl::Content>* esl::String::print (const esl::Params& params)
 {
-    data_ = data;
-}
-
-esl::MemoryObject<esl::Content>* esl::String::print (const esl::Params&)
-{
-    std::cout << data_;
+    esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    std::cout << obj->data_get();
 
     return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
 }
 
-esl::MemoryObject<esl::Content>* esl::String::to_string (const esl::Params&)
+esl::MemoryObject<esl::Content>* esl::String::to_string (const esl::Params& params)
 {
-    return new esl::MemoryObject<esl::Content> (new esl::String(data_));
+    esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    std::string value = obj->data_get();
+
+    return new esl::MemoryObject<esl::Content> (new esl::StringObject(value));
 }
 
 std::string esl::String::type_name_get () const
 {
-    return "String";
+    return name_;
 }
 
 esl::MemoryObject<esl::Content>* esl::String::plus_op (const Params& params)
 {
-    esl::String* op2 = dynamic_cast<esl::String*>(params.get_params(2)->data_get());
-    std::string value = op2->data_get();
+    esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
+    std::string value1 = op1->data_get();
+    std::string value2 = op2->data_get();
 
-    return new esl::MemoryObject<esl::Content>(new esl::String(data_ + value));
+    return new esl::MemoryObject<esl::Content>(new esl::StringObject(value1 + value2));
 }
 
 esl::MemoryObject<esl::Content>* esl::String::eq_op (const Params& params)
 {
-    esl::String* op2 = dynamic_cast<esl::String*>(params.get_params(2)->data_get());
-    std::string value = op2->data_get();
+    esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
+    std::string value1 = op1->data_get();
+    std::string value2 = op2->data_get();
 
-    return new esl::MemoryObject<esl::Content>(new esl::IntObject(data_ == value));
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(value1 == value2));
 }
 
 esl::MemoryObject<esl::Content>* esl::String::diff_op (const Params& params)
 {
-    esl::String* op2 = dynamic_cast<esl::String*>(params.get_params(2)->data_get());
-    std::string value = op2->data_get();
+    esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
+    std::string value1 = op1->data_get();
+    std::string value2 = op2->data_get();
 
-    return new esl::MemoryObject<esl::Content>(new esl::IntObject(data_ != value));
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(value1 != value2));
 }
 
 esl::MemoryObject<esl::Content>* esl::String::gt_op (const Params& params)
 {
-    esl::String* op2 = dynamic_cast<esl::String*>(params.get_params(2)->data_get());
-    std::string value = op2->data_get();
+    esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
+    std::string value1 = op1->data_get();
+    std::string value2 = op2->data_get();
 
-    return new esl::MemoryObject<esl::Content>(new esl::IntObject(data_ > value));
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(value1 > value2));
 }
 
 esl::MemoryObject<esl::Content>* esl::String::ge_op (const Params& params)
 {
-    esl::String* op2 = dynamic_cast<esl::String*>(params.get_params(2)->data_get());
-    std::string value = op2->data_get();
+    esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
+    std::string value1 = op1->data_get();
+    std::string value2 = op2->data_get();
 
-    return new esl::MemoryObject<esl::Content>(new esl::IntObject(data_ >= value));
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(value1 >= value2));
 }
 
 esl::MemoryObject<esl::Content>* esl::String::lt_op (const Params& params)
 {
-    esl::String* op2 = dynamic_cast<esl::String*>(params.get_params(2)->data_get());
-    std::string value = op2->data_get();
+    esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
+    std::string value1 = op1->data_get();
+    std::string value2 = op2->data_get();
 
-    return new esl::MemoryObject<esl::Content>(new esl::IntObject(data_ < value));
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(value1 < value2));
 }
 
 esl::MemoryObject<esl::Content>* esl::String::le_op (const Params& params)
 {
-    esl::String* op2 = dynamic_cast<esl::String*>(params.get_params(2)->data_get());
-    std::string value = op2->data_get();
+    esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
+    std::string value1 = op1->data_get();
+    std::string value2 = op2->data_get();
 
-    return new esl::MemoryObject<esl::Content>(new esl::IntObject(data_ <= value));
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(value1 <= value2));
 }

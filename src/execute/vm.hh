@@ -21,6 +21,7 @@
 # include "../../lib/type/squeleton.hh"
 
 # include "../../lib/type/int-object.hh"
+# include "../../lib/type/string-object.hh"
 
 # include "../utils/bytecode.hh"
 # include "../utils/ro-data.hh"
