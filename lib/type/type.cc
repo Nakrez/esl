@@ -21,6 +21,9 @@ void esl::Type::init_basics ()
     squeleton->register_method (name_, "tostring",
                                 new Function(new Delegate<esl::Type>(this,
                                                                      &esl::Type::to_string)));
+    squeleton->register_method (name_, "construct",
+                                new Function(new Delegate<esl::Type>(this,
+                                                                     &esl::Type::construct)));
     squeleton->register_method (name_, "operator+",
                                 new Function(new Delegate<esl::Type>(this,
                                                                      &esl::Type::plus_op)));

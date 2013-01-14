@@ -327,7 +327,10 @@ expr            :
                 |"identifier" { $$ = new esl::Ast(ID, $1); }
                 |fun_call { $$ = $1; }
                 |object_call_list { $$ = $1; }
-                |"new" fun_call
+                |"new" fun_call {
+                                  $$ = new esl::Ast(NEW);
+                                  $$->add($2);
+                                }
                 |"identifier" "=" expr {
                                          $$ = new esl::Ast(ASSIGNEMENT);
                                          $$->add(new esl::Ast(ID, $1));

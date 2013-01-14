@@ -63,6 +63,9 @@ enum instr
     /// TOS[TOS1]
     OP_BRACKET,
 
+    /// Instanciate arg1
+    OP_NEW,
+
     /*
     ** Store the top of the stack in the variable name
     **

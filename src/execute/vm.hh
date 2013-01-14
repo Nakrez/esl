@@ -115,6 +115,7 @@ namespace esl
             /// @param instr The instruction to execute
             void call_method (Bytecode* bytecode);
 
+            void instanciation (Bytecode* bytecode);
 
             /// @brief Push a delimiter on the stack
             void add_delim ();

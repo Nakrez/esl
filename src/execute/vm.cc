@@ -150,6 +150,9 @@ void esl::Vm::run()
             case OP_AND:
                 this->operation("operator&&");
                 break;
+            case OP_NEW:
+                this->instanciation (instr);
+                break;
             case OPEN:
                 this->setup_module(instr);
                 break;
@@ -181,12 +184,48 @@ void esl::Vm::external_call (esl::Function* fun, const esl::Params& params)
     if ((ret_value = fun->call(fun_runtime, params)) == nullptr)
     {
         // This is a ESL coded function
+        for (int i = params.count() - 1; i >= 0; --i)
+            this->stack_.push(params.get_params(i + 1));
+
+        // Push current context in the stack
+        this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_));
+
+        // Set function runtime as current runtime
+        this->runtime_ = fun_runtime;
     }
     else
     {
         delete fun_runtime;
         this->stack_.push(ret_value);
     }
+}
+
+void esl::Vm::instanciation (esl::Bytecode* instr)
+{
+    std::string type;
+    esl::Function* fun;
+    esl::Params params;
+
+    // Storing all args before context switch
+    while (!dynamic_cast<esl::StackDelimiter*>(this->stack_.top()->data_get()))
+    {
+        params.params_set(this->stack_.top());
+        this->stack_.pop();
+    }
+
+    // POP delimiter
+    this->pop();
+
+    // Get function name in RoData
+    type = *(RoData::instance_get()->get(instr->get_param()));
+
+    // Get function
+    fun = esl::Squeleton::get()->method_get(type, "construct");
+
+    external_call (fun, params);
+
+    // Decrement reference count on all params (since they have been poped)
+    params.decr();
 }
 
 void esl::Vm::call_method(esl::Bytecode *instr)
