@@ -7,7 +7,7 @@
 #include <cstring>
 #include <iostream>
 
-# define BENCH 1
+# define BENCH 0
 
 int main(int argc, char **argv)
 {
