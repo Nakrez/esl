@@ -387,7 +387,6 @@ void esl::Vm::call_module (Bytecode* instr)
     // Perform the call
     this->stack_.push(module->call(*fun_name, params));
 
-    this->stack_.top()->incr();
     // Decrement reference count on all params (since they have been poped)
     params.decr();
 }

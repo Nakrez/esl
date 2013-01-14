@@ -22,12 +22,12 @@ esl::Context::Context(const Context& context)
 
 esl::Context::~Context()
 {
-    for (auto mod : modules_)
-        mod.second->decr();
     for (auto var : variables_)
         var.second->decr();
     for (auto fun : functions_)
         fun.second->decr();
+    for (auto mod : modules_)
+        mod.second->decr();
 }
 
 esl::MemContent esl::Context::function_get (const std::string& name) const

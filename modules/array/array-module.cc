@@ -15,7 +15,7 @@ esl::MemoryObject<esl::Content>* ArrayModule::create (const esl::Params& params)
     esl::IntObject* size = static_cast<esl::IntObject*> (params.get_params(1)->data_get());
     esl::ArrayObject* array = new esl::ArrayObject(size->data_get());
 
-    return new esl::MemoryObject<esl::Content> (array);
+    return new esl::MemoryObject<esl::Content>(array);
 }
 
 extern "C"
