@@ -13,7 +13,6 @@ libesl_la_SOURCES = lib/context.cc lib/context.hh \
 		    lib/stack-delimiter.cc lib/stack-delimiter.hh \
 		    lib/type/int.cc lib/type/int.hh \
 		    lib/type/string.cc lib/type/string.hh \
-		    lib/type/array.cc lib/type/array.hh \
 		    lib/type/type.cc lib/type/type.hh \
 		    lib/type/squeleton.cc lib/type/squeleton.hh \
 		    lib/type/object.cc lib/type/object.hh \
@@ -69,7 +68,7 @@ clear: distclean
 
 count:
 	cat lib/*.{hh,cc} lib/type/*.{cc,hh} lib/gc/*.{hh,hxx} src/main.cc \
-	    src/**/*.{cc,hh} | wc -l
+	    src/**/*.{cc,hh} modules/**/*.{cc,hh} | wc -l
 
 doxygen-doc:
 	doxygen doc/Doxyfile

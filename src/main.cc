@@ -5,7 +5,7 @@
 #include "utils/ro-data.hh"
 #include "lib/type/squeleton.hh"
 
-# define BENCH 0
+# define BENCH 1
 
 int main(int argc, char **argv)
 {
@@ -45,13 +45,6 @@ int main(int argc, char **argv)
             gettimeofday(&start, nullptr);
         #endif /* !BENCH */
 
-        #if BENCH == 1
-            gettimeofday(&end, nullptr);
-            useconds = end.tv_usec - start.tv_usec;
-
-            std::cout << "Execution time : " << useconds << std::endl;
-        #endif /* !BENCH */
-
         try
         {
             esl::Vm::instanciate(compiler->get_bytecode());
@@ -61,6 +54,13 @@ int main(int argc, char **argv)
         {
             std::cerr << "ESL exception: " << e.message() << std::endl;
         }
+
+        #if BENCH == 1
+            gettimeofday(&end, nullptr);
+            useconds = end.tv_usec - start.tv_usec;
+
+            std::cout << "Execution time : " << useconds << std::endl;
+        #endif /* !BENCH */
 
         esl::RoData::instance_delete();
     }

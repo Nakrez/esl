@@ -12,7 +12,6 @@
 # include <queue>
 
 # include "../../lib/gc/memory-object.hh"
-# include "../../lib/type/esl-types.hh"
 # include "../../lib/content.hh"
 # include "../../lib/params.hh"
 # include "../../lib/exception.hh"
@@ -21,7 +20,9 @@
 # include "../../lib/type/squeleton.hh"
 
 # include "../../lib/type/int-object.hh"
+# include "../../lib/type/int.hh"
 # include "../../lib/type/string-object.hh"
+# include "../../lib/type/string.hh"
 
 # include "../utils/bytecode.hh"
 # include "../utils/ro-data.hh"
