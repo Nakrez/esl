@@ -9,18 +9,19 @@ esl::MemoryObject<esl::Content>* Io::print (const esl::Params& params)
 {
     for (int i = 0; i < params.count(); ++i)
     {
-        esl::Type* obj = nullptr;
+        esl::Object* obj = nullptr;
         esl::Params print_params;
         esl::MemoryObject<esl::Content>* mem = nullptr;
 
-        obj = dynamic_cast<esl::Type*> (params.get_params(i + 1)->data_get());
+        obj = dynamic_cast<esl::Object*> (params.get_params(i + 1)->data_get());
 
         if (obj)
         {
             mem = new esl::MemoryObject<esl::Content>(obj);
             print_params.params_set(mem);
 
-            obj->print(print_params)->decr();
+            esl::Vm::get()->external_call(obj->get_method("print"),
+                                          print_params);
 
             mem->free();
         }
@@ -31,7 +32,7 @@ esl::MemoryObject<esl::Content>* Io::print (const esl::Params& params)
 
     std::cout << std::endl;
 
-    return new esl::MemoryObject<esl::Content> (new esl::Int(0));
+    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
 }
 
 extern "C"

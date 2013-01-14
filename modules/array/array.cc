@@ -1,28 +1,48 @@
 #include "array.hh"
+#include "../../lib/type/string-object.hh"
+#include "../../lib/type/int-object.hh"
+#include "array-object.hh"
 
-void Array::init ()
+esl::Array::Array ()
+    : Type ("Array")
 {
-    register_function("create", new esl::Delegate<Array>(this,
-                                                          &Array::create));
 }
 
-esl::MemoryObject<esl::Content>* Array::create (const esl::Params& params)
+esl::Array::~Array ()
 {
-    esl::Int* size = static_cast<esl::Int*> (params.get_params(1)->data_get());
-    esl::Array* array = new esl::Array(size->data_get());
-
-    return new esl::MemoryObject<esl::Content> (array);
 }
 
-extern "C"
+esl::MemoryObject<esl::Content>* esl::Array::construct (const Params&)
 {
-    Array* get ()
-    {
-        return new Array();
-    }
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(0));
+}
 
-    void destroy (Array* ext)
-    {
-        delete ext;
-    }
+esl::MemoryObject<esl::Content>* esl::Array::bracket_op (const Params& params)
+{
+    esl::ArrayObject* object = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
+    esl::IntObject* op2 = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
+    unsigned int pos = op2->data_get();
+
+    object->at(pos)->incr();
+
+    return object->at(pos);
+}
+
+esl::MemoryObject<esl::Content>* esl::Array::print (const esl::Params&)
+{
+    std::cout << "[" << std::endl;
+
+    std::cout << "]" << std::endl;
+
+    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+}
+
+esl::MemoryObject<esl::Content>* esl::Array::to_string (const esl::Params&)
+{
+    return new esl::MemoryObject<esl::Content> (new esl::StringObject("Array"));
+}
+
+std::string esl::Array::type_name_get () const
+{
+    return "Array";
 }

@@ -1,6 +1,8 @@
 #include "vm.hh"
 #include "../../lib/function.hh"
 
+esl::Vm* esl::Vm::instance_ = nullptr;
+
 const std::string esl::Vm::path_lib_[] =
 {
     "/usr/lib/esl/",
@@ -12,12 +14,37 @@ const std::string esl::Vm::path_lib_[] =
     "./"
 };
 
+void esl::Vm::instanciate (const std::vector<esl::Bytecode*>& code)
+{
+    instance_ = new esl::Vm(code);
+}
+
+esl::Vm* esl::Vm::get ()
+{
+    if (!instance_)
+        throw esl::Exception("Internal error : VM null");
+
+    return instance_;
+}
+
+void esl::Vm::free ()
+{
+    if (instance_)
+    {
+        delete instance_;
+        instance_ = nullptr;
+    }
+}
+
 esl::Vm::Vm (const std::vector<esl::Bytecode*>& code)
     : stack_ ()
 {
     this->code_ = code;
     this->runtime_ = new esl::Context();
-    this->runtime_->type_set("Array", esl::Array::instanciate);
+
+    // Register built-in types
+    (new esl::Int())->init();
+    (new esl::String())->init();
 }
 
 esl::Vm::~Vm()
@@ -146,12 +173,28 @@ void esl::Vm::run()
     }
 }
 
+void esl::Vm::external_call (esl::Function* fun, const esl::Params& params)
+{
+    esl::MemoryObject<esl::Content>* ret_value = nullptr;
+    esl::Context* fun_runtime = new esl::Context(*(this->runtime_));
+
+    if ((ret_value = fun->call(fun_runtime, params)) == nullptr)
+    {
+        // This is a ESL coded function
+    }
+    else
+    {
+        delete fun_runtime;
+        this->stack_.push(ret_value);
+    }
+}
+
 void esl::Vm::call_method(esl::Bytecode *instr)
 {
     std::string fun_name;
     esl::MemoryObject<esl::Content>* object_container = nullptr;
     esl::MemoryObject<esl::Content>* ret_value = nullptr;
-    esl::Type* object = nullptr;
+    esl::Object* object = nullptr;
     esl::Context* fun_runtime = new esl::Context(*(this->runtime_));
     esl::Params params;
 
@@ -167,8 +210,11 @@ void esl::Vm::call_method(esl::Bytecode *instr)
 
     // Get the object
     object_container = this->stack_.top();
-    object = dynamic_cast<esl::Type*> (object_container->data_get());
+    object = dynamic_cast<esl::Object*> (object_container->data_get());
     this->stack_.pop();
+
+    // Set the the object itself as first param
+    params.params_set(object_container);
 
     if (object == nullptr)
         throw esl::Exception("Method call on non object value");
@@ -212,8 +258,8 @@ void esl::Vm::operation (const std::string& name)
     this->stack_.pop();
 
     // Get the 2 operands
-    esl::Type* value1 = dynamic_cast<esl::Type*> (obj1->data_get());
-    esl::Type* value2 = dynamic_cast<esl::Type*> (obj2->data_get());
+    esl::Object* value1 = dynamic_cast<esl::Object*> (obj1->data_get());
+    esl::Object* value2 = dynamic_cast<esl::Object*> (obj2->data_get());
 
     if (value1 && value2)
     {
@@ -341,24 +387,25 @@ void esl::Vm::call_module (Bytecode* instr)
     // Perform the call
     this->stack_.push(module->call(*fun_name, params));
 
+    this->stack_.top()->incr();
     // Decrement reference count on all params (since they have been poped)
     params.decr();
 }
 
 void esl::Vm::load_int (Bytecode* instr)
 {
-    esl::Int* v = new esl::Int(instr->get_param());
+    esl::IntObject* v = new esl::IntObject(instr->get_param());
 
     this->stack_.push(new esl::MemoryObject<esl::Content>(v));
 }
 
 void esl::Vm::load_str (Bytecode* instr)
 {
-    esl::String* v = nullptr;
+    esl::StringObject* v = nullptr;
     // Get string in RoData
     std::string str = *(RoData::instance_get()->get(instr->get_param()));
 
-    v = new esl::String(str);
+    v = new esl::StringObject(str);
 
     this->stack_.push(new esl::MemoryObject<esl::Content>(v));
 }
@@ -395,7 +442,7 @@ void esl::Vm::function_return()
         }
     }
     else
-        this->stack_.push(new MemoryObject<esl::Content>(new esl::Int(0)));
+        this->stack_.push(new MemoryObject<esl::Content>(new esl::IntObject(0)));
 }
 
 void esl::Vm::call_function(esl::Bytecode *instr)
@@ -468,9 +515,9 @@ void esl::Vm::load(esl::Bytecode *instr)
 void esl::Vm::jump(esl::Bytecode *instr, int val)
 {
     // Check if conditional jump is performed over boolean expression
-    if (dynamic_cast<esl::Int*> (this->stack_.top()->data_get()))
+    if (dynamic_cast<esl::IntObject*> (this->stack_.top()->data_get()))
     {
-        esl::Int* value = dynamic_cast<esl::Int*> (this->stack_.top()->data_get());
+        esl::IntObject* value = dynamic_cast<esl::IntObject*> (this->stack_.top()->data_get());
         int v = value->data_get();
 
         // If val is equal to TOS jump

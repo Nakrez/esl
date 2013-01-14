@@ -1,17 +1,30 @@
-#ifndef ARRAY_MODULE_HH
-# define ARRAY_MODULE_HH
+#ifndef ARRAY_HH
+# define ARRAY_HH
 
-#include "../../lib/extension.hh"
-#include "../../lib/type/array.hh"
+# include <iostream>
+# include <vector>
 
-class Array: public esl::Extension
+# include "../../lib/type/type.hh"
+# include "../../lib/gc/memory-object.hh"
+# include "../../lib/exception.hh"
+
+namespace esl
 {
-    public:
-        void init ();
-        esl::MemoryObject<esl::Content>* create (const esl::Params&);
-};
+    class Array : public Type
+    {
+        public:
+            Array ();
+            ~Array ();
 
-extern "C" Array* get ();
-extern "C" void destroy (Array*);
+            virtual MemoryObject<Content>* construct (const Params&);
 
-#endif /* !ARRAY_MODULE_HH */
+            virtual std::string type_name_get () const;
+
+            virtual MemoryObject<Content>* print (const Params&);
+            virtual MemoryObject<Content>* to_string (const Params&);
+
+            virtual MemoryObject<Content>* bracket_op (const Params&);
+    };
+}
+
+#endif /* !ARRAY_HH */

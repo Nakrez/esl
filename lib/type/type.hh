@@ -1,33 +1,33 @@
+/// @file lib/type/type.hh
+/// @brief Basic class that represent an ESL type (class)
+/// @author Baptiste COVOLATO <b.covolato@gmail.com>
+/// @date 30 Dec 2012
+
 #ifndef TYPE_HH
 # define TYPE_HH
 
 # include <string>
 # include <map>
 
-# include "../exception.hh"
+# include "squeleton.hh"
+# include "../function.hh"
 # include "../content.hh"
 # include "../gc/memory-object.hh"
-# include "../delegate.hh"
-# include "../function.hh"
-
-enum Visibility
-{
-    PUBLIC,
-    PROTECTED,
-    PRIVATE
-};
 
 namespace esl
 {
-    using Method = MemoryObject<esl::DelegateBase>;
-
     class Type : public Content
     {
         public:
-            Type ();
+            Type (const std::string& name);
             virtual ~Type ();
 
+            void init_basics ();
+            virtual void init ();
+
             virtual std::string type_name_get() const = 0;
+
+            virtual MemoryObject<Content>* construct (const Params&) = 0;
 
             virtual MemoryObject<Content>* print (const Params&) = 0;
             virtual MemoryObject<Content>* to_string (const Params&) = 0;
@@ -51,14 +51,9 @@ namespace esl
 
             virtual MemoryObject<Content>* bracket_op (const Params&);
 
-            void register_method (const std::string&,
-                                  MemoryObject<Function>*, Visibility);
-            MemoryObject<Content>* call_method (const std::string&,
-                                                Context*,
-                                                const esl::Params&);
         protected:
-            std::map<std::string,
-                     std::pair<MemoryObject<Function>*, Visibility>> method_;
+            std::string name_;
+
             std::map<std::string,
                      std::pair<MemoryObject<esl::Content>*,
                                Visibility>> attribut_;
