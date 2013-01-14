@@ -42,6 +42,7 @@ esl::Vm::Vm (const std::vector<esl::Bytecode*>& code)
     this->code_ = code;
     this->runtime_ = new esl::Context();
 
+    // Register built-in types
     (new esl::Int())->init();
     (new esl::String())->init();
 }
@@ -386,6 +387,7 @@ void esl::Vm::call_module (Bytecode* instr)
     // Perform the call
     this->stack_.push(module->call(*fun_name, params));
 
+    this->stack_.top()->incr();
     // Decrement reference count on all params (since they have been poped)
     params.decr();
 }

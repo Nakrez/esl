@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 
         #if BENCH == 1
             struct timeval start, end;
-            long useconds;
+            long long useconds;
 
             gettimeofday(&start, nullptr);
         #endif /* !BENCH */
