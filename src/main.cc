@@ -76,8 +76,8 @@ int main(int argc, char **argv)
     driver.free();
 
     delete compiler;
-    esl::Vm::free();
     esl::Squeleton::free();
+    esl::Vm::free();
 
     return (0);
 }

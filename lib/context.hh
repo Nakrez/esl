@@ -17,7 +17,6 @@ namespace esl
 
     using MemContent = MemoryObject<Content>*;
     using Callback = MemContent (*)(Context*, const Params&);
-    using Constructor = MemContent (*)();
 
     class Context : public Content
     {
@@ -29,12 +28,10 @@ namespace esl
             MemContent function_get (const std::string& name) const;
             MemContent variable_get (const std::string& name) const;
             MemContent module_get (const std::string&) const;
-            Constructor type_get (const std::string&) const;
 
             void variable_set (const std::string&, MemContent);
             void function_set (const std::string&, MemContent);
             void module_set (const std::string&, MemContent);
-            void type_set (const std::string&, Constructor);
 
             size_t pc_get () const;
             void pc_set (size_t);
@@ -44,7 +41,6 @@ namespace esl
             std::map<std::string, MemContent> functions_;
             std::map<std::string, MemContent> variables_;
             std::map<std::string, MemContent> modules_;
-            std::map<std::string, Constructor> types_;
 
             size_t pc_;
     };
