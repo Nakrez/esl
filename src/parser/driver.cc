@@ -44,6 +44,16 @@ int Driver::parser(const std::string &f, const std::string &t)
     scan_end();
 
     this->gen_ast_->print();
+    }else{
+    std::cout << "Received a param!";
+
+    yy::eslxx_parser parser(*this);
+
+    scan_begin();
+    res = parser.parse();
+    scan_end();
+
+    this->gen_ast_->print();
     }
     return res;
 }
