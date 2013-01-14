@@ -4,7 +4,6 @@ esl::Context::Context()
     : functions_ ()
     , variables_ ()
     , modules_ ()
-    , types_ ()
     , pc_ (0)
 {
 }
@@ -23,12 +22,12 @@ esl::Context::Context(const Context& context)
 
 esl::Context::~Context()
 {
-    for (auto mod : modules_)
-        mod.second->decr();
     for (auto var : variables_)
         var.second->decr();
     for (auto fun : functions_)
         fun.second->decr();
+    for (auto mod : modules_)
+        mod.second->decr();
 }
 
 esl::MemContent esl::Context::function_get (const std::string& name) const
@@ -55,14 +54,6 @@ esl::MemContent esl::Context::module_get (const std::string& name) const
     return this->modules_.at(name);
 }
 
-esl::Constructor esl::Context::type_get (const std::string& name) const
-{
-    if (this->types_.find(name) == this->types_.end())
-        throw Exception("Type " + name + " not found");
-
-    return this->types_.at(name);
-}
-
 void esl::Context::variable_set (const std::string& name, MemContent value)
 {
     value->incr();
@@ -86,11 +77,6 @@ void esl::Context::module_set (const std::string& name, MemContent module)
     str[0] = str[0] - 'a' + 'A';
 
     this->modules_[str] = module;
-}
-
-void esl::Context::type_set (const std::string& name, Constructor value)
-{
-    this->types_[name] = value;
 }
 
 size_t esl::Context::pc_get () const

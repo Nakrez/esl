@@ -24,6 +24,8 @@ const static std::string instr_string[] =
 
     "OP_BRACKET",
 
+    "OP_NEW",
+
     "STORE",
     "SOTRE_STK",
 

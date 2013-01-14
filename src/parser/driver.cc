@@ -31,17 +31,29 @@ esl::Ast *Driver::ast()
     return this->gen_ast_;
 }
 
-int Driver::parser(const std::string& f)
+int Driver::parser(const std::string &f, const std::string &t)
 {
+    int res;
+    if(!t.compare("file")){
     this->file_ = f;
 
     yy::eslxx_parser parser(*this);
 
     scan_begin();
-    int res = parser.parse();
+    res = parser.parse();
     scan_end();
 
     this->gen_ast_->print();
+    }else{
+    std::cout << "Received a param!";
 
+    yy::eslxx_parser parser(*this);
+
+    scan_begin();
+    res = parser.parse();
+    scan_end();
+
+    this->gen_ast_->print();
+    }
     return res;
 }

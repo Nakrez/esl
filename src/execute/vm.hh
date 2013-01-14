@@ -12,12 +12,18 @@
 # include <queue>
 
 # include "../../lib/gc/memory-object.hh"
-# include "../../lib/type/esl-types.hh"
 # include "../../lib/content.hh"
 # include "../../lib/params.hh"
 # include "../../lib/exception.hh"
 # include "../../lib/context.hh"
 # include "../../lib/stack-delimiter.hh"
+# include "../../lib/type/squeleton.hh"
+
+# include "../../lib/type/int-object.hh"
+# include "../../lib/type/int.hh"
+# include "../../lib/type/string-object.hh"
+# include "../../lib/type/string.hh"
+
 # include "../utils/bytecode.hh"
 # include "../utils/ro-data.hh"
 
@@ -26,7 +32,19 @@ namespace esl
     class Vm
     {
         public:
+            static void instanciate (const std::vector<esl::Bytecode*>& code);
+            static Vm* get ();
+            static void free ();
 
+            /// @brief Run the virtual machine
+            void run();
+
+            void external_call (Function* fun, const Params& params);
+
+            /// @brief POP stack and decr counter on TOS
+            void pop ();
+
+        private:
             /// @brief Constructor
             /// @param code The bytecode to execute
             Vm (const std::vector<Bytecode*>& code);
@@ -34,10 +52,6 @@ namespace esl
             /// @brief Destructor
             ~Vm ();
 
-            /// @brief Run the virtual machine
-            void run();
-
-        private:
             /// @brief Execute STORE instruction
             /// @param instr The instruction to execute
             void store (Bytecode* instr);
@@ -101,8 +115,7 @@ namespace esl
             /// @param instr The instruction to execute
             void call_method (Bytecode* bytecode);
 
-            /// @brief POP stack and decr counter on TOS
-            void pop ();
+            void instanciation (Bytecode* bytecode);
 
             /// @brief Push a delimiter on the stack
             void add_delim ();
@@ -118,6 +131,9 @@ namespace esl
 
             /// @brief Path to look at to find module
             static const std::string path_lib_[];
+
+            /// @brief Static instance of the VM
+            static Vm* instance_;
     };
 }
 

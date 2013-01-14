@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -Wall -Wextra -std=c++0x -fPIC
 
-OBJ = array.o
+OBJ = array-module.o array.o array-object.o
 
 all: libarray
 

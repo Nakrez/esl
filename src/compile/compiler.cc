@@ -89,6 +89,8 @@ void esl::Compiler::compile(esl::Ast *ast)
                   break;
         case AND:  compile_operation(ast, OP_AND);
                    break;
+        case NEW:  compile_new(ast);
+                   break;
         case NUMBER:  compile_number(ast);
                       break;
         case STRING:  compile_string(ast);
@@ -121,6 +123,15 @@ void esl::Compiler::compile(esl::Ast *ast)
                            break;
         default : break;
     }
+}
+
+void esl::Compiler::compile_new(Ast* ast)
+{
+    compile_call(ast->get_fson(), false);
+    delete byte_code_.at(byte_code_.size() - 1);
+    byte_code_.pop_back();
+    byte_code_.push_back(new esl::Bytecode(OP_NEW,
+                                           ast->get_fson()->get_content()));
 }
 
 void esl::Compiler::compile_method_call (Ast* ast)

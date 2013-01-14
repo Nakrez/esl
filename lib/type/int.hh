@@ -10,10 +10,12 @@ namespace esl
     class Int : public Type
     {
         public:
-            Int (int data);
+            Int ();
             ~Int ();
 
             virtual std::string type_name_get () const;
+
+            virtual MemoryObject<Content>* construct (const Params&);
 
             virtual MemoryObject<Content>* print (const Params&);
             virtual MemoryObject<Content>* to_string (const Params&);
@@ -34,12 +36,6 @@ namespace esl
 
             virtual MemoryObject<Content>* and_op (const Params&);
             virtual MemoryObject<Content>* or_op (const Params&);
-
-            int data_get () const;
-            void data_set (int data);
-
-        private:
-            int data_;
     };
 }
 

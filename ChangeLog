@@ -1,3 +1,13 @@
+Nightly 14/01/2013
+
+- [LIB] Rename module array class as ArrayModule
+- OO modele now ready
+- Add object instanciation via "new"
+
+Nightly 10/01/2013
+
+- Fixing segfault on POW
+
 Nightly 09/01/2013
 
 - Add math pow function (a^b)

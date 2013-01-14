@@ -5,7 +5,6 @@
 
 #include <string>
 #include <list>
-#include <cmath>
 
 #include "../utils/ast.hh"
 
@@ -46,7 +45,8 @@ class Driver;
 
 %token END       0 "end_of_file"
 %token TOK_EQ "=" TOK_DOT "." TOK_SEPARATOR ";"
-%token TOK_PLUS "+" TOK_MINUS "-" TOK_MUL "*" TOK_DIV "/" TOK_MOD "%" TOK_POW "^"
+%token TOK_PLUS "+" TOK_MINUS "-" TOK_MUL "*" TOK_DIV "/" TOK_MOD "%"
+%token TOK_POW "^"
 %token TOK_BIN_EQ "==" TOK_DIFF "!=" TOK_GT ">" TOK_GE ">="
 %token TOK_LT "<" TOK_LE "<="
 %token TOK_AND "&&" TOK_OR "||"
@@ -74,7 +74,8 @@ class Driver;
 %left "||" "&&"
 %left "==" "!=" "<" ">" "<=" ">="
 %left "+" "-"
-%left "*" "/" "%" "^"
+%left "*" "/" "%"
+%left "^"
 %left "[" ")" "->" "("
 
 
@@ -326,7 +327,10 @@ expr            :
                 |"identifier" { $$ = new esl::Ast(ID, $1); }
                 |fun_call { $$ = $1; }
                 |object_call_list { $$ = $1; }
-                |"new" fun_call
+                |"new" fun_call {
+                                  $$ = new esl::Ast(NEW);
+                                  $$->add($2);
+                                }
                 |"identifier" "=" expr {
                                          $$ = new esl::Ast(ASSIGNEMENT);
                                          $$->add(new esl::Ast(ID, $1));

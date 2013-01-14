@@ -3,6 +3,9 @@
 #include "compile/compiler.hh"
 #include "execute/vm.hh"
 #include "utils/ro-data.hh"
+#include "lib/type/squeleton.hh"
+#include <cstring>
+#include <iostream>
 
 # define BENCH 0
 
@@ -10,13 +13,20 @@ int main(int argc, char **argv)
 {
     Driver driver;
     esl::Compiler *compiler = nullptr;
-    esl::Vm *vm = nullptr;
 
     if (argc < 2)
         return (1);
+    for (int i = 1; i < argc; i++)
+    {
+        std::string arg = argv[i];
 
-    /* Parser the file given in arg */
-    driver.parser(argv[1]);
+        if (arg.find("--")==0){
+            std::cout << "PARAM:" << arg << std::endl;
+            driver.parser(argv[i], "param");
+        }else{
+            driver.parser(argv[i], "file");
+	}
+    }
 
     /* Compile the AST given by the parser into bytecode */
     if (!driver.errors_get())
@@ -25,7 +35,7 @@ int main(int argc, char **argv)
 
         #if BENCH == 1
             struct timeval start, end;
-            long useconds;
+            long long useconds;
 
             gettimeofday(&start, nullptr);
         #endif /* !BENCH */
@@ -41,16 +51,26 @@ int main(int argc, char **argv)
 
         compiler->export_bytecode("byte.eslc");
 
-        vm = new esl::Vm(compiler->get_bytecode());
+        #if BENCH == 1
+            gettimeofday(&start, nullptr);
+        #endif /* !BENCH */
 
         try
         {
-            vm->run();
+            esl::Vm::instanciate(compiler->get_bytecode());
+            esl::Vm::get()->run();
         }
         catch (esl::Exception& e)
         {
             std::cerr << "ESL exception: " << e.message() << std::endl;
         }
+
+        #if BENCH == 1
+            gettimeofday(&end, nullptr);
+            useconds = end.tv_usec - start.tv_usec;
+
+            std::cout << "Execution time : " << useconds << std::endl;
+        #endif /* !BENCH */
 
         esl::RoData::instance_delete();
     }
@@ -58,7 +78,8 @@ int main(int argc, char **argv)
     driver.free();
 
     delete compiler;
-    delete vm;
+    esl::Squeleton::free();
+    esl::Vm::free();
 
     return (0);
 }
