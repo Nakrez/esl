@@ -41,6 +41,9 @@ namespace esl
 
             void external_call (Function* fun, const Params& params);
 
+            /// @brief POP stack and decr counter on TOS
+            void pop ();
+
         private:
             /// @brief Constructor
             /// @param code The bytecode to execute
@@ -112,8 +115,6 @@ namespace esl
             /// @param instr The instruction to execute
             void call_method (Bytecode* bytecode);
 
-            /// @brief POP stack and decr counter on TOS
-            void pop ();
 
             /// @brief Push a delimiter on the stack
             void add_delim ();

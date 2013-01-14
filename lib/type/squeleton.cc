@@ -12,6 +12,14 @@ esl::Squeleton::~Squeleton ()
 {
     for (auto type : declared_type_)
         delete type.second;
+
+    for (auto methods : object_methods_)
+    {
+        for (auto method : methods.second)
+        {
+            delete method.second.first;
+        }
+    }
 }
 
 esl::Squeleton* esl::Squeleton::get ()
