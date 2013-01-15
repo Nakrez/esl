@@ -116,6 +116,7 @@ namespace esl
             void call_method (Bytecode* bytecode);
 
             void instanciation (Bytecode* bytecode);
+            void create_type (Bytecode* bytecode);
 
             /// @brief Push a delimiter on the stack
             void add_delim ();
@@ -134,6 +135,8 @@ namespace esl
 
             /// @brief Static instance of the VM
             static Vm* instance_;
+
+            Type* declaration;
     };
 }
 

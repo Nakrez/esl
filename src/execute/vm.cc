@@ -42,6 +42,8 @@ esl::Vm::Vm (const std::vector<esl::Bytecode*>& code)
     this->code_ = code;
     this->runtime_ = new esl::Context();
 
+    declaration = nullptr;
+
     // Register built-in types
     (new esl::Int())->init();
     (new esl::String())->init();
@@ -165,6 +167,12 @@ void esl::Vm::run()
             case CALL_METHOD:
                 this->call_method(instr);
                 break;
+            case START_CLASS:
+                this->create_type(instr);
+                break;
+            case END_CLASS:
+                declaration = nullptr;
+                break;
             case DELIM:
                 this->add_delim();
                 break;
@@ -174,6 +182,14 @@ void esl::Vm::run()
 
         this->runtime_->pc_incr(1);
     }
+}
+
+void esl::Vm::create_type (esl::Bytecode* instr)
+{
+    std::string class_name = *(RoData::instance_get()->get(instr->get_param()));
+
+    declaration = new esl::Type(class_name);
+    declaration->init();
 }
 
 void esl::Vm::external_call (esl::Function* fun, const esl::Params& params)
@@ -253,6 +269,7 @@ void esl::Vm::call_method(esl::Bytecode *instr)
     this->stack_.pop();
 
     // Set the the object itself as first param
+    object_container->incr();
     params.params_set(object_container);
 
     if (object == nullptr)
@@ -264,13 +281,12 @@ void esl::Vm::call_method(esl::Bytecode *instr)
     // Perform the call
     if ((ret_value = object->call_method(fun_name, fun_runtime, params)) == nullptr)
     {
-        // This is a ESL coded function
-
-        for (int i = params.count() - 1; i >= 0; --i)
-            this->stack_.push(params.get_params(i + 1));
-
         // Push current context in the stack
         this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_));
+
+        // This is a ESL coded function
+        for (int i = params.count() - 1; i >= 0; --i)
+            this->stack_.push(params.get_params(i + 1));
 
         // Set function runtime as current runtime
         this->runtime_ = fun_runtime;
@@ -577,14 +593,16 @@ void esl::Vm::jump(esl::Bytecode *instr)
 
 void esl::Vm::register_function(esl::Bytecode *instr)
 {
-    std::string* fun_name = nullptr;
+    std::string fun_name = *(RoData::instance_get()->get(instr->get_param()));
     esl::Function* fun = nullptr;
-
-    // Get the function name in RoData
-    fun_name = RoData::instance_get()->get(instr->get_param());
 
     // Create the function
     fun = new esl::Function(this->runtime_->pc_get());
 
-    this->runtime_->function_set(*fun_name, new esl::MemoryObject<esl::Content>(fun));
+    if (!declaration)
+        this->runtime_->function_set(fun_name, new esl::MemoryObject<esl::Content>(fun));
+    else
+        esl::Squeleton::get()->register_method(declaration->type_name_get(),
+                                               fun_name,
+                                               fun);
 }

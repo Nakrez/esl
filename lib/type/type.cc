@@ -1,4 +1,6 @@
 #include "type.hh"
+#include "int-object.hh"
+#include "object.hh"
 
 esl::Type::Type (const std::string& name)
     : name_ (name)
@@ -74,6 +76,25 @@ void esl::Type::init_basics ()
 void esl::Type::init ()
 {
     init_basics ();
+}
+
+std::string esl::Type::type_name_get() const
+{
+    return name_;
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::construct (const esl::Params&)
+{
+    return new esl::MemoryObject<esl::Content>(new esl::Object(name_));
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::print (const esl::Params&)
+{
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(0));
+}
+esl::MemoryObject<esl::Content>* esl::Type::to_string (const esl::Params&)
+{
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(0));
 }
 
 esl::MemoryObject<esl::Content>* esl::Type::plus_op (const Params&)

@@ -18,7 +18,8 @@ void esl::RoData::instance_delete ()
 
 esl::RoData::RoData ()
 {
-
+    bool exists = true;
+    store(new std::string("self"), exists);
 }
 
 esl::RoData::~RoData ()

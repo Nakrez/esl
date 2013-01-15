@@ -104,6 +104,9 @@ enum instr
     /// Call TOS->arg1
     CALL_METHOD,
 
+    START_CLASS,
+    END_CLASS,
+
     /*
     ** Jump at target adress if the top of the stack is true
     ** The top of the stack is POP

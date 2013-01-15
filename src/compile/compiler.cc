@@ -20,6 +20,7 @@ std::vector<esl::Bytecode *> esl::Compiler::get_bytecode()
 
 void esl::Compiler::compile()
 {
+    declared_class_ = false;
     compile(this->gen_ast_);
     this->byte_code_.push_back(new esl::Bytecode(NOP));
 }
@@ -107,6 +108,8 @@ void esl::Compiler::compile(esl::Ast *ast)
                              break;
         case METHOD_CALL: compile_method_call(ast);
                           break;
+        case CLASS_DECL: compile_class(ast);
+                         break;
         case LIST:  compile_list(ast);
                     break;
         case LIST_ID:  compile_list_id(ast);
@@ -123,6 +126,15 @@ void esl::Compiler::compile(esl::Ast *ast)
                            break;
         default : break;
     }
+}
+
+void esl::Compiler::compile_class(Ast* ast)
+{
+    byte_code_.push_back(new esl::Bytecode(START_CLASS, ast->get_content()));
+    declared_class_ = true;
+    compile(ast->get_fson());
+    declared_class_ = false;
+    byte_code_.push_back(new esl::Bytecode(END_CLASS));
 }
 
 void esl::Compiler::compile_new(Ast* ast)
@@ -311,12 +323,20 @@ void esl::Compiler::compile_function(esl::Ast* ast)
 
     byte_code_.push_back(jump);
 
+    if (declared_class_)
+    {
+        byte_code_.push_back(new esl::Bytecode(STORE, 0));
+        byte_code_.push_back(new esl::Bytecode(POP));
+
+        avoid += 2;
+    }
+
     /* If there is param LOAD them in the stack */
     if (ast->get_fson()->get_token() != EMPTY)
     {
         compile_list_id(ast->get_fson());
         jump_addr = byte_code_.size() - code_size - 1;
-        avoid = 0;
+        --avoid;
     }
 
     code_size = byte_code_.size();
