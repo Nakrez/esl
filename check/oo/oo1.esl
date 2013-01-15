@@ -1,0 +1,5 @@
+class test
+    public function method()
+        test = 1
+    end
+end

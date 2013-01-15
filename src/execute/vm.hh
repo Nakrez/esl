@@ -39,7 +39,7 @@ namespace esl
             /// @brief Run the virtual machine
             void run();
 
-            void external_call (Function* fun, const Params& params);
+            bool external_call (Function* fun, const Params& params);
 
             /// @brief POP stack and decr counter on TOS
             void pop ();

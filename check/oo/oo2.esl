@@ -1,0 +1,10 @@
+import "io"
+
+class test
+    public function a()
+        Io.print("Method a from test class")
+    end
+end
+
+lol = new test()
+lol->a()

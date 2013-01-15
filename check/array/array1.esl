@@ -1,0 +1,4 @@
+import "array"
+
+test = new array()
+test = new array(10)

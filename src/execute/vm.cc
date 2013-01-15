@@ -192,7 +192,7 @@ void esl::Vm::create_type (esl::Bytecode* instr)
     declaration->init();
 }
 
-void esl::Vm::external_call (esl::Function* fun, const esl::Params& params)
+bool esl::Vm::external_call (esl::Function* fun, const esl::Params& params)
 {
     esl::MemoryObject<esl::Content>* ret_value = nullptr;
     esl::Context* fun_runtime = new esl::Context(*(this->runtime_));
@@ -208,12 +208,14 @@ void esl::Vm::external_call (esl::Function* fun, const esl::Params& params)
 
         // Set function runtime as current runtime
         this->runtime_ = fun_runtime;
+
+        return false;
     }
     else
     {
-        //params.get_params(params.count())->decr();
         delete fun_runtime;
         this->stack_.push(ret_value);
+        return true;
     }
 }
 
