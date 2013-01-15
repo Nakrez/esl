@@ -199,18 +199,19 @@ void esl::Vm::external_call (esl::Function* fun, const esl::Params& params)
 
     if ((ret_value = fun->call(fun_runtime, params)) == nullptr)
     {
+        // Push current context in the stack
+        this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_));
+
         // This is a ESL coded function
         for (int i = params.count() - 1; i >= 0; --i)
             this->stack_.push(params.get_params(i + 1));
-
-        // Push current context in the stack
-        this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_));
 
         // Set function runtime as current runtime
         this->runtime_ = fun_runtime;
     }
     else
     {
+        //params.get_params(params.count())->decr();
         delete fun_runtime;
         this->stack_.push(ret_value);
     }
@@ -238,7 +239,12 @@ void esl::Vm::instanciation (esl::Bytecode* instr)
     // Get function
     fun = esl::Squeleton::get()->method_get(type, "construct");
 
-    external_call (fun, params);
+    esl::Object* object = new esl::Object(type);
+
+    params.push_back(new esl::MemoryObject<esl::Content>(object));
+    params.get_params(params.count())->incr();
+
+    external_call(fun, params);
 
     // Decrement reference count on all params (since they have been poped)
     params.decr();

@@ -24,9 +24,14 @@ esl::MemoryObject<esl::Content>* esl::Params::get_params (int number) const
     return this->params_.at(number - 1);
 }
 
+void esl::Params::push_back (esl::MemoryObject<esl::Content>* value)
+{
+    this->params_.push_back(value);
+}
+
 void esl::Params::params_set (esl::MemoryObject<esl::Content>* value)
 {
-    return this->params_.push_front(value);
+    this->params_.push_front(value);
 }
 
 void esl::Params::decr ()

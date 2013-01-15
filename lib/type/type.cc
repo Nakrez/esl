@@ -1,5 +1,6 @@
 #include "type.hh"
 #include "int-object.hh"
+#include "string-object.hh"
 #include "object.hh"
 
 esl::Type::Type (const std::string& name)
@@ -17,15 +18,18 @@ void esl::Type::init_basics ()
 
     squeleton->register_type(name_, this);
 
+    squeleton->register_method (name_, "construct",
+                                new Function(new Delegate<esl::Type>(this,
+                                                                     &esl::Type::construct)));
+    squeleton->register_method (name_, "type",
+                                new Function(new Delegate<esl::Type>(this,
+                                                                     &esl::Type::type)));
     squeleton->register_method (name_, "print",
                                 new Function(new Delegate<esl::Type>(this,
                                                                      &esl::Type::print)));
     squeleton->register_method (name_, "tostring",
                                 new Function(new Delegate<esl::Type>(this,
                                                                      &esl::Type::to_string)));
-    squeleton->register_method (name_, "construct",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::construct)));
     squeleton->register_method (name_, "operator+",
                                 new Function(new Delegate<esl::Type>(this,
                                                                      &esl::Type::plus_op)));
@@ -81,6 +85,11 @@ void esl::Type::init ()
 std::string esl::Type::type_name_get() const
 {
     return name_;
+}
+
+esl::MemoryObject<esl::Content>* esl::Type::type (const esl::Params&)
+{
+    return new esl::MemoryObject<esl::Content>(new esl::StringObject(name_));
 }
 
 esl::MemoryObject<esl::Content>* esl::Type::construct (const esl::Params&)

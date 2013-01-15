@@ -32,6 +32,8 @@ namespace esl
             virtual MemoryObject<Content>* print (const Params&);
             virtual MemoryObject<Content>* to_string (const Params&);
 
+            virtual MemoryObject<Content>* type (const Params&);
+
             virtual MemoryObject<Content>* plus_op (const Params&);
             virtual MemoryObject<Content>* minus_op (const Params&);
             virtual MemoryObject<Content>* mul_op (const Params&);

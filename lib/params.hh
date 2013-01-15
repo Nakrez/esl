@@ -18,6 +18,8 @@ namespace esl
             int count () const;
 
             MemoryObject<Content>* get_params (int) const;
+
+            void push_back (MemoryObject<Content>*);
             void params_set (MemoryObject<Content>*);
 
             void decr ();
