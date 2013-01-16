@@ -16,7 +16,7 @@ esl::MemoryObject<esl::Content>* esl::Array::construct (const Params& params)
 {
     esl::ArrayObject* array = nullptr;
 
-    if (params.count() < 1)
+    if (params.count() == 1)
     {
         array = new esl::ArrayObject(0);
     }
