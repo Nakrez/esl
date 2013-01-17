@@ -26,7 +26,7 @@ namespace esl
     using Methods = std::map<std::string, Method>;
 
     using Attribut = std::pair<std::string, Visibility>;
-    using Attributs = std::map<std::string, Attribut>;
+    using Attributs = std::map<std::string, Visibility>;//Attribut>;
 
     class Type;
 
@@ -45,7 +45,8 @@ namespace esl
                                   const std::string& name,
                                   Function* fun);
 
-            void register_attribut
+            void register_attribut (const std::string& type,
+                                    const std::string& name);
 
             //Attributs* attributs_get (const std::string& type);
 

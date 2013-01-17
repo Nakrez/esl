@@ -191,7 +191,8 @@ void esl::Vm::make_attribut (esl::Bytecode* instr)
 {
     std::string attr_name = *(RoData::instance_get()->get(instr->get_param()));
 
-    esl::Squeleton::get()->register_attribut():
+    esl::Squeleton::get()->register_attribut(declaration->type_name_get(),
+                                             attr_name);
 }
 
 void esl::Vm::create_type (esl::Bytecode* instr)

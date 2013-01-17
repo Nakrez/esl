@@ -82,3 +82,19 @@ void esl::Squeleton::register_method (const std::string& type,
 
     this->object_methods_[type][name] = Method(fun, PUBLIC);
 }
+
+
+void esl::Squeleton::register_attribut (const std::string& type,
+                                        const std::string& name)
+{
+    try
+    {
+        delete this->object_methods_[type][name].first;
+    }
+    catch (...)
+    {
+
+    }
+
+    this->object_attributs_[type][name] = PUBLIC;
+}
