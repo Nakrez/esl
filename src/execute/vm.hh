@@ -117,6 +117,7 @@ namespace esl
 
             void instanciation (Bytecode* bytecode);
             void create_type (Bytecode* bytecode);
+            void make_attribut (Bytecode* bytecode);
 
             /// @brief Push a delimiter on the stack
             void add_delim ();

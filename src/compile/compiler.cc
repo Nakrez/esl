@@ -21,6 +21,7 @@ std::vector<esl::Bytecode *> esl::Compiler::get_bytecode()
 void esl::Compiler::compile()
 {
     declared_class_ = false;
+    declared_function_ = false;
     compile(this->gen_ast_);
     this->byte_code_.push_back(new esl::Bytecode(NOP));
 }
@@ -311,6 +312,7 @@ void esl::Compiler::compile_function(esl::Ast* ast)
     int code_size;
     int avoid = 1;
 
+    declared_function_ = true;
     code_size = byte_code_.size();
 
     byte_code_.push_back(new esl::Bytecode(MAKE_FUNCTION, ast->get_content()));
@@ -353,6 +355,7 @@ void esl::Compiler::compile_function(esl::Ast* ast)
 
     /* Add instruction RETURN */
     byte_code_.push_back(new esl::Bytecode(RETURN));
+    declared_function_ = false;
 }
 
 void esl::Compiler::compile_call(esl::Ast* ast, bool method)
@@ -448,7 +451,11 @@ void esl::Compiler::compile_string(esl::Ast *ast)
 
 void esl::Compiler::compile_identifier(esl::Ast *ast)
 {
-    byte_code_.push_back(new esl::Bytecode(LOAD, ast->get_content()));
+    if (declared_class_ && !declared_function_)
+        byte_code_.push_back(new esl::Bytecode(MAKE_ATTRIBUT,
+                                               ast->get_content()));
+    else
+        byte_code_.push_back(new esl::Bytecode(LOAD, ast->get_content()));
 }
 
 void esl::Compiler::compile_import(esl::Ast *ast)

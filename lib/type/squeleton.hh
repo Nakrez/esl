@@ -45,6 +45,8 @@ namespace esl
                                   const std::string& name,
                                   Function* fun);
 
+            void register_attribut
+
             //Attributs* attributs_get (const std::string& type);
 
         private:

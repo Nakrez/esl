@@ -106,6 +106,7 @@ enum instr
 
     START_CLASS,
     END_CLASS,
+    MAKE_ATTRIBUT,
 
     /*
     ** Jump at target adress if the top of the stack is true

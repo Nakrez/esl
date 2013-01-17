@@ -42,6 +42,7 @@ const static std::string instr_string[] =
 
     "START_CLASS",
     "END_CLASS",
+    "MAKE_ATTRIBUT",
 
     "JUMP_IF_TRUE",
     "JUMP_IF_FALSE",

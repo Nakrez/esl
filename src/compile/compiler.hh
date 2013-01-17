@@ -133,6 +133,7 @@ namespace esl
             std::vector<Bytecode*> byte_code_;
 
             bool declared_class_;
+            bool declared_function_;
     };
 }
 #endif /* !COMPILER_HH */

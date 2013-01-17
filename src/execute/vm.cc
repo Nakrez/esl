@@ -173,6 +173,9 @@ void esl::Vm::run()
             case END_CLASS:
                 declaration = nullptr;
                 break;
+            case MAKE_ATTRIBUT:
+                this->make_attribut(instr);
+                break;
             case DELIM:
                 this->add_delim();
                 break;
@@ -182,6 +185,13 @@ void esl::Vm::run()
 
         this->runtime_->pc_incr(1);
     }
+}
+
+void esl::Vm::make_attribut (esl::Bytecode* instr)
+{
+    std::string attr_name = *(RoData::instance_get()->get(instr->get_param()));
+
+    esl::Squeleton::get()->register_attribut():
 }
 
 void esl::Vm::create_type (esl::Bytecode* instr)
