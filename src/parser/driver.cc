@@ -1,4 +1,6 @@
 #include "driver.hh"
+#include <string>
+#include <algorithm>
 
 Driver::Driver()
 {
@@ -46,12 +48,10 @@ int Driver::parser(const std::string &f, const std::string &t)
     this->gen_ast_->print();
     }else{
     std::cout << "Received a param!";
-
-    yy::eslxx_parser parser(*this);
-
-    scan_begin();
-    res = parser.parse();
-    scan_end();
+    std::string s=f;
+    s.erase(0,2);
+    std::cout << s;
+    
 
     this->gen_ast_->print();
     }

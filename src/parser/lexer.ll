@@ -25,6 +25,7 @@
     typedef yy::eslxx_parser::token token;
 %}
 
+
 #\[                     yy_push_state(COMMENT_MULTI);
 
 <COMMENT_MULTI>"]#"     yy_pop_state();

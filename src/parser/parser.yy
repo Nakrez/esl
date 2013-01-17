@@ -42,7 +42,6 @@ class Driver;
 {
 #include "driver.hh"
 }
-
 %token END       0 "end_of_file"
 %token TOK_EQ "=" TOK_DOT "." TOK_SEPARATOR ";"
 %token TOK_PLUS "+" TOK_MINUS "-" TOK_MUL "*" TOK_DIV "/" TOK_MOD "%"
