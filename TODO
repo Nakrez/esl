@@ -48,3 +48,6 @@
 
 Bugs:
 
+- Constructors
+- fix bug on array5 check
+- fix bug on array4 check

@@ -2,13 +2,13 @@
 #include "../../lib/type/int-object.hh"
 
 esl::ArrayObject::ArrayObject ()
-    : Object ("Array")
+    : Object ("array")
 {
 
 }
 
 esl::ArrayObject::ArrayObject (int size)
-    : Object ("Array")
+    : Object ("array")
 {
     for (int i = 0; i < size; ++i)
         data_.push_back(new esl::MemoryObject<esl::Content>(new esl::IntObject(0)));

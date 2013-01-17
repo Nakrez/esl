@@ -12,6 +12,14 @@ esl::Squeleton::~Squeleton ()
 {
     for (auto type : declared_type_)
         delete type.second;
+
+    for (auto methods : object_methods_)
+    {
+        for (auto method : methods.second)
+        {
+            delete method.second.first;
+        }
+    }
 }
 
 esl::Squeleton* esl::Squeleton::get ()
@@ -63,5 +71,14 @@ void esl::Squeleton::register_method (const std::string& type,
                                       const std::string& name,
                                       Function* fun)
 {
+    try
+    {
+        delete this->object_methods_[type][name].first;
+    }
+    catch (...)
+    {
+
+    }
+
     this->object_methods_[type][name] = Method(fun, PUBLIC);
 }

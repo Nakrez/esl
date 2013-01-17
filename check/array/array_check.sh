@@ -1,7 +1,7 @@
 #! /bin/sh
 
 categorie="array"
-count=0
+count=3
 curr=1
 win=0
 

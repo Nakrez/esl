@@ -11,7 +11,6 @@ class ArrayModule: public esl::Extension
 {
     public:
         void init ();
-        esl::MemoryObject<esl::Content>* create (const esl::Params&);
 };
 
 extern "C" ArrayModule* get ();

@@ -1,7 +1,12 @@
+Nightly 15/01/2013
+
+- Add class declaration and basic method call + construct
+
 Nightly 14/01/2013
 
 - [LIB] Rename module array class as ArrayModule
-- OO modele now ready (WIP : "new", class declaration in ESL)
+- OO modele now ready
+- Add object instanciation via "new"
 
 Nightly 10/01/2013
 

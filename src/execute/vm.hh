@@ -39,7 +39,10 @@ namespace esl
             /// @brief Run the virtual machine
             void run();
 
-            void external_call (Function* fun, const Params& params);
+            bool external_call (Function* fun, const Params& params);
+
+            /// @brief POP stack and decr counter on TOS
+            void pop ();
 
         private:
             /// @brief Constructor
@@ -112,8 +115,8 @@ namespace esl
             /// @param instr The instruction to execute
             void call_method (Bytecode* bytecode);
 
-            /// @brief POP stack and decr counter on TOS
-            void pop ();
+            void instanciation (Bytecode* bytecode);
+            void create_type (Bytecode* bytecode);
 
             /// @brief Push a delimiter on the stack
             void add_delim ();
@@ -132,6 +135,8 @@ namespace esl
 
             /// @brief Static instance of the VM
             static Vm* instance_;
+
+            Type* declaration;
     };
 }
 

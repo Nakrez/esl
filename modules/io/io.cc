@@ -22,6 +22,7 @@ esl::MemoryObject<esl::Content>* Io::print (const esl::Params& params)
 
             esl::Vm::get()->external_call(obj->get_method("print"),
                                           print_params);
+            esl::Vm::get()->pop();
 
             mem->free();
         }

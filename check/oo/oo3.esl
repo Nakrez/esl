@@ -1,0 +1,13 @@
+import "io"
+
+class test
+    public function a()
+        return "method a"
+    end
+    public function b()
+        return self->a()
+    end
+end
+
+temp = new test()
+Io.print(temp->b())

@@ -1,0 +1,8 @@
+import "array"
+import "io"
+
+test = new array(1)
+test[0] = 9
+test[0] = "test"
+
+Io.print(test[0])

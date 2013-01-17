@@ -24,6 +24,8 @@ const static std::string instr_string[] =
 
     "OP_BRACKET",
 
+    "OP_NEW",
+
     "STORE",
     "SOTRE_STK",
 
@@ -37,6 +39,9 @@ const static std::string instr_string[] =
     "CALL_MODULE",
     "CALL_FUNCTION",
     "CALL_METHOD",
+
+    "START_CLASS",
+    "END_CLASS",
 
     "JUMP_IF_TRUE",
     "JUMP_IF_FALSE",

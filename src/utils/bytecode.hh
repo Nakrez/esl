@@ -63,6 +63,9 @@ enum instr
     /// TOS[TOS1]
     OP_BRACKET,
 
+    /// Instanciate arg1
+    OP_NEW,
+
     /*
     ** Store the top of the stack in the variable name
     **
@@ -100,6 +103,9 @@ enum instr
 
     /// Call TOS->arg1
     CALL_METHOD,
+
+    START_CLASS,
+    END_CLASS,
 
     /*
     ** Jump at target adress if the top of the stack is true

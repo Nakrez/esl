@@ -4,7 +4,7 @@
 #include "array-object.hh"
 
 esl::Array::Array ()
-    : Type ("Array")
+    : Type ("array")
 {
 }
 
@@ -12,9 +12,21 @@ esl::Array::~Array ()
 {
 }
 
-esl::MemoryObject<esl::Content>* esl::Array::construct (const Params&)
+esl::MemoryObject<esl::Content>* esl::Array::construct (const Params& params)
 {
-    return new esl::MemoryObject<esl::Content>(new esl::IntObject(0));
+    esl::ArrayObject* array = nullptr;
+
+    if (params.count() == 1)
+    {
+        array = new esl::ArrayObject(0);
+    }
+    else
+    {
+        esl::IntObject* size = static_cast<esl::IntObject*> (params.get_params(1)->data_get());
+        array = new esl::ArrayObject(size->data_get());
+    }
+
+    return new esl::MemoryObject<esl::Content>(array);
 }
 
 esl::MemoryObject<esl::Content>* esl::Array::bracket_op (const Params& params)

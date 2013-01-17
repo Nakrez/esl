@@ -25,12 +25,14 @@ namespace esl
             void init_basics ();
             virtual void init ();
 
-            virtual std::string type_name_get() const = 0;
+            virtual std::string type_name_get() const;
 
-            virtual MemoryObject<Content>* construct (const Params&) = 0;
+            virtual MemoryObject<Content>* construct (const Params&);
 
-            virtual MemoryObject<Content>* print (const Params&) = 0;
-            virtual MemoryObject<Content>* to_string (const Params&) = 0;
+            virtual MemoryObject<Content>* print (const Params&);
+            virtual MemoryObject<Content>* to_string (const Params&);
+
+            virtual MemoryObject<Content>* type (const Params&);
 
             virtual MemoryObject<Content>* plus_op (const Params&);
             virtual MemoryObject<Content>* minus_op (const Params&);

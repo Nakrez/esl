@@ -2,6 +2,7 @@ export libdir
 
 SUBDIRS = . modules
 ACLOCAL_AMFLAGS = -I m4
+
 # libesl
 lib_LTLIBRARIES = libesl.la
 libesl_la_SOURCES = lib/context.cc lib/context.hh \
@@ -81,4 +82,5 @@ TESTS=	./check/io/io_check.sh \
 	./check/functions/functions_check.sh \
 	./check/array/array_check.sh \
 	./check/comment/comment_check.sh \
+	./check/oo/oo_check.sh \
 	./check/mix/mix_check.sh

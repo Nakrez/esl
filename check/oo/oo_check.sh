@@ -1,7 +1,7 @@
 #! /bin/sh
 
-categorie="comment"
-count=2
+categorie="oo"
+count=4
 curr=1
 win=0
 
