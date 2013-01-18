@@ -2,6 +2,8 @@
 
 void Io::init ()
 {
+    (new esl::File)->init();
+
     register_function("print", new esl::Delegate<Io>(this, &Io::print));
 }
 

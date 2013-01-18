@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -g -Wall -Wextra -std=c++0x -fPIC
 
-OBJ = io.o
+OBJ = io.o file.o file-object.o
 
 all: libio
 

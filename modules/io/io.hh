@@ -3,6 +3,8 @@
 
 # include <iostream>
 
+# include "file.hh"
+
 # include "../../lib/extension.hh"
 # include "../../lib/type/object.hh"
 
