@@ -1,7 +1,7 @@
 #ifndef ARRAY_OBJECT_HH
 # define ARRAY_OBJECT_HH
 
-# include <vector>
+# include <stack>
 
 # include "../../lib/type/object.hh"
 # include "../../lib/gc/memory-object.hh"
@@ -10,17 +10,21 @@
 
 namespace esl
 {
-    class ArrayObject : public Object
+    class StackObject : public Object
     {
         public:
-            ArrayObject ();
-            ArrayObject (int size);
-            ~ArrayObject ();
+            StackObject ();
+            ~StackObject ();
 
-            MemoryObject<Content>* at (int i);
+            int size () const;
+            int empty () const;
+
+            void pop ();
+            void push (MemoryObject<Content>* obj);
+            MemoryObject<Content>* top () const;
 
         private:
-            std::vector<MemoryObject<Content>*> data_;
+            std::stack<MemoryObject<Content>*> data_;
     };
 }
 

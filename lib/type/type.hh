@@ -22,7 +22,6 @@ namespace esl
             Type (const std::string& name);
             virtual ~Type ();
 
-            void init_basics ();
             virtual void init ();
 
             virtual std::string type_name_get() const;
@@ -54,6 +53,8 @@ namespace esl
             virtual MemoryObject<Content>* bracket_op (const Params&);
 
         protected:
+            void init_basics ();
+
             std::string name_;
 
             std::map<std::string,

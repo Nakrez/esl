@@ -77,6 +77,7 @@ doxygen-doc:
 TESTS=	./check/io/io_check.sh \
 	./check/int/int_check.sh \
 	./check/strings/strings_check.sh \
+	./check/datastruct/datastruct_check.sh \
 	./check/control/control_check.sh \
 	./check/loops/loops_check.sh \
 	./check/functions/functions_check.sh \

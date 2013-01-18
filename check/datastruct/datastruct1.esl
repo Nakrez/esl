@@ -1,0 +1,25 @@
+import "io"
+import "stack"
+
+test = new stack()
+
+Io.print("Initial size : ", test->size())
+
+Io.print("Pushing 3, hello, 5")
+
+test->push(3)
+test->push("hello")
+test->push("5")
+
+Io.print("Actual size : ", test->size())
+
+while test->empty() == 0 do
+    Io.print("Content : ", test->top())
+    test->pop()
+end
+
+Io.print("Final size : ", test->size())
+
+if test->size() != 0 then
+    Io.print("Stack is empty")
+end

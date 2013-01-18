@@ -1,0 +1,7 @@
+Initial size : 0
+Pushing 3, hello, 5
+Actual size : 3
+Content : 5
+Content : hello
+Content : 3
+Final size : 0

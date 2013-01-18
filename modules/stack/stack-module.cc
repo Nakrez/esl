@@ -1,19 +1,19 @@
 #include "stack-module.hh"
 
-void ArrayModule::init ()
+void StackModule::init ()
 {
     // Register type Array
-    (new esl::Array())->init();
+    (new esl::Stack())->init();
 }
 
 extern "C"
 {
-    ArrayModule* get ()
+    StackModule* get ()
     {
-        return new ArrayModule();
+        return new StackModule();
     }
 
-    void destroy (ArrayModule* ext)
+    void destroy (StackModule* ext)
     {
         delete ext;
     }
