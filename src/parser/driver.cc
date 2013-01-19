@@ -1,6 +1,9 @@
 #include "driver.hh"
 #include <string>
 #include <algorithm>
+#include "compile/compiler.hh"
+
+struct main_params params;
 
 Driver::Driver()
 {
@@ -37,23 +40,27 @@ int Driver::parser(const std::string &f, const std::string &t)
 {
     int res;
     if(!t.compare("file")){
-    this->file_ = f;
-
-    yy::eslxx_parser parser(*this);
-
-    scan_begin();
-    res = parser.parse();
-    scan_end();
-
-    this->gen_ast_->print();
+        this->file_ = f;
+        yy::eslxx_parser parser(*this);
+        scan_begin();
+        res = parser.parse();
+        scan_end();
+        if(params.byte){
+            esl::Compiler *compiler = nullptr;
+            compiler = new esl::Compiler(this->ast());
+            compiler->export_bytecode("byte.eslc");
+       }
+       if(params.ast){
+           this->gen_ast_->print();
+       }
     }else{
-    std::cout << "Received a param!";
-    std::string s=f;
-    s.erase(0,2);
-    std::cout << s;
-    
-
-    this->gen_ast_->print();
-    }
+        std::string s=f;
+        s.erase(0,2);
+        if(s.compare("ast")){
+            params.ast = true;
+        }
+        if(s.compare("byte")){
+           params.byte = true;
+        }
     return res;
 }

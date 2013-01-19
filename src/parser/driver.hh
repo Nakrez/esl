@@ -25,6 +25,10 @@ class Driver
         esl::Ast* ast ();
         void free ();
         int errors_get ();
+        struct main_params{
+            bool ast;
+            bool byte;
+        }
 
     private:
         std::string file_;
