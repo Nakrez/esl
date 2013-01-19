@@ -66,6 +66,15 @@ esl::Function* esl::Squeleton::method_get(const std::string& type,
     return this->object_methods_.at(type).at(name).first;
 }
 
+const esl::Attributs& esl::Squeleton::attributs_get (const std::string& type)
+{
+    return object_attributs_[type];
+}
+
+bool esl::Squeleton::has_attribut (const std::string& type)
+{
+    return !object_attributs_[type].empty();
+}
 
 void esl::Squeleton::register_method (const std::string& type,
                                       const std::string& name,

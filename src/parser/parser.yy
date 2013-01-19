@@ -161,6 +161,11 @@ compound_list   :
 
 object_call_list:
                 expr "->" "identifier"
+                {
+                    $$ = new esl::Ast(CLASS_ATTRIBUT);
+                    $$->add($1);
+                    $$->add(new esl::Ast(ID, $3));
+                }
                 |expr "->" fun_call
                 {
                     $$ = new esl::Ast(METHOD_CALL);
@@ -168,6 +173,11 @@ object_call_list:
                     $$->add($3);
                 }
                 |object_call_list "->" "identifier"
+                {
+                    $$ = new esl::Ast(CLASS_ATTRIBUT);
+                    $$->add($1);
+                    $$->add(new esl::Ast(ID, $3));
+                }
                 |object_call_list "->" fun_call
                 {
                     $$ = new esl::Ast(METHOD_CALL);
@@ -333,6 +343,12 @@ expr            :
                 |"identifier" "=" expr {
                                          $$ = new esl::Ast(ASSIGNEMENT);
                                          $$->add(new esl::Ast(ID, $1));
+                                         $$->add($3);
+                                       }
+                | object_call_list "=" expr
+                                       {
+                                         $$ = new esl::Ast(ASSIGNEMENT);
+                                         $$->add($1);
                                          $$->add($3);
                                        }
                 |"mod_id" "." fun_call

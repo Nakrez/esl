@@ -27,11 +27,13 @@ const static std::string instr_string[] =
     "OP_NEW",
 
     "STORE",
-    "SOTRE_STK",
+    "STORE_STK",
+    "STORE_ATTR",
 
     "LOAD",
     "LOAD_INT",
     "LOAD_STR",
+    "LOAD_ATTR",
 
     "OPEN",
     "MODULE",

@@ -18,6 +18,7 @@ namespace esl
     {
         public:
             Object (const std::string& type);
+            ~Object ();
 
             MemContent call_method (const std::string& fun_name,
                                     Context* context,
@@ -25,9 +26,15 @@ namespace esl
 
             Function* get_method (const std::string& fun_name);
 
-        private:
-            std::string type_;
+            void update_attribut (const std::string& attr_name,
+                                  MemContent value);
 
+            MemContent attribut_get (const std::string& attr_name);
+
+        private:
+            void register_attribut (const std::map<std::string, Visibility>& attr);
+
+            std::string type_;
             std::map<std::string, std::pair<MemContent, Visibility>> attributs_;
     };
 }

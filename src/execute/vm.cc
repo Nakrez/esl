@@ -176,6 +176,12 @@ void esl::Vm::run()
             case MAKE_ATTRIBUT:
                 this->make_attribut(instr);
                 break;
+            case STORE_ATTR:
+                store_attribut(instr);
+                break;
+            case LOAD_ATTR:
+                load_attribut(instr);
+                break;
             case DELIM:
                 this->add_delim();
                 break;
@@ -185,6 +191,36 @@ void esl::Vm::run()
 
         this->runtime_->pc_incr(1);
     }
+}
+
+void esl::Vm::store_attribut (Bytecode* instr)
+{
+    esl::MemContent content = stack_.top();
+    esl::Object* object = dynamic_cast<esl::Object*>(content->data_get());
+    std::string attr_name = *(RoData::instance_get()->get(instr->get_param()));
+
+    this->stack_.pop();
+
+    this->stack_.top()->incr();
+    object->update_attribut (attr_name, this->stack_.top());
+
+    content->decr();
+}
+
+void esl::Vm::load_attribut(esl::Bytecode* instr)
+{
+    esl::Object* object = dynamic_cast<esl::Object*>(stack_.top()->data_get());
+    esl::MemContent value = nullptr;
+    std::string attr_name = *(RoData::instance_get()->get(instr->get_param()));
+
+    if (object == nullptr)
+        throw esl::Exception("Cannot access to attribut from non object");
+
+    value = object->attribut_get(attr_name);
+    value->incr();
+
+    this->pop();
+    this->stack_.push(value);
 }
 
 void esl::Vm::make_attribut (esl::Bytecode* instr)

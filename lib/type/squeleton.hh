@@ -48,7 +48,9 @@ namespace esl
             void register_attribut (const std::string& type,
                                     const std::string& name);
 
-            //Attributs* attributs_get (const std::string& type);
+            const Attributs& attributs_get (const std::string& type);
+
+            bool has_attribut (const std::string& type);
 
         private:
             Squeleton ();

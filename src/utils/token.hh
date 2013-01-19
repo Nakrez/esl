@@ -16,6 +16,7 @@ enum token
 
     FUNCTION_DECL,
     CLASS_DECL,
+    CLASS_ATTRIBUT,
 
     METHOD_CALL,
     NEW,
@@ -69,6 +70,7 @@ const static std::string token_string[] =
 
     "FUNCTION_DECL",
     "CLASS_DECL",
+    "CLASS_ATTRIBUT",
 
     "METHOD_CALL",
     "NEW",

@@ -111,6 +111,8 @@ void esl::Compiler::compile(esl::Ast *ast)
                           break;
         case CLASS_DECL: compile_class(ast);
                          break;
+        case CLASS_ATTRIBUT: compile_attribut(ast, false);
+                             break;
         case LIST:  compile_list(ast);
                     break;
         case LIST_ID:  compile_list_id(ast);
@@ -127,6 +129,14 @@ void esl::Compiler::compile(esl::Ast *ast)
                            break;
         default : break;
     }
+}
+
+void esl::Compiler::compile_attribut(Ast* ast, bool treated)
+{
+    compile(ast->get_fson());
+    if (!treated)
+        byte_code_.push_back(new esl::Bytecode(LOAD_ATTR,
+                                               ast->get_fson()->get_rbro()->get_content()));
 }
 
 void esl::Compiler::compile_class(Ast* ast)
@@ -420,11 +430,26 @@ void esl::Compiler::compile_if(esl::Ast *ast)
 
 void esl::Compiler::compile_assignement(esl::Ast* ast)
 {
-    // Compile the value assigned
-    compile(ast->get_fson()->get_rbro());
 
-    byte_code_.push_back(new esl::Bytecode(STORE,
-                                           ast->get_fson()->get_content()));
+    if (ast->get_fson()->get_token() == CLASS_ATTRIBUT)
+    {
+        // Compile the value assigned
+        compile(ast->get_fson()->get_rbro());
+        // Compile the attribut request
+        compile_attribut(ast->get_fson(), true);
+
+        Ast* attr_name = ast->get_fson()->get_fson()->get_rbro();
+
+        byte_code_.push_back(new esl::Bytecode(STORE_ATTR,
+                                               attr_name->get_content()));
+    }
+    else
+    {
+        // Compile the value assigned
+        compile(ast->get_fson()->get_rbro());
+        byte_code_.push_back(new esl::Bytecode(STORE,
+                                               ast->get_fson()->get_content()));
+    }
 }
 
 void esl::Compiler::compile_operation (esl::Ast* ast, enum instr i)

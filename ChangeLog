@@ -1,3 +1,8 @@
+Nightly 19/01/2013
+
+- Add stack module
+- Add attribut handling in ESL objects
+
 Nightly 15/01/2013
 
 - Add class declaration and basic method call + construct

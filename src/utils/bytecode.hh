@@ -80,6 +80,8 @@ enum instr
     */
     STORE_STK,
 
+    STORE_ATTR,
+
     /// Push the value of the variable name in the stack
     LOAD,
 
@@ -88,6 +90,9 @@ enum instr
 
     /// Push a string in the stack
     LOAD_STR,
+
+    /// Push an attribut from TOS
+    LOAD_ATTR,
 
     /// Open a dynamic module
     OPEN,
