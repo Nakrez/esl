@@ -57,6 +57,9 @@ esl::Vm::~Vm()
         this->stack_.pop();
     }*/
 
+    /*if (!this->stack_.empty())
+        std::cout << "Stack not empty" << std::endl;
+    */
     delete this->runtime_;
 }
 
@@ -153,7 +156,7 @@ void esl::Vm::run()
                 this->operation("operator&&");
                 break;
             case OP_NEW:
-                this->instanciation (instr);
+                this->instanciation(instr);
                 break;
             case OPEN:
                 this->setup_module(instr);
@@ -291,12 +294,9 @@ void esl::Vm::instanciation (esl::Bytecode* instr)
     esl::Object* object = new esl::Object(type);
 
     params.push_back(new esl::MemoryObject<esl::Content>(object));
-    params.get_params(params.count())->incr();
 
-    external_call(fun, params);
-
-    // Decrement reference count on all params (since they have been poped)
-    params.decr();
+    if (external_call(fun, params))
+        params.decr();
 }
 
 void esl::Vm::call_method(esl::Bytecode *instr)
@@ -324,7 +324,6 @@ void esl::Vm::call_method(esl::Bytecode *instr)
     this->stack_.pop();
 
     // Set the the object itself as first param
-    object_container->incr();
     params.params_set(object_container);
 
     if (object == nullptr)
@@ -336,6 +335,7 @@ void esl::Vm::call_method(esl::Bytecode *instr)
     // Perform the call
     if ((ret_value = object->call_method(fun_name, fun_runtime, params)) == nullptr)
     {
+        object_container->incr();
         // Push current context in the stack
         this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_));
 

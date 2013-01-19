@@ -1,0 +1,27 @@
+import "io"
+import "array"
+
+class a
+    public function construct()
+        Io.print("cons")
+        self->temp = "Hello"
+        self->attr = self->temp
+        return self
+    end
+    public function lol()
+        return 4
+    end
+    public function test ()
+        return self->lol()
+    end
+    public attr
+    public temp
+end
+
+test = new a()
+Io.print(test->test())
+Io.print(test->type())
+Io.print(test->temp == test->attr)
+test->temp = "World"
+Io.print(test->temp == test->attr)
+Io.print(test->attr, test->temp)

@@ -48,6 +48,7 @@
 
 Bugs:
 
-- Constructors
+- Constructors with args
 - fix bug on array5 check
 - fix bug on array4 check
+- fix leaks on non exploited values
