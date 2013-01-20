@@ -25,8 +25,14 @@ class Driver
         esl::Ast* ast ();
         void free ();
         int errors_get ();
+        void set_byte (bool a);
+        bool get_byte ();
+        void set_ast (bool a);
+        bool get_ast ();
 
     private:
+        bool ast_param;
+        bool byte_param;
         std::string file_;
         int errors_;
         esl::Ast* gen_ast_;
