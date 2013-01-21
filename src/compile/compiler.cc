@@ -348,7 +348,10 @@ void esl::Compiler::compile_function(esl::Ast* ast)
     {
         compile_list_id(ast->get_fson());
         jump_addr = byte_code_.size() - code_size - 1;
-        --avoid;
+        if (declared_class_)
+            avoid -= 3;
+        else
+            --avoid;
     }
 
     code_size = byte_code_.size();
