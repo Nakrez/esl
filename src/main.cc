@@ -21,7 +21,6 @@ int main(int argc, char **argv)
         std::string arg = argv[i];
 
         if (arg.find("--")==0){
-            std::cout << "PARAM:" << arg << std::endl;
             driver.parser(argv[i], "param");
         }else{
             driver.parser(argv[i], "file");
@@ -48,8 +47,6 @@ int main(int argc, char **argv)
 
             std::cout << "Compilation time : " << useconds << std::endl;
         #endif /* !BENCH */
-
-        compiler->export_bytecode("byte.eslc");
 
         #if BENCH == 1
             gettimeofday(&start, nullptr);
