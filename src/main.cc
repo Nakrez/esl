@@ -40,7 +40,8 @@ int main(int argc, char **argv)
         #endif /* !BENCH */
 
         compiler->compile();
-
+        if (driver.get_byte())
+            compiler->export_bytecode("byte.eslc");
         #if BENCH == 1
             gettimeofday(&end, nullptr);
             useconds = end.tv_usec - start.tv_usec;

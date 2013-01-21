@@ -68,13 +68,6 @@ int Driver::parser(const std::string &f, const std::string &t)
         res = parser.parse();
         scan_end();
 
-        if (get_byte())
-        {
-            esl::Compiler *compiler = nullptr;
-            compiler = new esl::Compiler(this->ast());
-            compiler->export_bytecode("byte.eslc");
-        }
-
         if (get_ast())
             this->gen_ast_->print();
     }
