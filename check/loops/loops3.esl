@@ -2,6 +2,6 @@ import "io"
 
 i=10
 while i do
-    Io.print (i)
+    Io.print_newline (i)
     i=i-1
 end

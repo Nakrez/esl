@@ -3,9 +3,9 @@ import "io"
 i = 0
 j = 5
 if i then
-    Io.print(5)
+    Io.print_newline(5)
 elif j then
-    Io.print(4)
+    Io.print_newline(4)
 else
-    Io.print(6)
+    Io.print_newline(6)
 end

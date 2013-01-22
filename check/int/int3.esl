@@ -7,4 +7,4 @@ i=i*10
 i=i-30
 i=i%9
 i=i+9
-Io.print(i)
+Io.print_newline(i)

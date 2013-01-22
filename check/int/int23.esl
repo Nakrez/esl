@@ -1,4 +1,4 @@
 import "io"
 
 i = 2
-Io.print(i < 10 and i < 60)
+Io.print_newline(i < 10 and i < 60)

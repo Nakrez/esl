@@ -1,5 +1,5 @@
-# Import module io (to print a result)
+# Import module io (to print_newline a result)
 import "io" #this is the import
 
-#Print value
-Io.print("Hello!")
+#print_newline value
+Io.print_newline("Hello!")

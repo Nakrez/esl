@@ -7,4 +7,4 @@ function a(test)
     return test
 end
 
-Io.print(a(test+1))
+Io.print_newline(a(test+1))

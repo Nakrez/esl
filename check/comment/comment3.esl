@@ -1,5 +1,5 @@
 #[
-    Import IO module to print a value
+    Import IO module to print_newline a value
 ]#
 
 import "io"
@@ -11,8 +11,8 @@ r = 0
 #[
 
 
-    Print
+    print_newline
 
 ]#
 
-Io.print(r)
+Io.print_newline(r)

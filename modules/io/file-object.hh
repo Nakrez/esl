@@ -3,6 +3,7 @@
 
 # include <fstream>
 # include <string>
+# include <sstream>
 
 # include "../../lib/type/object.hh"
 # include "../../lib/gc/memory-object.hh"
@@ -21,6 +22,20 @@ namespace esl
 
             void open (const std::string& filename);
             void open (const std::string& filename, const std::string& mode);
+
+            void close ();
+            int is_open () const;
+
+            std::string read_line ();
+            std::string read_all ();
+
+            void seek_beg ();
+            void seek_end ();
+
+            int eof () const;
+
+            void write (const std::string& data);
+            void write_newline (const std::string& data);
 
         private:
             std::fstream data_;

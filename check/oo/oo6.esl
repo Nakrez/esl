@@ -15,12 +15,12 @@ class queue
 end
 
 test = new queue()
-Io.print("Start")
+Io.print_newline("Start")
 test->elem = "1"
 test->add("2")
 
 temp = test
-Io.print(temp->elem)
+Io.print_newline(temp->elem)
 temp = temp->next
-Io.print(temp->elem)
+Io.print_newline(temp->elem)
 temp = temp->next

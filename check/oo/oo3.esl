@@ -10,4 +10,4 @@ class test
 end
 
 temp = new test()
-Io.print(temp->b())
+Io.print_newline(temp->b())

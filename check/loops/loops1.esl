@@ -1,5 +1,5 @@
 import "io"
 
 while 0 do
-    Io.print(1)
+    Io.print_newline(1)
 end
