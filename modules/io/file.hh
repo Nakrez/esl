@@ -34,6 +34,9 @@ namespace esl
             MemoryObject<Content>* seek_end (const Params&);
 
             MemoryObject<Content>* eof (const Params&);
+
+            MemoryObject<Content>* write (const Params&);
+            MemoryObject<Content>* write_newline (const Params&);
     };
 }
 

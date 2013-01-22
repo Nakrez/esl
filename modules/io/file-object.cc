@@ -36,12 +36,55 @@ void esl::FileObject::open (const std::string& filename,
 {
     std::ios_base::openmode flags;
 
-    for (unsigned i = 0; i < mode.length(); ++i)
+    if (mode.length() > 0)
+    {
+        switch (mode.at(0))
+        {
+            case 'r':
+                flags = std::fstream::in;
+                break;
+            case 'w':
+                flags = std::fstream::out;
+                break;
+            case 'b':
+                flags = std::fstream::binary;
+                break;
+            case 'a':
+                flags = std::fstream::app;
+                break;
+            case 't':
+                flags = std::fstream::trunc;
+                break;
+            case 'e':
+                flags = std::fstream::ate;
+                break;
+            default:
+                throw esl::Exception("Unrecognized option");
+                break;
+        }
+    }
+
+    for (unsigned i = 1; i < mode.length(); ++i)
     {
         switch (mode.at(i))
         {
             case 'r':
                 flags |= std::fstream::in;
+                break;
+            case 'w':
+                flags |= std::fstream::out;
+                break;
+            case 'b':
+                flags |= std::fstream::binary;
+                break;
+            case 'a':
+                flags |= std::fstream::app;
+                break;
+            case 't':
+                flags |= std::fstream::trunc;
+                break;
+            case 'e':
+                flags |= std::fstream::ate;
                 break;
             default:
                 throw esl::Exception("Unrecognized option");
@@ -98,4 +141,14 @@ void esl::FileObject::seek_end ()
 int esl::FileObject::eof () const
 {
     return data_.eof();
+}
+
+void esl::FileObject::write (const std::string& data)
+{
+    data_.write(data.c_str(), data.size());
+}
+
+void esl::FileObject::write_newline (const std::string& data)
+{
+    write(data + '\n');
 }

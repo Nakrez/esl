@@ -48,6 +48,14 @@ void esl::File::init()
     squeleton->register_method (name_, "eof",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::eof)));
+
+    squeleton->register_method (name_, "write",
+                                new Function(new Delegate<esl::File>(this,
+                                                                     &esl::File::write)));
+
+    squeleton->register_method (name_, "write_newline",
+                                new Function(new Delegate<esl::File>(this,
+                                                                     &esl::File::write_newline)));
 }
 
 esl::MemoryObject<esl::Content>* esl::File::construct (const Params& params)
@@ -156,9 +164,43 @@ esl::MemoryObject<esl::Content>* esl::File::seek_end (const Params& params)
     return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
 }
 
+esl::MemoryObject<esl::Content>* esl::File::write (const Params& params)
+{
+    esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
+
+    if (params.count() != 2)
+        throw esl::Exception("write_newline method takes 1 argument");
+
+    esl::StringObject* buf = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
+
+    if (!buf)
+        throw esl::Exception("First parameter of write_newline must be a string");
+
+    file->write(buf->data_get());
+
+    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+}
+
 esl::MemoryObject<esl::Content>* esl::File::eof (const Params& params)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
     return new esl::MemoryObject<esl::Content> (new esl::IntObject(file->eof()));
+}
+
+esl::MemoryObject<esl::Content>* esl::File::write_newline (const Params& params)
+{
+    esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
+
+    if (params.count() != 2)
+        throw esl::Exception("write_newline method takes 1 argument");
+
+    esl::StringObject* buf = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
+
+    if (!buf)
+        throw esl::Exception("First parameter of write_newline must be a string");
+
+    file->write_newline(buf->data_get());
+
+    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
 }

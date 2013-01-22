@@ -9,7 +9,7 @@ void Io::init ()
                       new esl::Delegate<Io>(this, &Io::print_newline));
 }
 
-esl::MemoryObject<esl::Content>* Io::print (const esl::Params& params)
+esl::MemoryObject<esl::Content>* Io::print_core (const esl::Params& params)
 {
     for (int i = 0; i < params.count(); ++i)
     {
@@ -38,9 +38,18 @@ esl::MemoryObject<esl::Content>* Io::print (const esl::Params& params)
     return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
 }
 
+esl::MemoryObject<esl::Content>* Io::print (const esl::Params& params)
+{
+    esl::MemoryObject<esl::Content>* ret = this->print_core(params);
+
+    std::cout << std::flush;
+
+    return ret;
+}
+
 esl::MemoryObject<esl::Content>* Io::print_newline (const esl::Params& params)
 {
-    esl::MemoryObject<esl::Content>* ret = this->print(params);
+    esl::MemoryObject<esl::Content>* ret = this->print_core(params);
 
     std::cout << std::endl;
 

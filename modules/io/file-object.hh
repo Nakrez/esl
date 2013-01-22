@@ -34,6 +34,9 @@ namespace esl
 
             int eof () const;
 
+            void write (const std::string& data);
+            void write_newline (const std::string& data);
+
         private:
             std::fstream data_;
     };
