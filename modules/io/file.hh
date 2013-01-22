@@ -16,10 +16,15 @@ namespace esl
             File ();
             ~File ();
 
+            virtual void init ();
+
             virtual MemoryObject<Content>* construct (const Params&);
 
             virtual MemoryObject<Content>* print (const Params&);
             virtual MemoryObject<Content>* to_string (const Params&);
+
+            MemoryObject<Content>* open (const Params&);
+            MemoryObject<Content>* close (const Params&);
     };
 }
 

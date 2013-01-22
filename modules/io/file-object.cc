@@ -46,6 +46,16 @@ void esl::FileObject::open (const std::string& filename,
     data_.open(filename, flags);
 }
 
+int esl::FileObject::is_open () const
+{
+    return data_.is_open();
+}
+
+void esl::FileObject::close ()
+{
+    data_.close();
+}
+
 esl::FileObject::~FileObject ()
 {
     if (data_.is_open())

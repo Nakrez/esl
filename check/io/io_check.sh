@@ -1,7 +1,7 @@
 #! /bin/sh
 
 categorie="io"
-count=1
+count=4
 curr=1
 win=0
 

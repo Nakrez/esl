@@ -22,6 +22,9 @@ namespace esl
             void open (const std::string& filename);
             void open (const std::string& filename, const std::string& mode);
 
+            void close ();
+            int is_open () const;
+
         private:
             std::fstream data_;
     };
