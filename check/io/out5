@@ -1,0 +1,8 @@
+File : bootstrap open in read only
+#! /bin/sh
+mkdir m4
+autoreconf -vif
+#! /bin/sh
+mkdir m4
+autoreconf -vif
+

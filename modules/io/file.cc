@@ -21,9 +21,33 @@ void esl::File::init()
     squeleton->register_method (name_, "open",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::open)));
+    squeleton->register_method (name_, "is_open",
+                                new Function(new Delegate<esl::File>(this,
+                                                                     &esl::File::is_open)));
+
     squeleton->register_method (name_, "close",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::close)));
+
+    squeleton->register_method (name_, "read_line",
+                                new Function(new Delegate<esl::File>(this,
+                                                                     &esl::File::read_line)));
+
+    squeleton->register_method (name_, "read_all",
+                                new Function(new Delegate<esl::File>(this,
+                                                                     &esl::File::read_all)));
+
+    squeleton->register_method (name_, "seek_beg",
+                                new Function(new Delegate<esl::File>(this,
+                                                                     &esl::File::seek_beg)));
+
+    squeleton->register_method (name_, "seek_end",
+                                new Function(new Delegate<esl::File>(this,
+                                                                     &esl::File::seek_end)));
+
+    squeleton->register_method (name_, "eof",
+                                new Function(new Delegate<esl::File>(this,
+                                                                     &esl::File::eof)));
 }
 
 esl::MemoryObject<esl::Content>* esl::File::construct (const Params& params)
@@ -84,6 +108,13 @@ esl::MemoryObject<esl::Content>* esl::File::open (const esl::Params& params)
     return new esl::MemoryObject<esl::Content> (new esl::IntObject(file->is_open()));
 }
 
+esl::MemoryObject<esl::Content>* esl::File::is_open (const esl::Params& params)
+{
+    esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
+
+    return new esl::MemoryObject<esl::Content> (new esl::IntObject(file->is_open()));
+}
+
 esl::MemoryObject<esl::Content>* esl::File::close (const esl::Params& params)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
@@ -92,4 +123,42 @@ esl::MemoryObject<esl::Content>* esl::File::close (const esl::Params& params)
         file->close();
 
     return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+}
+esl::MemoryObject<esl::Content>* esl::File::read_line (const Params& params)
+{
+    esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
+
+    return new esl::MemoryObject<esl::Content> (new esl::StringObject(file->read_line()));
+}
+
+esl::MemoryObject<esl::Content>* esl::File::read_all (const Params& params)
+{
+    esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
+
+    return new esl::MemoryObject<esl::Content> (new esl::StringObject(file->read_all()));
+}
+
+esl::MemoryObject<esl::Content>* esl::File::seek_beg (const Params& params)
+{
+    esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
+
+    file->seek_beg();
+
+    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+}
+
+esl::MemoryObject<esl::Content>* esl::File::seek_end (const Params& params)
+{
+    esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
+
+    file->seek_end();
+
+    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+}
+
+esl::MemoryObject<esl::Content>* esl::File::eof (const Params& params)
+{
+    esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
+
+    return new esl::MemoryObject<esl::Content> (new esl::IntObject(file->eof()));
 }

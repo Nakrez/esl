@@ -24,7 +24,16 @@ namespace esl
             virtual MemoryObject<Content>* to_string (const Params&);
 
             MemoryObject<Content>* open (const Params&);
+            MemoryObject<Content>* is_open (const Params&);
             MemoryObject<Content>* close (const Params&);
+
+            MemoryObject<Content>* read_line (const Params&);
+            MemoryObject<Content>* read_all (const Params&);
+
+            MemoryObject<Content>* seek_beg (const Params&);
+            MemoryObject<Content>* seek_end (const Params&);
+
+            MemoryObject<Content>* eof (const Params&);
     };
 }
 
