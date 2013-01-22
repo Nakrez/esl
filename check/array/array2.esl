@@ -5,4 +5,4 @@ test = new array(1)
 test[0] = 9
 test[0] = "test"
 
-Io.print(test[0])
+Io.print_newline(test[0])

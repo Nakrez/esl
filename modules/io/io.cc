@@ -5,6 +5,8 @@ void Io::init ()
     (new esl::File)->init();
 
     register_function("print", new esl::Delegate<Io>(this, &Io::print));
+    register_function("print_newline",
+                      new esl::Delegate<Io>(this, &Io::print_newline));
 }
 
 esl::MemoryObject<esl::Content>* Io::print (const esl::Params& params)
@@ -33,9 +35,16 @@ esl::MemoryObject<esl::Content>* Io::print (const esl::Params& params)
 
     }
 
+    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+}
+
+esl::MemoryObject<esl::Content>* Io::print_newline (const esl::Params& params)
+{
+    esl::MemoryObject<esl::Content>* ret = this->print(params);
+
     std::cout << std::endl;
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+    return ret;
 }
 
 extern "C"

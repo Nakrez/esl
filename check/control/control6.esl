@@ -2,22 +2,22 @@ import "io"
 
 if 0 then
     if 1 then
-        Io.print(1)
+        Io.print_newline(1)
     else
-        Io.print(2)
+        Io.print_newline(2)
     end
 elif 1 then
     if 1 then
         if 1 then
-            Io.print(5)
+            Io.print_newline(5)
         elif 0 then
-            Io.print(6)
+            Io.print_newline(6)
         else
-            Io.print(9)
+            Io.print_newline(9)
         end
     else
-        Io.print(12)
+        Io.print_newline(12)
     end
 else
-    Io.print (4)
+    Io.print_newline (4)
 end

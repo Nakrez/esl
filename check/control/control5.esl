@@ -2,10 +2,10 @@ import "io"
 
 if 1 then
     if 0 then
-        Io.print(1)
+        Io.print_newline(1)
     else
-        Io.print(2)
+        Io.print_newline(2)
     end
 else
-    Io.print(3)
+    Io.print_newline(3)
 end

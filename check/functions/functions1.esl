@@ -4,4 +4,4 @@ function a()
     return 1
 end
 
-Io.print(a())
+Io.print_newline(a())

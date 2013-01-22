@@ -1,7 +1,7 @@
 import "io"
 
 if 0 then
-    Io.print(0)
+    Io.print_newline(0)
 else
-    Io.print(2)
+    Io.print_newline(2)
 end
