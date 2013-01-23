@@ -97,9 +97,15 @@ class_decl:
           "class" "identifier" class_components "end"
           {
             $$ = new esl::Ast(CLASS_DECL, $2);
+            $$->add(new esl::Ast(EMPTY));
             $$->add(esl::Ast::ast_from_list($3));
           }
           |"class" "identifier" ":" "(" param_list ")" class_components "end"
+          {
+            $$ = new esl::Ast(CLASS_DECL, $2);
+            $$->add(esl::Ast::ast_from_list($5));
+            $$->add(esl::Ast::ast_from_list($7));
+          }
           ;
 
 visibility :
