@@ -188,12 +188,28 @@ void esl::Vm::run()
             case DELIM:
                 this->add_delim();
                 break;
+            case INHERIT:
+                this->inherit(instr);
+                break;
             default:
                 break;
         }
 
         this->runtime_->pc_incr(1);
     }
+}
+
+void esl::Vm::inherit (Bytecode* instr)
+{
+    // Exctract the mother name
+    std::string name = *(RoData::instance_get()->get(instr->get_param()));
+
+    // Check if there is a class that is in declaration
+    if (!declaration)
+        throw esl::Exception("Internal error no declaration found");
+
+    // Register the inheritance
+    declaration->inherit(name);
 }
 
 void esl::Vm::store_attribut (Bytecode* instr)
