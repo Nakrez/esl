@@ -1,3 +1,8 @@
+Nightly 26/01/2013
+
+- Add inheritance
+- Not working yet : call to super constructor
+
 Nightly 22/01/2013
 
 - Add complete file type (read/write operation)

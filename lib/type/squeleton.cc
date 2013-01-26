@@ -109,9 +109,9 @@ void esl::Squeleton::inherit (const std::string& type,
 
             if (this->object_methods_.at(type).find(method.first) !=
                 this->object_methods_.at(type).end())
-                method.second.first->decr();
+                object_methods_.at(type).at(method.first).first->decr();
 
-            object_methods_[inherit][method.first] = Method(method.second);
+            object_methods_[type][method.first] = Method(method.second);
         }
     }
 
