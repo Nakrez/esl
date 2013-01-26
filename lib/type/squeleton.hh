@@ -22,7 +22,7 @@ enum Visibility
 
 namespace esl
 {
-    using Method = std::pair<Function*, Visibility>;
+    using Method = std::pair<esl::MemoryObject<Function>*, Visibility>;
     using Methods = std::map<std::string, Method>;
 
     using Attribut = std::pair<std::string, Visibility>;
@@ -35,6 +35,8 @@ namespace esl
         public:
             static Squeleton* get();
             static void free();
+
+            void inherit (const std::string& type, const std::string& inherit);
 
             void register_type (const std::string& name, Type* ptr);
 

@@ -134,6 +134,7 @@ void esl::Compiler::compile(esl::Ast *ast)
 void esl::Compiler::compile_attribut(Ast* ast, bool treated)
 {
     compile(ast->get_fson());
+
     if (!treated)
         byte_code_.push_back(new esl::Bytecode(LOAD_ATTR,
                                                ast->get_fson()->get_rbro()->get_content()));
@@ -142,9 +143,25 @@ void esl::Compiler::compile_attribut(Ast* ast, bool treated)
 void esl::Compiler::compile_class(Ast* ast)
 {
     byte_code_.push_back(new esl::Bytecode(START_CLASS, ast->get_content()));
+
+    // Compiling inheritance
+    if (ast->get_fson()->get_token() != EMPTY)
+    {
+        esl::Ast* temp = ast->get_fson()->get_fson();
+
+        while (temp)
+        {
+            byte_code_.push_back(new esl::Bytecode(INHERIT,
+                                                   temp->get_content()));
+
+            temp = temp->get_rbro();
+        }
+    }
+
     declared_class_ = true;
-    compile(ast->get_fson());
+    compile(ast->get_fson()->get_rbro());
     declared_class_ = false;
+
     byte_code_.push_back(new esl::Bytecode(END_CLASS));
 }
 
