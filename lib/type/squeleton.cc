@@ -101,18 +101,19 @@ void esl::Squeleton::register_attribut (const std::string& type,
 void esl::Squeleton::inherit (const std::string& type,
                               const std::string& inherit)
 {
-    for (auto methods : object_methods_)
+    for (auto method : object_methods_[inherit])
     {
-        if (methods.first == inherit)
+        if (method.first != "construct")
         {
-            for (auto method : methods.second)
-                method.second.first->incr();
-            break;
+            method.second.first->incr();
+
+            if (this->object_methods_.at(type).find(method.first) !=
+                this->object_methods_.at(type).end())
+                method.second.first->decr();
+
+            object_methods_[inherit][method.first] = Method(method.second);
         }
     }
-
-    this->object_methods_[type].insert(this->object_methods_[inherit].begin(),
-                                       this->object_methods_[inherit].end());
 
     this->object_attributs_[type].insert(this->object_attributs_[inherit].begin(),
                                          this->object_attributs_[inherit].end());
