@@ -5,6 +5,7 @@ Nightly 27/01/2013
 - Improve general performances
 - Improve array type constructor performances
 - Add fork function to Sys module
+- Add vfork function to Sys module
 - Add exit function to Sys module
 
 Nightly 26/01/2013

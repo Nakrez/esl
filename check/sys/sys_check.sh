@@ -1,7 +1,7 @@
 #! /bin/sh
 
 categorie="sys"
-count=2
+count=3
 curr=1
 win=0
 

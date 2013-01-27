@@ -16,6 +16,7 @@ class Sys : public esl::Extension
         void init ();
 
         esl::MemoryObject<esl::Content>* fork_fun (const esl::Params&);
+        esl::MemoryObject<esl::Content>* vfork_fun (const esl::Params&);
         esl::MemoryObject<esl::Content>* exit_fun (const esl::Params&);
 };
 

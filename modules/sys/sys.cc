@@ -4,12 +4,18 @@
 void Sys::init ()
 {
     register_function("fork", new esl::Delegate<Sys>(this, &Sys::fork_fun));
+    register_function("vfork", new esl::Delegate<Sys>(this, &Sys::fork_fun));
     register_function("exit", new esl::Delegate<Sys>(this, &Sys::exit_fun));
 }
 
 esl::MemoryObject<esl::Content>* Sys::fork_fun (const esl::Params&)
 {
     return new esl::MemoryObject<esl::Content> (new esl::IntObject(fork()));
+}
+
+esl::MemoryObject<esl::Content>* Sys::vfork_fun (const esl::Params&)
+{
+    return new esl::MemoryObject<esl::Content> (new esl::IntObject(vfork()));
 }
 
 esl::MemoryObject<esl::Content>* Sys::exit_fun (const esl::Params& params)
