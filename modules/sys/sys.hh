@@ -8,10 +8,14 @@
 
 # include "../../src/execute/vm.hh"
 
+#include <unistd.h>
+
 class Sys : public esl::Extension
 {
     public:
         void init ();
+
+        esl::MemoryObject<esl::Content>* fork_fun (const esl::Params&);
 };
 
 extern "C" Sys* get ();
