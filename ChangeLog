@@ -1,3 +1,8 @@
+Nightly 27/01/2013
+
+- Introduce super call to OO mode
+- Add exception on invalid function call from a module
+
 Nightly 26/01/2013
 
 - Add inheritance

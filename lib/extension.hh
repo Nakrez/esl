@@ -19,6 +19,8 @@ namespace esl
             MemoryObject<Content>* call(const std::string&,
                                         const Params&);
 
+            bool is_registered (const std::string& name) const;
+
         protected:
             void register_function (const std::string&, DelegateBase*);
 

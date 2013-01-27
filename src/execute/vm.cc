@@ -477,7 +477,7 @@ void esl::Vm::setup_module (Bytecode* instr)
         throw Exception ("Module " + *module_name + " not found");
 
     // Setup new module and load it
-    module = new esl::Module(path);
+    module = new esl::Module(path, *module_name);
     module->load();
 
     this->runtime_->module_set(*module_name, new esl::MemoryObject<esl::Content>(module));
@@ -510,6 +510,9 @@ void esl::Vm::call_module (Bytecode* instr)
     // POP the delimiter
     this->pop();
 
+    if (!module->is_registered(*fun_name))
+        throw esl::Exception("no function " + *fun_name +
+                             " registered in module " + module->name_get()); 
     // Perform the call
     this->stack_.push(module->call(*fun_name, params));
 
