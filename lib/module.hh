@@ -14,15 +14,18 @@ namespace esl
     class Module : public Content
     {
         public:
-            Module (const std::string&);
+            Module (const std::string&, const std::string&);
             ~Module ();
 
+            bool is_registered (const std::string&) const;
+            const std::string& name_get () const;
             void load ();
             MemoryObject<Content>* call(const std::string& name,
                                         const Params& params);
 
         private:
             std::string path_;
+            std::string name_;
             Extension *ext_;
             EDestroy destroy_module_;
             void* lib_;

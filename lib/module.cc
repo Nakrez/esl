@@ -1,7 +1,8 @@
 #include "module.hh"
 
-esl::Module::Module (const std::string& path)
+esl::Module::Module (const std::string& path, const std::string& name)
     : path_ (path)
+    , name_ (name)
 {
     ext_ = nullptr;
     destroy_module_ = nullptr;
@@ -48,6 +49,16 @@ void esl::Module::load ()
 
     ext_ = get_module();
     ext_->init();
+}
+
+bool esl::Module::is_registered (const std::string& name) const
+{
+    return ext_->is_registered(name);
+}
+
+const std::string& esl::Module::name_get () const
+{
+    return name_;
 }
 
 esl::MemoryObject<esl::Content>* esl::Module::call(const std::string& name,

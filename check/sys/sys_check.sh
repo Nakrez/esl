@@ -1,7 +1,7 @@
 #! /bin/sh
 
-categorie="loops"
-count=3
+categorie="sys"
+count=4
 curr=1
 win=0
 

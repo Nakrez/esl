@@ -85,4 +85,4 @@ TESTS=	./check/io/io_check.sh \
 	./check/comment/comment_check.sh \
 	./check/oo/oo_check.sh \
 	./check/mix/mix_check.sh \
-	./check/clean.sh
+	./check/sys/sys_check.sh

@@ -1,0 +1,44 @@
+import "io"
+
+class a
+    public function construct()
+        self->attr = "a"
+        Io.print_newline("A construct")
+        return self
+    end
+
+    public function method_a()
+        Io.print_newline("Method a from a class")
+    end
+
+    public attr
+end
+
+class b
+    public function construct()
+        Io.print_newline("B construct")
+        return self
+    end
+
+    public function to_override()
+        Io.print_newline("I am in b")
+    end
+end
+
+class c : (a,b)
+    public function construct()
+        self->__super_a()
+        self->__super_b()
+        self->attr = "c"
+        Io.print_newline("C construct")
+        return self
+    end
+
+    public function to_override()
+        Io.print_newline("I am in c")
+    end
+end
+
+test_c = new c()
+Io.print_newline(test_c->attr)
+test_c->to_override()
