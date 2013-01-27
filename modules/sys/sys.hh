@@ -18,6 +18,8 @@ class Sys : public esl::Extension
         esl::MemoryObject<esl::Content>* fork_fun (const esl::Params&);
         esl::MemoryObject<esl::Content>* vfork_fun (const esl::Params&);
         esl::MemoryObject<esl::Content>* exit_fun (const esl::Params&);
+        esl::MemoryObject<esl::Content>* chdir_fun (const esl::Params&);
+        esl::MemoryObject<esl::Content>* getcwd_fun (const esl::Params&);
 };
 
 extern "C" Sys* get ();

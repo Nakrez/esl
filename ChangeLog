@@ -7,6 +7,8 @@ Nightly 27/01/2013
 - Add fork function to Sys module
 - Add vfork function to Sys module
 - Add exit function to Sys module
+- Add chdir function to Sys module
+- Add getcwd function to Sys module
 
 Nightly 26/01/2013
 
