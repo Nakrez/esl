@@ -6,7 +6,7 @@
 #ifndef SQUELETON_HH
 # define SQUELETON_HH
 
-# include <map>
+# include <unordered_map>
 # include <string>
 
 # include "../exception.hh"
@@ -23,10 +23,10 @@ enum Visibility
 namespace esl
 {
     using Method = std::pair<esl::MemoryObject<Function>*, Visibility>;
-    using Methods = std::map<std::string, Method>;
+    using Methods = std::unordered_map<std::string, Method>;
 
     using Attribut = std::pair<std::string, Visibility>;
-    using Attributs = std::map<std::string, Visibility>;//Attribut>;
+    using Attributs = std::unordered_map<std::string, Visibility>;//Attribut>;
 
     class Type;
 
@@ -60,9 +60,9 @@ namespace esl
 
             void type_existance (const std::string&);
 
-            std::map<std::string, Methods> object_methods_;
-            std::map<std::string, Attributs> object_attributs_;
-            std::map<std::string, Type*> declared_type_;
+            std::unordered_map<std::string, Methods> object_methods_;
+            std::unordered_map<std::string, Attributs> object_attributs_;
+            std::unordered_map<std::string, Type*> declared_type_;
 
             static Squeleton* instance_;
     };

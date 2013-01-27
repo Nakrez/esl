@@ -6,7 +6,7 @@
 #ifndef OBJECT_HH
 # define OBJECT_HH
 
-# include <map>
+# include <unordered_map>
 # include <string>
 
 # include "squeleton.hh"
@@ -32,10 +32,10 @@ namespace esl
             MemContent attribut_get (const std::string& attr_name);
 
         private:
-            void register_attribut (const std::map<std::string, Visibility>& attr);
+            void register_attribut (const std::unordered_map<std::string, Visibility>& attr);
 
             std::string type_;
-            std::map<std::string, std::pair<MemContent, Visibility>> attributs_;
+            std::unordered_map<std::string, std::pair<MemContent, Visibility>> attributs_;
     };
 }
 

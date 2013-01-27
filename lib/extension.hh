@@ -2,7 +2,7 @@
 # define EXTENSION_HH
 
 # include <string>
-# include <map>
+# include <unordered_map>
 
 # include "delegate.hh"
 
@@ -25,7 +25,7 @@ namespace esl
             void register_function (const std::string&, DelegateBase*);
 
         private:
-            std::map<std::string, DelegateBase*> functions_;
+            std::unordered_map<std::string, DelegateBase*> functions_;
     };
 
     using EGet = Extension* (*)();
