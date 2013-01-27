@@ -66,11 +66,15 @@ esl::Function* esl::Squeleton::method_get(const std::string& type,
 
 const esl::Attributs& esl::Squeleton::attributs_get (const std::string& type)
 {
+    type_existance (type);
+
     return object_attributs_[type];
 }
 
 bool esl::Squeleton::has_attribut (const std::string& type)
 {
+    type_existance (type);
+
     return !object_attributs_[type].empty();
 }
 
@@ -103,15 +107,23 @@ void esl::Squeleton::inherit (const std::string& type,
 {
     for (auto method : object_methods_[inherit])
     {
+        method.second.first->incr();
+
         if (method.first != "construct")
         {
-            method.second.first->incr();
-
             if (this->object_methods_.at(type).find(method.first) !=
                 this->object_methods_.at(type).end())
                 object_methods_.at(type).at(method.first).first->decr();
 
             object_methods_[type][method.first] = Method(method.second);
+        }
+        else // Register super method
+        {
+            if (this->object_methods_.at(type).find("__super_" + inherit) !=
+                this->object_methods_.at(type).end())
+                object_methods_.at(type).at("__super_" + inherit).first->decr();
+
+            object_methods_[type]["__super_" + inherit] = Method(method.second);
         }
     }
 
