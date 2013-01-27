@@ -2,6 +2,8 @@ Nightly 27/01/2013
 
 - Introduce super call to OO mode
 - Add exception on invalid function call from a module
+- Improve general performances
+- Improve array type constructor performances
 
 Nightly 26/01/2013
 
