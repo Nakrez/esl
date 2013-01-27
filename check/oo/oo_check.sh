@@ -1,7 +1,7 @@
 #! /bin/sh
 
 categorie="oo"
-count=6
+count=9
 curr=1
 win=0
 
