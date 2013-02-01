@@ -1,5 +1,11 @@
 #include "string-object.hh"
 
+esl::StringObject::StringObject ()
+    : Object ("String")
+{
+
+}
+
 esl::StringObject::StringObject (const std::string& data)
     : Object ("String")
     , data_ (data)

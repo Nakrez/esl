@@ -10,6 +10,7 @@ namespace esl
     class StringObject : public Object
     {
         public:
+            StringObject ();
             StringObject (const std::string& data);
 
             const std::string& data_get () const;
