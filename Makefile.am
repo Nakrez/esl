@@ -64,7 +64,7 @@ clear: distclean
 	rm -f *.png
 	rm -f tags
 	rm -f src/tags
-	rm -f doc/doc/*.html
+	rm -rf doc/doc/
 
 count:
 	cat lib/*.{hh,cc} lib/type/*.{cc,hh} lib/gc/*.{hh,hxx} src/main.cc \
