@@ -64,15 +64,14 @@ clear: distclean
 	rm -f *.png
 	rm -f tags
 	rm -f src/tags
-	rm -rf doc/html
-	rm -rf doc/latex
+	rm -f doc/doc/*.html
 
 count:
 	cat lib/*.{hh,cc} lib/type/*.{cc,hh} lib/gc/*.{hh,hxx} src/main.cc \
 	    src/**/*.{cc,hh} modules/**/*.{cc,hh} | wc -l
 
-doxygen-doc:
-	doxygen doc/Doxyfile
+esl-doc:
+	make -C doc
 
 TESTS=	./check/io/io_check.sh \
 	./check/int/int_check.sh \
