@@ -9,7 +9,6 @@
 # include "../../src/execute/vm.hh"
 
 # include <unistd.h>
-# include <stdlib.h>
 
 class Sys : public esl::Extension
 {
@@ -23,6 +22,8 @@ class Sys : public esl::Extension
         esl::MemoryObject<esl::Content>* getcwd_fun (const esl::Params&);
         esl::MemoryObject<esl::Content>* getenv_fun (const esl::Params&);
         esl::MemoryObject<esl::Content>* setenv_fun (const esl::Params&);
+        esl::MemoryObject<esl::Content>* rename_fun (const esl::Params&);
+        esl::MemoryObject<esl::Content>* remove_fun (const esl::Params&);
 };
 
 extern "C" Sys* get ();

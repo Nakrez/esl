@@ -1,0 +1,8 @@
+import "io"
+import "sys"
+
+if Sys.rename("make_check_file_6", "rename_make_check_6") then
+    if Sys.remove("rename_make_check_6") then
+        Io.print_newline("It works")
+    end
+end

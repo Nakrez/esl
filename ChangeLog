@@ -1,6 +1,8 @@
 Nighlty 01/02/2013
 
-- Add getenv/setenv to Sys module
+- Add getenv/setenv functions to Sys module
+- Add rename function to Sys module
+- Add remove function to Sys module
 
 Nightly 27/01/2013
 
