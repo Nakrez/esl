@@ -1,0 +1,6 @@
+import "io"
+import "sys"
+
+if Sys.setenv("ENV_MAKE_CHECK_ESL_SET", "itworks") then
+    Io.print_newline(Sys.getenv("ENV_MAKE_CHECK_ESL_SET"))
+end

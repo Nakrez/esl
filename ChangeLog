@@ -1,3 +1,7 @@
+Nighlty 01/02/2013
+
+- Add getenv/setenv to Sys module
+
 Nightly 27/01/2013
 
 - Introduce super call to OO mode
