@@ -2,6 +2,7 @@
 #include <string>
 #include <algorithm>
 #include "../compile/compiler.hh"
+#include "../utils/option.hh"
 
 Driver::Driver()
 {
@@ -59,7 +60,7 @@ void Driver::set_ast(bool a)
 int Driver::parser(const std::string &f, const std::string &t)
 {
     int res = 0;
-
+    Option inst;
     if (!t.compare("file"))
     {
         this->file_ = f;
@@ -75,29 +76,9 @@ int Driver::parser(const std::string &f, const std::string &t)
     {
         std::string s=f;
         s.erase(0,2);
-        if (!s.compare("ast"))
-            set_ast(true);
-        else if (!s.compare("byte"))
-            set_byte(true);
-        else if (!s.compare("ee"))
-        {
-            std::cout << "+      o     +              o   " << std::endl;
-            std::cout << "    +             o     +       +" << std::endl;
-            std::cout << "o          +" << std::endl;
-            std::cout << "    o  +           +        +" << std::endl;
-            std::cout << "+        o     o       +        o" << std::endl;
-            std::cout << "-_-_-_-_-_-_-_,------,      o " << std::endl;
-            std::cout << "_-_-_-_-_-_-_-|   /\\_/\\  " << std::endl;
-            std::cout << "-_-_-_-_-_-_-~|__( ^ .^)  +     +  " << std::endl;
-            std::cout << "_-_-_-_-_-_-_-\"\"  \"\"      " << std::endl;
-            std::cout << "+      o         o   +       o" << std::endl;
-            std::cout << "    +         +" << std::endl;
-            std::cout << "o        o         o      o     +" << std::endl;
-            std::cout << "    o           +" << std::endl;
-            std::cout << "+      +     o        o      +" << std::endl;
-            std::cout << "\033[4;35m" << "Trololol, this is Nyan Cat!"
-                      << "\033[0m" << std::endl;
-        }
+        if (!s.compare("ast")) inst.ast_optn();
+        else if (!s.compare("byte")) inst.byte_optn();
+        else if (!s.compare("ee")) inst.ee_optn();
         else
             std::cerr << "Unknown option : " << s << std::endl;
     }
