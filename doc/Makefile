@@ -1,5 +1,5 @@
 CC = pandoc
-SRC = doc/ctrl_flow.html \
+SRC = doc/intro.html doc/ctrl_flow.html doc/types.html doc/modules.html \
       doc/std_module_io.html doc/std_module_esl.html doc/std_module_sys.html
 
 all: doc $(SRC)

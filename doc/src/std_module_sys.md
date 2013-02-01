@@ -1,4 +1,4 @@
-% Intercation with Operating System
+% Operating System interactions
 % Baptiste Covolato
 % February 1, 2013
 
