@@ -1,3 +1,7 @@
+Nightly 02/02/2013
+
+- Add read_line function to Io module
+
 Nighlty 01/02/2013
 
 - Add getenv/setenv functions to Sys module

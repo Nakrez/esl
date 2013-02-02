@@ -18,6 +18,7 @@ class Io: public esl::Extension
         esl::MemoryObject<esl::Content>* print (const esl::Params&);
         esl::MemoryObject<esl::Content>* print_core (const esl::Params&);
         esl::MemoryObject<esl::Content>* print_newline (const esl::Params&);
+        esl::MemoryObject<esl::Content>* read_line (const esl::Params&);
 };
 
 extern "C" Io* get ();

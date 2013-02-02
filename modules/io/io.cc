@@ -7,6 +7,8 @@ void Io::init ()
     register_function("print", new esl::Delegate<Io>(this, &Io::print));
     register_function("print_newline",
                       new esl::Delegate<Io>(this, &Io::print_newline));
+    register_function("read_line",
+                      new esl::Delegate<Io>(this, &Io::read_line));
 }
 
 esl::MemoryObject<esl::Content>* Io::print_core (const esl::Params& params)
@@ -43,6 +45,18 @@ esl::MemoryObject<esl::Content>* Io::print (const esl::Params& params)
     esl::MemoryObject<esl::Content>* ret = this->print_core(params);
 
     std::cout << std::flush;
+
+    return ret;
+}
+
+esl::MemoryObject<esl::Content>* Io::read_line (const esl::Params& params)
+{
+    esl::MemoryObject<esl::Content>* ret = this->print_core(params);
+    std::string input;
+
+    std::cin >> input;
+
+    ret = new esl::MemoryObject<esl::Content>(new esl::StringObject(input));
 
     return ret;
 }
