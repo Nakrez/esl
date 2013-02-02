@@ -16,6 +16,11 @@ namespace esl
 
             virtual std::string type_name_get () const;
 
+            virtual void init ();
+
+            virtual MemoryObject<Content>* size (const Params&);
+            virtual MemoryObject<Content>* at (const Params&);
+
             virtual MemoryObject<Content>* construct (const Params&);
 
             virtual MemoryObject<Content>* print (const Params&);

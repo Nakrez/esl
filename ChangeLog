@@ -1,6 +1,8 @@
 Nightly 02/02/2013
 
 - Add read_line function to Io module
+- Add at method to String type
+- Add size method to String type
 
 Nighlty 01/02/2013
 
