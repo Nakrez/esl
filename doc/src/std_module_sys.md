@@ -2,6 +2,17 @@
 % Baptiste Covolato
 % February 1, 2013
 
+Introduction
+============
+
+Sys module allows you to interact with your operating system and performs some
+operations such as : rename files, execute a process, get environnement
+variables, ...
+To use this module you must add it in your programm. To do so, you have to add
+this line at the beggining of your script
+
+    import "sys"
+
 Process parameters
 ==================
 
@@ -9,7 +20,7 @@ Process parameters
 
 `Sys.chdir(path)`
 
-`Sys.getenv()`
+`Sys.getenv(var)`
 
 `Sys.setenv(var, value)`
 
