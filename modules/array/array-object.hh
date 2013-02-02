@@ -18,6 +18,7 @@ namespace esl
             ~ArrayObject ();
 
             MemoryObject<Content>* at (int i);
+            int size () const;
 
         private:
             std::vector<MemoryObject<Content>*> data_;

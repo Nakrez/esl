@@ -29,3 +29,8 @@ esl::MemoryObject<esl::Content>* esl::ArrayObject::at (int i)
 
     return data_.at(i);
 }
+
+int esl::ArrayObject::size () const
+{
+    return data_.size();
+}

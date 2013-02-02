@@ -1,0 +1,12 @@
+import "io"
+
+test = "Hello World !"
+
+i = 0
+
+while i < test->size() do
+    Io.print(test->at(i))
+    i = i + 1
+end
+
+Io.print_newline()

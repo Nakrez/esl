@@ -1,0 +1,6 @@
+import "io"
+import "array"
+
+test = new array(10)
+
+Io.print_newline(test->size())

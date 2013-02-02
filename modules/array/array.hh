@@ -18,12 +18,15 @@ namespace esl
 
             virtual MemoryObject<Content>* construct (const Params&);
 
+            virtual void init ();
+
             virtual std::string type_name_get () const;
 
             virtual MemoryObject<Content>* print (const Params&);
             virtual MemoryObject<Content>* to_string (const Params&);
 
             virtual MemoryObject<Content>* bracket_op (const Params&);
+            virtual MemoryObject<Content>* size (const Params&);
     };
 }
 

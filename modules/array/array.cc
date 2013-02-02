@@ -12,6 +12,17 @@ esl::Array::~Array ()
 {
 }
 
+void esl::Array::init()
+{
+    esl::Squeleton* squeleton = esl::Squeleton::get();
+
+    init_basics();
+
+    squeleton->register_method (name_, "size",
+                                new Function(new Delegate<esl::Array>(this,
+                                                                       &esl::Array::size)));
+}
+
 esl::MemoryObject<esl::Content>* esl::Array::construct (const Params& params)
 {
     esl::ArrayObject* array = nullptr;
@@ -38,6 +49,13 @@ esl::MemoryObject<esl::Content>* esl::Array::bracket_op (const Params& params)
     object->at(pos)->incr();
 
     return object->at(pos);
+}
+
+esl::MemoryObject<esl::Content>* esl::Array::size (const Params& params)
+{
+    esl::ArrayObject* object = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
+
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(object->size()));
 }
 
 esl::MemoryObject<esl::Content>* esl::Array::print (const esl::Params&)
