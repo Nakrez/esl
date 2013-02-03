@@ -10,6 +10,9 @@
 
 # include <unistd.h>
 
+# include <sys/types.h>
+# include <sys/wait.h>
+
 class Sys : public esl::Extension
 {
     public:
@@ -24,6 +27,7 @@ class Sys : public esl::Extension
         esl::MemoryObject<esl::Content>* setenv_fun (const esl::Params&);
         esl::MemoryObject<esl::Content>* rename_fun (const esl::Params&);
         esl::MemoryObject<esl::Content>* remove_fun (const esl::Params&);
+        esl::MemoryObject<esl::Content>* exec_fun (const esl::Params&);
 };
 
 extern "C" Sys* get ();

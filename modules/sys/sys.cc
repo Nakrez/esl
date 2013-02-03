@@ -1,6 +1,7 @@
 #include "sys.hh"
 #include "../../lib/type/int-object.hh"
 #include "../../lib/type/string-object.hh"
+#include "../../lib/type/array-object.hh"
 
 void Sys::init ()
 {
@@ -18,11 +19,57 @@ void Sys::init ()
                                                        &Sys::remove_fun));
     register_function("rename", new esl::Delegate<Sys>(this,
                                                        &Sys::rename_fun));
+    register_function("exec", new esl::Delegate<Sys>(this,
+                                                      &Sys::exec_fun));
 }
 
 esl::MemoryObject<esl::Content>* Sys::fork_fun (const esl::Params&)
 {
     return new esl::MemoryObject<esl::Content> (new esl::IntObject(fork()));
+}
+
+esl::MemoryObject<esl::Content>* Sys::exec_fun (const esl::Params& params)
+{
+    if (params.count() < 1)
+        throw esl::Exception("chdir takes 1 parameter");
+
+    esl::ArrayObject* command = nullptr;
+
+    command = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
+
+    if (command->size() <= 0)
+        throw esl::Exception("Empty array cannot execute anything");
+
+    int pid = fork();
+    int exit_status = 0;
+
+    if (pid < 0)
+        throw esl::Exception("Exec error cannot fork");
+    else if (pid == 0)
+    {
+        int i = 0;
+        char* temp[command->size()];
+
+        for ( ; i < command->size(); ++i)
+        {
+            esl::StringObject* str = nullptr;
+
+            str = dynamic_cast<esl::StringObject*>(command->at(i)->data_get());
+
+            if (str == nullptr)
+                throw esl::Exception("All components in the array must be a string");
+
+            temp[i] = const_cast<char*>(str->data_get().c_str());
+        }
+
+        temp[i] = 0;
+
+        execvp(temp[0], temp);
+    }
+    else
+        waitpid(pid, &exit_status, 0);
+
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(WEXITSTATUS(exit_status)));
 }
 
 esl::MemoryObject<esl::Content>* Sys::vfork_fun (const esl::Params&)

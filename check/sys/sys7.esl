@@ -1,0 +1,16 @@
+import "io"
+import "sys"
+
+test = new array()
+
+test->push_back("/bin/echo")
+test->push_back("Hello ")
+test->push_back("world")
+
+Io.print_newline("Return : ", Sys.exec(test))
+
+test = new array()
+test->push_back("/bin/ls")
+test->push_back("/world")
+
+Io.print_newline("Return : ", Sys.exec(test))

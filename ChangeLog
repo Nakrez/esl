@@ -8,6 +8,7 @@ Nightly 03/02/2013
 - Add to_int method to String type
 - Fix issue with read_line in IO module
 - Fix several leaks on method call
+- Add exec function to Sys module
 
 Nightly 02/02/2013
 
