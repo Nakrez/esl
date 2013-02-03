@@ -1,0 +1,45 @@
+import "io"
+import "stack"
+
+function is_operand (str)
+    return str == "+" || str == "-" || str == "*" || str == "/"
+end
+
+function perform_operation (operator, operand1, operand2)
+    if (operator == "+") then
+        return operand1 + operand2
+    elif (operator == "-") then
+        return operand1 - operand2
+    elif (operator == "*") then
+        return operand1 * operand2
+    elif (operator == "/") then
+        return operand1 / operand2
+    end
+end
+
+function polish (expression)
+    separeted_expr = expression->split(" ")
+    i = separeted_expr->size() - 1
+    stack = new stack()
+
+    while i >= 0 do
+        if (is_operand(separeted_expr->at(i))) then
+            op1 = stack->top()
+            stack->pop()
+            op2 = stack->top()
+            stack->pop()
+            stack->push(perform_operation(separeted_expr->at(i), op1, op2))
+        else
+            stack->push(separeted_expr->at(i)->to_int())
+        end
+        i = i - 1
+    end
+
+    if (stack->empty()) then
+        Io.print_newline("An error occured")
+    else
+        return stack->top()
+    end
+end
+
+Io.print_newline(polish("- * / 15 - 7 + 1 1 3 + 2 + 1 1"))
