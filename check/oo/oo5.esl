@@ -1,5 +1,4 @@
 import "io"
-import "array"
 
 class a
     public function construct()

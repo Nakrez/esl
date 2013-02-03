@@ -2,6 +2,8 @@ Nightly 03/02/2013
 
 - Add put_at method to Array type
 - Add at method to Array type
+- Arrays are not built-in
+- Add split method to String type
 
 Nightly 02/02/2013
 

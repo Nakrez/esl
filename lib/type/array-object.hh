@@ -20,6 +20,7 @@ namespace esl
             MemoryObject<Content>* at (int i);
             void put_at (int i, MemoryObject<Content>* obj);
             int size () const;
+            void push_back (MemoryObject<Content>* obj);
 
         private:
             std::vector<MemoryObject<Content>*> data_;

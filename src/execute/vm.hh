@@ -23,6 +23,8 @@
 # include "../../lib/type/int.hh"
 # include "../../lib/type/string-object.hh"
 # include "../../lib/type/string.hh"
+# include "../../lib/type/array-object.hh"
+# include "../../lib/type/array.hh"
 
 # include "../utils/bytecode.hh"
 # include "../utils/ro-data.hh"

@@ -47,6 +47,7 @@ esl::Vm::Vm (const std::vector<esl::Bytecode*>& code)
     // Register built-in types
     (new esl::Int())->init();
     (new esl::String())->init();
+    (new esl::Array())->init();
 }
 
 esl::Vm::~Vm()

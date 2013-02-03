@@ -14,10 +14,12 @@ libesl_la_SOURCES = lib/context.cc lib/context.hh \
 		    lib/stack-delimiter.cc lib/stack-delimiter.hh \
 		    lib/type/int.cc lib/type/int.hh \
 		    lib/type/string.cc lib/type/string.hh \
+		    lib/type/array.cc lib/type/array.hh \
 		    lib/type/type.cc lib/type/type.hh \
 		    lib/type/squeleton.cc lib/type/squeleton.hh \
 		    lib/type/object.cc lib/type/object.hh \
 		    lib/type/int-object.cc lib/type/int-object.hh \
+		    lib/type/array-object.cc lib/type/array-object.hh \
 		    lib/type/string-object.cc lib/type/string-object.hh \
 		    src/execute/vm.cc src/execute/vm.hh src/execute/vm.hxx \
 		    lib/gc/memory-object.hh

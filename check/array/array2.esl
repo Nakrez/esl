@@ -1,4 +1,3 @@
-import "array"
 import "io"
 
 test = new array(1)

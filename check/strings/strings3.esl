@@ -1,0 +1,14 @@
+import "io"
+
+test = "Hello, Bonjour, Hi"
+
+table1 = test->split()
+table2 = test->split(",")
+
+i = 0
+
+while i < table1->size() do
+    Io.print_newline(table1->at(i))
+    Io.print_newline(table2->at(i))
+    i = i + 1
+end

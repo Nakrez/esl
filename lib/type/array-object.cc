@@ -42,3 +42,8 @@ void esl::ArrayObject::put_at (int i, esl::MemoryObject<esl::Content>* obj)
 
     data_[i] = obj;
 }
+
+void esl::ArrayObject::push_back (esl::MemoryObject<esl::Content>* obj)
+{
+    data_.push_back(obj);
+}

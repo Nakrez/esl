@@ -1,5 +1,4 @@
 import "io"
-import "array"
 
 test = new array(2)
 test[0] = 9
