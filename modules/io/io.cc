@@ -54,7 +54,7 @@ esl::MemoryObject<esl::Content>* Io::read_line (const esl::Params& params)
     esl::MemoryObject<esl::Content>* ret = this->print_core(params);
     std::string input;
 
-    std::cin >> input;
+    getline(std::cin, input);
 
     ret = new esl::MemoryObject<esl::Content>(new esl::StringObject(input));
 
