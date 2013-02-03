@@ -27,6 +27,7 @@
 [PARSER] Add alternative syntax for multidimensional array [,]
 [LIBESL] Reorder
 [LIB] Module IO
+[SYS] Add dialog with daemon
 [LIB] Module Array
 [LIB] Module Utils
 [LIB] Cast function

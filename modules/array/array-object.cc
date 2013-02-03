@@ -34,3 +34,11 @@ int esl::ArrayObject::size () const
 {
     return data_.size();
 }
+
+void esl::ArrayObject::put_at (int i, esl::MemoryObject<esl::Content>* obj)
+{
+    if (i < 0 || static_cast<unsigned> (i) >= data_.size())
+        throw esl::Exception ("Array module : Illegal access (out of bound)");
+
+    data_[i] = obj;
+}

@@ -26,7 +26,10 @@ namespace esl
             virtual MemoryObject<Content>* to_string (const Params&);
 
             virtual MemoryObject<Content>* bracket_op (const Params&);
+
             virtual MemoryObject<Content>* size (const Params&);
+            virtual MemoryObject<Content>* at (const Params&);
+            virtual MemoryObject<Content>* put_at (const Params&);
     };
 }
 

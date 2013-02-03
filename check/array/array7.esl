@@ -1,0 +1,6 @@
+import "io"
+import "array"
+
+test = new array(10)
+test->put_at(3, "Hello")
+Io.print_newline(test->at(3))

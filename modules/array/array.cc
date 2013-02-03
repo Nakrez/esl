@@ -21,6 +21,14 @@ void esl::Array::init()
     squeleton->register_method (name_, "size",
                                 new Function(new Delegate<esl::Array>(this,
                                                                        &esl::Array::size)));
+
+    squeleton->register_method (name_, "at",
+                                new Function(new Delegate<esl::Array>(this,
+                                                                       &esl::Array::at)));
+
+    squeleton->register_method (name_, "put_at",
+                                new Function(new Delegate<esl::Array>(this,
+                                                                       &esl::Array::put_at)));
 }
 
 esl::MemoryObject<esl::Content>* esl::Array::construct (const Params& params)
@@ -56,6 +64,35 @@ esl::MemoryObject<esl::Content>* esl::Array::size (const Params& params)
     esl::ArrayObject* object = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
 
     return new esl::MemoryObject<esl::Content>(new esl::IntObject(object->size()));
+}
+
+esl::MemoryObject<esl::Content>* esl::Array::at (const Params& params)
+{
+    if (params.count() <= 1)
+        throw esl::Exception("at takes 1 parameter");
+
+    esl::ArrayObject* object = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
+    esl::IntObject* op2 = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
+    unsigned int pos = op2->data_get();
+
+    object->at(pos)->incr();
+
+    return object->at(pos);
+}
+
+esl::MemoryObject<esl::Content>* esl::Array::put_at (const Params& params)
+{
+    if (params.count() <= 2)
+        throw esl::Exception("at takes 2 parameter");
+
+    esl::ArrayObject* object = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
+    esl::MemoryObject<esl::Content>* value = params.get_params(3);
+    esl::IntObject* op2 = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
+    int pos = op2->data_get();
+
+    object->put_at(pos, value);
+
+    return new esl::MemoryObject<esl::Content>(new IntObject(0));
 }
 
 esl::MemoryObject<esl::Content>* esl::Array::print (const esl::Params&)

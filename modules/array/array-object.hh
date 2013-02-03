@@ -18,6 +18,7 @@ namespace esl
             ~ArrayObject ();
 
             MemoryObject<Content>* at (int i);
+            void put_at (int i, MemoryObject<Content>* obj);
             int size () const;
 
         private:
