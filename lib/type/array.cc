@@ -29,6 +29,10 @@ void esl::Array::init()
     squeleton->register_method (name_, "put_at",
                                 new Function(new Delegate<esl::Array>(this,
                                                                        &esl::Array::put_at)));
+
+    squeleton->register_method (name_, "push_back",
+                                new Function(new Delegate<esl::Array>(this,
+                                                                       &esl::Array::push_back)));
 }
 
 esl::MemoryObject<esl::Content>* esl::Array::construct (const Params& params)
@@ -78,6 +82,20 @@ esl::MemoryObject<esl::Content>* esl::Array::at (const Params& params)
     object->at(pos)->incr();
 
     return object->at(pos);
+}
+
+esl::MemoryObject<esl::Content>* esl::Array::push_back (const Params& params)
+{
+    if (params.count() <= 1)
+        throw esl::Exception("at takes 1 parameter");
+
+    esl::ArrayObject* array = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
+    esl::MemoryObject<esl::Content>* obj = params.get_params(2);
+
+    obj->incr();
+    array->push_back(obj);
+
+    return new esl::MemoryObject<esl::Content>(new esl::IntObject(0));
 }
 
 esl::MemoryObject<esl::Content>* esl::Array::put_at (const Params& params)

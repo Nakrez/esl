@@ -30,6 +30,7 @@ namespace esl
             virtual MemoryObject<Content>* size (const Params&);
             virtual MemoryObject<Content>* at (const Params&);
             virtual MemoryObject<Content>* put_at (const Params&);
+            virtual MemoryObject<Content>* push_back (const Params&);
     };
 }
 
