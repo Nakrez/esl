@@ -5,6 +5,8 @@ Nightly 03/02/2013
 - Arrays are not built-in
 - Add split method to String type
 - Add to_int method to String type
+- Fix issue with read_line in IO module
+- Fix several leaks on method call
 
 Nightly 02/02/2013
 

@@ -284,7 +284,8 @@ void esl::Compiler::compile_statements(esl::Ast* ast)
         if (ast->get_token() == EXPR ||
             ast->get_token() == ASSIGNEMENT ||
             ast->get_token() == FUNCTION_CALL ||
-            ast->get_token() == MODULE_CALL)
+            ast->get_token() == MODULE_CALL ||
+            ast->get_token() == METHOD_CALL)
             byte_code_.push_back(new esl::Bytecode(POP));
 
         ast = ast->get_rbro();
