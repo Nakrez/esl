@@ -31,6 +31,10 @@ void esl::String::init()
     squeleton->register_method (name_, "split",
                                 new Function(new Delegate<esl::String>(this,
                                                                        &esl::String::split)));
+
+    squeleton->register_method (name_, "to_int",
+                                new Function(new Delegate<esl::String>(this,
+                                                                       &esl::String::to_int)));
 }
 
 esl::MemoryObject<esl::Content>* esl::String::construct (const Params&)
@@ -44,6 +48,14 @@ esl::MemoryObject<esl::Content>* esl::String::print (const esl::Params& params)
     std::cout << obj->data_get();
 
     return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+}
+
+esl::MemoryObject<esl::Content>* esl::String::to_int (const esl::Params& params)
+{
+    esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    int ret = atoi(obj->data_get().c_str());
+
+    return new esl::MemoryObject<esl::Content> (new esl::IntObject(ret));
 }
 
 esl::MemoryObject<esl::Content>* esl::String::to_string (const esl::Params& params)

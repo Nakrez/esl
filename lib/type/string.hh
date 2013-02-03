@@ -22,6 +22,7 @@ namespace esl
             virtual MemoryObject<Content>* size (const Params&);
             virtual MemoryObject<Content>* at (const Params&);
             virtual MemoryObject<Content>* split (const Params&);
+            virtual MemoryObject<Content>* to_int (const Params&);
 
             virtual MemoryObject<Content>* construct (const Params&);
 

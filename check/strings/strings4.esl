@@ -1,0 +1,5 @@
+import "io"
+
+test = "40"
+
+Io.print_newline(test->to_int() + 60)
