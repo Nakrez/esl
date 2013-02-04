@@ -19,24 +19,24 @@ namespace esl
 
             virtual void init ();
 
-            virtual MemoryObject<Content>* size (const Params&);
-            virtual MemoryObject<Content>* at (const Params&);
-            virtual MemoryObject<Content>* split (const Params&);
-            virtual MemoryObject<Content>* to_int (const Params&);
+            virtual GCObject* size (const Params&);
+            virtual GCObject* at (const Params&);
+            virtual GCObject* split (const Params&);
+            virtual GCObject* to_int (const Params&);
 
-            virtual MemoryObject<Content>* construct (const Params&);
+            virtual GCObject* construct (const Params&);
 
-            virtual MemoryObject<Content>* print (const Params&);
-            virtual MemoryObject<Content>* to_string (const Params&);
+            virtual GCObject* print (const Params&);
+            virtual GCObject* to_string (const Params&);
 
-            virtual MemoryObject<Content>* plus_op (const Params&);
+            virtual GCObject* plus_op (const Params&);
 
-            virtual MemoryObject<Content>* eq_op (const Params&);
-            virtual MemoryObject<Content>* diff_op (const Params&);
-            virtual MemoryObject<Content>* gt_op (const Params&);
-            virtual MemoryObject<Content>* ge_op (const Params&);
-            virtual MemoryObject<Content>* lt_op (const Params&);
-            virtual MemoryObject<Content>* le_op (const Params&);
+            virtual GCObject* eq_op (const Params&);
+            virtual GCObject* diff_op (const Params&);
+            virtual GCObject* gt_op (const Params&);
+            virtual GCObject* ge_op (const Params&);
+            virtual GCObject* lt_op (const Params&);
+            virtual GCObject* le_op (const Params&);
     };
 }
 

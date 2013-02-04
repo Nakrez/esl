@@ -261,13 +261,13 @@ void esl::Vm::create_type (esl::Bytecode* instr)
 
 bool esl::Vm::external_call (esl::Function* fun, const esl::Params& params)
 {
-    esl::MemoryObject<esl::Content>* ret_value = nullptr;
+    esl::GCObject* ret_value = nullptr;
     esl::Context* fun_runtime = new esl::Context(*(this->runtime_));
 
     if ((ret_value = fun->call(fun_runtime, params)) == nullptr)
     {
         // Push current context in the stack
-        this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_));
+        this->stack_.push(new esl::GCObject(this->runtime_));
 
         // This is a ESL coded function
         for (int i = params.count() - 1; i >= 0; --i)
@@ -310,7 +310,7 @@ void esl::Vm::instanciation (esl::Bytecode* instr)
 
     esl::Object* object = new esl::Object(type);
 
-    params.push_back(new esl::MemoryObject<esl::Content>(object));
+    params.push_back(new esl::GCObject(object));
 
     if (external_call(fun, params))
         params.decr();
@@ -319,8 +319,8 @@ void esl::Vm::instanciation (esl::Bytecode* instr)
 void esl::Vm::call_method(esl::Bytecode *instr)
 {
     std::string fun_name;
-    esl::MemoryObject<esl::Content>* object_container = nullptr;
-    esl::MemoryObject<esl::Content>* ret_value = nullptr;
+    esl::GCObject* object_container = nullptr;
+    esl::GCObject* ret_value = nullptr;
     esl::Object* object = nullptr;
     esl::Context* fun_runtime = new esl::Context(*(this->runtime_));
     esl::Params params;
@@ -354,7 +354,7 @@ void esl::Vm::call_method(esl::Bytecode *instr)
     {
         object_container->incr();
         // Push current context in the stack
-        this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_));
+        this->stack_.push(new esl::GCObject(this->runtime_));
 
         // This is a ESL coded function
         for (int i = params.count() - 1; i >= 0; --i)
@@ -375,8 +375,8 @@ void esl::Vm::call_method(esl::Bytecode *instr)
 
 void esl::Vm::operation (const std::string& name)
 {
-    esl::MemoryObject<esl::Content>* obj1 = nullptr;
-    esl::MemoryObject<esl::Content>* obj2 = nullptr;
+    esl::GCObject* obj1 = nullptr;
+    esl::GCObject* obj2 = nullptr;
 
     obj1 = this->stack_.top();
     this->stack_.pop();
@@ -397,7 +397,7 @@ void esl::Vm::operation (const std::string& name)
         params.params_set(obj2);
 
         esl::Context* fun_context = new esl::Context();
-        esl::MemoryObject<esl::Content>* ret_value = nullptr;
+        esl::GCObject* ret_value = nullptr;
 
         // Call operator function
         if ((ret_value = value2->call_method(name, fun_context, params)) == nullptr)
@@ -420,7 +420,7 @@ void esl::Vm::operation (const std::string& name)
 void esl::Vm::add_delim ()
 {
     esl::StackDelimiter* delim = new esl::StackDelimiter();
-    this->stack_.push(new esl::MemoryObject<esl::Content>(delim));
+    this->stack_.push(new esl::GCObject(delim));
 }
 
 void esl::Vm::pop()
@@ -431,8 +431,8 @@ void esl::Vm::pop()
 
 void esl::Vm::store_stk ()
 {
-    esl::MemoryObject<esl::Content>* tos = nullptr;
-    esl::MemoryObject<esl::Content>* tos1 = nullptr;
+    esl::GCObject* tos = nullptr;
+    esl::GCObject* tos1 = nullptr;
 
     tos = this->stack_.top();
     this->stack_.pop();
@@ -481,7 +481,7 @@ void esl::Vm::setup_module (Bytecode* instr)
     module = new esl::Module(path, *module_name);
     module->load();
 
-    this->runtime_->module_set(*module_name, new esl::MemoryObject<esl::Content>(module));
+    this->runtime_->module_set(*module_name, new esl::GCObject(module));
 }
 
 void esl::Vm::module (Bytecode* instr)
@@ -525,7 +525,7 @@ void esl::Vm::load_int (Bytecode* instr)
 {
     esl::IntObject* v = new esl::IntObject(instr->get_param());
 
-    this->stack_.push(new esl::MemoryObject<esl::Content>(v));
+    this->stack_.push(new esl::GCObject(v));
 }
 
 void esl::Vm::load_str (Bytecode* instr)
@@ -536,12 +536,12 @@ void esl::Vm::load_str (Bytecode* instr)
 
     v = new esl::StringObject(str);
 
-    this->stack_.push(new esl::MemoryObject<esl::Content>(v));
+    this->stack_.push(new esl::GCObject(v));
 }
 
 void esl::Vm::function_return()
 {
-    std::stack<esl::MemoryObject<esl::Content>*> ret;
+    std::stack<esl::GCObject*> ret;
 
     while (this->stack_.top() &&
            !dynamic_cast<esl::Context*> (this->stack_.top()->data_get()))
@@ -592,7 +592,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     this->pop();
 
     // Push current context in the stack
-    this->stack_.push(new esl::MemoryObject<esl::Content>(this->runtime_));
+    this->stack_.push(new esl::GCObject(this->runtime_));
 
     // Get function name in RoData
     fun_name = *(RoData::instance_get()->get(instr->get_param()));
@@ -627,7 +627,7 @@ void esl::Vm::store(esl::Bytecode *instr)
 void esl::Vm::load(esl::Bytecode *instr)
 {
     std::string* var_name = nullptr;
-    esl::MemoryObject<esl::Content>* value = nullptr;
+    esl::GCObject* value = nullptr;
 
     // Get variable name in RoData
     var_name = RoData::instance_get()->get(instr->get_param());
@@ -675,7 +675,7 @@ void esl::Vm::register_function(esl::Bytecode *instr)
     fun = new esl::Function(this->runtime_->pc_get());
 
     if (!declaration)
-        this->runtime_->function_set(fun_name, new esl::MemoryObject<esl::Content>(fun));
+        this->runtime_->function_set(fun_name, new esl::GCObject(fun));
     else
         esl::Squeleton::get()->register_method(declaration->type_name_get(),
                                                fun_name,

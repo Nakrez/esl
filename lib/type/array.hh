@@ -4,9 +4,9 @@
 # include <iostream>
 # include <vector>
 
-# include "../../lib/type/type.hh"
-# include "../../lib/gc/memory-object.hh"
-# include "../../lib/exception.hh"
+# include "type.hh"
+# include "../gc/memory-object.hh"
+# include "../exception.hh"
 
 namespace esl
 {
@@ -16,21 +16,21 @@ namespace esl
             Array ();
             ~Array ();
 
-            virtual MemoryObject<Content>* construct (const Params&);
+            virtual GCObject* construct (const Params&);
 
             virtual void init ();
 
             virtual std::string type_name_get () const;
 
-            virtual MemoryObject<Content>* print (const Params&);
-            virtual MemoryObject<Content>* to_string (const Params&);
+            virtual GCObject* print (const Params&);
+            virtual GCObject* to_string (const Params&);
 
-            virtual MemoryObject<Content>* bracket_op (const Params&);
+            virtual GCObject* bracket_op (const Params&);
 
-            virtual MemoryObject<Content>* size (const Params&);
-            virtual MemoryObject<Content>* at (const Params&);
-            virtual MemoryObject<Content>* put_at (const Params&);
-            virtual MemoryObject<Content>* push_back (const Params&);
+            virtual GCObject* size (const Params&);
+            virtual GCObject* at (const Params&);
+            virtual GCObject* put_at (const Params&);
+            virtual GCObject* push_back (const Params&);
     };
 }
 

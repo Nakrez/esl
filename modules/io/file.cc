@@ -58,7 +58,7 @@ void esl::File::init()
                                                                      &esl::File::write_newline)));
 }
 
-esl::MemoryObject<esl::Content>* esl::File::construct (const Params& params)
+esl::GCObject* esl::File::construct (const Params& params)
 {
     esl::FileObject* file = nullptr;
 
@@ -68,20 +68,20 @@ esl::MemoryObject<esl::Content>* esl::File::construct (const Params& params)
     {
     }
 
-    return new esl::MemoryObject<esl::Content>(file);
+    return new esl::GCObject(file);
 }
 
-esl::MemoryObject<esl::Content>* esl::File::print (const esl::Params&)
+esl::GCObject* esl::File::print (const esl::Params&)
 {
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+    return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::MemoryObject<esl::Content>* esl::File::to_string (const esl::Params&)
+esl::GCObject* esl::File::to_string (const esl::Params&)
 {
-    return new esl::MemoryObject<esl::Content> (new esl::StringObject("File"));
+    return new esl::GCObject (new esl::StringObject("File"));
 }
 
-esl::MemoryObject<esl::Content>* esl::File::open (const esl::Params& params)
+esl::GCObject* esl::File::open (const esl::Params& params)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
@@ -90,7 +90,7 @@ esl::MemoryObject<esl::Content>* esl::File::open (const esl::Params& params)
 
     if (params.count() == 2)
     {
-        esl::MemoryObject<esl::Content>* object1 = params.get_params(2);
+        esl::GCObject* object1 = params.get_params(2);
         esl::StringObject* param1 = dynamic_cast<esl::StringObject*>(object1->data_get());
 
         if (!param1)
@@ -100,9 +100,9 @@ esl::MemoryObject<esl::Content>* esl::File::open (const esl::Params& params)
     }
     else
     {
-        esl::MemoryObject<esl::Content>* object1 = params.get_params(2);
+        esl::GCObject* object1 = params.get_params(2);
         esl::StringObject* param1 = dynamic_cast<esl::StringObject*>(object1->data_get());
-        esl::MemoryObject<esl::Content>* object2 = params.get_params(3);
+        esl::GCObject* object2 = params.get_params(3);
         esl::StringObject* param2 = dynamic_cast<esl::StringObject*>(object2->data_get());
 
         if (!param1)
@@ -113,58 +113,58 @@ esl::MemoryObject<esl::Content>* esl::File::open (const esl::Params& params)
         file->open(param1->data_get(), param2->data_get());
     }
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(file->is_open()));
+    return new esl::GCObject (new esl::IntObject(file->is_open()));
 }
 
-esl::MemoryObject<esl::Content>* esl::File::is_open (const esl::Params& params)
+esl::GCObject* esl::File::is_open (const esl::Params& params)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(file->is_open()));
+    return new esl::GCObject (new esl::IntObject(file->is_open()));
 }
 
-esl::MemoryObject<esl::Content>* esl::File::close (const esl::Params& params)
+esl::GCObject* esl::File::close (const esl::Params& params)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
     if (file->is_open())
         file->close();
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+    return new esl::GCObject (new esl::IntObject(0));
 }
-esl::MemoryObject<esl::Content>* esl::File::read_line (const Params& params)
+esl::GCObject* esl::File::read_line (const Params& params)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
-    return new esl::MemoryObject<esl::Content> (new esl::StringObject(file->read_line()));
+    return new esl::GCObject (new esl::StringObject(file->read_line()));
 }
 
-esl::MemoryObject<esl::Content>* esl::File::read_all (const Params& params)
+esl::GCObject* esl::File::read_all (const Params& params)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
-    return new esl::MemoryObject<esl::Content> (new esl::StringObject(file->read_all()));
+    return new esl::GCObject (new esl::StringObject(file->read_all()));
 }
 
-esl::MemoryObject<esl::Content>* esl::File::seek_beg (const Params& params)
+esl::GCObject* esl::File::seek_beg (const Params& params)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
     file->seek_beg();
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+    return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::MemoryObject<esl::Content>* esl::File::seek_end (const Params& params)
+esl::GCObject* esl::File::seek_end (const Params& params)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
     file->seek_end();
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+    return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::MemoryObject<esl::Content>* esl::File::write (const Params& params)
+esl::GCObject* esl::File::write (const Params& params)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
@@ -178,17 +178,17 @@ esl::MemoryObject<esl::Content>* esl::File::write (const Params& params)
 
     file->write(buf->data_get());
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+    return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::MemoryObject<esl::Content>* esl::File::eof (const Params& params)
+esl::GCObject* esl::File::eof (const Params& params)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(file->eof()));
+    return new esl::GCObject (new esl::IntObject(file->eof()));
 }
 
-esl::MemoryObject<esl::Content>* esl::File::write_newline (const Params& params)
+esl::GCObject* esl::File::write_newline (const Params& params)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
@@ -202,5 +202,5 @@ esl::MemoryObject<esl::Content>* esl::File::write_newline (const Params& params)
 
     file->write_newline(buf->data_get());
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+    return new esl::GCObject (new esl::IntObject(0));
 }

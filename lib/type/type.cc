@@ -92,156 +92,156 @@ std::string esl::Type::type_name_get() const
     return name_;
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::type (const esl::Params&)
+esl::GCObject* esl::Type::type (const esl::Params&)
 {
-    return new esl::MemoryObject<esl::Content>(new esl::StringObject(name_));
+    return new esl::GCObject(new esl::StringObject(name_));
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::construct (const esl::Params&)
+esl::GCObject* esl::Type::construct (const esl::Params&)
 {
-    return new esl::MemoryObject<esl::Content>(new esl::Object(name_));
+    return new esl::GCObject(new esl::Object(name_));
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::print (const esl::Params&)
+esl::GCObject* esl::Type::print (const esl::Params&)
 {
-    return new esl::MemoryObject<esl::Content>(new esl::IntObject(0));
+    return new esl::GCObject(new esl::IntObject(0));
 }
-esl::MemoryObject<esl::Content>* esl::Type::to_string (const esl::Params&)
+esl::GCObject* esl::Type::to_string (const esl::Params&)
 {
-    return new esl::MemoryObject<esl::Content>(new esl::IntObject(0));
+    return new esl::GCObject(new esl::IntObject(0));
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::plus_op (const Params&)
+esl::GCObject* esl::Type::plus_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide + operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::minus_op (const Params&)
+esl::GCObject* esl::Type::minus_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide - operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::mul_op (const Params&)
+esl::GCObject* esl::Type::mul_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide * operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::div_op (const Params&)
+esl::GCObject* esl::Type::div_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide / operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::mod_op (const Params&)
+esl::GCObject* esl::Type::mod_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide % operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::pow_op (const Params&)
+esl::GCObject* esl::Type::pow_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide ^ operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::and_op (const Params&)
+esl::GCObject* esl::Type::and_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide && (and) operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::or_op (const Params&)
+esl::GCObject* esl::Type::or_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide || (or) operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::eq_op (const Params&)
+esl::GCObject* esl::Type::eq_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide == operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::diff_op (const Params&)
+esl::GCObject* esl::Type::diff_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide != (<>) operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::gt_op (const Params&)
+esl::GCObject* esl::Type::gt_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide > operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::ge_op (const Params&)
+esl::GCObject* esl::Type::ge_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide >= operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::lt_op (const Params&)
+esl::GCObject* esl::Type::lt_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide < operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::le_op (const Params&)
+esl::GCObject* esl::Type::le_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide <= operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }
 
-esl::MemoryObject<esl::Content>* esl::Type::bracket_op (const Params&)
+esl::GCObject* esl::Type::bracket_op (const Params&)
 {
     throw esl::Exception("Type "
                          + type_name_get()
                          + " does not provide [] operator");
 
-    return new MemoryObject<esl::Content>(nullptr);
+    return new esl::GCObject(nullptr);
 }

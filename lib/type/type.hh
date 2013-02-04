@@ -28,31 +28,31 @@ namespace esl
 
             virtual std::string type_name_get() const;
 
-            virtual MemoryObject<Content>* construct (const Params&);
+            virtual GCObject* construct (const Params&);
 
-            virtual MemoryObject<Content>* print (const Params&);
-            virtual MemoryObject<Content>* to_string (const Params&);
+            virtual GCObject* print (const Params&);
+            virtual GCObject* to_string (const Params&);
 
-            virtual MemoryObject<Content>* type (const Params&);
+            virtual GCObject* type (const Params&);
 
-            virtual MemoryObject<Content>* plus_op (const Params&);
-            virtual MemoryObject<Content>* minus_op (const Params&);
-            virtual MemoryObject<Content>* mul_op (const Params&);
-            virtual MemoryObject<Content>* div_op (const Params&);
-            virtual MemoryObject<Content>* mod_op (const Params&);
-            virtual MemoryObject<Content>* pow_op (const Params&);
+            virtual GCObject* plus_op (const Params&);
+            virtual GCObject* minus_op (const Params&);
+            virtual GCObject* mul_op (const Params&);
+            virtual GCObject* div_op (const Params&);
+            virtual GCObject* mod_op (const Params&);
+            virtual GCObject* pow_op (const Params&);
 
-            virtual MemoryObject<Content>* eq_op (const Params&);
-            virtual MemoryObject<Content>* diff_op (const Params&);
-            virtual MemoryObject<Content>* gt_op (const Params&);
-            virtual MemoryObject<Content>* ge_op (const Params&);
-            virtual MemoryObject<Content>* lt_op (const Params&);
-            virtual MemoryObject<Content>* le_op (const Params&);
+            virtual GCObject* eq_op (const Params&);
+            virtual GCObject* diff_op (const Params&);
+            virtual GCObject* gt_op (const Params&);
+            virtual GCObject* ge_op (const Params&);
+            virtual GCObject* lt_op (const Params&);
+            virtual GCObject* le_op (const Params&);
 
-            virtual MemoryObject<Content>* and_op (const Params&);
-            virtual MemoryObject<Content>* or_op (const Params&);
+            virtual GCObject* and_op (const Params&);
+            virtual GCObject* or_op (const Params&);
 
-            virtual MemoryObject<Content>* bracket_op (const Params&);
+            virtual GCObject* bracket_op (const Params&);
 
         protected:
             void init_basics ();

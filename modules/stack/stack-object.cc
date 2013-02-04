@@ -35,12 +35,12 @@ void esl::StackObject::pop ()
     data_.pop();
 }
 
-void esl::StackObject::push (esl::MemoryObject<esl::Content>* obj)
+void esl::StackObject::push (esl::GCObject* obj)
 {
     data_.push(obj);
 }
 
-esl::MemoryObject<esl::Content>* esl::StackObject::top () const
+esl::GCObject* esl::StackObject::top () const
 {
     if (data_.empty())
         throw esl::Exception("Top perform on an empty stack");

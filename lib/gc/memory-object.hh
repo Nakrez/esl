@@ -6,6 +6,8 @@
 #ifndef MEMORY_OBJECT_HH
 # define MEMORY_OBJECT_HH
 
+# include "../content.hh"
+
 namespace esl
 {
     template<class T>
@@ -56,6 +58,8 @@ namespace esl
             //         else
             bool free_;
     };
+
+    using GCObject = MemoryObject<Content>;
 }
 
 # include "memory-object.hxx"

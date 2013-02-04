@@ -35,26 +35,26 @@ void esl::Stack::init ()
                                                                       &esl::Stack::push)));
 }
 
-esl::MemoryObject<esl::Content>* esl::Stack::construct (const Params&)
+esl::GCObject* esl::Stack::construct (const Params&)
 {
     esl::StackObject* array = new esl::StackObject();
 
-    return new esl::MemoryObject<esl::Content>(array);
+    return new esl::GCObject(array);
 }
 
-esl::MemoryObject<esl::Content>* esl::Stack::print (const esl::Params&)
+esl::GCObject* esl::Stack::print (const esl::Params&)
 {
     std::cout << "STACK" << std::endl;
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+    return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::MemoryObject<esl::Content>* esl::Stack::to_string (const esl::Params&)
+esl::GCObject* esl::Stack::to_string (const esl::Params&)
 {
-    return new esl::MemoryObject<esl::Content> (new esl::StringObject("Stack"));
+    return new esl::GCObject (new esl::StringObject("Stack"));
 }
 
-esl::MemoryObject<esl::Content>* esl::Stack::pop (const Params& params)
+esl::GCObject* esl::Stack::pop (const Params& params)
 {
     esl::StackObject* op1 = nullptr;
 
@@ -62,10 +62,10 @@ esl::MemoryObject<esl::Content>* esl::Stack::pop (const Params& params)
 
     op1->pop();
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+    return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::MemoryObject<esl::Content>* esl::Stack::top (const Params& params)
+esl::GCObject* esl::Stack::top (const Params& params)
 {
     esl::StackObject* op1 = nullptr;
 
@@ -74,28 +74,28 @@ esl::MemoryObject<esl::Content>* esl::Stack::top (const Params& params)
     return op1->top();
 }
 
-esl::MemoryObject<esl::Content>* esl::Stack::empty (const Params& params)
+esl::GCObject* esl::Stack::empty (const Params& params)
 {
     esl::StackObject* op1 = nullptr;
 
     op1 = dynamic_cast<esl::StackObject*>(params.get_params(1)->data_get());
 
-    return new esl::MemoryObject<esl::Content>(new esl::IntObject(op1->empty()));
+    return new esl::GCObject(new esl::IntObject(op1->empty()));
 }
 
-esl::MemoryObject<esl::Content>* esl::Stack::size (const Params& params)
+esl::GCObject* esl::Stack::size (const Params& params)
 {
     esl::StackObject* op1 = nullptr;
 
     op1 = dynamic_cast<esl::StackObject*>(params.get_params(1)->data_get());
 
-    return new esl::MemoryObject<esl::Content>(new esl::IntObject(op1->size()));
+    return new esl::GCObject(new esl::IntObject(op1->size()));
 }
 
-esl::MemoryObject<esl::Content>* esl::Stack::push (const Params& params)
+esl::GCObject* esl::Stack::push (const Params& params)
 {
     esl::StackObject* op1 = nullptr;
-    esl::MemoryObject<esl::Content>* op2 = nullptr;
+    esl::GCObject* op2 = nullptr;
 
     if (params.count() == 1)
         throw esl::Exception ("Not enought parameters to push");
@@ -107,5 +107,5 @@ esl::MemoryObject<esl::Content>* esl::Stack::push (const Params& params)
 
     op1->push(op2);
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+    return new esl::GCObject (new esl::IntObject(0));
 }

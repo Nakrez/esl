@@ -16,18 +16,18 @@ namespace esl
             Stack ();
             ~Stack ();
 
-            virtual MemoryObject<Content>* construct (const Params&);
+            virtual GCObject* construct (const Params&);
 
             virtual void init ();
 
-            virtual MemoryObject<Content>* print (const Params&);
-            virtual MemoryObject<Content>* to_string (const Params&);
+            virtual GCObject* print (const Params&);
+            virtual GCObject* to_string (const Params&);
 
-            MemoryObject<Content>* pop (const Params& params);
-            MemoryObject<Content>* push (const Params& params);
-            MemoryObject<Content>* top (const Params& params);
-            MemoryObject<Content>* empty (const Params& params);
-            MemoryObject<Content>* size (const Params& params);
+            GCObject* pop (const Params& params);
+            GCObject* push (const Params& params);
+            GCObject* top (const Params& params);
+            GCObject* empty (const Params& params);
+            GCObject* size (const Params& params);
     };
 }
 

@@ -23,12 +23,12 @@ void Sys::init ()
                                                       &Sys::exec_fun));
 }
 
-esl::MemoryObject<esl::Content>* Sys::fork_fun (const esl::Params&)
+esl::GCObject* Sys::fork_fun (const esl::Params&)
 {
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(fork()));
+    return new esl::GCObject (new esl::IntObject(fork()));
 }
 
-esl::MemoryObject<esl::Content>* Sys::exec_fun (const esl::Params& params)
+esl::GCObject* Sys::exec_fun (const esl::Params& params)
 {
     if (params.count() < 1)
         throw esl::Exception("chdir takes 1 parameter");
@@ -69,15 +69,15 @@ esl::MemoryObject<esl::Content>* Sys::exec_fun (const esl::Params& params)
     else
         waitpid(pid, &exit_status, 0);
 
-    return new esl::MemoryObject<esl::Content>(new esl::IntObject(WEXITSTATUS(exit_status)));
+    return new esl::GCObject(new esl::IntObject(WEXITSTATUS(exit_status)));
 }
 
-esl::MemoryObject<esl::Content>* Sys::vfork_fun (const esl::Params&)
+esl::GCObject* Sys::vfork_fun (const esl::Params&)
 {
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(vfork()));
+    return new esl::GCObject (new esl::IntObject(vfork()));
 }
 
-esl::MemoryObject<esl::Content>* Sys::chdir_fun (const esl::Params& params)
+esl::GCObject* Sys::chdir_fun (const esl::Params& params)
 {
     if (params.count() < 1)
         throw esl::Exception("chdir takes 1 parameter");
@@ -88,10 +88,10 @@ esl::MemoryObject<esl::Content>* Sys::chdir_fun (const esl::Params& params)
 
     const char* path = new_path->data_get().c_str();
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(!chdir(path)));
+    return new esl::GCObject (new esl::IntObject(!chdir(path)));
 }
 
-esl::MemoryObject<esl::Content>* Sys::remove_fun (const esl::Params& params)
+esl::GCObject* Sys::remove_fun (const esl::Params& params)
 {
     if (params.count() < 1)
         throw esl::Exception("remove takes 1 parameter");
@@ -102,10 +102,10 @@ esl::MemoryObject<esl::Content>* Sys::remove_fun (const esl::Params& params)
 
     const char* path = new_path->data_get().c_str();
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(!remove(path)));
+    return new esl::GCObject (new esl::IntObject(!remove(path)));
 }
 
-esl::MemoryObject<esl::Content>* Sys::getenv_fun (const esl::Params& params)
+esl::GCObject* Sys::getenv_fun (const esl::Params& params)
 {
     if (params.count() < 1)
         throw esl::Exception("getenv takes 1 parameter");
@@ -116,12 +116,12 @@ esl::MemoryObject<esl::Content>* Sys::getenv_fun (const esl::Params& params)
 
     const char *var_content = getenv(var->data_get().c_str());
     if (var_content == nullptr)
-        return new esl::MemoryObject<esl::Content> (new esl::StringObject());
+        return new esl::GCObject (new esl::StringObject());
 
-    return new esl::MemoryObject<esl::Content> (new esl::StringObject(var_content));
+    return new esl::GCObject (new esl::StringObject(var_content));
 }
 
-esl::MemoryObject<esl::Content>* Sys::setenv_fun (const esl::Params& params)
+esl::GCObject* Sys::setenv_fun (const esl::Params& params)
 {
     if (params.count() < 2)
         throw esl::Exception("setenv takes 2 parameters");
@@ -134,10 +134,10 @@ esl::MemoryObject<esl::Content>* Sys::setenv_fun (const esl::Params& params)
 
     int ret = !setenv(var1->data_get().c_str(), var2->data_get().c_str(), 1);
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(ret));
+    return new esl::GCObject (new esl::IntObject(ret));
 }
 
-esl::MemoryObject<esl::Content>* Sys::rename_fun (const esl::Params& params)
+esl::GCObject* Sys::rename_fun (const esl::Params& params)
 {
     if (params.count() < 2)
         throw esl::Exception("setenv takes 2 parameters");
@@ -150,17 +150,17 @@ esl::MemoryObject<esl::Content>* Sys::rename_fun (const esl::Params& params)
 
     int ret = !rename(var1->data_get().c_str(), var2->data_get().c_str());
 
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(ret));
+    return new esl::GCObject (new esl::IntObject(ret));
 }
 
-esl::MemoryObject<esl::Content>* Sys::getcwd_fun (const esl::Params&)
+esl::GCObject* Sys::getcwd_fun (const esl::Params&)
 {
     std::string dir = getcwd(NULL, 0);
 
-    return new esl::MemoryObject<esl::Content> (new esl::StringObject(dir));
+    return new esl::GCObject (new esl::StringObject(dir));
 }
 
-esl::MemoryObject<esl::Content>* Sys::exit_fun (const esl::Params& params)
+esl::GCObject* Sys::exit_fun (const esl::Params& params)
 {
     if (params.count() == 0)
         exit(0);
@@ -175,7 +175,7 @@ esl::MemoryObject<esl::Content>* Sys::exit_fun (const esl::Params& params)
         throw esl::Exception("First parameter of exit must be an integer");
 
     // Never reached
-    return new esl::MemoryObject<esl::Content> (new esl::IntObject(0));
+    return new esl::GCObject (new esl::IntObject(0));
 }
 
 extern "C"
