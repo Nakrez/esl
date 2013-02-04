@@ -65,7 +65,12 @@
 "private"               return token::TOK_PRIVATE;
 "new"                   return token::TOK_NEW;
 
-<LITTERAL>"\""          BEGIN(INITIAL); return token::TOK_STRING;
+<LITTERAL>"\""          {
+                            BEGIN(INITIAL);
+                            if (yylval->sval == nullptr)
+                                yylval->sval = new std::string;
+                            return token::TOK_STRING;
+                        }
 <LITTERAL>\\[\\"nr]     {
                             if (yylval->sval)
                                 *(yylval->sval) += yytext;
