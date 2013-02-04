@@ -15,10 +15,13 @@ class Io: public esl::Extension
     public:
         void init ();
 
-        esl::MemoryObject<esl::Content>* print (const esl::Params&);
+        esl::MemoryObject<esl::Content>* print (const esl::Params&,
+                                                esl::Context*);
         esl::MemoryObject<esl::Content>* print_core (const esl::Params&);
-        esl::MemoryObject<esl::Content>* print_newline (const esl::Params&);
-        esl::MemoryObject<esl::Content>* read_line (const esl::Params&);
+        esl::MemoryObject<esl::Content>* print_newline (const esl::Params&,
+                                                        esl::Context*);
+        esl::MemoryObject<esl::Content>* read_line (const esl::Params&,
+                                                    esl::Context*);
 };
 
 extern "C" Io* get ();

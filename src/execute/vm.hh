@@ -14,6 +14,7 @@
 # include "../../lib/gc/memory-object.hh"
 # include "../../lib/content.hh"
 # include "../../lib/params.hh"
+# include "../../lib/module.hh"
 # include "../../lib/exception.hh"
 # include "../../lib/context.hh"
 # include "../../lib/stack-delimiter.hh"

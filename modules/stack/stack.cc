@@ -35,26 +35,26 @@ void esl::Stack::init ()
                                                                       &esl::Stack::push)));
 }
 
-esl::GCObject* esl::Stack::construct (const Params&)
+esl::GCObject* esl::Stack::construct (const Params&, Context*)
 {
     esl::StackObject* array = new esl::StackObject();
 
     return new esl::GCObject(array);
 }
 
-esl::GCObject* esl::Stack::print (const esl::Params&)
+esl::GCObject* esl::Stack::print (const esl::Params&, Context*)
 {
     std::cout << "STACK" << std::endl;
 
     return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::GCObject* esl::Stack::to_string (const esl::Params&)
+esl::GCObject* esl::Stack::to_string (const esl::Params&, Context*)
 {
     return new esl::GCObject (new esl::StringObject("Stack"));
 }
 
-esl::GCObject* esl::Stack::pop (const Params& params)
+esl::GCObject* esl::Stack::pop (const Params& params, Context*)
 {
     esl::StackObject* op1 = nullptr;
 
@@ -65,7 +65,7 @@ esl::GCObject* esl::Stack::pop (const Params& params)
     return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::GCObject* esl::Stack::top (const Params& params)
+esl::GCObject* esl::Stack::top (const Params& params, Context*)
 {
     esl::StackObject* op1 = nullptr;
 
@@ -74,7 +74,7 @@ esl::GCObject* esl::Stack::top (const Params& params)
     return op1->top();
 }
 
-esl::GCObject* esl::Stack::empty (const Params& params)
+esl::GCObject* esl::Stack::empty (const Params& params, Context*)
 {
     esl::StackObject* op1 = nullptr;
 
@@ -83,7 +83,7 @@ esl::GCObject* esl::Stack::empty (const Params& params)
     return new esl::GCObject(new esl::IntObject(op1->empty()));
 }
 
-esl::GCObject* esl::Stack::size (const Params& params)
+esl::GCObject* esl::Stack::size (const Params& params, Context*)
 {
     esl::StackObject* op1 = nullptr;
 
@@ -92,7 +92,7 @@ esl::GCObject* esl::Stack::size (const Params& params)
     return new esl::GCObject(new esl::IntObject(op1->size()));
 }
 
-esl::GCObject* esl::Stack::push (const Params& params)
+esl::GCObject* esl::Stack::push (const Params& params, Context*)
 {
     esl::StackObject* op1 = nullptr;
     esl::GCObject* op2 = nullptr;

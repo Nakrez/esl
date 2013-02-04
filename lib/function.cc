@@ -20,11 +20,11 @@ esl::Function::~Function ()
         delete callback_;
 }
 
-esl::MemContent esl::Function::call (esl::Context* context,
-                                     const esl::Params& params) const
+esl::GCObject* esl::Function::call (esl::Context* context,
+                                    const esl::Params& params) const
 {
     if (callback_) /* External call */
-        return callback_->Call(params);
+        return callback_->Call(params, context);
     else
     {
         context->pc_set(pc_ + 1);

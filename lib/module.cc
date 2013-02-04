@@ -61,8 +61,9 @@ const std::string& esl::Module::name_get () const
     return name_;
 }
 
-esl::MemoryObject<esl::Content>* esl::Module::call(const std::string& name,
-                                                   const esl::Params& params)
+esl::GCObject* esl::Module::call(const std::string& name,
+                                 const esl::Params& params,
+                                 Context* context)
 {
-    return ext_->call(name, params);
+    return ext_->call(name, params, context);
 }

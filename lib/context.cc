@@ -30,7 +30,7 @@ esl::Context::~Context()
         mod.second->decr();
 }
 
-esl::MemContent esl::Context::function_get (const std::string& name) const
+esl::GCObject* esl::Context::function_get (const std::string& name) const
 {
     if (this->functions_.find(name) == this->functions_.end())
         throw Exception("Function " + name + " not found");
@@ -38,7 +38,7 @@ esl::MemContent esl::Context::function_get (const std::string& name) const
     return this->functions_.at(name);
 }
 
-esl::MemContent esl::Context::variable_get (const std::string& name) const
+esl::GCObject* esl::Context::variable_get (const std::string& name) const
 {
     if (this->variables_.find(name) == this->variables_.end())
         throw Exception("Variable " + name + " not found");
@@ -46,7 +46,7 @@ esl::MemContent esl::Context::variable_get (const std::string& name) const
     return this->variables_.at(name);
 }
 
-esl::MemContent esl::Context::module_get (const std::string& name) const
+esl::GCObject* esl::Context::module_get (const std::string& name) const
 {
     if (this->modules_.find(name) == this->modules_.end())
         throw Exception("Module " + name + " not found");
@@ -54,7 +54,7 @@ esl::MemContent esl::Context::module_get (const std::string& name) const
     return this->modules_.at(name);
 }
 
-void esl::Context::variable_set (const std::string& name, MemContent value)
+void esl::Context::variable_set (const std::string& name, esl::GCObject* value)
 {
     value->incr();
 
@@ -65,12 +65,12 @@ void esl::Context::variable_set (const std::string& name, MemContent value)
 }
 
 void esl::Context::function_set (const std::string& name,
-                                 MemContent function)
+                                 GCObject* function)
 {
     this->functions_[name] = function;
 }
 
-void esl::Context::module_set (const std::string& name, MemContent module)
+void esl::Context::module_set (const std::string& name, GCObject* module)
 {
     std::string str = name;
 

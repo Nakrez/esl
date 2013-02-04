@@ -5,18 +5,15 @@
 # include <map>
 # include <memory>
 
-# include "module.hh"
 # include "content.hh"
 # include "exception.hh"
+# include "gc/memory-object.hh"
 
 namespace esl
 {
     class Params;
     class Context;
     class Function;
-
-    using MemContent = MemoryObject<Content>*;
-    using Callback = MemContent (*)(Context*, const Params&);
 
     class Context : public Content
     {
@@ -25,22 +22,22 @@ namespace esl
             Context(const Context& context);
             ~Context();
 
-            MemContent function_get (const std::string& name) const;
-            MemContent variable_get (const std::string& name) const;
-            MemContent module_get (const std::string&) const;
+            GCObject* function_get (const std::string& name) const;
+            GCObject* variable_get (const std::string& name) const;
+            GCObject* module_get (const std::string&) const;
 
-            void variable_set (const std::string&, MemContent);
-            void function_set (const std::string&, MemContent);
-            void module_set (const std::string&, MemContent);
+            void variable_set (const std::string&, GCObject*);
+            void function_set (const std::string&, GCObject*);
+            void module_set (const std::string&, GCObject*);
 
             size_t pc_get () const;
             void pc_set (size_t);
             void pc_incr (int incr);
 
         private:
-            std::map<std::string, MemContent> functions_;
-            std::map<std::string, MemContent> variables_;
-            std::map<std::string, MemContent> modules_;
+            std::map<std::string, GCObject*> functions_;
+            std::map<std::string, GCObject*> variables_;
+            std::map<std::string, GCObject*> modules_;
 
             size_t pc_;
     };

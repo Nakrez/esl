@@ -37,12 +37,12 @@ void esl::String::init()
                                                                        &esl::String::to_int)));
 }
 
-esl::GCObject* esl::String::construct (const Params&)
+esl::GCObject* esl::String::construct (const Params&, Context*)
 {
     return new esl::GCObject(new esl::IntObject(0));
 }
 
-esl::GCObject* esl::String::print (const esl::Params& params)
+esl::GCObject* esl::String::print (const esl::Params& params, Context*)
 {
     esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     std::cout << obj->data_get();
@@ -50,7 +50,7 @@ esl::GCObject* esl::String::print (const esl::Params& params)
     return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::GCObject* esl::String::to_int (const esl::Params& params)
+esl::GCObject* esl::String::to_int (const esl::Params& params, Context*)
 {
     esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     int ret = atoi(obj->data_get().c_str());
@@ -58,7 +58,7 @@ esl::GCObject* esl::String::to_int (const esl::Params& params)
     return new esl::GCObject (new esl::IntObject(ret));
 }
 
-esl::GCObject* esl::String::to_string (const esl::Params& params)
+esl::GCObject* esl::String::to_string (const esl::Params& params, Context*)
 {
     esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     std::string value = obj->data_get();
@@ -66,7 +66,7 @@ esl::GCObject* esl::String::to_string (const esl::Params& params)
     return new esl::GCObject (new esl::StringObject(value));
 }
 
-esl::GCObject* esl::String::size (const esl::Params& params)
+esl::GCObject* esl::String::size (const esl::Params& params, Context*)
 {
     esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     std::string value = obj->data_get();
@@ -74,7 +74,7 @@ esl::GCObject* esl::String::size (const esl::Params& params)
     return new esl::GCObject (new esl::IntObject(value.size()));
 }
 
-esl::GCObject* esl::String::at (const esl::Params& params)
+esl::GCObject* esl::String::at (const esl::Params& params, Context*)
 {
     esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::IntObject* pos = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
@@ -87,7 +87,7 @@ esl::GCObject* esl::String::at (const esl::Params& params)
     return new esl::GCObject(new esl::StringObject(value));
 }
 
-esl::GCObject* esl::String::split (const esl::Params& params)
+esl::GCObject* esl::String::split (const esl::Params& params, Context*)
 {
     esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::ArrayObject* ret = new esl::ArrayObject();
@@ -116,7 +116,7 @@ std::string esl::String::type_name_get () const
     return name_;
 }
 
-esl::GCObject* esl::String::plus_op (const Params& params)
+esl::GCObject* esl::String::plus_op (const Params& params, Context*)
 {
     esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
@@ -126,7 +126,7 @@ esl::GCObject* esl::String::plus_op (const Params& params)
     return new esl::GCObject(new esl::StringObject(value1 + value2));
 }
 
-esl::GCObject* esl::String::eq_op (const Params& params)
+esl::GCObject* esl::String::eq_op (const Params& params, Context*)
 {
     esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
@@ -136,7 +136,7 @@ esl::GCObject* esl::String::eq_op (const Params& params)
     return new esl::GCObject(new esl::IntObject(value1 == value2));
 }
 
-esl::GCObject* esl::String::diff_op (const Params& params)
+esl::GCObject* esl::String::diff_op (const Params& params, Context*)
 {
     esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
@@ -146,7 +146,7 @@ esl::GCObject* esl::String::diff_op (const Params& params)
     return new esl::GCObject(new esl::IntObject(value1 != value2));
 }
 
-esl::GCObject* esl::String::gt_op (const Params& params)
+esl::GCObject* esl::String::gt_op (const Params& params, Context*)
 {
     esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
@@ -156,7 +156,7 @@ esl::GCObject* esl::String::gt_op (const Params& params)
     return new esl::GCObject(new esl::IntObject(value1 > value2));
 }
 
-esl::GCObject* esl::String::ge_op (const Params& params)
+esl::GCObject* esl::String::ge_op (const Params& params, Context*)
 {
     esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
@@ -166,7 +166,7 @@ esl::GCObject* esl::String::ge_op (const Params& params)
     return new esl::GCObject(new esl::IntObject(value1 >= value2));
 }
 
-esl::GCObject* esl::String::lt_op (const Params& params)
+esl::GCObject* esl::String::lt_op (const Params& params, Context*)
 {
     esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
@@ -176,7 +176,7 @@ esl::GCObject* esl::String::lt_op (const Params& params)
     return new esl::GCObject(new esl::IntObject(value1 < value2));
 }
 
-esl::GCObject* esl::String::le_op (const Params& params)
+esl::GCObject* esl::String::le_op (const Params& params, Context*)
 {
     esl::StringObject* op1 = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::StringObject* op2 = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());

@@ -22,8 +22,9 @@ bool esl::Extension::is_registered (const std::string& name) const
     return functions_.find(name) != functions_.end();
 }
 
-esl::MemoryObject<esl::Content> *esl::Extension::call (const std::string& name,
-                                                       const esl::Params& params)
+esl::GCObject *esl::Extension::call (const std::string& name,
+                                     const esl::Params& params,
+                                     Context* context)
 {
-    return functions_.at(name)->Call(params);
+    return functions_.at(name)->Call(params, context);
 }

@@ -5,6 +5,7 @@
 # include "params.hh"
 # include "context.hh"
 # include "content.hh"
+# include "delegate.hh"
 
 namespace esl
 {
@@ -15,7 +16,7 @@ namespace esl
             Function (DelegateBase*);
             ~Function ();
 
-            MemContent call (Context*, const Params&) const;
+            GCObject* call (Context*, const Params&) const;
 
         private:
             int pc_;

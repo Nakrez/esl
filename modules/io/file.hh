@@ -18,25 +18,25 @@ namespace esl
 
             virtual void init ();
 
-            virtual GCObject* construct (const Params&);
+            virtual GCObject* construct (const Params&, Context*);
 
-            virtual GCObject* print (const Params&);
-            virtual GCObject* to_string (const Params&);
+            virtual GCObject* print (const Params&, Context*);
+            virtual GCObject* to_string (const Params&, Context*);
 
-            GCObject* open (const Params&);
-            GCObject* is_open (const Params&);
-            GCObject* close (const Params&);
+            GCObject* open (const Params&, Context*);
+            GCObject* is_open (const Params&, Context*);
+            GCObject* close (const Params&, Context*);
 
-            GCObject* read_line (const Params&);
-            GCObject* read_all (const Params&);
+            GCObject* read_line (const Params&, Context*);
+            GCObject* read_all (const Params&, Context*);
 
-            GCObject* seek_beg (const Params&);
-            GCObject* seek_end (const Params&);
+            GCObject* seek_beg (const Params&, Context*);
+            GCObject* seek_end (const Params&, Context*);
 
-            GCObject* eof (const Params&);
+            GCObject* eof (const Params&, Context*);
 
-            GCObject* write (const Params&);
-            GCObject* write_newline (const Params&);
+            GCObject* write (const Params&, Context*);
+            GCObject* write_newline (const Params&, Context*);
     };
 }
 

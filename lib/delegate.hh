@@ -2,6 +2,7 @@
 # define DELEGATE_HH
 
 # include "content.hh"
+# include "context.hh"
 # include "params.hh"
 
 namespace esl
@@ -9,13 +10,13 @@ namespace esl
     class DelegateBase
     {
         public:
-            virtual MemoryObject<Content>* Call(const Params&) = 0;
+            virtual GCObject* Call(const Params&, Context*) = 0;
     };
 
     template <class Class> class Delegate: public DelegateBase, Content
     {
         public:
-            typedef MemoryObject<Content>* (Class::*Function)(const Params&);
+            typedef GCObject* (Class::*Function)(const Params&, Context*);
             Delegate(Class* object, Function f)
                 : obj_ (object)
                 , fun_ (f)
@@ -27,9 +28,9 @@ namespace esl
                 delete obj_;
             }
 
-            virtual MemoryObject<Content>* Call(const Params& params)
+            virtual GCObject* Call(const Params& params, Context* context)
             {
-                return (obj_->*fun_)(params);
+                return (obj_->*fun_)(params, context);
             }
 
         private:

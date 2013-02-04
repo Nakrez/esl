@@ -35,7 +35,7 @@ void esl::Array::init()
                                                                        &esl::Array::push_back)));
 }
 
-esl::GCObject* esl::Array::construct (const Params& params)
+esl::GCObject* esl::Array::construct (const Params& params, Context*)
 {
     esl::ArrayObject* array = nullptr;
 
@@ -52,7 +52,7 @@ esl::GCObject* esl::Array::construct (const Params& params)
     return new esl::GCObject(array);
 }
 
-esl::GCObject* esl::Array::bracket_op (const Params& params)
+esl::GCObject* esl::Array::bracket_op (const Params& params, Context*)
 {
     esl::ArrayObject* object = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
     esl::IntObject* op2 = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
@@ -63,7 +63,7 @@ esl::GCObject* esl::Array::bracket_op (const Params& params)
     return object->at(pos);
 }
 
-esl::GCObject* esl::Array::size (const Params& params)
+esl::GCObject* esl::Array::size (const Params& params, Context*)
 {
     esl::ArrayObject* object = nullptr;
     object = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
@@ -71,7 +71,7 @@ esl::GCObject* esl::Array::size (const Params& params)
     return new esl::GCObject(new esl::IntObject(object->size()));
 }
 
-esl::GCObject* esl::Array::at (const Params& params)
+esl::GCObject* esl::Array::at (const Params& params, Context*)
 {
     if (params.count() <= 1)
         throw esl::Exception("at takes 1 parameter");
@@ -85,7 +85,7 @@ esl::GCObject* esl::Array::at (const Params& params)
     return object->at(pos);
 }
 
-esl::GCObject* esl::Array::push_back (const Params& params)
+esl::GCObject* esl::Array::push_back (const Params& params, Context*)
 {
     if (params.count() <= 1)
         throw esl::Exception("at takes 1 parameter");
@@ -99,7 +99,7 @@ esl::GCObject* esl::Array::push_back (const Params& params)
     return new esl::GCObject(new esl::IntObject(0));
 }
 
-esl::GCObject* esl::Array::put_at (const Params& params)
+esl::GCObject* esl::Array::put_at (const Params& params, Context*)
 {
     if (params.count() <= 2)
         throw esl::Exception("at takes 2 parameter");
@@ -114,7 +114,7 @@ esl::GCObject* esl::Array::put_at (const Params& params)
     return new esl::GCObject(new IntObject(0));
 }
 
-esl::GCObject* esl::Array::print (const esl::Params&)
+esl::GCObject* esl::Array::print (const esl::Params&, Context*)
 {
     std::cout << "[" << std::endl;
 
@@ -123,7 +123,7 @@ esl::GCObject* esl::Array::print (const esl::Params&)
     return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::GCObject* esl::Array::to_string (const esl::Params&)
+esl::GCObject* esl::Array::to_string (const esl::Params&, Context*)
 {
     return new esl::GCObject (new esl::StringObject("Array"));
 }

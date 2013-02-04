@@ -16,8 +16,7 @@ namespace esl
 
             virtual void init () = 0;
 
-            MemoryObject<Content>* call(const std::string&,
-                                        const Params&);
+            GCObject* call(const std::string&, const Params&i, Context*);
 
             bool is_registered (const std::string& name) const;
 

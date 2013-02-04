@@ -23,12 +23,12 @@ void Sys::init ()
                                                       &Sys::exec_fun));
 }
 
-esl::GCObject* Sys::fork_fun (const esl::Params&)
+esl::GCObject* Sys::fork_fun (const esl::Params&, esl::Context*)
 {
     return new esl::GCObject (new esl::IntObject(fork()));
 }
 
-esl::GCObject* Sys::exec_fun (const esl::Params& params)
+esl::GCObject* Sys::exec_fun (const esl::Params& params, esl::Context*)
 {
     if (params.count() < 1)
         throw esl::Exception("chdir takes 1 parameter");
@@ -72,12 +72,12 @@ esl::GCObject* Sys::exec_fun (const esl::Params& params)
     return new esl::GCObject(new esl::IntObject(WEXITSTATUS(exit_status)));
 }
 
-esl::GCObject* Sys::vfork_fun (const esl::Params&)
+esl::GCObject* Sys::vfork_fun (const esl::Params&, esl::Context*)
 {
     return new esl::GCObject (new esl::IntObject(vfork()));
 }
 
-esl::GCObject* Sys::chdir_fun (const esl::Params& params)
+esl::GCObject* Sys::chdir_fun (const esl::Params& params, esl::Context*)
 {
     if (params.count() < 1)
         throw esl::Exception("chdir takes 1 parameter");
@@ -91,7 +91,7 @@ esl::GCObject* Sys::chdir_fun (const esl::Params& params)
     return new esl::GCObject (new esl::IntObject(!chdir(path)));
 }
 
-esl::GCObject* Sys::remove_fun (const esl::Params& params)
+esl::GCObject* Sys::remove_fun (const esl::Params& params, esl::Context*)
 {
     if (params.count() < 1)
         throw esl::Exception("remove takes 1 parameter");
@@ -105,7 +105,7 @@ esl::GCObject* Sys::remove_fun (const esl::Params& params)
     return new esl::GCObject (new esl::IntObject(!remove(path)));
 }
 
-esl::GCObject* Sys::getenv_fun (const esl::Params& params)
+esl::GCObject* Sys::getenv_fun (const esl::Params& params, esl::Context*)
 {
     if (params.count() < 1)
         throw esl::Exception("getenv takes 1 parameter");
@@ -121,7 +121,7 @@ esl::GCObject* Sys::getenv_fun (const esl::Params& params)
     return new esl::GCObject (new esl::StringObject(var_content));
 }
 
-esl::GCObject* Sys::setenv_fun (const esl::Params& params)
+esl::GCObject* Sys::setenv_fun (const esl::Params& params, esl::Context*)
 {
     if (params.count() < 2)
         throw esl::Exception("setenv takes 2 parameters");
@@ -137,7 +137,7 @@ esl::GCObject* Sys::setenv_fun (const esl::Params& params)
     return new esl::GCObject (new esl::IntObject(ret));
 }
 
-esl::GCObject* Sys::rename_fun (const esl::Params& params)
+esl::GCObject* Sys::rename_fun (const esl::Params& params, esl::Context*)
 {
     if (params.count() < 2)
         throw esl::Exception("setenv takes 2 parameters");
@@ -153,14 +153,14 @@ esl::GCObject* Sys::rename_fun (const esl::Params& params)
     return new esl::GCObject (new esl::IntObject(ret));
 }
 
-esl::GCObject* Sys::getcwd_fun (const esl::Params&)
+esl::GCObject* Sys::getcwd_fun (const esl::Params&, esl::Context*)
 {
     std::string dir = getcwd(NULL, 0);
 
     return new esl::GCObject (new esl::StringObject(dir));
 }
 
-esl::GCObject* Sys::exit_fun (const esl::Params& params)
+esl::GCObject* Sys::exit_fun (const esl::Params& params, esl::Context*)
 {
     if (params.count() == 0)
         exit(0);

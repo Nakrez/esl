@@ -58,7 +58,7 @@ void esl::File::init()
                                                                      &esl::File::write_newline)));
 }
 
-esl::GCObject* esl::File::construct (const Params& params)
+esl::GCObject* esl::File::construct (const Params& params, Context*)
 {
     esl::FileObject* file = nullptr;
 
@@ -71,17 +71,17 @@ esl::GCObject* esl::File::construct (const Params& params)
     return new esl::GCObject(file);
 }
 
-esl::GCObject* esl::File::print (const esl::Params&)
+esl::GCObject* esl::File::print (const esl::Params&, Context*)
 {
     return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::GCObject* esl::File::to_string (const esl::Params&)
+esl::GCObject* esl::File::to_string (const esl::Params&, Context*)
 {
     return new esl::GCObject (new esl::StringObject("File"));
 }
 
-esl::GCObject* esl::File::open (const esl::Params& params)
+esl::GCObject* esl::File::open (const esl::Params& params, Context*)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
@@ -116,14 +116,14 @@ esl::GCObject* esl::File::open (const esl::Params& params)
     return new esl::GCObject (new esl::IntObject(file->is_open()));
 }
 
-esl::GCObject* esl::File::is_open (const esl::Params& params)
+esl::GCObject* esl::File::is_open (const esl::Params& params, Context*)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
     return new esl::GCObject (new esl::IntObject(file->is_open()));
 }
 
-esl::GCObject* esl::File::close (const esl::Params& params)
+esl::GCObject* esl::File::close (const esl::Params& params, Context*)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
@@ -132,21 +132,22 @@ esl::GCObject* esl::File::close (const esl::Params& params)
 
     return new esl::GCObject (new esl::IntObject(0));
 }
-esl::GCObject* esl::File::read_line (const Params& params)
+
+esl::GCObject* esl::File::read_line (const Params& params, Context*)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
     return new esl::GCObject (new esl::StringObject(file->read_line()));
 }
 
-esl::GCObject* esl::File::read_all (const Params& params)
+esl::GCObject* esl::File::read_all (const Params& params, Context*)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
     return new esl::GCObject (new esl::StringObject(file->read_all()));
 }
 
-esl::GCObject* esl::File::seek_beg (const Params& params)
+esl::GCObject* esl::File::seek_beg (const Params& params, Context*)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
@@ -155,7 +156,7 @@ esl::GCObject* esl::File::seek_beg (const Params& params)
     return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::GCObject* esl::File::seek_end (const Params& params)
+esl::GCObject* esl::File::seek_end (const Params& params, Context*)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
@@ -164,7 +165,7 @@ esl::GCObject* esl::File::seek_end (const Params& params)
     return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::GCObject* esl::File::write (const Params& params)
+esl::GCObject* esl::File::write (const Params& params, Context*)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
@@ -181,14 +182,14 @@ esl::GCObject* esl::File::write (const Params& params)
     return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::GCObject* esl::File::eof (const Params& params)
+esl::GCObject* esl::File::eof (const Params& params, Context*)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 
     return new esl::GCObject (new esl::IntObject(file->eof()));
 }
 
-esl::GCObject* esl::File::write_newline (const Params& params)
+esl::GCObject* esl::File::write_newline (const Params& params, Context*)
 {
     esl::FileObject* file = dynamic_cast<esl::FileObject*>(params.get_params(1)->data_get());
 

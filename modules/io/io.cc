@@ -40,7 +40,7 @@ esl::GCObject* Io::print_core (const esl::Params& params)
     return new esl::GCObject (new esl::IntObject(0));
 }
 
-esl::GCObject* Io::print (const esl::Params& params)
+esl::GCObject* Io::print (const esl::Params& params, esl::Context*)
 {
     esl::GCObject* ret = this->print_core(params);
 
@@ -49,7 +49,7 @@ esl::GCObject* Io::print (const esl::Params& params)
     return ret;
 }
 
-esl::GCObject* Io::read_line (const esl::Params& params)
+esl::GCObject* Io::read_line (const esl::Params& params, esl::Context*)
 {
     esl::GCObject* ret = this->print_core(params);
     std::string input;
@@ -61,7 +61,7 @@ esl::GCObject* Io::read_line (const esl::Params& params)
     return ret;
 }
 
-esl::GCObject* Io::print_newline (const esl::Params& params)
+esl::GCObject* Io::print_newline (const esl::Params& params, esl::Context*)
 {
     esl::GCObject* ret = this->print_core(params);
 

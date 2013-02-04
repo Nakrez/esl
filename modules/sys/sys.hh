@@ -18,16 +18,16 @@ class Sys : public esl::Extension
     public:
         void init ();
 
-        esl::MemoryObject<esl::Content>* fork_fun (const esl::Params&);
-        esl::MemoryObject<esl::Content>* vfork_fun (const esl::Params&);
-        esl::MemoryObject<esl::Content>* exit_fun (const esl::Params&);
-        esl::MemoryObject<esl::Content>* chdir_fun (const esl::Params&);
-        esl::MemoryObject<esl::Content>* getcwd_fun (const esl::Params&);
-        esl::MemoryObject<esl::Content>* getenv_fun (const esl::Params&);
-        esl::MemoryObject<esl::Content>* setenv_fun (const esl::Params&);
-        esl::MemoryObject<esl::Content>* rename_fun (const esl::Params&);
-        esl::MemoryObject<esl::Content>* remove_fun (const esl::Params&);
-        esl::MemoryObject<esl::Content>* exec_fun (const esl::Params&);
+        esl::GCObject* fork_fun (const esl::Params&, esl::Context*);
+        esl::GCObject* vfork_fun (const esl::Params&, esl::Context*);
+        esl::GCObject* exit_fun (const esl::Params&, esl::Context*);
+        esl::GCObject* chdir_fun (const esl::Params&, esl::Context*);
+        esl::GCObject* getcwd_fun (const esl::Params&, esl::Context*);
+        esl::GCObject* getenv_fun (const esl::Params&, esl::Context*);
+        esl::GCObject* setenv_fun (const esl::Params&, esl::Context*);
+        esl::GCObject* rename_fun (const esl::Params&, esl::Context*);
+        esl::GCObject* remove_fun (const esl::Params&, esl::Context*);
+        esl::GCObject* exec_fun (const esl::Params&, esl::Context*);
 };
 
 extern "C" Sys* get ();

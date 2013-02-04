@@ -20,8 +20,9 @@ namespace esl
             bool is_registered (const std::string&) const;
             const std::string& name_get () const;
             void load ();
-            MemoryObject<Content>* call(const std::string& name,
-                                        const Params& params);
+            GCObject* call(const std::string& name,
+                           const Params& params,
+                           Context* context);
 
         private:
             std::string path_;

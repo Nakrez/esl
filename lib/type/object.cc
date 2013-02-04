@@ -16,7 +16,7 @@ esl::Object::~Object ()
     }
 }
 
-esl::MemContent esl::Object::call_method (const std::string& fun_name,
+esl::GCObject* esl::Object::call_method (const std::string& fun_name,
                                            esl::Context* context,
                                            const esl::Params& params)
 {
@@ -33,14 +33,14 @@ void esl::Object::register_attribut (const std::unordered_map<std::string, Visib
     for (auto attribut : attr)
     {
         esl::IntObject* object = new esl::IntObject(0);
-        esl::MemContent default_value = new esl::MemoryObject<esl::Content>(object);
-        attributs_[attribut.first] = std::pair<esl::MemContent,
+        esl::GCObject* default_value = new GCObject(object);
+        attributs_[attribut.first] = std::pair<esl::GCObject*,
                                                Visibility>(default_value,
                                                            attribut.second);
     }
 }
 
-esl::MemContent esl::Object::attribut_get (const std::string& attr_name)
+esl::GCObject* esl::Object::attribut_get (const std::string& attr_name)
 {
     if (attributs_.find(attr_name) == attributs_.end())
         throw esl::Exception("No attribut " +
@@ -49,7 +49,7 @@ esl::MemContent esl::Object::attribut_get (const std::string& attr_name)
     return attributs_.at(attr_name).first;
 }
 void esl::Object::update_attribut (const std::string& attr_name,
-                                   esl::MemContent value)
+                                   esl::GCObject* value)
 {
     if (attributs_.find(attr_name) == attributs_.end())
         throw esl::Exception("No attribut " +
@@ -57,7 +57,7 @@ void esl::Object::update_attribut (const std::string& attr_name,
 
     attributs_.at(attr_name).first->decr();
 
-    attributs_[attr_name] = std::pair<esl::MemContent,
+    attributs_[attr_name] = std::pair<esl::GCObject*,
                                       Visibility>(value,
                                                   attributs_.at(attr_name).second);
 }

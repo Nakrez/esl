@@ -20,22 +20,24 @@ namespace esl
             Object (const std::string& type);
             ~Object ();
 
-            MemContent call_method (const std::string& fun_name,
-                                    Context* context,
-                                    const Params& params);
+            GCObject* call_method (const std::string& fun_name,
+                                   Context* context,
+                                   const Params& params);
 
             Function* get_method (const std::string& fun_name);
 
             void update_attribut (const std::string& attr_name,
-                                  MemContent value);
+                                  GCObject* value);
 
-            MemContent attribut_get (const std::string& attr_name);
+            GCObject* attribut_get (const std::string& attr_name);
 
         private:
-            void register_attribut (const std::unordered_map<std::string, Visibility>& attr);
+            void register_attribut (const std::unordered_map<std::string,
+                                                             Visibility>& attr);
 
             std::string type_;
-            std::unordered_map<std::string, std::pair<MemContent, Visibility>> attributs_;
+            std::unordered_map<std::string,
+                               std::pair<GCObject*, Visibility>> attributs_;
     };
 }
 

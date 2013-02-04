@@ -215,7 +215,7 @@ void esl::Vm::inherit (Bytecode* instr)
 
 void esl::Vm::store_attribut (Bytecode* instr)
 {
-    esl::MemContent content = stack_.top();
+    esl::GCObject* content = stack_.top();
     esl::Object* object = dynamic_cast<esl::Object*>(content->data_get());
     std::string attr_name = *(RoData::instance_get()->get(instr->get_param()));
 
@@ -230,7 +230,7 @@ void esl::Vm::store_attribut (Bytecode* instr)
 void esl::Vm::load_attribut(esl::Bytecode* instr)
 {
     esl::Object* object = dynamic_cast<esl::Object*>(stack_.top()->data_get());
-    esl::MemContent value = nullptr;
+    esl::GCObject* value = nullptr;
     std::string attr_name = *(RoData::instance_get()->get(instr->get_param()));
 
     if (object == nullptr)
@@ -515,7 +515,7 @@ void esl::Vm::call_module (Bytecode* instr)
         throw esl::Exception("no function " + *fun_name +
                              " registered in module " + module->name_get()); 
     // Perform the call
-    this->stack_.push(module->call(*fun_name, params));
+    this->stack_.push(module->call(*fun_name, params, new esl::Context));
 
     // Decrement reference count on all params (since they have been poped)
     params.decr();
