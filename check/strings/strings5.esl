@@ -1,0 +1,6 @@
+import "io"
+
+test = "lol"
+Io.print_newline(test->empty())
+test = ""
+Io.print_newline(test->empty())

@@ -35,11 +35,23 @@ void esl::String::init()
     squeleton->register_method (name_, "to_int",
                                 new Function(new Delegate<esl::String>(this,
                                                                        &esl::String::to_int)));
+
+    squeleton->register_method (name_, "empty",
+                                new Function(new Delegate<esl::String>(this,
+                                                                       &esl::String::empty)));
 }
 
 esl::GCObject* esl::String::construct (const Params&, Context*)
 {
     return new esl::GCObject(new esl::IntObject(0));
+}
+
+esl::GCObject* esl::String::empty (const esl::Params& params, Context*)
+{
+    esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    int ret = obj->data_get().empty();
+
+    return new esl::GCObject (new esl::IntObject(ret));
 }
 
 esl::GCObject* esl::String::print (const esl::Params& params, Context*)

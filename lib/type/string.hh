@@ -23,6 +23,7 @@ namespace esl
             virtual GCObject* at (const Params&, Context*);
             virtual GCObject* split (const Params&, Context*);
             virtual GCObject* to_int (const Params&, Context*);
+            virtual GCObject* empty (const Params&, Context*);
 
             virtual GCObject* construct (const Params&, Context*);
 
