@@ -1,0 +1,5 @@
+import "io"
+
+test = "Hello"
+test->insert(test->size(), " World")
+Io.print_newline(test)

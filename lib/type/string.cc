@@ -20,30 +20,56 @@ void esl::String::init()
 
     init_basics();
 
-    squeleton->register_method (name_, "size",
-                                new Function(new Delegate<esl::String>(this,
-                                                                       &esl::String::size)));
+    squeleton->register_method(name_, "size",
+                               new Function(new Delegate<esl::String>(this,
+                                                                      &esl::String::size)));
 
-    squeleton->register_method (name_, "at",
-                                new Function(new Delegate<esl::String>(this,
-                                                                       &esl::String::at)));
+    squeleton->register_method(name_, "at",
+                               new Function(new Delegate<esl::String>(this,
+                                                                      &esl::String::at)));
 
-    squeleton->register_method (name_, "split",
-                                new Function(new Delegate<esl::String>(this,
-                                                                       &esl::String::split)));
+    squeleton->register_method(name_, "split",
+                               new Function(new Delegate<esl::String>(this,
+                                                                      &esl::String::split)));
 
-    squeleton->register_method (name_, "to_int",
-                                new Function(new Delegate<esl::String>(this,
-                                                                       &esl::String::to_int)));
+    squeleton->register_method(name_, "to_int",
+                               new Function(new Delegate<esl::String>(this,
+                                                                      &esl::String::to_int)));
 
-    squeleton->register_method (name_, "empty",
-                                new Function(new Delegate<esl::String>(this,
-                                                                       &esl::String::empty)));
+    squeleton->register_method(name_, "empty",
+                               new Function(new Delegate<esl::String>(this,
+                                                                      &esl::String::empty)));
+
+    squeleton->register_method(name_, "insert",
+                               new Function(new Delegate<esl::String>(this,
+                                                                      &esl::String::insert)));
 }
 
 esl::GCObject* esl::String::construct (const Params&, Context*)
 {
     return new esl::GCObject(new esl::IntObject(0));
+}
+
+esl::GCObject* esl::String::insert (const esl::Params& params, Context*)
+{
+    if (params.count() < 3)
+        throw esl::Exception("Insert takes 2 parameters");
+
+    esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    esl::IntObject* pos = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
+    esl::StringObject* str = dynamic_cast<esl::StringObject*>(params.get_params(3)->data_get());
+
+    if (!pos)
+        throw esl::Exception("1st parameter of insert must be an integer");
+
+    if (!str)
+        throw esl::Exception("2nd parameter of insert must be a string");
+
+    std::string temp = obj->data_get();
+
+    obj->data_set(temp.insert(pos->data_get(), str->data_get()));
+
+    return new esl::GCObject (new esl::IntObject(0));
 }
 
 esl::GCObject* esl::String::empty (const esl::Params& params, Context*)

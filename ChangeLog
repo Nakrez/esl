@@ -1,3 +1,7 @@
+Nightly 06/02/2013
+
+- Add insert method to String type
+
 Nightly 04/02/2013
 
 - Fix bug on empty strings
