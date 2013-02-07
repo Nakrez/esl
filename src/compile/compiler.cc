@@ -55,79 +55,116 @@ void esl::Compiler::compile(esl::Ast *ast)
     // Test the type of the ast node and call the right method to compile it
     switch (ast->get_token())
     {
-        case STATEMENTS: compile_statements(ast->get_fson());
-                         break;
-        case ASSIGNEMENT: compile_assignement(ast);
-                          break;
-        case ASSIGNEMENT_ARRAY: compile_assignement_array(ast);
-                          break;
-        case ARRAY_AT: compile_array_at(ast);
-                       break;
-        case ADD: compile_operation(ast, OP_ADD);
-                  break;
-        case MINUS: compile_operation(ast, OP_MINUS);
-                    break;
-        case MUL: compile_operation(ast, OP_MUL);
-                  break;
-        case DIV: compile_operation(ast, OP_DIV);
-                  break;
-        case MOD: compile_operation(ast, OP_MOD);
-                  break;
-        case POW: compile_operation(ast, OP_POW);
-                  break;
-        case EQ: compile_operation(ast, OP_EQ);
-                 break;
-        case DIFF: compile_operation(ast, OP_DIFF);
-                   break;
-        case LT: compile_operation(ast, OP_LT);
-                 break;
-        case LE: compile_operation(ast, OP_LE);
-                 break;
-        case GT:  compile_operation(ast, OP_GT);
-                  break;
-        case GE:  compile_operation(ast, OP_GE);
-                  break;
-        case OR:  compile_operation(ast, OP_OR);
-                  break;
-        case AND:  compile_operation(ast, OP_AND);
-                   break;
-        case NEW:  compile_new(ast);
-                   break;
-        case NUMBER:  compile_number(ast);
-                      break;
-        case STRING:  compile_string(ast);
-                      break;
-        case EXPR:  compile(ast->get_fson());
-                    break;
-        case ID:  compile_identifier(ast);
-                  break;
-        case IF:  compile_if(ast);
-                  break;
-        case FUNCTION_DECL:  compile_function(ast);
-                             break;
-        case FUNCTION_CALL:  compile_call(ast, false);
-                             break;
-        case METHOD_CALL: compile_method_call(ast);
-                          break;
-        case CLASS_DECL: compile_class(ast);
-                         break;
-        case CLASS_ATTRIBUT: compile_attribut(ast, false);
-                             break;
-        case LIST:  compile_list(ast);
-                    break;
-        case LIST_ID:  compile_list_id(ast);
-                       break;
-        case RETURN_STM:  compile_return(ast);
-                          break;
-        case WHILE:  compile_loop(ast, JUMP_IF_FALSE);
-                     break;
-        case UNTIL:  compile_loop(ast, JUMP_IF_TRUE);
-                     break;
-        case IMPORT:  compile_import(ast);
-                      break;
-        case MODULE_CALL:  compile_module_call(ast);
-                           break;
-        default : break;
+        case STATEMENTS:
+            compile_statements(ast->get_fson());
+            break;
+        case ASSIGNEMENT:
+            compile_assignement(ast);
+            break;
+        case ASSIGNEMENT_ARRAY:
+            compile_assignement_array(ast);
+            break;
+        case ARRAY_AT:
+            compile_array_at(ast);
+            break;
+        case ADD:
+            compile_operation(ast, OP_ADD);
+            break;
+        case MINUS:
+            compile_operation(ast, OP_MINUS);
+            break;
+        case MUL:
+            compile_operation(ast, OP_MUL);
+            break;
+        case DIV:
+            compile_operation(ast, OP_DIV);
+            break;
+        case MOD:
+            compile_operation(ast, OP_MOD);
+            break;
+        case POW:
+            compile_operation(ast, OP_POW);
+            break;
+        case EQ:
+            compile_operation(ast, OP_EQ);
+            break;
+        case DIFF:
+            compile_operation(ast, OP_DIFF);
+            break;
+        case LT:
+            compile_operation(ast, OP_LT);
+            break;
+        case LE:
+            compile_operation(ast, OP_LE);
+            break;
+        case GT:
+            compile_operation(ast, OP_GT);
+            break;
+        case GE:
+            compile_operation(ast, OP_GE);
+            break;
+        case OR:
+            compile_operation(ast, OP_OR);
+            break;
+        case AND:
+            compile_operation(ast, OP_AND);
+            break;
+        case NEW:
+            compile_new(ast);
+            break;
+        case NUMBER:
+            compile_number(ast);
+            break;
+        case STRING:
+            compile_string(ast);
+            break;
+        case EXPR:
+            compile(ast->get_fson());
+            break;
+        case ID:
+            compile_identifier(ast);
+            break;
+        case IF:
+            compile_if(ast);
+            break;
+        case FUNCTION_DECL:
+            compile_function(ast);
+            break;
+        case FUNCTION_CALL:
+            compile_call(ast, false);
+            break;
+        case METHOD_CALL:
+            compile_method_call(ast);
+            break;
+        case CLASS_DECL:
+            compile_class(ast);
+            break;
+        case CLASS_ATTRIBUT:
+            compile_attribut(ast, false);
+            break;
+        case LIST:
+            compile_list(ast);
+            break;
+        case LIST_ID:
+            compile_list_id(ast);
+            break;
+        case RETURN_STM:
+            compile_return(ast);
+            break;
+        case WHILE:
+            compile_loop(ast, JUMP_IF_FALSE);
+            break;
+        case UNTIL:
+            compile_loop(ast, JUMP_IF_TRUE);
+            break;
+        case IMPORT:
+            compile_import(ast);
+            break;
+        case MODULE_CALL:
+            compile_module_call(ast);
+            break;
+        default:
+            break;
     }
 }
 
