@@ -26,6 +26,7 @@ namespace esl
             virtual GCObject* empty (const Params&, Context*);
             virtual GCObject* insert (const Params&, Context*);
             virtual GCObject* erase (const Params&, Context*);
+            virtual GCObject* replace(const Params&, Context*);
 
             virtual GCObject* construct (const Params&, Context*);
 

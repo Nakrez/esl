@@ -1,0 +1,5 @@
+import "io"
+
+test = "Hello test World"
+Io.print_newline(test->replace(6, 4, "dear"))
+Io.print_newline(test)

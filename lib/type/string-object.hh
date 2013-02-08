@@ -17,6 +17,7 @@ namespace esl
             void data_set(const std::string& data);
 
             void erase(int start, int len);
+            void replace(int start, int len, const std::string& str);
 
         private:
             std::string data_;

@@ -27,3 +27,8 @@ void esl::StringObject::erase(int start, int len)
 {
     data_.erase(start, len);
 }
+
+void esl::StringObject::replace(int start, int len, const std::string& str)
+{
+    data_.replace(start, len, str);
+}
