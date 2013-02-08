@@ -365,6 +365,9 @@ void esl::Vm::call_method(esl::Bytecode *instr)
     }
     else // External function call
     {
+        for (int i = 2; i <= params.count(); ++i)
+            params.get_params(i)->decr();
+
         delete fun_runtime;
         this->stack_.push(ret_value);
     }

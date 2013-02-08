@@ -11,18 +11,18 @@ namespace esl
     class Params
     {
         public:
-            Params ();
-            ~Params ();
+            Params();
+            ~Params();
 
-            bool empty () const;
-            int count () const;
+            bool empty() const;
+            int count() const;
 
-            MemoryObject<Content>* get_params (int) const;
+            MemoryObject<Content>* get_params(int) const;
 
-            void push_back (MemoryObject<Content>*);
-            void params_set (MemoryObject<Content>*);
+            void push_back(MemoryObject<Content>*);
+            void params_set(MemoryObject<Content>*);
 
-            void decr ();
+            void decr();
 
         private:
             std::deque<MemoryObject<Content>*> params_;
