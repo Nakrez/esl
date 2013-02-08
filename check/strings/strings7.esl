@@ -1,0 +1,5 @@
+import "io"
+
+test = "Hello test World"
+Io.print_newline(test->erase(5,5))
+Io.print_newline(test)

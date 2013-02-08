@@ -1,3 +1,7 @@
+Nightly 07/02/2013
+
+- Add erase method to String type
+
 Nightly 06/02/2013
 
 - Add insert method to String type

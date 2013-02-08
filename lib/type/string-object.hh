@@ -10,11 +10,13 @@ namespace esl
     class StringObject : public Object
     {
         public:
-            StringObject ();
-            StringObject (const std::string& data);
+            StringObject();
+            StringObject(const std::string& data);
 
-            const std::string& data_get () const;
-            void data_set (const std::string& data);
+            const std::string& data_get() const;
+            void data_set(const std::string& data);
+
+            void erase(int start, int len);
 
         private:
             std::string data_;

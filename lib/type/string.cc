@@ -43,11 +43,37 @@ void esl::String::init()
     squeleton->register_method(name_, "insert",
                                new Function(new Delegate<esl::String>(this,
                                                                       &esl::String::insert)));
+
+    squeleton->register_method(name_, "erase",
+                               new Function(new Delegate<esl::String>(this,
+                                                                      &esl::String::erase)));
 }
 
 esl::GCObject* esl::String::construct (const Params&, Context*)
 {
     return new esl::GCObject(new esl::IntObject(0));
+}
+
+esl::GCObject* esl::String::erase (const esl::Params& params, Context*)
+{
+    if (params.count() < 3)
+        throw esl::Exception("Insert takes 2 parameters");
+
+    esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    esl::IntObject* start = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
+    esl::IntObject* len = dynamic_cast<esl::IntObject*>(params.get_params(3)->data_get());
+
+    if (!start)
+        throw esl::Exception("1st parameter of insert must be an integer");
+
+    if (!len)
+        throw esl::Exception("2nd parameter of insert must be a string");
+
+
+    obj->erase(start->data_get(), len->data_get());
+    params.get_params(1)->incr();
+
+    return params.get_params(1);
 }
 
 esl::GCObject* esl::String::insert (const esl::Params& params, Context*)
