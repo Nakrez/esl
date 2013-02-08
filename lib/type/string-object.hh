@@ -18,6 +18,7 @@ namespace esl
 
             void erase(int start, int len);
             void replace(int start, int len, const std::string& str);
+            std::string substr(int pos, int len);
 
         private:
             std::string data_;

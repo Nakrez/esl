@@ -1,0 +1,4 @@
+import "io"
+
+test = "Hello world"
+Io.print_newline(test->substr(6, 5))

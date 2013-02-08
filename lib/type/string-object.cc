@@ -32,3 +32,8 @@ void esl::StringObject::replace(int start, int len, const std::string& str)
 {
     data_.replace(start, len, str);
 }
+
+std::string esl::StringObject::substr(int pos, int len)
+{
+    return data_.substr(pos, len);
+}

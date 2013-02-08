@@ -1,7 +1,7 @@
 #! /bin/sh
 
 categorie="strings"
-count=8
+count=9
 curr=1
 win=0
 

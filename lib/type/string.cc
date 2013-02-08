@@ -51,6 +51,10 @@ void esl::String::init()
     squeleton->register_method(name_, "replace",
                                new Function(new Delegate<esl::String>(this,
                                                                       &esl::String::replace)));
+
+    squeleton->register_method(name_, "substr",
+                               new Function(new Delegate<esl::String>(this,
+                                                                      &esl::String::substr)));
 }
 
 esl::GCObject* esl::String::construct (const Params&, Context*)
@@ -61,7 +65,7 @@ esl::GCObject* esl::String::construct (const Params&, Context*)
 esl::GCObject* esl::String::replace(const esl::Params& params, Context*)
 {
     if (params.count() < 4)
-        throw esl::Exception("Insert takes 3 parameters");
+        throw esl::Exception("replace takes 3 parameters");
 
     esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::IntObject* start = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
@@ -69,13 +73,13 @@ esl::GCObject* esl::String::replace(const esl::Params& params, Context*)
     esl::StringObject* str = dynamic_cast<esl::StringObject*>(params.get_params(4)->data_get());
 
     if (!start)
-        throw esl::Exception("1st parameter of insert must be an integer");
+        throw esl::Exception("1st parameter of replace must be an integer");
 
     if (!len)
-        throw esl::Exception("2nd parameter of insert must be an integer");
+        throw esl::Exception("2nd parameter of replace must be an integer");
 
     if (!str)
-        throw esl::Exception("2nd parameter of insert must be a string");
+        throw esl::Exception("2nd parameter of replace must be a string");
 
     obj->replace(start->data_get(), len->data_get(), str->data_get());
     params.get_params(1)->incr();
@@ -83,20 +87,40 @@ esl::GCObject* esl::String::replace(const esl::Params& params, Context*)
     return params.get_params(1);
 }
 
-esl::GCObject* esl::String::erase (const esl::Params& params, Context*)
+esl::GCObject* esl::String::substr(const esl::Params& params, Context*)
 {
     if (params.count() < 3)
-        throw esl::Exception("Insert takes 2 parameters");
+        throw esl::Exception("substr takes 2 parameters");
 
     esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::IntObject* start = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
     esl::IntObject* len = dynamic_cast<esl::IntObject*>(params.get_params(3)->data_get());
 
     if (!start)
-        throw esl::Exception("1st parameter of insert must be an integer");
+        throw esl::Exception("1st parameter of substr must be an integer");
 
     if (!len)
-        throw esl::Exception("2nd parameter of insert must be an integer");
+        throw esl::Exception("2nd parameter of substr must be an integer");
+
+    esl::StringObject* sub = new esl::StringObject(obj->substr(start->data_get(),
+                                                               len->data_get()));
+    return new GCObject(sub);
+}
+
+esl::GCObject* esl::String::erase (const esl::Params& params, Context*)
+{
+    if (params.count() < 3)
+        throw esl::Exception("erase takes 2 parameters");
+
+    esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    esl::IntObject* start = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
+    esl::IntObject* len = dynamic_cast<esl::IntObject*>(params.get_params(3)->data_get());
+
+    if (!start)
+        throw esl::Exception("1st parameter of erase must be an integer");
+
+    if (!len)
+        throw esl::Exception("2nd parameter of erase must be an integer");
 
 
     obj->erase(start->data_get(), len->data_get());
@@ -108,7 +132,7 @@ esl::GCObject* esl::String::erase (const esl::Params& params, Context*)
 esl::GCObject* esl::String::insert (const esl::Params& params, Context*)
 {
     if (params.count() < 3)
-        throw esl::Exception("Insert takes 2 parameters");
+        throw esl::Exception("insert takes 2 parameters");
 
     esl::StringObject* obj = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::IntObject* pos = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
