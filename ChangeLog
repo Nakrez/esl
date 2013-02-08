@@ -1,5 +1,6 @@
 Nightly 07/02/2013
 
+- Add is_register_function to Esl module
 - Add erase method to String type
 - Add replace method to String type
 - Add substr method to String type

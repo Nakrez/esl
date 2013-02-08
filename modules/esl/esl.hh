@@ -7,11 +7,15 @@
 # include "../../lib/type/object.hh"
 
 # include "../../src/execute/vm.hh"
+# include "../../lib/gc/memory-object.hh"
 
 class Esl: public esl::Extension
 {
     public:
         void init ();
+
+        esl::GCObject* is_function_exist(const esl::Params& params,
+                                        esl::Context* context);
 };
 
 extern "C" Esl* get ();

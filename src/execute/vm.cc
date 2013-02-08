@@ -200,6 +200,11 @@ void esl::Vm::run()
     }
 }
 
+bool esl::Vm::is_register_function(const std::string& name) const
+{
+    return runtime_->function_exist(name);
+}
+
 void esl::Vm::inherit (Bytecode* instr)
 {
     // Exctract the mother name

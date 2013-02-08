@@ -22,6 +22,8 @@ namespace esl
             Context(const Context& context);
             ~Context();
 
+            bool function_exist(const std::string& name) const;
+
             GCObject* function_get (const std::string& name) const;
             GCObject* variable_get (const std::string& name) const;
             GCObject* module_get (const std::string&) const;

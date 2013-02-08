@@ -30,6 +30,11 @@ esl::Context::~Context()
         mod.second->decr();
 }
 
+bool esl::Context::function_exist(const std::string& name) const
+{
+    return this->functions_.find(name) != this->functions_.end();
+}
+
 esl::GCObject* esl::Context::function_get (const std::string& name) const
 {
     if (this->functions_.find(name) == this->functions_.end())

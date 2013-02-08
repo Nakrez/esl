@@ -44,6 +44,8 @@ namespace esl
 
             bool external_call (Function* fun, const Params& params);
 
+            bool is_register_function(const std::string& name) const;
+
             /// @brief POP stack and decr counter on TOS
             void pop ();
 
