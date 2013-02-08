@@ -497,6 +497,7 @@ void esl::Vm::call_module (Bytecode* instr)
     esl::Params params;
     esl::Module* module = nullptr;
     std::string* fun_name = RoData::instance_get()->get(instr->get_param());
+    esl::Context context;
 
     module = dynamic_cast<esl::Module*>(this->stack_.top()->data_get());
     this->stack_.pop();
@@ -515,7 +516,7 @@ void esl::Vm::call_module (Bytecode* instr)
         throw esl::Exception("no function " + *fun_name +
                              " registered in module " + module->name_get()); 
     // Perform the call
-    this->stack_.push(module->call(*fun_name, params, new esl::Context));
+    this->stack_.push(module->call(*fun_name, params, &context));
 
     // Decrement reference count on all params (since they have been poped)
     params.decr();
