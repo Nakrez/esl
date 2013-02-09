@@ -48,6 +48,9 @@ namespace esl
             bool is_register_variable(const std::string& name) const;
             bool is_register_module(const std::string& name) const;
 
+            bool module_function(const std::string& module,
+                                 const std::string& fun) const;
+
             /// @brief POP stack and decr counter on TOS
             void pop ();
 

@@ -1,7 +1,7 @@
 #! /bin/sh
 
 categorie="esl"
-count=7
+count=8
 curr=1
 win=0
 

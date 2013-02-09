@@ -26,6 +26,9 @@ namespace esl
             bool module_exist(const std::string& name) const;
             bool variable_exist(const std::string& name) const;
 
+            bool module_function(const std::string& module,
+                                 const std::string& fun) const;
+
             GCObject* function_get(const std::string& name) const;
             GCObject* variable_get(const std::string& name) const;
             GCObject* module_get(const std::string&) const;

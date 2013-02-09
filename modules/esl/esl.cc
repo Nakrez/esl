@@ -16,6 +16,8 @@ void Esl::init ()
                       new esl::Delegate<Esl>(this, &Esl::object_method));
     register_function("object_attribut",
                       new esl::Delegate<Esl>(this, &Esl::object_attribut));
+    register_function("module_function",
+                      new esl::Delegate<Esl>(this, &Esl::module_function));
 }
 
 esl::GCObject* Esl::function_exist(const esl::Params& params,
@@ -128,7 +130,7 @@ esl::GCObject* Esl::object_method(const esl::Params& params,
 }
 
 esl::GCObject* Esl::object_attribut(const esl::Params& params,
-                                  esl::Context*)
+                                    esl::Context*)
 {
     if (params.count() < 1)
         throw esl::Exception("object_attribut take 2 parameters");
@@ -141,6 +143,26 @@ esl::GCObject* Esl::object_attribut(const esl::Params& params,
 
     int ret = esl::Squeleton::get()->type_attribut(obj->type_get(),
                                                    attribut->data_get());
+
+    return new esl::GCObject(new esl::IntObject(ret));
+}
+
+esl::GCObject* Esl::module_function(const esl::Params& params,
+                                    esl::Context*)
+{
+    if (params.count() < 1)
+        throw esl::Exception("module_function take 2 parameters");
+
+    esl::Vm* vm = esl::Vm::get();
+    esl::StringObject* module = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
+    esl::StringObject* function = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
+
+    if (!module)
+        throw esl::Exception("1st parameter of module_function must be a string");
+    if (!function)
+        throw esl::Exception("2nd parameter of module_function must be a string");
+
+    int ret = vm->module_function(module->data_get(), function->data_get());
 
     return new esl::GCObject(new esl::IntObject(ret));
 }

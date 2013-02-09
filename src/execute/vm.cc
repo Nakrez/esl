@@ -200,6 +200,12 @@ void esl::Vm::run()
     }
 }
 
+bool esl::Vm::module_function(const std::string& module,
+                              const std::string& fun) const
+{
+    return runtime_->module_function(module, fun);
+}
+
 bool esl::Vm::is_register_function(const std::string& name) const
 {
     return runtime_->function_exist(name);

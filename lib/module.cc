@@ -51,7 +51,7 @@ void esl::Module::load ()
     ext_->init();
 }
 
-bool esl::Module::is_registered (const std::string& name) const
+bool esl::Module::is_registered(const std::string& name) const
 {
     return ext_->is_registered(name);
 }

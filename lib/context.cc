@@ -1,4 +1,5 @@
 #include "context.hh"
+#include "module.hh"
 
 esl::Context::Context()
     : functions_ ()
@@ -33,6 +34,23 @@ esl::Context::~Context()
 bool esl::Context::function_exist(const std::string& name) const
 {
     return this->functions_.find(name) != this->functions_.end();
+}
+
+bool esl::Context::module_function(const std::string& module,
+                                   const std::string& fun) const
+{
+    std::string str = module;
+
+    for (unsigned i = 1; i < str.length(); ++i)
+        str[i] = tolower(str[i]);
+
+    str[0] = toupper(str[0]);
+
+    if (!module_exist(str))
+        return 0;
+
+    esl::Module* ext = dynamic_cast<esl::Module*>(modules_.at(str)->data_get());
+    return ext->is_registered(fun);
 }
 
 bool esl::Context::module_exist(const std::string& name) const
