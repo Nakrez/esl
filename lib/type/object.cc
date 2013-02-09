@@ -61,3 +61,8 @@ void esl::Object::update_attribut (const std::string& attr_name,
                                       Visibility>(value,
                                                   attributs_.at(attr_name).second);
 }
+
+const std::string& esl::Object::type_get() const
+{
+    return type_;
+}

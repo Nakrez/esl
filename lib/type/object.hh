@@ -31,6 +31,8 @@ namespace esl
 
             GCObject* attribut_get (const std::string& attr_name);
 
+            const std::string& type_get() const;
+
         private:
             void register_attribut (const std::unordered_map<std::string,
                                                              Visibility>& attr);
