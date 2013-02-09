@@ -71,11 +71,36 @@ const esl::Attributs& esl::Squeleton::attributs_get (const std::string& type)
     return object_attributs_[type];
 }
 
-bool esl::Squeleton::has_attribut (const std::string& type)
+bool esl::Squeleton::has_attribut(const std::string& type)
 {
     type_existance (type);
 
     return !object_attributs_[type].empty();
+}
+
+bool esl::Squeleton::type_exist(const std::string& type)
+{
+    return declared_type_.find(type) != declared_type_.end();
+}
+
+bool esl::Squeleton::type_attribut(const std::string& type,
+                                   const std::string& attribut)
+{
+    if (!type_exist(type))
+        return 0;
+
+    return object_attributs_[type].find(attribut) !=
+           object_attributs_[type].end();
+}
+
+bool esl::Squeleton::type_method(const std::string& type,
+                                 const std::string& method)
+{
+    if (!type_exist(type))
+        return 0;
+
+    return object_methods_[type].find(method) !=
+           object_methods_[type].end();
 }
 
 void esl::Squeleton::register_method (const std::string& type,

@@ -1,0 +1,15 @@
+import "io"
+import "esl"
+
+sys = 1
+
+class temp
+    public function testt()
+        return 1
+    end
+end
+
+Io.print_newline(Esl.type_method("temp", "test"))
+Io.print_newline(Esl.type_method("temp", "testt"))
+Io.print_newline(Esl.type_method("test", "testt"))
+Io.print_newline(Esl.type_method("String", "substr"))

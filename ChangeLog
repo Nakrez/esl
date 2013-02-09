@@ -1,6 +1,7 @@
 Nightly 08/02/2013
 
 - Add is_module_exist to Esl module
+- Add type_method to Esl module
 - Add variable_exist to Esl module
 - Rename is_module_exist into module_exist (Esl module)
 - Rename is_function_exist into function_exist (Esl module)

@@ -52,7 +52,13 @@ namespace esl
 
             const Attributs& attributs_get (const std::string& type);
 
-            bool has_attribut (const std::string& type);
+            bool has_attribut(const std::string& type);
+
+            bool type_attribut(const std::string& type,
+                               const std::string& attribut);
+            bool type_method(const std::string& type,
+                             const std::string& method);
+            bool type_exist(const std::string& type);
 
         private:
             Squeleton ();

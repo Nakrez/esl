@@ -20,6 +20,8 @@ class Esl: public esl::Extension
                                        esl::Context* context);
         esl::GCObject* is_variable_exist(const esl::Params& params,
                                          esl::Context* context);
+        esl::GCObject* type_method(const esl::Params& params,
+                                   esl::Context* context);
 };
 
 extern "C" Esl* get ();
