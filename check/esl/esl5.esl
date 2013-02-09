@@ -1,0 +1,12 @@
+import "io"
+import "esl"
+
+sys = 1
+
+class temp
+    public test
+end
+
+Io.print_newline(Esl.type_attribut("temp", "test"))
+Io.print_newline(Esl.type_attribut("temp", "substr"))
+Io.print_newline(Esl.type_attribut("String", "substr"))
