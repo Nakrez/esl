@@ -4,6 +4,7 @@ Nightly 09/02/2013
 - Add type_attribut function to Esl module
 - Add type_method function to Esl module
 - Add object_method function to Esl module
+- Add object_attribut function to Esl module
 - Add variable_exist to Esl module
 - Rename is_module_exist into module_exist (Esl module)
 - Rename is_function_exist into function_exist (Esl module)
