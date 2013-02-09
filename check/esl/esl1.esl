@@ -5,5 +5,5 @@ function test()
     return 1
 end
 
-Io.print_newline(Esl.is_function_exist("test"))
-Io.print_newline(Esl.is_function_exist("another_test"))
+Io.print_newline(Esl.function_exist("test"))
+Io.print_newline(Esl.function_exist("another_test"))

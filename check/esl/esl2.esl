@@ -1,9 +1,5 @@
 import "io"
 import "esl"
 
-function test()
-    return 1
-end
-
-Io.print_newline(Esl.is_module_exist("sys"))
-Io.print_newline(Esl.is_module_exist("esl"))
+Io.print_newline(Esl.module_exist("sys"))
+Io.print_newline(Esl.module_exist("esl"))

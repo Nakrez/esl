@@ -1,0 +1,7 @@
+import "io"
+import "esl"
+
+sys = 1
+
+Io.print_newline(Esl.variable_exist("sys"))
+Io.print_newline(Esl.variable_exist("esl"))
