@@ -205,6 +205,16 @@ bool esl::Vm::is_register_function(const std::string& name) const
     return runtime_->function_exist(name);
 }
 
+bool esl::Vm::is_register_variable(const std::string& name) const
+{
+    return runtime_->variable_exist(name);
+}
+
+bool esl::Vm::is_register_module(const std::string& name) const
+{
+    return runtime_->module_exist(name);
+}
+
 void esl::Vm::inherit (Bytecode* instr)
 {
     // Exctract the mother name

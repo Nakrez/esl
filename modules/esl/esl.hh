@@ -15,7 +15,11 @@ class Esl: public esl::Extension
         void init ();
 
         esl::GCObject* is_function_exist(const esl::Params& params,
-                                        esl::Context* context);
+                                         esl::Context* context);
+        esl::GCObject* is_module_exist(const esl::Params& params,
+                                       esl::Context* context);
+        esl::GCObject* is_variable_exist(const esl::Params& params,
+                                         esl::Context* context);
 };
 
 extern "C" Esl* get ();

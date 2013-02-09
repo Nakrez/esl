@@ -23,18 +23,20 @@ namespace esl
             ~Context();
 
             bool function_exist(const std::string& name) const;
+            bool module_exist(const std::string& name) const;
+            bool variable_exist(const std::string& name) const;
 
-            GCObject* function_get (const std::string& name) const;
-            GCObject* variable_get (const std::string& name) const;
-            GCObject* module_get (const std::string&) const;
+            GCObject* function_get(const std::string& name) const;
+            GCObject* variable_get(const std::string& name) const;
+            GCObject* module_get(const std::string&) const;
 
-            void variable_set (const std::string&, GCObject*);
-            void function_set (const std::string&, GCObject*);
-            void module_set (const std::string&, GCObject*);
+            void variable_set(const std::string&, GCObject*);
+            void function_set(const std::string&, GCObject*);
+            void module_set(const std::string&, GCObject*);
 
-            size_t pc_get () const;
-            void pc_set (size_t);
-            void pc_incr (int incr);
+            size_t pc_get() const;
+            void pc_set(size_t);
+            void pc_incr(int incr);
 
         private:
             std::map<std::string, GCObject*> functions_;

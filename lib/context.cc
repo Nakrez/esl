@@ -35,6 +35,23 @@ bool esl::Context::function_exist(const std::string& name) const
     return this->functions_.find(name) != this->functions_.end();
 }
 
+bool esl::Context::module_exist(const std::string& name) const
+{
+    std::string str = name;
+
+    for (unsigned i = 1; i < str.length(); ++i)
+        str[i] = tolower(str[i]);
+
+    str[0] = toupper(str[0]);
+
+    return this->modules_.find(str) != this->modules_.end();
+}
+
+bool esl::Context::variable_exist(const std::string& name) const
+{
+    return this->variables_.find(name) != this->variables_.end();
+}
+
 esl::GCObject* esl::Context::function_get (const std::string& name) const
 {
     if (this->functions_.find(name) == this->functions_.end())
@@ -79,7 +96,7 @@ void esl::Context::module_set (const std::string& name, GCObject* module)
 {
     std::string str = name;
 
-    str[0] = str[0] - 'a' + 'A';
+    str[0] = toupper(str[0]);
 
     this->modules_[str] = module;
 }
