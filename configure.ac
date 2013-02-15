@@ -28,7 +28,6 @@ AC_CHECK_LIB([dl], [dlclose])
 AC_CHECK_HEADERS([sys/time.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
-AC_CHECK_HEADER_STDBOOL
 AC_C_INLINE
 AC_TYPE_SIZE_T
 

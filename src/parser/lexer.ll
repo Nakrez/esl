@@ -33,7 +33,7 @@
                             yylloc->lines(yyleng);
                             yylloc->step();
                         }
-<COMMENT_MULTI>.*
+<COMMENT_MULTI>.        yylloc->step();
 
 "#"                     BEGIN(COMMENT_SIMPLE);
 <COMMENT_SIMPLE>"\n"    {
