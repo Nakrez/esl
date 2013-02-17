@@ -1,3 +1,4 @@
+/// date 17 Feb 2013
 #ifndef OP_EXP_HH
 # define OP_EXP_HH
 

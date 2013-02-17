@@ -1,3 +1,4 @@
+/// date 17 Feb 2013
 #ifndef VISITOR_HH
 # define VISITOR_HH
 
@@ -11,6 +12,7 @@ namespace ast
     class AttributDec;
     class ExpList;
     class OpExp;
+    class IfExp;
 
     class Visitor
     {
@@ -25,6 +27,7 @@ namespace ast
             virtual void operator()(FunctionDec&) = 0;
             virtual void operator()(AttributDec&) = 0;
             virtual void operator()(OpExp&) = 0;
+            virtual void operator()(IfExp&) = 0;
             virtual void operator()(ExpList&) = 0;
     };
 } // namespace ast
