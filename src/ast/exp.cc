@@ -1,7 +1,4 @@
-#ifndef EXP_HXX
-# define EXP_HXX
-
-# include <ast/exp.hh>
+#include <ast/exp.hh>
 
 namespace ast
 {
@@ -9,5 +6,3 @@ namespace ast
         : Ast(location)
     {}
 }
-
-#endif /* !EXP_HXX */

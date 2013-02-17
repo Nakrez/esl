@@ -32,11 +32,17 @@ libesl_la_CXXFLAGS = -Ilib -Wall -Wextra -std=c++0x -Wno-delete-non-virtual-dtor
 bin_PROGRAMS= esl
 
 esl_SOURCES =  src/parser/parser.yy \
+		src/parser/lexer.ll \
 		src/ast/ast.cc src/ast/ast.hh \
+		src/ast/dec.cc \
+		src/ast/var-dec.cc \
+		src/ast/function-dec.cc \
+		src/ast/method-dec.cc \
+		src/ast/import-dec.cc \
+		src/ast/exp.cc \
 		src/utils/utils.cc src/utils/utils.hh \
 		src/utils/bytecode.cc src/utils/bytecode.hh \
 		src/utils/ro-data.cc src/utils/ro-data.hh \
-		src/parser/lexer.ll \
 		src/parser/driver.cc src/parser/driver.hh \
 		src/compile/compiler.cc src/compile/compiler.hh \
 		src/main.cc
@@ -75,7 +81,7 @@ clear: distclean
 
 count:
 	cat lib/*.{hh,cc} lib/type/*.{cc,hh} lib/gc/*.{hh,hxx} src/main.cc \
-	    src/**/*.{cc,hh} modules/**/*.{cc,hh} | wc -l
+	    src/**/*.{cc,hh,hxx} modules/**/*.{cc,hh} | wc -l
 
 esl-doc:
 	make -C doc

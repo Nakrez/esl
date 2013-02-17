@@ -22,7 +22,7 @@ namespace ast
             Ast(token tok, std::string* content);
             Ast(token tok, Ast* content);
             Ast(token tok, int content);
-            ~Ast();
+            virtual ~Ast();
 
             void print();
             void add(Ast *ast);

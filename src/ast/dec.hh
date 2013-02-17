@@ -1,3 +1,4 @@
+/// date 17 Feb 2013
 #ifndef DEC_HH
 # define DEC_HH
 
@@ -11,6 +12,7 @@ namespace ast
         public:
             Dec(const yy::location& location,
                 const misc::symbol& name);
+            virtual ~Dec();
 
             const misc::symbol& name_get() const;
             void name_set(const misc::symbol& name);

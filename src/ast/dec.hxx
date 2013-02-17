@@ -5,19 +5,12 @@
 
 namespace ast
 {
-    Dec::Dec(const yy::location& location,
-             const misc::symbol& name)
-        : Ast(location)
-        , name_(name)
-    {
-    }
-
-    inline const misc::symbol& name_get() const
+    inline const misc::symbol& Dec::name_get() const
     {
         return name_;
     }
 
-    inline void name_set(const misc::symbol& name)
+    inline void Dec::name_set(const misc::symbol& name)
     {
         name_ = name;
     }

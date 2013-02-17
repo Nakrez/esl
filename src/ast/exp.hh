@@ -1,7 +1,8 @@
+/// date 17 Feb 2013
 #ifndef EXP_HH
 # define EXP_HH
 
-# include <ast/ast>
+# include <ast/ast.hh>
 
 namespace ast
 {

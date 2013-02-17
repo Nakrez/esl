@@ -6,7 +6,7 @@
 #include <string>
 #include <list>
 
-#include <ast/ast.hh>
+#include <ast/all.hh>
 
 class Driver;
 }
