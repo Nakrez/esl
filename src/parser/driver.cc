@@ -5,7 +5,6 @@
 
 Driver::Driver()
 {
-    this->gen_ast_ = new ast::Ast(STATEMENTS);
     errors_ = 0;
     byte_param = false;
     ast_param = false;
@@ -17,7 +16,7 @@ Driver::~Driver()
 
 void Driver::free()
 {
-    delete this->gen_ast_;
+    delete this->ast_;
 }
 
 void Driver::error(const yy::location& l, const std::string& m)
@@ -29,11 +28,6 @@ void Driver::error(const yy::location& l, const std::string& m)
 int Driver::errors_get ()
 {
     return this->errors_;
-}
-
-ast::Ast *Driver::ast()
-{
-    return this->gen_ast_;
 }
 
 bool Driver::get_byte()
@@ -68,8 +62,8 @@ int Driver::parser(const std::string &f, const std::string &t)
         res = parser.parse();
         scan_end();
 
-        if (get_ast())
-            this->gen_ast_->print();
+        /*if (get_ast())
+            this->gen_ast_->print();*/
     }
     else
     {

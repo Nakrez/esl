@@ -22,7 +22,6 @@ class Driver
         int parser (const std::string &f, const std::string &t);
         void scan_begin ();
         void scan_end ();
-        ast::Ast* ast ();
         void free ();
         int errors_get ();
         void set_byte (bool a);
@@ -30,11 +29,13 @@ class Driver
         void set_ast (bool a);
         bool get_ast ();
 
+    public:
+        ast::Ast* ast_;
+
     private:
         bool ast_param;
         bool byte_param;
         std::string file_;
         int errors_;
-        ast::Ast* gen_ast_;
 };
 #endif /* DRIVER_HH */

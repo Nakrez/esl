@@ -8,7 +8,21 @@
 
 namespace ast
 {
-    typedef std::list<VarDec> VarDecList;
+    class VarDecList : public Ast
+    {
+        public:
+            VarDecList(const yy::location& location);
+            VarDecList(const yy::location& location,
+                       std::list<VarDec*>* list);
+            ~VarDecList();
+
+            const std::list<VarDec*>& list_get() const;
+
+        protected:
+            std::list<VarDec*>* list_;
+    };
 } // namespace ast
+
+# include <ast/var-dec-list.hxx>
 
 #endif /* !VAR_DEC_LIST_HH */

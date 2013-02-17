@@ -8,7 +8,21 @@
 
 namespace ast
 {
-    typedef std::list<Exp> ExpList;
+    class ExpList : public Ast
+    {
+        public:
+            ExpList(const yy::location& location);
+            ExpList(const yy::location& location,
+                    std::list<Exp*>* list);
+            virtual ~ExpList();
+
+            const std::list<Exp*>& list_get() const;
+
+        protected:
+            std::list<Exp*>* list_;
+    };
 } // namespace ast
+
+# include <ast/exp-list.hxx>
 
 #endif /* !EXP_LIST_HH */

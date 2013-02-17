@@ -36,18 +36,20 @@ esl_SOURCES =  src/parser/parser.yy \
 		src/ast/ast.cc src/ast/ast.hh \
 		src/ast/dec.cc \
 		src/ast/var-dec.cc \
+		src/ast/var-dec-list.cc \
 		src/ast/attribut-dec.cc \
 		src/ast/function-dec.cc \
 		src/ast/method-dec.cc \
 		src/ast/import-dec.cc \
 		src/ast/exp.cc \
+		src/ast/exp-list.cc \
+		src/ast/visitor.cc \
 		src/utils/utils.cc src/utils/utils.hh \
 		src/utils/bytecode.cc src/utils/bytecode.hh \
 		src/utils/ro-data.cc src/utils/ro-data.hh \
 		src/parser/driver.cc src/parser/driver.hh \
-		src/compile/compiler.cc src/compile/compiler.hh \
 		src/main.cc
-
+#src/compile/compiler.cc src/compile/compiler.hh \
 #EXTRA_esl_YACCdir = src/parser
 
 esl_CXXFLAGS = -Isrc -Ilib -Wall -Wextra -std=c++0x -Wno-delete-non-virtual-dtor

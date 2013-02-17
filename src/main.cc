@@ -8,6 +8,7 @@
 #include <iostream>
 
 # define BENCH 0
+# define AST_TEST
 
 int main(int argc, char **argv)
 {
@@ -29,6 +30,9 @@ int main(int argc, char **argv)
     /* Compile the AST given by the parser into bytecode */
     if (!driver.errors_get())
     {
+        #ifdef AST_TEST
+        std::cout << "Pretty Print" << std::endl;
+        #else
         compiler = new esl::Compiler(driver.ast());
 
         #if BENCH == 1
@@ -70,11 +74,12 @@ int main(int argc, char **argv)
         #endif /* !BENCH */
 
         esl::RoData::instance_delete();
+        delete compiler;
+        #endif
     }
 
-    driver.free();
+    //driver.free();
 
-    delete compiler;
     esl::Squeleton::free();
     esl::Vm::free();
 
