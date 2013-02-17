@@ -1,26 +1,17 @@
-/// date 17 Feb 2013
-#ifndef VISITOR_HH
-# define VISITOR_HH
+#ifndef PRETTY_PRINTER_HH
+# define PRETTY_PRINTER_HH
+
+# include <iostream>
+
+# include <ast/visitor.hh>
 
 namespace ast
 {
-    class Ast;
-    class VarDec;
-    class VarDecList;
-    class ImportDec;
-    class FunctionDec;
-    class AttributDec;
-    class ExpList;
-    class OpExp;
-    class IfExp;
-
-    class Visitor
+    class PrettyPrinter : public Visitor
     {
         public:
-            Visitor();
-            virtual ~Visitor();
+            PrettyPrinter(std::ostream& stream);
 
-            void operator()(Ast&);
             virtual void operator()(VarDec&) = 0;
             virtual void operator()(VarDecList&) = 0;
             virtual void operator()(ImportDec&) = 0;
@@ -29,7 +20,10 @@ namespace ast
             virtual void operator()(OpExp&) = 0;
             virtual void operator()(IfExp&) = 0;
             virtual void operator()(ExpList&) = 0;
+
+        protected:
+            std::ostream& stream_;
     };
 } // namespace ast
 
-#endif /* !VISITOR_HH */
+#endif /* !PRETTY_PRINTER_HH */

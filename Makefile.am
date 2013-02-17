@@ -46,6 +46,7 @@ esl_SOURCES =  src/parser/parser.yy \
 		src/ast/op-exp.cc \
 		src/ast/if-exp.cc \
 		src/ast/visitor.cc \
+		src/ast/pretty-printer.cc \
 		src/utils/utils.cc src/utils/utils.hh \
 		src/utils/bytecode.cc src/utils/bytecode.hh \
 		src/utils/ro-data.cc src/utils/ro-data.hh \
