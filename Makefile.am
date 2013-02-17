@@ -36,6 +36,7 @@ esl_SOURCES =  src/parser/parser.yy \
 		src/ast/ast.cc src/ast/ast.hh \
 		src/ast/dec.cc \
 		src/ast/var-dec.cc \
+		src/ast/attribut-dec.cc \
 		src/ast/function-dec.cc \
 		src/ast/method-dec.cc \
 		src/ast/import-dec.cc \
