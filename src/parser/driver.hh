@@ -1,8 +1,8 @@
 #ifndef DRIVER_HH
 # define DRIVER_HH
 
-# include "esl-parser.hh"
-# include "../utils/ast.hh"
+# include <parser/esl-parser.hh>
+# include <ast/ast.hh>
 
 # define YY_DECL                                        \
     yy::eslxx_parser::token_type yylex(                \
@@ -22,7 +22,7 @@ class Driver
         int parser (const std::string &f, const std::string &t);
         void scan_begin ();
         void scan_end ();
-        esl::Ast* ast ();
+        ast::Ast* ast ();
         void free ();
         int errors_get ();
         void set_byte (bool a);
@@ -35,6 +35,6 @@ class Driver
         bool byte_param;
         std::string file_;
         int errors_;
-        esl::Ast* gen_ast_;
+        ast::Ast* gen_ast_;
 };
 #endif /* DRIVER_HH */

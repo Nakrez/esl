@@ -1,6 +1,6 @@
 #include "compiler.hh"
 
-esl::Compiler::Compiler(esl::Ast *ast)
+esl::Compiler::Compiler(ast::Ast *ast)
 {
     this->gen_ast_ = ast;
 }
@@ -47,7 +47,7 @@ void esl::Compiler::export_bytecode(const std::string &filename)
 
 /* Private Members */
 
-void esl::Compiler::compile(esl::Ast *ast)
+void esl::Compiler::compile(ast::Ast *ast)
 {
     if (ast == nullptr)
         return;
@@ -168,7 +168,7 @@ void esl::Compiler::compile(esl::Ast *ast)
     }
 }
 
-void esl::Compiler::compile_attribut(Ast* ast, bool treated)
+void esl::Compiler::compile_attribut(ast::Ast* ast, bool treated)
 {
     compile(ast->get_fson());
 
@@ -177,14 +177,14 @@ void esl::Compiler::compile_attribut(Ast* ast, bool treated)
                                                ast->get_fson()->get_rbro()->get_content()));
 }
 
-void esl::Compiler::compile_class(Ast* ast)
+void esl::Compiler::compile_class(ast::Ast* ast)
 {
     byte_code_.push_back(new esl::Bytecode(START_CLASS, ast->get_content()));
 
     // Compiling inheritance
     if (ast->get_fson()->get_token() != EMPTY)
     {
-        esl::Ast* temp = ast->get_fson()->get_fson();
+        ast::Ast* temp = ast->get_fson()->get_fson();
 
         while (temp)
         {
@@ -202,7 +202,7 @@ void esl::Compiler::compile_class(Ast* ast)
     byte_code_.push_back(new esl::Bytecode(END_CLASS));
 }
 
-void esl::Compiler::compile_new(Ast* ast)
+void esl::Compiler::compile_new(ast::Ast* ast)
 {
     compile_call(ast->get_fson(), false);
     delete byte_code_.at(byte_code_.size() - 1);
@@ -211,7 +211,7 @@ void esl::Compiler::compile_new(Ast* ast)
                                            ast->get_fson()->get_content()));
 }
 
-void esl::Compiler::compile_method_call (Ast* ast)
+void esl::Compiler::compile_method_call (ast::Ast* ast)
 {
     // Compile the left part of the call (before "->")
     compile(ast->get_fson());
@@ -220,10 +220,10 @@ void esl::Compiler::compile_method_call (Ast* ast)
     compile_call(ast->get_fson()->get_rbro(), true);
 }
 
-void esl::Compiler::compile_assignement_array (Ast* ast)
+void esl::Compiler::compile_assignement_array (ast::Ast* ast)
 {
     // Node containing the expr inside []
-    esl::Ast* temp_ast = ast->get_fson()->get_rbro()->get_fson()->get_fson();
+    ast::Ast* temp_ast = ast->get_fson()->get_rbro()->get_fson()->get_fson();
 
     // Compile value received
     compile(ast->get_fson()->get_rbro()->get_rbro());
@@ -244,10 +244,10 @@ void esl::Compiler::compile_assignement_array (Ast* ast)
     byte_code_.push_back(new esl::Bytecode(POP));
 }
 
-void esl::Compiler::compile_array_at(Ast* ast)
+void esl::Compiler::compile_array_at(ast::Ast* ast)
 {
     // Node containing the expr inside []
-    esl::Ast* temp_ast = ast->get_fson()->get_rbro()->get_fson();
+    ast::Ast* temp_ast = ast->get_fson()->get_rbro()->get_fson();
 
     // Compile array name
     compile(ast->get_fson());
@@ -261,7 +261,7 @@ void esl::Compiler::compile_array_at(Ast* ast)
     }
 }
 
-void esl::Compiler::compile_module_call(Ast* ast)
+void esl::Compiler::compile_module_call(ast::Ast* ast)
 {
     // For parameter delimitation
     byte_code_.push_back(new esl::Bytecode(DELIM));
@@ -276,7 +276,7 @@ void esl::Compiler::compile_module_call(Ast* ast)
                                            ast->get_fson()->get_content()));
 }
 
-void esl::Compiler::compile_loop(Ast* ast, instr i)
+void esl::Compiler::compile_loop(ast::Ast* ast, instr i)
 {
     // The instruction that return to the condition
     esl::Bytecode* instruction_back = nullptr;
@@ -311,7 +311,7 @@ void esl::Compiler::compile_loop(Ast* ast, instr i)
     byte_code_.push_back(instruction_back);
 }
 
-void esl::Compiler::compile_statements(esl::Ast* ast)
+void esl::Compiler::compile_statements(ast::Ast* ast)
 {
     while (ast)
     {
@@ -329,16 +329,16 @@ void esl::Compiler::compile_statements(esl::Ast* ast)
     }
 }
 
-void esl::Compiler::compile_return(esl::Ast* ast)
+void esl::Compiler::compile_return(ast::Ast* ast)
 {
     // Compile the expression returned
     compile(ast->get_fson());
     byte_code_.push_back(new esl::Bytecode(RETURN));
 }
 
-void esl::Compiler::compile_list_id(esl::Ast* ast)
+void esl::Compiler::compile_list_id(ast::Ast* ast)
 {
-    esl::Ast* temp_ast = nullptr;
+    ast::Ast* temp_ast = nullptr;
 
     // The first id
     temp_ast = ast->get_fson();
@@ -354,9 +354,9 @@ void esl::Compiler::compile_list_id(esl::Ast* ast)
     }
 }
 
-void esl::Compiler::compile_list(esl::Ast* ast)
+void esl::Compiler::compile_list(ast::Ast* ast)
 {
-    esl::Ast* temp_ast = nullptr;
+    ast::Ast* temp_ast = nullptr;
 
     // The first element of the list
     temp_ast = ast->get_fson();
@@ -370,7 +370,7 @@ void esl::Compiler::compile_list(esl::Ast* ast)
     }
 }
 
-void esl::Compiler::compile_function(esl::Ast* ast)
+void esl::Compiler::compile_function(ast::Ast* ast)
 {
     esl::Bytecode* jump = nullptr;
     int jump_addr = 0;
@@ -426,9 +426,9 @@ void esl::Compiler::compile_function(esl::Ast* ast)
     declared_function_ = false;
 }
 
-void esl::Compiler::compile_call(esl::Ast* ast, bool method)
+void esl::Compiler::compile_call(ast::Ast* ast, bool method)
 {
-    esl::Ast *temp_ast = nullptr;
+    ast::Ast *temp_ast = nullptr;
 
     // Load args
     if (ast->get_fson())
@@ -449,7 +449,7 @@ void esl::Compiler::compile_call(esl::Ast* ast, bool method)
                                                ast->get_content()));
 }
 
-void esl::Compiler::compile_if(esl::Ast *ast)
+void esl::Compiler::compile_if(ast::Ast *ast)
 {
     int jump_next = 0;
     esl::Bytecode* jump = new esl::Bytecode(JUMP_IF_FALSE);
@@ -486,7 +486,7 @@ void esl::Compiler::compile_if(esl::Ast *ast)
     }
 }
 
-void esl::Compiler::compile_assignement(esl::Ast* ast)
+void esl::Compiler::compile_assignement(ast::Ast* ast)
 {
 
     if (ast->get_fson()->get_token() == CLASS_ATTRIBUT)
@@ -496,7 +496,7 @@ void esl::Compiler::compile_assignement(esl::Ast* ast)
         // Compile the attribut request
         compile_attribut(ast->get_fson(), true);
 
-        Ast* attr_name = ast->get_fson()->get_fson()->get_rbro();
+        ast::Ast* attr_name = ast->get_fson()->get_fson()->get_rbro();
 
         byte_code_.push_back(new esl::Bytecode(STORE_ATTR,
                                                attr_name->get_content()));
@@ -510,7 +510,7 @@ void esl::Compiler::compile_assignement(esl::Ast* ast)
     }
 }
 
-void esl::Compiler::compile_operation (esl::Ast* ast, enum instr i)
+void esl::Compiler::compile_operation (ast::Ast* ast, enum instr i)
 {
     // Compile left operand
     compile(ast->get_fson());
@@ -522,17 +522,17 @@ void esl::Compiler::compile_operation (esl::Ast* ast, enum instr i)
     byte_code_.push_back(new esl::Bytecode(i));
 }
 
-void esl::Compiler::compile_number(esl::Ast *ast)
+void esl::Compiler::compile_number(ast::Ast *ast)
 {
     byte_code_.push_back(new esl::Bytecode(LOAD_INT, ast->get_content()));
 }
 
-void esl::Compiler::compile_string(esl::Ast *ast)
+void esl::Compiler::compile_string(ast::Ast *ast)
 {
     byte_code_.push_back(new esl::Bytecode(LOAD_STR, ast->get_content()));
 }
 
-void esl::Compiler::compile_identifier(esl::Ast *ast)
+void esl::Compiler::compile_identifier(ast::Ast *ast)
 {
     if (declared_class_ && !declared_function_)
         byte_code_.push_back(new esl::Bytecode(MAKE_ATTRIBUT,
@@ -541,7 +541,7 @@ void esl::Compiler::compile_identifier(esl::Ast *ast)
         byte_code_.push_back(new esl::Bytecode(LOAD, ast->get_content()));
 }
 
-void esl::Compiler::compile_import(esl::Ast *ast)
+void esl::Compiler::compile_import(ast::Ast *ast)
 {
     byte_code_.push_back(new esl::Bytecode(OPEN, ast->get_content()));
 }

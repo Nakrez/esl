@@ -4,9 +4,13 @@ AC_CONFIG_AUX_DIR([build])
 
 AM_INIT_AUTOMAKE([foreign -Wall -Werror dist-bzip2 subdir-objects])
 
+AC_LANG([C++])
+AC_PROG_CXX
+
 AM_PROG_AR
 
-LT_INIT(shared)
+LT_INIT()
+AM_DISABLE_STATIC
 
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -15,7 +19,6 @@ AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_YACC
-AC_PROG_CXX
 AC_PROG_LEX
 AC_PROG_MAKE_SET
 

@@ -5,7 +5,7 @@
 
 Driver::Driver()
 {
-    this->gen_ast_ = new esl::Ast(STATEMENTS);
+    this->gen_ast_ = new ast::Ast(STATEMENTS);
     errors_ = 0;
     byte_param = false;
     ast_param = false;
@@ -31,7 +31,7 @@ int Driver::errors_get ()
     return this->errors_;
 }
 
-esl::Ast *Driver::ast()
+ast::Ast *Driver::ast()
 {
     return this->gen_ast_;
 }

@@ -11,9 +11,10 @@
 # include <iostream>
 # include <fstream>
 
-# include "../utils/bytecode.hh"
-# include "../utils/ast.hh"
-# include "../utils/utils.hh"
+# include <utils/bytecode.hh>
+# include <utils/utils.hh>
+
+# include <ast/ast.hh>
 
 namespace esl
 {
@@ -22,7 +23,7 @@ namespace esl
         public:
             /// @brief Constructor
             /// @param ast The ast you want to compile into bytecode
-            Compiler (Ast* ast);
+            Compiler (ast::Ast* ast);
 
             /// @brief Destructor
             ~Compiler ();
@@ -43,92 +44,92 @@ namespace esl
         private:
             /// @brief The main compilation function
             /// @param ast The ast you want to compile
-            void compile (Ast* ast);
+            void compile (ast::Ast* ast);
 
             /// @brief Compile Statement node of the AST
             /// @param ast The node which contains the statement
-            void compile_statements (Ast* ast);
+            void compile_statements (ast::Ast* ast);
 
             /// @brief Compile assignement node of the AST
             /// @param ast The node which contains the assignement
-            void compile_assignement (Ast* ast);
+            void compile_assignement (ast::Ast* ast);
 
             /// @brief Compile id [ expr ] = value node of the AST
             /// @param ast The node which contains the array assignement
-            void compile_assignement_array (Ast* ast);
+            void compile_assignement_array (ast::Ast* ast);
 
             /// @brief Compile operator[] node of the AST
             /// @param ast The node which contains the array at
-            void compile_array_at (Ast* ast);
+            void compile_array_at (ast::Ast* ast);
 
             /// @brief Compile operation node of the AST
             /// @param ast The node which contains the operation
-            void compile_operation (Ast* ast, instr);
+            void compile_operation (ast::Ast* ast, instr);
 
             /// @brief Compile loop node of the AST
             /// @param ast The node which contains the loop
-            void compile_loop (Ast* ast, instr);
+            void compile_loop (ast::Ast* ast, instr);
 
             /// @brief Compile number node of the AST
             /// @param ast The node which contains the number
-            void compile_number (Ast* ast);
+            void compile_number (ast::Ast* ast);
 
             /// @brief Compile string node of the AST
             /// @param ast The node which contains the string
-            void compile_string (Ast* ast);
+            void compile_string (ast::Ast* ast);
 
             /// @brief Compile identifier node of the AST
             /// @param ast The node which contains the identifier
-            void compile_identifier (Ast* ast);
+            void compile_identifier (ast::Ast* ast);
 
             /// @brief Compile if node of the AST
             /// @param ast The node which contains the if
-            void compile_if (Ast* ast);
+            void compile_if (ast::Ast* ast);
 
             /// @brief Compile function node of the AST
             /// @param ast The node which contains the function
-            void compile_function (Ast* ast);
+            void compile_function (ast::Ast* ast);
 
             /// @brief Compile call jnode of the AST
             /// @param ast The node which contains the call
             /// @param method true if this is a method call, else false
-            void compile_call (Ast* ast, bool method);
+            void compile_call (ast::Ast* ast, bool method);
 
             /// @brief Compile list node of the AST
             /// @param ast The node which contains the list
-            void compile_list (Ast* ast);
+            void compile_list (ast::Ast* ast);
 
             /// @brief Compile list id node of the AST
             /// @param ast The node which contains the id list
-            void compile_list_id (Ast* ast);
+            void compile_list_id (ast::Ast* ast);
 
             /// @brief Compile import node of the AST
             /// @param ast The node which contains the import
-            void compile_import (Ast* ast);
+            void compile_import (ast::Ast* ast);
 
             /// @brief Compile return node of the AST
             /// @param ast The node which contains the return
-            void compile_return (Ast* ast);
+            void compile_return (ast::Ast* ast);
 
             /// @brief Compile module call node of the AST
             /// @param ast The node which contains the module call
-            void compile_module_call (Ast* ast);
+            void compile_module_call (ast::Ast* ast);
 
             /// @brief Compile method call node of the AST
             /// @param ast The node which contains the  method call
-            void compile_method_call (Ast* ast);
+            void compile_method_call (ast::Ast* ast);
 
             /// @brief Compile object instanciation
             /// @param ast The node that represents the instanciation
-            void compile_new (Ast* ast);
+            void compile_new (ast::Ast* ast);
 
-            void compile_class (Ast* ast);
-            void compile_attribut (Ast* ast, bool treated);
+            void compile_class (ast::Ast* ast);
+            void compile_attribut (ast::Ast* ast, bool treated);
         private:
 
             /// @brief The AST generated by the parser (given by arg to the
             ///        constructor)
-            Ast* gen_ast_;
+            ast::Ast* gen_ast_;
 
             /// @brief The bytecode generated
             std::vector<Bytecode*> byte_code_;

@@ -5,7 +5,8 @@ ACLOCAL_AMFLAGS = -I m4
 
 # libesl
 lib_LTLIBRARIES = libesl.la
-libesl_la_SOURCES = lib/context.cc lib/context.hh \
+libesl_la_SOURCES = lib/misc/symbol.cc \
+		    lib/context.cc lib/context.hh \
 		    lib/extension.cc lib/extension.hh \
 		    lib/params.cc lib/params.hh \
 		    lib/module.cc lib/module.hh \
@@ -25,25 +26,29 @@ libesl_la_SOURCES = lib/context.cc lib/context.hh \
 		    lib/gc/memory-object.hh
 
 libesl_la_LDFLAGS = -version-info 1:0:0
-libesl_la_CXXFLAGS = -Wall -Wextra -std=c++0x -Wno-delete-non-virtual-dtor
+libesl_la_CXXFLAGS = -Ilib -Wall -Wextra -std=c++0x -Wno-delete-non-virtual-dtor
 
 # esl
 bin_PROGRAMS= esl
 
-esl_SOURCES =   src/utils/ast.cc src/utils/ast.hh \
+esl_SOURCES =  src/parser/parser.yy \
+		src/ast/ast.cc src/ast/ast.hh \
 		src/utils/utils.cc src/utils/utils.hh \
 		src/utils/bytecode.cc src/utils/bytecode.hh \
 		src/utils/ro-data.cc src/utils/ro-data.hh \
-		src/parser/parser.yy \
 		src/parser/lexer.ll \
 		src/parser/driver.cc src/parser/driver.hh \
 		src/compile/compiler.cc src/compile/compiler.hh \
 		src/main.cc
 
-esl_CXXFLAGS = -pedantic -Wall -Wextra -std=c++0x -Wno-delete-non-virtual-dtor
+#EXTRA_esl_YACCdir = src/parser
+
+esl_CXXFLAGS = -Isrc -Ilib -Wall -Wextra -std=c++0x -Wno-delete-non-virtual-dtor
 esl_LDFLAGS = -lfl
-esl_YFLAGS = -W -Wall --report=all
+esl_YFLAGS = -d -W -Wall --report=all
 esl_LDADD = libesl.la
+
+#esl_YACC_HEADERS = stack.hh location.hh position.hh
 
 # Other rules
 clear: distclean
