@@ -18,6 +18,8 @@ namespace ast
 
             const std::list<VarDec*>& list_get() const;
 
+            virtual void accept(Visitor& visitor);
+
         protected:
             std::list<VarDec*>* list_;
     };

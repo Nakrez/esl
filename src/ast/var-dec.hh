@@ -17,6 +17,8 @@ namespace ast
             Exp* value_get() const;
             void value_set(Exp* value);
 
+            virtual void accept(Visitor& visitor);
+
         protected:
             Exp* value_;
     };

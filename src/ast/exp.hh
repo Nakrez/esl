@@ -10,6 +10,8 @@ namespace ast
     {
         public:
             Exp(const yy::location& location);
+
+            virtual void accept(Visitor& visitor) = 0;
     };
 }// namespace ast
 

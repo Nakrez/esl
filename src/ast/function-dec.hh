@@ -22,8 +22,7 @@ namespace ast
             const VarDecList& args_get() const;
             const ExpList& body_get() const;
 
-            void args_set(const VarDecList& args);
-            void body_set(const ExpList& body);
+            virtual void accept(Visitor& visitor);
 
         protected:
             VarDecList args_;

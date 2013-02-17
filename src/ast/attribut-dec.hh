@@ -20,9 +20,13 @@ namespace ast
             misc::visibility visibility_get() const;
             void visibility_set(misc::visibility visibility);
 
+            virtual void accept(Visitor& visitor);
+
         protected:
             misc::visibility visibility_;
     };
 } // namespace ast
+
+# include <ast/attribut-dec.hxx>
 
 #endif /* !ATTRIBUT_DEC_HH */

@@ -1,6 +1,8 @@
 #ifndef FUNCTION_DEC_HXX
 # define FUNCTION_DEC_HXX
 
+# include <ast/visitor.hh>
+
 # include <ast/function-dec.hh>
 
 namespace ast
@@ -15,14 +17,9 @@ namespace ast
         return body_;
     }
 
-    inline void FunctionDec::args_set(const VarDecList& args)
+    inline void FunctionDec::accept(Visitor& visitor)
     {
-        args_ = args;
-    }
-
-    inline void FunctionDec::body_set(const ExpList& body)
-    {
-        body_ = body;
+        visitor(*this);
     }
 } // namespace ast
 

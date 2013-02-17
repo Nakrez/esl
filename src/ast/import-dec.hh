@@ -11,7 +11,11 @@ namespace ast
         ImportDec(const yy::location& location,
                   const misc::symbol name);
         virtual ~ImportDec();
+
+        virtual void accept(Visitor& visitor);
     };
 } // namespace ast
+
+# include <ast/import-dec.hxx>
 
 #endif /* !IMPORT_DEC_HH */

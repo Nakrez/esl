@@ -6,13 +6,12 @@
 # include <iostream>
 # include <fstream>
 
-# include <utils/ro-data.hh>
-# include <utils/token.hh>
-
 # include <parser/location.hh>
 
 namespace ast
 {
+    class Visitor;
+
     class Ast
     {
         public:
@@ -21,6 +20,8 @@ namespace ast
 
             const yy::location& location_get() const;
             void location_set(const yy::location& location);
+
+            virtual void accept(Visitor& visitor) = 0;
 
         protected:
             yy::location location_;
