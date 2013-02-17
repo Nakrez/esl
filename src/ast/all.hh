@@ -12,6 +12,9 @@
 # include <ast/import-dec.hh>
 # include <ast/exp.hh>
 # include <ast/exp-list.hh>
+# include <ast/int-exp.hh>
+# include <ast/id-exp.hh>
+# include <ast/string-exp.hh>
 # include <ast/op-exp.hh>
 # include <ast/if-exp.hh>
 

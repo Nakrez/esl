@@ -1,3 +1,7 @@
+Nightly 15/02/2013
+
+- Add multiline comments
+
 Nightly 09/02/2013
 
 - Add is_module_exist function to Esl module

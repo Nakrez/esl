@@ -12,6 +12,9 @@ namespace ast
     class AttributDec;
     class ExpList;
     class OpExp;
+    class IntExp;
+    class StringExp;
+    class IdExp;
     class IfExp;
 
     class Visitor
@@ -27,6 +30,9 @@ namespace ast
             virtual void operator()(FunctionDec&) = 0;
             virtual void operator()(AttributDec&) = 0;
             virtual void operator()(OpExp&) = 0;
+            virtual void operator()(IntExp&) = 0;
+            virtual void operator()(StringExp&) = 0;
+            virtual void operator()(IdExp&) = 0;
             virtual void operator()(IfExp&) = 0;
             virtual void operator()(ExpList&) = 0;
     };

@@ -8,7 +8,6 @@
 [LEXER/PARSER/COMPILER/VM] Introduce foreach loop
 [PARSER] Introduce Unary operators
 [LEXER/PARSER] Introduce "include" keywords
-[LEXER 50%] Introduce Comments
 [COMPILER] Introduce Bytecode optimizer
 [COMPILER] Introduce AST checker to provide bad operation (-, /, ... on strings, ...)
 [LEXER/PARSER/COMPILER/VM] Introduce post/pre incrementation/decrementation
@@ -32,7 +31,6 @@
 [LIB] Module Utils
 [LIB] Cast function
 [LIB] Module String
-[LEXER/PARSER/COMPILER/VM] Add object paradigm
 [LEXER/PARSER/COMPILER/VM] Type forcing (multi type separate with ,)
 [BYTECODE] Rename operators instruction in OPERATOR_[name]
 [VM] Allow external call for esl coded functions !!!!
