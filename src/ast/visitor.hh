@@ -10,6 +10,7 @@ namespace ast
     class FunctionDec;
     class AttributDec;
     class ExpList;
+    class OpExp;
 
     class Visitor
     {
@@ -23,6 +24,7 @@ namespace ast
             virtual void operator()(ImportDec&) = 0;
             virtual void operator()(FunctionDec&) = 0;
             virtual void operator()(AttributDec&) = 0;
+            virtual void operator()(OpExp&) = 0;
             virtual void operator()(ExpList&) = 0;
     };
 } // namespace ast

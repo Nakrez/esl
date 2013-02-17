@@ -12,5 +12,6 @@
 # include <ast/import-dec.hh>
 # include <ast/exp.hh>
 # include <ast/exp-list.hh>
+# include <ast/op-exp.hh>
 
 #endif /* !ALL_HH */
