@@ -35,6 +35,7 @@ class Driver;
     std::string *sval;
     int ival;
     ast::Ast *ast;
+    ast::Exp *ast_exp;
     std::list<ast::Ast *> *lval;
 }
 
@@ -95,11 +96,13 @@ class Driver;
 %token <ival>
         TOK_DIGIT           "digit"
 
-%type <ast> instr expr functions esl_command fun_call
+%type <ast> instr functions esl_command fun_call
 %type <ast> rule_while rule_until rule_if do_group else_group
 %type <ast> class_decl class_component object_call_list
 
 %type <lval> compound_list id_list param_list arrays class_components
+
+%type <ast_exp> expr
 
 %right "="
 %left "||" "&&"
@@ -189,20 +192,91 @@ arrays          :
                 ;
 
 expr            :
-                expr "+" expr
-                |expr "-" expr
-                |expr "*" expr
-                |expr "/" expr
-                |expr "%" expr
-                |expr "^" expr
-                |expr "==" expr
-                |expr "!=" expr
-                |expr ">" expr
-                |expr ">=" expr
-                |expr "<" expr
-                |expr "<=" expr
-                |expr "&&" expr
-                |expr "||" expr
+                expr "+" expr {
+                                $$ = new ast::OpExp(@3,
+                                                    $1,
+                                                    ast::OpExp::Operator::add,
+                                                    $3);
+                              }
+                |expr "-" expr {
+                                 $$ = new ast::OpExp(@3,
+                                                     $1,
+                                                     ast::OpExp::Operator::min,
+                                                     $3);
+                               }
+                |expr "*" expr {
+                                 $$ = new ast::OpExp(@3,
+                                                     $1,
+                                                     ast::OpExp::Operator::tim,
+                                                     $3);
+                               }
+                |expr "/" expr {
+                                 $$ = new ast::OpExp(@3,
+                                                     $1,
+                                                     ast::OpExp::Operator::div,
+                                                     $3);
+                               }
+                |expr "%" expr {
+                                 $$ = new ast::OpExp(@3,
+                                                     $1,
+                                                     ast::OpExp::Operator::mod,
+                                                     $3);
+                               }
+                |expr "^" expr {
+                                 $$ = new ast::OpExp(@3,
+                                                     $1,
+                                                     ast::OpExp::Operator::pow,
+                                                     $3);
+                               }
+                |expr "==" expr {
+                                 $$ = new ast::OpExp(@3,
+                                                     $1,
+                                                     ast::OpExp::Operator::eq,
+                                                     $3);
+                               }
+
+                |expr "!=" expr {
+                                  $$ = new ast::OpExp(@3,
+                                                      $1,
+                                                      ast::OpExp::Operator::neq,
+                                                      $3);
+                                }
+                |expr ">" expr {
+                                  $$ = new ast::OpExp(@3,
+                                                      $1,
+                                                      ast::OpExp::Operator::gt,
+                                                      $3);
+                                }
+                |expr ">=" expr {
+                                  $$ = new ast::OpExp(@3,
+                                                      $1,
+                                                      ast::OpExp::Operator::ge,
+                                                      $3);
+                                }
+                |expr "<" expr {
+                                  $$ = new ast::OpExp(@3,
+                                                      $1,
+                                                      ast::OpExp::Operator::lt,
+                                                      $3);
+                                }
+                |expr "<=" expr {
+                                  $$ = new ast::OpExp(@3,
+                                                      $1,
+                                                      ast::OpExp::Operator::le,
+                                                      $3);
+                                }
+                |expr "&&" expr {
+                                  $$ = new ast::OpExp(@3,
+                                                      $1,
+                                                      ast::OpExp::Operator::and_,
+                                                      $3);
+                                }
+                |expr "||" expr {
+                                  $$ = new ast::OpExp(@3,
+                                                      $1,
+                                                      ast::OpExp::Operator::or_,
+                                                      $3);
+                                }
                 |"(" expr ")"
                 |"digit"
                 |"string"
