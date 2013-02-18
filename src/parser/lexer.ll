@@ -5,6 +5,12 @@
 # undef yywrap
 # define yywrap() 1
 # define yyterminate() return token::END
+
+#define TOKEN_VAL(Type, Value)                  \
+  yy::parser::make_ ## Type(Value, tp.location_)
+
+#define TOKEN(Type)                             \
+  yy::parser::make_ ## Type(tp.location_)
 %}
 
 %option nounput noyywrap noinput stack
@@ -43,7 +49,7 @@
                         }
 <COMMENT_SIMPLE>[^\n]*
 
-"if"                    return token::TOK_IF;
+"if"                    return TOKEN(TOK_IF);
 "then"                  return token::TOK_THEN;
 "else"                  return token::TOK_ELSE;
 "elif"                  return token::TOK_ELIF;

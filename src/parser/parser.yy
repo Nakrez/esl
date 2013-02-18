@@ -23,6 +23,7 @@ class Driver;
 
 /* Better errors */
 %error-verbose
+%define variant
 
 /* Enable location tracking */
 %locations
@@ -30,13 +31,15 @@ class Driver;
 %lex-param   { Driver& driver }
 %pure-parser
 
-%union
+/*%union
 {
     std::string *sval;
     int ival;
+    ast::OpExp::Operator operator;
     ast::Ast *ast;
     std::list<ast::Ast *> *lval;
-}
+    ast::Exp *ast_exp;
+}*/
 
 %code
 {
@@ -87,19 +90,22 @@ class Driver;
         TOK_PRIVATE         "private"
         TOK_PROTECTED       "protected"
 
-%token <sval>
+%token <std::string*>
         TOK_ID              "identifier"
         TOK_STRING          "string"
         TOK_MOD_ID          "mod_id"
 
-%token <ival>
+%token <int>
         TOK_DIGIT           "digit"
 
-%type <ast> instr expr functions esl_command fun_call
+%type <ast> instr functions esl_command fun_call
 %type <ast> rule_while rule_until rule_if do_group else_group
 %type <ast> class_decl class_component object_call_list
 
 %type <lval> compound_list id_list param_list arrays class_components
+
+%type <ast::Exp*> expr
+%type <ast::OpExp::Operator> op
 
 %right "="
 %left "||" "&&"
@@ -189,24 +195,31 @@ arrays          :
                 ;
 
 expr            :
-                expr "+" expr
-                |expr "-" expr
-                |expr "*" expr
-                |expr "/" expr
-                |expr "%" expr
-                |expr "^" expr
-                |expr "==" expr
-                |expr "!=" expr
-                |expr ">" expr
-                |expr ">=" expr
-                |expr "<" expr
-                |expr "<=" expr
-                |expr "&&" expr
-                |expr "||" expr
-                |"(" expr ")"
-                |"digit"
-                |"string"
-                |"identifier"
+                expr op expr { $$ = new ast::OpExp(@1, $1, $2, $3); }
+                ;
+
+op              :
+                "+" { $$ = ast::OpExp::Operator::add; }
+                |"-"
+                |"*"
+                |"/"
+                |"%"
+                |"^"
+                |"=="
+                |"!="
+                |">"
+                |">="
+                |"<"
+                |"<="
+                |"&&"
+                |"||"
+                ;
+
+expr            :
+                "(" expr ")"
+                |"digit" { $$ = new ast::IntExp(@1, $1); }
+                |"string" { $$ = new ast::StringExp(@1, *$1); }
+                |"identifier" { $$ = new ast::IdExp(@1, *$1); }
                 |fun_call
                 |object_call_list
                 |"new" fun_call
@@ -247,7 +260,7 @@ do_group        :
                 ;
 %%
 void yy::eslxx_parser::error (const yy::eslxx_parser::location_type& l,
-                               const std::string& m)
+                              const std::string& m)
 {
     driver.error(l, m);
 }
