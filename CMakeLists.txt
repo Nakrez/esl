@@ -120,3 +120,28 @@ SET_DIRECTORY_PROPERTIES(PROPERTIES
 #######################
 
 add_subdirectory(modules)
+
+#######################
+#######################
+#####  ESL TEST   #####
+#######################
+#######################
+
+ENABLE_TESTING()
+
+SET(TEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/check")
+ADD_TEST("Arith" ${TEST_DIR}/arith/arith_check.sh)
+ADD_TEST("Array" ${TEST_DIR}/array/array_check.sh)
+ADD_TEST("Comment" ${TEST_DIR}/comment/comment_check.sh)
+ADD_TEST("Control" ${TEST_DIR}/control/control_check.sh)
+ADD_TEST("DataStructure" ${TEST_DIR}/datastruct/datastruct_check.sh)
+ADD_TEST("ESLModule" ${TEST_DIR}/esl/esl_check.sh)
+ADD_TEST("Function" ${TEST_DIR}/functions/functions_check.sh)
+ADD_TEST("Integer" ${TEST_DIR}/int/int_check.sh)
+ADD_TEST("IOModule" ${TEST_DIR}/io/io_check.sh)
+ADD_TEST("Loops" ${TEST_DIR}/loops/loops_check.sh)
+ADD_TEST("Mix" ${TEST_DIR}/mix/mix_check.sh)
+ADD_TEST("ObjectParadigm" ${TEST_DIR}/oo/oo_check.sh)
+ADD_TEST("String" ${TEST_DIR}/strings/strings_check.sh)
+ADD_TEST("SysModule" ${TEST_DIR}/sys/sys_check.sh)
+
