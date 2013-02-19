@@ -1,7 +1,7 @@
 #ifndef DRIVER_HH
 # define DRIVER_HH
 
-# include "esl-parser.hh"
+# include <parser/parser.hh>
 # include "../utils/ast.hh"
 
 # define YY_DECL                                        \

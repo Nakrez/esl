@@ -3,7 +3,7 @@
 #include "compile/compiler.hh"
 #include "execute/vm.hh"
 #include "utils/ro-data.hh"
-#include "lib/type/squeleton.hh"
+#include "../lib/type/squeleton.hh"
 #include <cstring>
 #include <iostream>
 

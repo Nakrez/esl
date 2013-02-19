@@ -1,0 +1,15 @@
+##########################
+#      STACK MODULE      #
+##########################
+
+ADD_LIBRARY(stack_module SHARED
+            stack.cc
+            stack-object.cc
+            stack-module.cc)
+
+# Setup correct name <stack.eslm>
+set_target_properties(stack_module PROPERTIES 
+                      PREFIX ""
+                      OUTPUT_NAME "stack"
+                      SUFFIX ".eslm"
+                      LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})

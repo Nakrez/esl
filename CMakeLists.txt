@@ -5,13 +5,118 @@ project(esl)
 find_package(BISON)
 find_package(FLEX)
 
-add_definitions(-Wall -Werror -std=c++0x)
+add_definitions(-Wall -Wextra -std=c++0x -Isrc -Ilib)
+
+#######################
+#######################
+####### ESL LIB #######
+#######################
+#######################
 
 ADD_LIBRARY(esl_lib SHARED
             lib/context.cc
-            lib/exception.cc)
+            lib/exception.cc
+            lib/extension.cc
+            lib/function.cc
+            lib/module.cc
+            lib/params.cc
+            lib/stack-delimiter.cc
+            lib/type/array.cc
+            lib/type/array-object.cc
+            lib/type/int.cc
+            lib/type/int-object.cc
+            lib/type/string.cc
+            lib/type/string-object.cc
+            lib/type/object.cc
+            lib/type/type.cc
+            lib/type/squeleton.cc
+            src/execute/vm.cc)
+
+SET_TARGET_PROPERTIES(
+    esl_lib
+    PROPERTIES
+    VERSION 1.0.0
+    OUTPUT_NAME esl
+)
+
+target_link_libraries(esl_lib dl)
+
+#######################
+#######################
+####### ESL BIN #######
+#######################
+#######################
+
+##########################
+#         BISON          #
+##########################
+
+SET(src_parser "${CMAKE_CURRENT_SOURCE_DIR}/src/parser/parser.yy")
+SET(dst_parser "${CMAKE_CURRENT_SOURCE_DIR}/src/parser/parser.cc")
+
+ADD_CUSTOM_COMMAND(
+        OUTPUT "${dst_parser}"
+        DEPENDS "${src_parser}"
+        COMMAND
+        /usr/bin/bison -o${dst_parser} ${src_parser}
+        )
+
+add_custom_target(esl_grammar DEPENDS "${dst_parser}")
+
+##########################
+#          FLEX          #
+##########################
+
+SET(src_lexer "${CMAKE_CURRENT_SOURCE_DIR}/src/parser/lexer.ll")
+SET(dst_lexer "${CMAKE_CURRENT_SOURCE_DIR}/src/parser/lexer.cc")
+
+ADD_CUSTOM_COMMAND(
+        OUTPUT "${dst_lexer}"
+        DEPENDS "${src_lexer}"
+        COMMAND
+        /usr/bin/flex -o${dst_lexer} ${src_lexer}
+        )
+
+add_custom_target(esl_lexer DEPENDS "${dst_lexer}")
 
 add_executable(esl
+               src/parser/parser.cc
+               src/parser/lexer.cc
+               src/parser/driver.cc
+               src/utils/ast.cc
+               src/utils/bytecode.cc
+               src/utils/ro-data.cc
+               src/utils/utils.cc
                src/compile/compiler.cc
                src/main.cc)
-add_dependencies(esl parser)
+
+# Library link
+
+target_link_libraries(esl esl_lib)
+TARGET_LINK_LIBRARIES(esl LINK_INTERFACE_LIBRARIES)
+
+# ESL dependencies
+
+add_dependencies(esl esl_grammar)
+add_dependencies(esl esl_lexer)
+add_dependencies(esl esl_lib)
+
+LIST(APPEND extra_clean_files
+     src/parser/parser.hh
+     src/parser/location.hh
+     src/parser/position.hh
+     src/parser/stack.hh
+)
+
+SET_DIRECTORY_PROPERTIES(PROPERTIES
+                         ADDITIONAL_MAKE_CLEAN_FILES
+                         "${extra_clean_files}")
+
+
+#######################
+#######################
+##### ESL MODULES #####
+#######################
+#######################
+
+add_subdirectory(modules)
