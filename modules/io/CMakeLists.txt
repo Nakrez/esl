@@ -13,3 +13,8 @@ set_target_properties(io_module PROPERTIES
                       OUTPUT_NAME "io"
                       SUFFIX ".eslm"
                       LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+
+INSTALL(TARGETS io_module
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib)

@@ -11,3 +11,8 @@ set_target_properties(esl_module PROPERTIES
                       OUTPUT_NAME "esl"
                       SUFFIX ".eslm"
                       LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+
+INSTALL(TARGETS esl_module
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib)

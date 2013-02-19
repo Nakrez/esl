@@ -145,3 +145,27 @@ ADD_TEST("ObjectParadigm" ${TEST_DIR}/oo/oo_check.sh)
 ADD_TEST("String" ${TEST_DIR}/strings/strings_check.sh)
 ADD_TEST("SysModule" ${TEST_DIR}/sys/sys_check.sh)
 
+#######################
+#######################
+###  INSTALL RULE   ###
+#######################
+#######################
+
+INSTALL(PROGRAMS esl DESTINATION bin)
+INSTALL(TARGETS esl_lib
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib)
+
+#######################
+#######################
+##  UNINSTALL RULE   ##
+#######################
+#######################
+
+CONFIGURE_FILE(
+  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_uninstall.cmake"
+  IMMEDIATE @ONLY)
+ADD_CUSTOM_TARGET(uninstall
+  "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_uninstall.cmake") 

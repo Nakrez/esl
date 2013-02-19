@@ -11,3 +11,8 @@ set_target_properties(sys_module PROPERTIES
                       OUTPUT_NAME "sys"
                       SUFFIX ".eslm"
                       LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+
+INSTALL(TARGETS sys_module
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib)

@@ -13,3 +13,8 @@ set_target_properties(stack_module PROPERTIES
                       OUTPUT_NAME "stack"
                       SUFFIX ".eslm"
                       LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+
+INSTALL(TARGETS stack_module
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib)
