@@ -1,8 +1,16 @@
 File : bootstrap open in read only
-#! /bin/sh
-mkdir m4
-autoreconf -vif
-#! /bin/sh
-mkdir m4
-autoreconf -vif
+import "io"
+
+test = new file()
+if test->open("TODO") == true then
+    Io.print_newline("File : TODO open in read only")
+    test->close()
+end
+import "io"
+
+test = new file()
+if test->open("TODO") == true then
+    Io.print_newline("File : TODO open in read only")
+    test->close()
+end
 
