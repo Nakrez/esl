@@ -3,6 +3,6 @@
 namespace ast
 {
     Exp::Exp(const yy::location& location)
-        : Ast(location)
+        : Instr(location)
     {}
 }

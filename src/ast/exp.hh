@@ -2,11 +2,11 @@
 #ifndef EXP_HH
 # define EXP_HH
 
-# include <ast/ast.hh>
+# include <ast/instr.hh>
 
 namespace ast
 {
-    class Exp : public Ast
+    class Exp : public Instr
     {
         public:
             Exp(const yy::location& location);

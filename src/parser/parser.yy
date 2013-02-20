@@ -35,6 +35,7 @@ class Driver;
     std::string *sval;
     int ival;
     ast::Ast *ast;
+    ast::Instr *ast_instr;
     ast::Exp *ast_exp;
     std::list<ast::Ast *> *lval;
 }
@@ -96,13 +97,11 @@ class Driver;
 %token <ival>
         TOK_DIGIT           "digit"
 
-%type <ast> instr functions esl_command fun_call
-%type <ast> rule_while rule_until rule_if do_group else_group
-%type <ast> class_decl class_component object_call_list
-
-%type <lval> compound_list id_list param_list arrays class_components
-
 %type <ast_exp> expr
+
+%type <ast_instr> instr
+                  esl_command
+                  rule_if
 
 %right "="
 %left "||" "&&"
@@ -120,10 +119,10 @@ input   :
         ;
 
 instr   :
-        expr
+        expr { $$ = $1; }
         |functions
         |class_decl
-        |esl_command
+        |esl_command { $$ = $1; }
         |"import" "string"
         |"include" "string"
         ;
@@ -192,95 +191,66 @@ arrays          :
                 ;
 
 expr            :
-                expr "+" expr {
-                                $$ = new ast::OpExp(@3,
-                                                    $1,
-                                                    ast::OpExp::Operator::add,
-                                                    $3);
-                              }
-                |expr "-" expr {
-                                 $$ = new ast::OpExp(@3,
-                                                     $1,
-                                                     ast::OpExp::Operator::min,
-                                                     $3);
-                               }
-                |expr "*" expr {
-                                 $$ = new ast::OpExp(@3,
-                                                     $1,
-                                                     ast::OpExp::Operator::tim,
-                                                     $3);
-                               }
-                |expr "/" expr {
-                                 $$ = new ast::OpExp(@3,
-                                                     $1,
-                                                     ast::OpExp::Operator::div,
-                                                     $3);
-                               }
-                |expr "%" expr {
-                                 $$ = new ast::OpExp(@3,
-                                                     $1,
-                                                     ast::OpExp::Operator::mod,
-                                                     $3);
-                               }
-                |expr "^" expr {
-                                 $$ = new ast::OpExp(@3,
-                                                     $1,
-                                                     ast::OpExp::Operator::pow,
-                                                     $3);
-                               }
-                |expr "==" expr {
-                                 $$ = new ast::OpExp(@3,
-                                                     $1,
-                                                     ast::OpExp::Operator::eq,
-                                                     $3);
-                               }
-
-                |expr "!=" expr {
-                                  $$ = new ast::OpExp(@3,
-                                                      $1,
-                                                      ast::OpExp::Operator::neq,
-                                                      $3);
-                                }
-                |expr ">" expr {
-                                  $$ = new ast::OpExp(@3,
-                                                      $1,
-                                                      ast::OpExp::Operator::gt,
-                                                      $3);
-                                }
-                |expr ">=" expr {
-                                  $$ = new ast::OpExp(@3,
-                                                      $1,
-                                                      ast::OpExp::Operator::ge,
-                                                      $3);
-                                }
-                |expr "<" expr {
-                                  $$ = new ast::OpExp(@3,
-                                                      $1,
-                                                      ast::OpExp::Operator::lt,
-                                                      $3);
-                                }
-                |expr "<=" expr {
-                                  $$ = new ast::OpExp(@3,
-                                                      $1,
-                                                      ast::OpExp::Operator::le,
-                                                      $3);
-                                }
-                |expr "&&" expr {
-                                  $$ = new ast::OpExp(@3,
-                                                      $1,
-                                                      ast::OpExp::Operator::and_,
-                                                      $3);
-                                }
-                |expr "||" expr {
-                                  $$ = new ast::OpExp(@3,
-                                                      $1,
-                                                      ast::OpExp::Operator::or_,
-                                                      $3);
-                                }
-                |"(" expr ")"
-                |"digit"
-                |"string"
-                |"identifier"
+                expr "+" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::add, $3);
+                }
+                | expr "-" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::min, $3);
+                }
+                | expr "*" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::tim, $3);
+                }
+                | expr "/" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::div, $3);
+                }
+                | expr "%" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::mod, $3);
+                }
+                | expr "^" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::pow, $3);
+                }
+                | expr "==" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::eq, $3);
+                }
+                | expr "!=" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::neq, $3);
+                }
+                | expr ">" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::gt, $3);
+                }
+                | expr ">=" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::ge, $3);
+                }
+                | expr "<" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::lt, $3);
+                }
+                | expr "<=" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::le, $3);
+                }
+                | expr "&&" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::and_, $3);
+                }
+                | expr "||" expr
+                {
+                  $$ = new ast::OpExp(@3, $1, ast::OpExp::Operator::or_, $3);
+                }
+                |"(" expr ")" { $$ = $2; }
+                |"digit" { $$ = new ast::IntExp(@1, $1); }
+                |"string" { $$ = new ast::StringExp(@1, *$1); }
+                |"identifier" { $$ = new ast::IdExp(@1, *$1); }
                 |fun_call
                 |object_call_list
                 |"new" fun_call
@@ -292,7 +262,7 @@ expr            :
                 ;
 
 esl_command     :
-                rule_if
+                rule_if { $$ = $1; }
                 |rule_until
                 |rule_while
                 ;

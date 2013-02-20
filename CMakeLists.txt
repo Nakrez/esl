@@ -135,8 +135,10 @@ add_executable(esl
                src/ast/exp-list.cc
                src/ast/function-dec.cc
                src/ast/id-exp.cc
-               src/ast/if-exp.cc
+               src/ast/instr.cc
+               src/ast/if-instr.cc
                src/ast/import-dec.cc
+               src/ast/instr.cc
                src/ast/int-exp.cc
                src/ast/method-dec.cc
                src/ast/op-exp.cc
