@@ -2,7 +2,7 @@
 # define DRIVER_HH
 
 # include <parser/parser.hh>
-# include "../utils/ast.hh"
+# include <ast/ast.hh>
 
 # define YY_DECL                                           \
     yy::eslxx_parser::token_type yylex(                    \

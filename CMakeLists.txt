@@ -71,6 +71,7 @@ ADD_LIBRARY(esl_lib SHARED
             lib/type/object.cc
             lib/type/type.cc
             lib/type/squeleton.cc
+            lib/misc/symbol.cc
             src/execute/vm.cc)
 
 SET_TARGET_PROPERTIES(
@@ -124,11 +125,27 @@ add_executable(esl
                src/parser/parser.cc
                src/parser/lexer.cc
                src/parser/driver.cc
-               src/utils/ast.cc
                src/utils/bytecode.cc
                src/utils/ro-data.cc
                src/utils/utils.cc
-               src/compile/compiler.cc
+               src/ast/ast.cc
+               src/ast/attribut-dec.cc
+               src/ast/dec.cc
+               src/ast/exp.cc
+               src/ast/exp-list.cc
+               src/ast/function-dec.cc
+               src/ast/id-exp.cc
+               src/ast/if-exp.cc
+               src/ast/import-dec.cc
+               src/ast/int-exp.cc
+               src/ast/method-dec.cc
+               src/ast/op-exp.cc
+               src/ast/pretty-printer.cc
+               src/ast/string-exp.cc
+               src/ast/var-dec.cc
+               src/ast/var-dec-list.cc
+               src/ast/visitor.cc
+               #src/compile/compiler.cc
                src/main.cc)
 
 # Library link
