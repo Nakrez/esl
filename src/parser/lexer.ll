@@ -1,16 +1,10 @@
 %{
-#include "esl-parser.hh"
-#include "driver.hh"
+#include <parser/parser.hh>
+#include <parser/driver.hh>
 
 # undef yywrap
 # define yywrap() 1
 # define yyterminate() return token::END
-
-#define TOKEN_VAL(Type, Value)                  \
-  yy::parser::make_ ## Type(Value, tp.location_)
-
-#define TOKEN(Type)                             \
-  yy::parser::make_ ## Type(tp.location_)
 %}
 
 %option nounput noyywrap noinput stack
@@ -49,7 +43,7 @@
                         }
 <COMMENT_SIMPLE>[^\n]*
 
-"if"                    return TOKEN(TOK_IF);
+"if"                    return token::TOK_IF;
 "then"                  return token::TOK_THEN;
 "else"                  return token::TOK_ELSE;
 "elif"                  return token::TOK_ELIF;
@@ -167,3 +161,4 @@ void Driver::scan_end()
     fclose (yyin);
     yylex_destroy();
 }
+

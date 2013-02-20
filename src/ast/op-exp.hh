@@ -12,6 +12,19 @@ namespace ast
             enum Operator
             {
                 add, /* + */
+                min, /* - */
+                tim, /* * */
+                div, /* / */
+                mod, /* % */
+                pow, /* ^ */
+                eq, /* == */
+                neq, /* != */
+                gt, /* > */
+                ge, /* >= */
+                lt, /* < */
+                le, /* <= */
+                and_, /* && */
+                or_ /* || */
             };
 
             OpExp(const yy::location location,

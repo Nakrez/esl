@@ -16,6 +16,7 @@
 # include <ast/id-exp.hh>
 # include <ast/string-exp.hh>
 # include <ast/op-exp.hh>
-# include <ast/if-exp.hh>
+# include <ast/instr.hh>
+# include <ast/if-instr.hh>
 
 #endif /* !ALL_HH */

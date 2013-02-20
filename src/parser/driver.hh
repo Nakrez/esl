@@ -1,11 +1,11 @@
 #ifndef DRIVER_HH
 # define DRIVER_HH
 
-# include <parser/esl-parser.hh>
+# include <parser/parser.hh>
 # include <ast/ast.hh>
 
-# define YY_DECL                                        \
-    yy::eslxx_parser::token_type yylex(                \
+# define YY_DECL                                           \
+    yy::eslxx_parser::token_type yylex(                    \
             yy::eslxx_parser::semantic_type *yylval,       \
             yy::eslxx_parser::location_type *yylloc,       \
             Driver& driver)
