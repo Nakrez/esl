@@ -67,6 +67,7 @@ class Driver;
         TOK_DOUBLEP         ":"
         TOK_ARROW           "->"
         TOK_NEW             "new"
+        TOK_NOT             "!"
         TOK_PAROPEN         "("
         TOK_PARCLOSE        ")"
         TOK_COMA            ","
@@ -205,7 +206,14 @@ arrays          :
                 ;
 
 expr            :
-                '-' expr
+                '!' expr
+                {
+                    $$ = new ast::OpExp(@1,
+                                        $2,
+                                        ast::OpExp::Operator::not_,
+                                        nullptr);
+                }
+                | '-' expr
                 {
                   $$ = new ast::OpExp(@2,
                                       new ast::IntExp(@1, 0),
@@ -312,7 +320,7 @@ else_group      :
                 ;
 
 rule_while      :
-                "while" expr do_group
+                "while" expr do_group //{ $$ = new ast::WhileRule
                 ;
 
 rule_until      :
