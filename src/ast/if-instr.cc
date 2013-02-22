@@ -4,7 +4,7 @@ namespace ast
 {
     IfInstr::IfInstr(const yy::location& location,
                      Exp* condition,
-                     Exp* exp_true)
+                     InstrList* exp_true)
         : Instr(location)
         , condition_(condition)
         , exp_true_(exp_true)
@@ -13,8 +13,8 @@ namespace ast
 
     IfInstr::IfInstr(const yy::location& location,
                      Exp* condition,
-                     Exp* exp_true,
-                     Exp* exp_else)
+                     InstrList* exp_true,
+                     Instr* exp_else)
         : Instr(location)
         , condition_(condition)
         , exp_true_(exp_true)

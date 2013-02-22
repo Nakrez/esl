@@ -32,11 +32,12 @@ class Driver;
 
 %union
 {
-    std::string *sval;
+    std::string* sval;
     int ival;
-    ast::Ast *ast;
-    ast::Instr *ast_instr;
-    ast::Exp *ast_exp;
+    ast::Ast* ast;
+    ast::Instr* ast_instr;
+    ast::InstrList* ast_list_instr;
+    ast::Exp* ast_exp;
     std::list<ast::Ast *> *lval;
 }
 
@@ -102,6 +103,13 @@ class Driver;
 %type <ast_instr> instr
                   esl_command
                   rule_if
+                  rule_while
+                  rule_until
+                  else_group
+                  compound
+
+%type <ast_list_instr> compound_list
+                       do_group
 
 %right "="
 %left "||" "&&"
@@ -150,13 +158,19 @@ class_components:
                 ;
 
 compound_list   :
-                "return" expr
-                |expr
-                |esl_command
-                | compound_list expr
-                | compound_list esl_command
-                | compound_list "return" expr
+                compound { $$ = new ast::InstrList(@1, $1); }
+                | compound_list compound
+                {
+                    $$ = $1;
+                    $$->push_back($2);
+                }
                 ;
+
+compound:
+        "return" expr
+        | expr { $$ = $1; }
+        | esl_command
+        ;
 
 object_call_list:
                 expr "->" "identifier"
@@ -276,13 +290,25 @@ esl_command     :
 
 rule_if         :
                 "if" expr "then" compound_list else_group "end"
+                {
+                  $$ = new ast::IfInstr(@1, $2, $4, $5);
+                }
                 |"if" expr "then" compound_list "end"
+                {
+                  $$ = new ast::IfInstr(@1, $2, $4);
+                }
                 ;
 
 else_group      :
-                "else" compound_list
+                "else" compound_list { $$ = $2; }
                 |"elif" expr "then" compound_list
+                {
+                    $$ = new ast::IfInstr(@1, $2, $4);
+                }
                 |"elif" expr "then" compound_list else_group
+                {
+                  $$ = new ast::IfInstr(@1, $2, $4, $5);
+                }
                 ;
 
 rule_while      :
@@ -294,7 +320,7 @@ rule_until      :
                 ;
 
 do_group        :
-                "do" compound_list "end"
+                "do" compound_list "end" { $$ = $2; }
                 ;
 %%
 void yy::eslxx_parser::error (const yy::eslxx_parser::location_type& l,

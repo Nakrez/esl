@@ -136,6 +136,7 @@ add_executable(esl
                src/ast/function-dec.cc
                src/ast/id-exp.cc
                src/ast/instr.cc
+               src/ast/instr-list.cc
                src/ast/if-instr.cc
                src/ast/import-dec.cc
                src/ast/instr.cc
