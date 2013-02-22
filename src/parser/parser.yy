@@ -320,11 +320,22 @@ else_group      :
                 ;
 
 rule_while      :
-                "while" expr do_group //{ $$ = new ast::WhileRule
+                "while" expr do_group
+                {
+                    $$ = new ast::WhileInstr(@1, $2, $3);
+                }
                 ;
 
 rule_until      :
                 "until" expr do_group
+                {
+                    $$ = new ast::WhileInstr(@1,
+                                             new ast::OpExp(@2,
+                                                            $2,
+                                                            ast::OpExp::Operator::not_,
+                                                            nullptr),
+                                            $3);
+                }
                 ;
 
 do_group        :

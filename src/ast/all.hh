@@ -17,6 +17,7 @@
 # include <ast/string-exp.hh>
 # include <ast/op-exp.hh>
 # include <ast/instr.hh>
+# include <ast/while-instr.hh>
 # include <ast/instr-list.hh>
 # include <ast/if-instr.hh>
 

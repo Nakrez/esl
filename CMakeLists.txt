@@ -140,6 +140,7 @@ add_executable(esl
                src/ast/if-instr.cc
                src/ast/import-dec.cc
                src/ast/instr.cc
+               src/ast/while-instr.cc
                src/ast/int-exp.cc
                src/ast/method-dec.cc
                src/ast/op-exp.cc
