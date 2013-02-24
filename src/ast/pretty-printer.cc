@@ -12,4 +12,13 @@ namespace ast
     {
         stream_ << exp.value_get();
     }
+
+    void PrettyPrinter::operator()(InstrList& list)
+    {
+        for (auto elem : list.list_get())
+        {
+            elem->accept(*this);
+            stream_ << std::endl;
+        }
+    }
 } // namespace ast

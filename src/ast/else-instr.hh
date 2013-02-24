@@ -1,8 +1,10 @@
 #ifndef ELSE_INSTR_HH
 # define ELSE_INSTR_HH
 
+# include <ast/fwd.hh>
 # include <ast/visitor.hh>
-# include <ast/list.hh>
+# include <ast/any-list.hh>
+# include <ast/instr.hh>
 
 namespace ast
 {

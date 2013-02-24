@@ -1,10 +1,11 @@
 #ifndef WHILE_INSTR_HH
 # define WHILE_INSTR_HH
 
+# include <ast/fwd.hh>
 # include <ast/visitor.hh>
+# include <ast/any-list.hh>
 # include <ast/instr.hh>
 # include <ast/exp.hh>
-# include <ast/list.hh>
 
 namespace ast
 {

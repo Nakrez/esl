@@ -32,7 +32,6 @@ int main(int argc, char **argv)
     if (!driver.errors_get())
     {
         #ifdef AST_TEST
-        std::cout << "Pretty Print" << std::endl;
         ast::PrettyPrinter print(std::cout);
         print(*driver.ast_);
         #else

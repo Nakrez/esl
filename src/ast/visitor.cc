@@ -1,5 +1,5 @@
 #include <ast/visitor.hh>
-#include <ast/list.hh>
+#include <ast/all.hh>
 
 namespace ast
 {
@@ -12,13 +12,5 @@ namespace ast
     void Visitor::operator()(Ast& ast)
     {
         ast.accept(*this);
-    }
-
-    void Visitor::operator()(AnyList<Instr>& list)
-    {
-        for (auto elem : list.list_get())
-        {
-            elem->accept(*this);
-        }
     }
 } // namespace ast

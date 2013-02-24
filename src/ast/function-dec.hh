@@ -4,9 +4,9 @@
 
 # include <list>
 
+# include <ast/fwd.hh>
 # include <ast/dec.hh>
 # include <ast/var-dec-list.hh>
-# include <ast/list.hh>
 
 namespace ast
 {

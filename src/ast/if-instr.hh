@@ -2,8 +2,10 @@
 #ifndef IF_INSTR_HH
 # define IF_INSTR_HH
 
-# include <ast/list.hh>
+# include <ast/fwd.hh>
+# include <ast/visitor.hh>
 # include <ast/exp.hh>
+# include <ast/any-list.hh>
 # include <ast/instr.hh>
 
 namespace ast
