@@ -1,5 +1,5 @@
 %require "2.4"
-%skeleton "lalr1.cc"
+%skeleton "glr.cc"
 %code requires
 {
 
@@ -14,6 +14,8 @@ class Driver;
 %define parser_class_name "eslxx_parser"
 %debug
 %defines
+%verbose
+%glr-parser
 /* No conflict accepted */
 
 /*
@@ -32,11 +34,12 @@ class Driver;
 
 %union
 {
-    std::string *sval;
+    std::string* sval;
     int ival;
-    ast::Ast *ast;
-    ast::Instr *ast_instr;
-    ast::Exp *ast_exp;
+    ast::Ast* ast;
+    ast::Instr* ast_instr;
+    ast::InstrList* ast_list_instr;
+    ast::Exp* ast_exp;
     std::list<ast::Ast *> *lval;
 }
 
@@ -66,6 +69,7 @@ class Driver;
         TOK_DOUBLEP         ":"
         TOK_ARROW           "->"
         TOK_NEW             "new"
+        TOK_NOT             "!"
         TOK_PAROPEN         "("
         TOK_PARCLOSE        ")"
         TOK_COMA            ","
@@ -102,6 +106,14 @@ class Driver;
 %type <ast_instr> instr
                   esl_command
                   rule_if
+                  rule_while
+                  rule_until
+                  else_group
+                  compound
+
+%type <ast_list_instr> compound_list
+                       do_group
+                       input
 
 %right "="
 %left "||" "&&"
@@ -113,9 +125,21 @@ class Driver;
 
 
 %%
+program:
+       | input { driver.ast_ = $1; }
+       ;
 
 input   :
+        instr
+        {
+            $$ = new ast::InstrList(@1);
+            $$->push_back($1);
+        }
         | input instr
+        {
+            $$ = $1;
+            $$->push_back($2);
+        }
         ;
 
 instr   :
@@ -150,12 +174,16 @@ class_components:
                 ;
 
 compound_list   :
-                compound
+                compound { $$ = new ast::InstrList(@1, $1); }
                 | compound_list compound
+                {
+                    $$ = $1;
+                    $$->push_back($2);
+                }
                 ;
 compound:
         "return" expr
-        | expr
+        | expr { $$ = $1; }
         | esl_command
         ;
 
@@ -192,7 +220,14 @@ arrays          :
                 ;
 
 expr            :
-                '-' expr
+                '!' expr
+                {
+                    $$ = new ast::OpExp(@1,
+                                        $2,
+                                        ast::OpExp::Operator::not_,
+                                        nullptr);
+                }
+                | '-' expr
                 {
                   $$ = new ast::OpExp(@2,
                                       new ast::IntExp(@1, 0),
@@ -271,31 +306,54 @@ expr            :
 
 esl_command     :
                 rule_if { $$ = $1; }
-                |rule_until
-                |rule_while
+                |rule_until { $$ = $1; }
+                |rule_while { $$ = $1; }
                 ;
 
 rule_if         :
                 "if" expr "then" compound_list else_group "end"
+                {
+                  $$ = new ast::IfInstr(@1, $2, $4, $5);
+                }
                 |"if" expr "then" compound_list "end"
+                {
+                  $$ = new ast::IfInstr(@1, $2, $4);
+                }
                 ;
 
 else_group      :
-                "else" compound_list
+                "else" compound_list { $$ = new ast::ElseInstr(@1, $2); }
                 |"elif" expr "then" compound_list
+                {
+                    $$ = new ast::IfInstr(@1, $2, $4);
+                }
                 |"elif" expr "then" compound_list else_group
+                {
+                  $$ = new ast::IfInstr(@1, $2, $4, $5);
+                }
                 ;
 
 rule_while      :
                 "while" expr do_group
+                {
+                    $$ = new ast::WhileInstr(@1, $2, $3);
+                }
                 ;
 
 rule_until      :
                 "until" expr do_group
+                {
+                    $$ = new ast::WhileInstr(@1,
+                                             new ast::OpExp(@2,
+                                                            $2,
+                                                            ast::OpExp::Operator::not_,
+                                                            nullptr),
+                                            $3);
+                }
                 ;
 
 do_group        :
-                "do" compound_list "end"
+                "do" compound_list "end" { $$ = $2; }
                 ;
 %%
 void yy::eslxx_parser::error (const yy::eslxx_parser::location_type& l,

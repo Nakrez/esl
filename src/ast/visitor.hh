@@ -16,6 +16,10 @@ namespace ast
     class StringExp;
     class IdExp;
     class IfExp;
+    class Instr;
+    template <class T>
+    class AnyList;
+    typedef AnyList<Instr> InstrList;
 
     class Visitor
     {
@@ -23,18 +27,9 @@ namespace ast
             Visitor();
             virtual ~Visitor();
 
-            void operator()(Ast&);
-            virtual void operator()(VarDec&) = 0;
-            virtual void operator()(VarDecList&) = 0;
-            virtual void operator()(ImportDec&) = 0;
-            virtual void operator()(FunctionDec&) = 0;
-            virtual void operator()(AttributDec&) = 0;
-            virtual void operator()(OpExp&) = 0;
+            virtual void operator()(Ast&);
+            virtual void operator()(AnyList<Instr>&);
             virtual void operator()(IntExp&) = 0;
-            virtual void operator()(StringExp&) = 0;
-            virtual void operator()(IdExp&) = 0;
-            virtual void operator()(IfExp&) = 0;
-            virtual void operator()(ExpList&) = 0;
     };
 } // namespace ast
 

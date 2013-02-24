@@ -10,16 +10,11 @@ namespace ast
     class PrettyPrinter : public Visitor
     {
         public:
+            using Visitor::operator();
+
             PrettyPrinter(std::ostream& stream);
 
-            virtual void operator()(VarDec&) = 0;
-            virtual void operator()(VarDecList&) = 0;
-            virtual void operator()(ImportDec&) = 0;
-            virtual void operator()(FunctionDec&) = 0;
-            virtual void operator()(AttributDec&) = 0;
-            virtual void operator()(OpExp&) = 0;
-            virtual void operator()(IfExp&) = 0;
-            virtual void operator()(ExpList&) = 0;
+            virtual void operator()(IntExp&);
 
         protected:
             std::ostream& stream_;

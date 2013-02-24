@@ -12,12 +12,12 @@ namespace ast
         return condition_;
     }
 
-    inline const Exp* IfInstr::exp_true_get() const
+    inline const InstrList* IfInstr::exp_true_get() const
     {
         return exp_true_;
     }
 
-    inline const Exp* IfInstr::exp_else_get() const
+    inline const Instr* IfInstr::exp_else_get() const
     {
         return exp_else_;
     }

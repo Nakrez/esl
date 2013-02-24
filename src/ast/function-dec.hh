@@ -6,7 +6,7 @@
 
 # include <ast/dec.hh>
 # include <ast/var-dec-list.hh>
-# include <ast/exp-list.hh>
+# include <ast/list.hh>
 
 namespace ast
 {
@@ -16,17 +16,17 @@ namespace ast
             FunctionDec(const yy::location& location,
                         const misc::symbol& name,
                         const VarDecList& args,
-                        const ExpList& body);
+                        InstrList* body);
             virtual ~FunctionDec();
 
             const VarDecList& args_get() const;
-            const ExpList& body_get() const;
+            const InstrList* body_get() const;
 
             virtual void accept(Visitor& visitor);
 
         protected:
             VarDecList args_;
-            ExpList body_;
+            InstrList* body_;
     };
 } // namespace ast
 

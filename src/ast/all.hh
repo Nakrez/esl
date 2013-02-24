@@ -3,6 +3,8 @@
 # define ALL_HH
 
 # include <ast/ast.hh>
+# include <ast/any-list.hh>
+# include <ast/list.hh>
 # include <ast/dec.hh>
 # include <ast/var-dec.hh>
 # include <ast/attribut-dec.hh>
@@ -17,6 +19,8 @@
 # include <ast/string-exp.hh>
 # include <ast/op-exp.hh>
 # include <ast/instr.hh>
+# include <ast/while-instr.hh>
 # include <ast/if-instr.hh>
+# include <ast/else-instr.hh>
 
 #endif /* !ALL_HH */

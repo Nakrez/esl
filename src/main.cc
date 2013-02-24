@@ -1,9 +1,10 @@
 #include <sys/time.h>
-#include "parser/driver.hh"
-#include "compile/compiler.hh"
-#include "execute/vm.hh"
-#include "utils/ro-data.hh"
-#include "../lib/type/squeleton.hh"
+#include <parser/driver.hh>
+#include <compile/compiler.hh>
+#include <execute/vm.hh>
+#include <utils/ro-data.hh>
+#include <type/squeleton.hh>
+#include <ast/pretty-printer.hh>
 #include <cstring>
 #include <iostream>
 
@@ -32,6 +33,8 @@ int main(int argc, char **argv)
     {
         #ifdef AST_TEST
         std::cout << "Pretty Print" << std::endl;
+        ast::PrettyPrinter print(std::cout);
+        print(*driver.ast_);
         #else
         compiler = new esl::Compiler(driver.ast());
 

@@ -24,7 +24,8 @@ namespace ast
                 lt, /* < */
                 le, /* <= */
                 and_, /* && */
-                or_ /* || */
+                or_, /* || */
+                not_ /* ! */
             };
 
             OpExp(const yy::location location,

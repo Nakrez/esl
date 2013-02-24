@@ -2,6 +2,7 @@
 #ifndef IF_INSTR_HH
 # define IF_INSTR_HH
 
+# include <ast/list.hh>
 # include <ast/exp.hh>
 # include <ast/instr.hh>
 
@@ -12,23 +13,23 @@ namespace ast
         public:
             IfInstr(const yy::location& location,
                     Exp* condition,
-                    Exp* exp_true);
+                    InstrList* exp_true);
             IfInstr(const yy::location& location,
                     Exp* condition,
-                    Exp* exp_true,
-                    Exp* exp_else);
+                    InstrList* exp_true,
+                    Instr* exp_else);
             ~IfInstr();
 
             const Exp* condition_get() const;
-            const Exp* exp_true_get() const;
-            const Exp* exp_else_get() const;
+            const InstrList* exp_true_get() const;
+            const Instr* exp_else_get() const;
 
             virtual void accept(Visitor& visitor);
 
         protected:
             Exp* condition_;
-            Exp* exp_true_;
-            Exp* exp_else_;
+            InstrList* exp_true_;
+            Instr* exp_else_;
     };
 } // namespace ast
 
