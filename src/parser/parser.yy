@@ -150,13 +150,14 @@ class_components:
                 ;
 
 compound_list   :
-                "return" expr
-                |expr
-                |esl_command
-                | compound_list expr
-                | compound_list esl_command
-                | compound_list "return" expr
+                compound
+                | compound_list compound
                 ;
+compound:
+        "return" expr
+        | expr
+        | esl_command
+        ;
 
 object_call_list:
                 expr "->" "identifier"
