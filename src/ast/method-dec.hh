@@ -13,7 +13,7 @@ namespace ast
             MethodDec(const yy::location& location,
                       const misc::symbol& name,
                       const VarDecList& args,
-                      const ExpList& body,
+                      InstrList* body,
                       misc::visibility visibility);
             virtual ~MethodDec();
 

@@ -3,6 +3,7 @@
 # define ALL_HH
 
 # include <ast/ast.hh>
+# include <ast/list.hh>
 # include <ast/dec.hh>
 # include <ast/var-dec.hh>
 # include <ast/attribut-dec.hh>

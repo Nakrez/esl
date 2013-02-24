@@ -1,5 +1,5 @@
 %require "2.4"
-%skeleton "lalr1.cc"
+%skeleton "glr.cc"
 %code requires
 {
 
@@ -14,6 +14,8 @@ class Driver;
 %define parser_class_name "eslxx_parser"
 %debug
 %defines
+%verbose
+%glr-parser
 /* No conflict accepted */
 
 /*
@@ -292,8 +294,8 @@ expr            :
 
 esl_command     :
                 rule_if { $$ = $1; }
-                |rule_until
-                |rule_while
+                |rule_until { $$ = $1; }
+                |rule_while { $$ = $1; }
                 ;
 
 rule_if         :

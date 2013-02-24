@@ -12,7 +12,7 @@ namespace ast
         return args_;
     }
 
-    inline const ExpList& FunctionDec::body_get() const
+    inline const InstrList* FunctionDec::body_get() const
     {
         return body_;
     }
