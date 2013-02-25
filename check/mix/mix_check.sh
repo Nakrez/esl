@@ -12,6 +12,7 @@ while test $curr -le $count; do
         win=$(($win+1))
     else
         echo "File $file in $categorie failed"
+        rm -f ./check/$categorie/out
         exit 1
     fi
     curr=$(($curr+1));

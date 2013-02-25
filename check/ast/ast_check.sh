@@ -1,6 +1,6 @@
 #! /bin/sh
 
-categorie="datastruct"
+categorie="ast"
 count=1
 curr=1
 win=0

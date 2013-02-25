@@ -192,6 +192,7 @@ add_subdirectory(modules)
 ENABLE_TESTING()
 
 SET(TEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/check")
+ADD_TEST("AST" ${TEST_DIR}/ast/ast_check.sh)
 ADD_TEST("Arith" ${TEST_DIR}/arith/arith_check.sh)
 ADD_TEST("Array" ${TEST_DIR}/array/array_check.sh)
 ADD_TEST("Comment" ${TEST_DIR}/comment/comment_check.sh)
