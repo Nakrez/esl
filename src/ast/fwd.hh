@@ -14,7 +14,8 @@ namespace ast
     class IntExp;
     class StringExp;
     class IdExp;
-    class IfExp;
+    class IfInstr;
+    class ElseInstr;
     class Instr;
     template <class T>
     class AnyList;

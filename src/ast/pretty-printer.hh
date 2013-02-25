@@ -18,6 +18,8 @@ namespace ast
             virtual void operator()(IdExp&);
             virtual void operator()(StringExp&);
             virtual void operator()(OpExp&);
+            virtual void operator()(IfInstr&);
+            virtual void operator()(ElseInstr&);
             virtual void operator()(InstrList&);
 
         protected:

@@ -5,7 +5,12 @@
 
 namespace ast
 {
-    inline InstrList* ElseInstr::instr_list_get() const
+    inline const InstrList* ElseInstr::instr_list_get() const
+    {
+        return instr_list_;
+    }
+
+    inline InstrList* ElseInstr::instr_list_get()
     {
         return instr_list_;
     }

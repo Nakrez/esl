@@ -15,7 +15,8 @@ namespace ast
                       InstrList* list);
             virtual ~ElseInstr();
 
-            InstrList* instr_list_get() const;
+            const InstrList* instr_list_get() const;
+            InstrList* instr_list_get();
 
             void accept(Visitor& visitor);
 

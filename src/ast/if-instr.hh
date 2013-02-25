@@ -20,11 +20,14 @@ namespace ast
                     Exp* condition,
                     InstrList* exp_true,
                     Instr* exp_else);
-            ~IfInstr();
+            virtual ~IfInstr();
 
             const Exp* condition_get() const;
             const InstrList* exp_true_get() const;
             const Instr* exp_else_get() const;
+            Exp* condition_get();
+            InstrList* exp_true_get();
+            Instr* exp_else_get();
 
             virtual void accept(Visitor& visitor);
 

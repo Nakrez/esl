@@ -328,7 +328,7 @@ else_group      :
                 }
                 |"elif" expr "then" compound_list else_group
                 {
-                  $$ = new ast::IfInstr(@1, $2, $4, $5);
+                    $$ = new ast::IfInstr(@1, $2, $4, $5);
                 }
                 ;
 

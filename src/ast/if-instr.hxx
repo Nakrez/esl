@@ -22,6 +22,20 @@ namespace ast
         return exp_else_;
     }
 
+    inline Exp* IfInstr::condition_get()
+    {
+        return condition_;
+    }
+
+    inline InstrList* IfInstr::exp_true_get()
+    {
+        return exp_true_;
+    }
+
+    inline Instr* IfInstr::exp_else_get()
+    {
+        return exp_else_;
+    }
     inline void IfInstr::accept(Visitor& visitor)
     {
         visitor(*this);
