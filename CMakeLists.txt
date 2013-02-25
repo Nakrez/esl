@@ -72,6 +72,7 @@ ADD_LIBRARY(esl_lib SHARED
             lib/type/type.cc
             lib/type/squeleton.cc
             lib/misc/symbol.cc
+            lib/misc/indent.cc
             src/execute/vm.cc)
 
 SET_TARGET_PROPERTIES(
@@ -236,7 +237,7 @@ ADD_CUSTOM_TARGET(uninstall
 
 #######################
 #######################
-##  UNINSTALL RULE   ##
+##    CLEAR RULE     ##
 #######################
 #######################
 

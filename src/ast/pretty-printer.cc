@@ -45,16 +45,16 @@ namespace ast
     {
         stream_ << "if (";
         instr.condition_get()->accept(*this);
-        stream_ << ") then" << std::endl;
+        stream_ << ") then" << misc::incendl;
         instr.exp_true_get()->accept(*this);
 
         if (instr.exp_else_get())
         {
-            stream_ << "else" << std::endl;
+            stream_ << misc::decendl << "else" << misc::incendl;
             instr.exp_else_get()->accept(*this);
         }
 
-        stream_ << "end" << std::endl;
+        stream_ << misc::decendl << "end" << misc::iendl;
     }
 
     void PrettyPrinter::operator()(ElseInstr& instr)
@@ -64,10 +64,13 @@ namespace ast
 
     void PrettyPrinter::operator()(InstrList& list)
     {
-        for (auto elem : list.list_get())
+        std::list<Instr*>::const_iterator it = list.list_get().begin();
+
+        for ( ; it != list.list_get().end(); ++it)
         {
-            elem->accept(*this);
-            stream_ << std::endl;
+            if (it != list.list_get().begin())
+                stream_ << misc::iendl;
+            (*it)->accept(*this);
         }
     }
 } // namespace ast

@@ -4,6 +4,7 @@
 # include <iostream>
 
 # include <ast/visitor.hh>
+# include <misc/indent.hh>
 
 namespace ast
 {
