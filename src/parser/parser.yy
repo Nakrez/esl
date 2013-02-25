@@ -51,7 +51,6 @@ class Driver;
 %token  END       0         "end_of_file"
         TOK_EQ              "="
         TOK_DOT             "."
-        TOK_SEPARATOR       ";"
         TOK_PLUS            "+"
         TOK_MINUS           "-"
         TOK_MUL             "*"
@@ -115,6 +114,7 @@ class Driver;
                        do_group
                        input
 
+%left prec_exp
 %right "="
 %left "||" "&&"
 %left "==" "!=" "<" ">" "<=" ">="
@@ -122,7 +122,6 @@ class Driver;
 %left "*" "/" "%"
 %left "^"
 %left "[" ")" "->" "("
-
 
 %%
 program:
@@ -143,7 +142,7 @@ input   :
         ;
 
 instr   :
-        expr { $$ = $1; }
+        expr %prec prec_exp { $$ = $1; }
         |functions
         |class_decl
         |esl_command { $$ = $1; }
@@ -220,18 +219,18 @@ arrays          :
                 ;
 
 expr            :
-                '!' expr
+                "!" expr
                 {
                     $$ = new ast::OpExp(@1,
                                         $2,
                                         ast::OpExp::Operator::not_,
                                         nullptr);
                 }
-                | '-' expr
+                | "-" expr
                 {
                   $$ = new ast::OpExp(@2,
                                       new ast::IntExp(@1, 0),
-                                      ast::OpExp::Operator::add,
+                                      ast::OpExp::Operator::min,
                                       $2);
                 }
                 | expr "+" expr

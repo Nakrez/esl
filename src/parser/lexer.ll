@@ -104,6 +104,7 @@
                         }
 "=="                    return token::TOK_BIN_EQ;
 "<>"                    return token::TOK_DIFF;
+"!"                     return token::TOK_NOT;
 "!="                    return token::TOK_DIFF;
 ">"                     return token::TOK_GT;
 ">="                    return token::TOK_GE;
@@ -124,10 +125,8 @@
 "."                     return token::TOK_DOT;
 "["                     return token::TOK_BRACKET_OP;
 "]"                     return token::TOK_BRACKET_CL;
-";"                     return token::TOK_SEPARATOR;
 ":"                     return token::TOK_DOUBLEP;
 "->"                    return token::TOK_ARROW;
-"!"                     return token::TOK_NOT;
 
 [0-9]+                  {
                             yylval->ival = atoi(yytext);

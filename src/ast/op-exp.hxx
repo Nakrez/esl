@@ -7,24 +7,24 @@
 
 namespace ast
 {
-    inline const Exp& OpExp::lop_get() const
+    inline const Exp* OpExp::lop_get() const
     {
-        return *lop_;
+        return lop_;
     }
 
-    inline const Exp& OpExp::rop_get() const
+    inline const Exp* OpExp::rop_get() const
     {
-        return *rop_;
+        return rop_;
     }
 
-    inline Exp& OpExp::lop_get()
+    inline Exp* OpExp::lop_get()
     {
-        return *lop_;
+        return lop_;
     }
 
-    inline Exp& OpExp::rop_get()
+    inline Exp* OpExp::rop_get()
     {
-        return *rop_;
+        return rop_;
     }
     inline OpExp::Operator OpExp::op_get() const
     {

@@ -25,11 +25,20 @@ namespace ast
 
     void PrettyPrinter::operator()(OpExp& exp)
     {
-        stream_ << "(";
-        exp.lop_get().accept(*this);
-        stream_ << " " << exp.str_op() << " ";
-        exp.rop_get().accept(*this);
-        stream_ << ")";
+        if (exp.rop_get())
+        {
+            stream_ << "(";
+            exp.lop_get()->accept(*this);
+            stream_ << " " << exp.str_op() << " ";
+            exp.rop_get()->accept(*this);
+            stream_ << ")";
+        }
+        else
+        {
+            stream_ << "(" << exp.str_op();
+            exp.lop_get()->accept(*this);
+            stream_ << ")";
+        }
     }
 
     void PrettyPrinter::operator()(InstrList& list)

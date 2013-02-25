@@ -34,10 +34,10 @@ namespace ast
                   Exp* rop);
             ~OpExp();
 
-            const Exp& lop_get() const;
-            const Exp& rop_get() const;
-            Exp& lop_get();
-            Exp& rop_get();
+            const Exp* lop_get() const;
+            const Exp* rop_get() const;
+            Exp* lop_get();
+            Exp* rop_get();
             OpExp::Operator op_get() const;
             std::string str_op() const;
 
