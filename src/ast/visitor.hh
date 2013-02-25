@@ -16,6 +16,9 @@ namespace ast
             virtual void operator()(Ast&);
             virtual void operator()(InstrList&) = 0;
             virtual void operator()(IntExp&) = 0;
+            virtual void operator()(IdExp&) = 0;
+            virtual void operator()(OpExp&) = 0;
+            virtual void operator()(StringExp&) = 0;
     };
 } // namespace ast
 

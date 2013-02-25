@@ -17,6 +17,15 @@ namespace ast
         return *rop_;
     }
 
+    inline Exp& OpExp::lop_get()
+    {
+        return *lop_;
+    }
+
+    inline Exp& OpExp::rop_get()
+    {
+        return *rop_;
+    }
     inline OpExp::Operator OpExp::op_get() const
     {
         return op_;

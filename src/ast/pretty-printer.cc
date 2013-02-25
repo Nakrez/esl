@@ -13,6 +13,25 @@ namespace ast
         stream_ << exp.value_get();
     }
 
+    void PrettyPrinter::operator()(IdExp& exp)
+    {
+        stream_ << exp.name_get();
+    }
+
+    void PrettyPrinter::operator()(StringExp& exp)
+    {
+        stream_ << "\"" << exp.value_get() << "\"";
+    }
+
+    void PrettyPrinter::operator()(OpExp& exp)
+    {
+        stream_ << "(";
+        exp.lop_get().accept(*this);
+        stream_ << " " << exp.str_op() << " ";
+        exp.rop_get().accept(*this);
+        stream_ << ")";
+    }
+
     void PrettyPrinter::operator()(InstrList& list)
     {
         for (auto elem : list.list_get())
