@@ -34,6 +34,7 @@ int main(int argc, char **argv)
         #ifdef AST_TEST
         ast::PrettyPrinter print(std::cout);
         print(*driver.ast_);
+        std::cout << std::endl;
         #else
         compiler = new esl::Compiler(driver.ast());
 
