@@ -62,6 +62,15 @@ namespace ast
         instr.instr_list_get()->accept(*this);
     }
 
+    void PrettyPrinter::operator()(WhileInstr& instr)
+    {
+        stream_ << "while (";
+        instr.condition_get()->accept(*this);
+        stream_ << ") do" << misc::incendl;
+        instr.instr_list_get()->accept(*this);
+        stream_ << misc::decendl << "end";
+    }
+
     void PrettyPrinter::operator()(InstrList& list)
     {
         std::list<Instr*>::const_iterator it = list.list_get().begin();

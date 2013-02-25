@@ -20,6 +20,7 @@ namespace ast
             virtual void operator()(OpExp&) = 0;
             virtual void operator()(IfInstr&) = 0;
             virtual void operator()(ElseInstr&) = 0;
+            virtual void operator()(WhileInstr&) = 0;
             virtual void operator()(StringExp&) = 0;
     };
 } // namespace ast

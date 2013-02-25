@@ -16,6 +16,7 @@ namespace ast
     class IdExp;
     class IfInstr;
     class ElseInstr;
+    class WhileInstr;
     class Instr;
     template <class T>
     class AnyList;

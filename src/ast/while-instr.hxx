@@ -15,6 +15,16 @@ namespace ast
         return condition_;
     }
 
+    inline InstrList* WhileInstr::instr_list_get()
+    {
+        return instr_list_;
+    }
+
+    inline Exp* WhileInstr::condition_get()
+    {
+        return condition_;
+    }
+
     inline void WhileInstr::accept(Visitor& visitor)
     {
         visitor(*this);

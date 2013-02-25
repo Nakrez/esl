@@ -21,6 +21,7 @@ namespace ast
             virtual void operator()(OpExp&);
             virtual void operator()(IfInstr&);
             virtual void operator()(ElseInstr&);
+            virtual void operator()(WhileInstr&);
             virtual void operator()(InstrList&);
 
         protected:

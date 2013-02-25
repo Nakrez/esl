@@ -19,6 +19,8 @@ namespace ast
 
             const InstrList* instr_list_get() const;
             const Exp* condition_get() const;
+            Exp* condition_get();
+            InstrList* instr_list_get();
             void accept(Visitor& visitor);
 
         protected:
