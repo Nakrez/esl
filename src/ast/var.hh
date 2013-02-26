@@ -1,12 +1,12 @@
 #ifndef VAR_HH
 # define VAR_HH
 
-# include <ast/ast.hh>
+# include <ast/exp.hh>
 # include <misc/symbol.hh>
 
 namespace ast
 {
-    class Var : public Ast
+    class Var : public Exp
     {
         public:
             Var(const yy::location& location,

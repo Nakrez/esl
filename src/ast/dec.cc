@@ -4,10 +4,8 @@ namespace ast
 {
     Dec::Dec(const yy::location& location,
              const misc::symbol& name)
-        : Ast(location)
-    {
-        name_ = name;
-    }
+        : Var(location, name)
+    {}
 
     Dec::~Dec()
     {}

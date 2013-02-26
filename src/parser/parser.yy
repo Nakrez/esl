@@ -40,6 +40,7 @@ class Driver;
     ast::Instr* ast_instr;
     ast::InstrList* ast_list_instr;
     ast::Exp* ast_exp;
+    ast::Var* ast_var;
     std::list<ast::Ast *> *lval;
 }
 
@@ -101,6 +102,8 @@ class Driver;
         TOK_DIGIT           "digit"
 
 %type <ast_exp> expr
+
+%type <ast_var> lvalue
 
 %type <ast_instr> instr
                   esl_command

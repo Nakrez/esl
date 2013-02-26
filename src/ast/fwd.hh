@@ -4,6 +4,7 @@
 namespace ast
 {
     class Ast;
+    class Var;
     class VarDec;
     class ImportDec;
     class FunctionDec;

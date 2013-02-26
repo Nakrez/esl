@@ -2,12 +2,12 @@
 #ifndef DEC_HH
 # define DEC_HH
 
-# include <ast/ast.hh>
+# include <ast/var.hh>
 # include <misc/symbol.hh>
 
 namespace ast
 {
-    class Dec : public Ast
+    class Dec : public Var
     {
         public:
             Dec(const yy::location& location,
