@@ -5,7 +5,6 @@ namespace ast
 {
     class Ast;
     class VarDec;
-    class VarDecList;
     class ImportDec;
     class FunctionDec;
     class AttributDec;
@@ -22,5 +21,6 @@ namespace ast
     class AnyList;
 
     typedef AnyList<Instr> InstrList;
+    typedef AnyList<VarDec> VarDecList;
 } // namespace ast
 #endif /* !FWD_HH */

@@ -147,8 +147,7 @@ add_executable(esl
                src/ast/op-exp.cc
                src/ast/pretty-printer.cc
                src/ast/string-exp.cc
-               src/ast/var-dec.cc
-               src/ast/var-dec-list.cc
+               src/ast/var.cc
                src/ast/visitor.cc
                #src/compile/compiler.cc
                src/main.cc)

@@ -6,7 +6,8 @@ namespace ast
                              const misc::symbol& name,
                              Exp* value,
                              misc::visibility visibility)
-        : VarDec(location, name, value)
+        : Dec(location, name)
+        , value_(value)
         , visibility_(visibility)
     {}
 

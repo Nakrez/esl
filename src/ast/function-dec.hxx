@@ -7,12 +7,22 @@
 
 namespace ast
 {
-    inline const VarDecList& FunctionDec::args_get() const
+    inline const VarDecList* FunctionDec::args_get() const
     {
         return args_;
     }
 
     inline const InstrList* FunctionDec::body_get() const
+    {
+        return body_;
+    }
+
+    inline VarDecList* FunctionDec::args_get()
+    {
+        return args_;
+    }
+
+    inline InstrList* FunctionDec::body_get()
     {
         return body_;
     }

@@ -17,6 +17,16 @@ namespace ast
         visibility_ = visibility;
     }
 
+    inline const Exp* AttributDec::value_get() const
+    {
+        return value_;
+    }
+
+    inline Exp* AttributDec::value_get()
+    {
+        return value_;
+    }
+
     inline void AttributDec::accept(Visitor& visitor)
     {
         visitor(*this);

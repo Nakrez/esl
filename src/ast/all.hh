@@ -4,10 +4,7 @@
 
 # include <ast/ast.hh>
 # include <ast/any-list.hh>
-# include <ast/dec.hh>
-# include <ast/var-dec.hh>
 # include <ast/attribut-dec.hh>
-# include <ast/var-dec-list.hh>
 # include <ast/function-dec.hh>
 # include <ast/method-dec.hh>
 # include <ast/import-dec.hh>
@@ -21,5 +18,6 @@
 # include <ast/while-instr.hh>
 # include <ast/if-instr.hh>
 # include <ast/else-instr.hh>
+# include <ast/var.hh>
 
 #endif /* !ALL_HH */

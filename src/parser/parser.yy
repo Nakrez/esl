@@ -186,36 +186,23 @@ compound:
         | esl_command
         ;
 
-object_call_list:
-                expr "->" "identifier"
-                |expr "->" fun_call
-                |object_call_list "->" "identifier"
-                |object_call_list "->" fun_call
-                ;
-
 param_list      :
                 "identifier"
                 | param_list "," "identifier"
                 ;
 
 id_list         :
-                expr
+                |expr
                 | id_list "," expr
                 ;
 
 fun_call        :
-                "identifier" "(" ")"
-                |"identifier" "(" id_list ")"
+                "identifier" "(" id_list ")"
                 ;
 
 functions       :
                 "function" "identifier" "(" ")" compound_list "end"
                 |"function" "identifier" "(" param_list ")" compound_list "end"
-                ;
-
-arrays          :
-                 "[" expr "]"
-                | arrays "[" expr "]"
                 ;
 
 expr            :
@@ -292,16 +279,20 @@ expr            :
                 |"(" expr ")" { $$ = $2; }
                 |"digit" { $$ = new ast::IntExp(@1, $1); }
                 |"string" { $$ = new ast::StringExp(@1, *$1); }
-                |"identifier" { $$ = new ast::IdExp(@1, *$1); }
                 |fun_call
-                |object_call_list
                 |"new" fun_call
-                |"identifier" "=" expr
-                | object_call_list "=" expr
-                |"mod_id" "." fun_call
-                |"identifier" arrays "=" expr
-                |"identifier" arrays
+                |lvalue
+                |lvalue "=" expr
                 ;
+
+lvalue:
+      "identifier"
+      | lvalue "->" "identifier"
+      | lvalue "->" "identifier" "(" id_list ")"
+      | lvalue "." "identifier"
+      | lvalue "." "identifier" "(" id_list")"
+      | lvalue "[" expr "]"
+      ;
 
 esl_command     :
                 rule_if { $$ = $1; }
