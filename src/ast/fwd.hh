@@ -6,6 +6,7 @@ namespace ast
     class Ast;
     class Var;
     class VarId;
+    class AttributVar;
     class VarDec;
     class ImportDec;
     class FunctionDec;

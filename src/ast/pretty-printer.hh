@@ -23,6 +23,7 @@ namespace ast
             virtual void operator()(WhileInstr&);
             virtual void operator()(InstrList&);
             virtual void operator()(VarId&);
+            virtual void operator()(AttributVar&);
 
         protected:
             std::ostream& stream_;

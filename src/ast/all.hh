@@ -19,5 +19,6 @@
 # include <ast/else-instr.hh>
 # include <ast/var.hh>
 # include <ast/var-id.hh>
+# include <ast/attribut-var.hh>
 
 #endif /* !ALL_HH */

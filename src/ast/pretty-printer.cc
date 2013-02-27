@@ -82,4 +82,10 @@ namespace ast
     {
         stream_ << var.name_get();
     }
+
+    void PrettyPrinter::operator()(AttributVar& var)
+    {
+        var.call_var_get().accept(*this);
+        stream_ << "->" << var.name_get();
+    }
 } // namespace ast

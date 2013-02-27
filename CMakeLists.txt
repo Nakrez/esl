@@ -147,6 +147,7 @@ add_executable(esl
                src/ast/pretty-printer.cc
                src/ast/string-exp.cc
                src/ast/var.cc
+               src/ast/attribut-var.cc
                src/ast/var-id.cc
                src/ast/visitor.cc
                #src/compile/compiler.cc
