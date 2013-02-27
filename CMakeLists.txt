@@ -135,7 +135,6 @@ add_executable(esl
                src/ast/exp.cc
                src/ast/exp-list.cc
                src/ast/function-dec.cc
-               src/ast/id-exp.cc
                src/ast/instr.cc
                src/ast/if-instr.cc
                src/ast/else-instr.cc
@@ -148,6 +147,7 @@ add_executable(esl
                src/ast/pretty-printer.cc
                src/ast/string-exp.cc
                src/ast/var.cc
+               src/ast/var-id.cc
                src/ast/visitor.cc
                #src/compile/compiler.cc
                src/main.cc)

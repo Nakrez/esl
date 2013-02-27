@@ -5,6 +5,7 @@ namespace ast
 {
     class Ast;
     class Var;
+    class VarId;
     class VarDec;
     class ImportDec;
     class FunctionDec;
@@ -13,7 +14,6 @@ namespace ast
     class OpExp;
     class IntExp;
     class StringExp;
-    class IdExp;
     class IfInstr;
     class ElseInstr;
     class WhileInstr;

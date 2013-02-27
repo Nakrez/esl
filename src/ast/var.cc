@@ -2,10 +2,8 @@
 
 namespace ast
 {
-    Var::Var(const yy::location& location,
-             const misc::symbol& name)
+    Var::Var(const yy::location& location)
         : Exp(location)
-        , name_(name)
     {}
 
     Var::~Var()

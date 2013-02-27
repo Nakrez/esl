@@ -15,7 +15,6 @@ namespace ast
             virtual ~Dec();
 
             const misc::symbol& name_get() const;
-            void name_set(const misc::symbol& name);
 
             virtual void accept(const Visitor& visitor) = 0;
 

@@ -13,11 +13,6 @@ namespace ast
         stream_ << exp.value_get();
     }
 
-    void PrettyPrinter::operator()(IdExp& exp)
-    {
-        stream_ << exp.name_get();
-    }
-
     void PrettyPrinter::operator()(StringExp& exp)
     {
         stream_ << "\"" << exp.value_get() << "\"";
@@ -81,5 +76,10 @@ namespace ast
                 stream_ << misc::iendl;
             (*it)->accept(*this);
         }
+    }
+
+    void PrettyPrinter::operator()(VarId& var)
+    {
+        stream_ << var.name_get();
     }
 } // namespace ast

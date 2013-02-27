@@ -1,13 +1,13 @@
-#include <ast/id-exp.hh>
+#include <ast/var-id.hh>
 
 namespace ast
 {
-    IdExp::IdExp(const yy::location& location,
+    VarId::VarId(const yy::location& location,
                  const misc::symbol& name)
-        : Exp(location)
+        : Var(location)
         , name_(name)
     {}
 
-    IdExp::~IdExp()
+    VarId::~VarId()
     {}
 } // namespace ast

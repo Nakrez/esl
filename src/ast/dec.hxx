@@ -9,11 +9,6 @@ namespace ast
     {
         return name_;
     }
-
-    inline void Dec::name_set(const misc::symbol& name)
-    {
-        name_ = name;
-    }
 } // namespace ast
 
 #endif /* !DEC_HXX */

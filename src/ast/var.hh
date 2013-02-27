@@ -9,17 +9,9 @@ namespace ast
     class Var : public Exp
     {
         public:
-            Var(const yy::location& location,
-                    const misc::symbol& name);
+            Var(const yy::location& location);
             virtual ~Var();
-
-            const misc::symbol& name_get() const;
-
-        protected:
-            misc::symbol name_;
     };
 } // namespace ast
-
-# include <ast/var.hxx>
 
 #endif /* !VAR_HH */

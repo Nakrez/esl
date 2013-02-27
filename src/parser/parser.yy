@@ -289,7 +289,7 @@ expr            :
                 ;
 
 lvalue:
-      "identifier"
+      "identifier" { $$ = new ast::VarId(@1, *$1); }
       | lvalue "->" "identifier"
       | lvalue "->" "identifier" "(" id_list ")"
       | lvalue "." "identifier"
