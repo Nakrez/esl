@@ -8,6 +8,7 @@
 # include <ast/function-dec.hh>
 # include <ast/method-dec.hh>
 # include <ast/import-dec.hh>
+# include <ast/var-dec.hh>
 # include <ast/exp.hh>
 # include <ast/exp-list.hh>
 # include <ast/int-exp.hh>

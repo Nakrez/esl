@@ -41,6 +41,9 @@ class Driver;
     ast::InstrList* ast_list_instr;
     ast::Exp* ast_exp;
     ast::Var* ast_var;
+    ast::FunctionDec* ast_function;
+    ast::VarDec* ast_vardec;
+    ast::VarDecList* ast_vardec_list;
     std::list<ast::Ast *> *lval;
 }
 
@@ -117,6 +120,11 @@ class Driver;
                        do_group
                        input
 
+%type <ast_vardec> param
+%type <ast_vardec_list> param_list
+
+%type <ast_function> function
+
 %left prec_exp
 %right "="
 %left "||" "&&"
@@ -146,16 +154,20 @@ input   :
 
 instr   :
         expr %prec prec_exp { $$ = $1; }
-        |functions
+        |function { $$ = $1; }
         |class_decl
         |esl_command { $$ = $1; }
         |"import" "string"
         |"include" "string"
         ;
 
+inherit_list:
+            "identifier"
+            | inherit_list "," "identifier"
+            ;
 class_decl:
           "class" "identifier" class_components "end"
-          |"class" "identifier" ":" "(" param_list ")" class_components "end"
+          |"class" "identifier" ":" "(" inherit_list ")" class_components "end"
           ;
 
 visibility :
@@ -165,7 +177,7 @@ visibility :
            ;
 
 class_component:
-                visibility functions
+                visibility function
                 |visibility "identifier"
                 |visibility "identifier" "=" expr
                 ;
@@ -189,9 +201,22 @@ compound:
         | esl_command
         ;
 
+param:
+     "identifier" { $$ = new ast::VarDec(@1, *$1); }
+     |"identifier" "=" expr { $$ = new ast::VarDec(@1, *$1, $3); }
+     ;
+
 param_list      :
-                "identifier"
-                | param_list "," "identifier"
+                { $$ = new ast::VarDecList(@$); }
+                | param
+                {
+                    $$ = new ast::VarDecList(@1, $1);
+                }
+                | param_list "," param
+                {
+                    $$ = $1;
+                    $$->push_back($3);
+                }
                 ;
 
 id_list         :
@@ -203,9 +228,11 @@ fun_call        :
                 "identifier" "(" id_list ")"
                 ;
 
-functions       :
-                "function" "identifier" "(" ")" compound_list "end"
-                |"function" "identifier" "(" param_list ")" compound_list "end"
+function        :
+                "function" "identifier" "(" param_list ")" compound_list "end"
+                {
+                    $$ = new ast::FunctionDec(@1, *$2, $4, $6);
+                }
                 ;
 
 expr            :

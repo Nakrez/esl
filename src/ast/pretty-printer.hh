@@ -24,6 +24,7 @@ namespace ast
             virtual void operator()(InstrList&);
             virtual void operator()(VarId&);
             virtual void operator()(AttributVar&);
+            virtual void operator()(FunctionDec&);
 
         protected:
             std::ostream& stream_;

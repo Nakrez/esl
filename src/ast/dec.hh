@@ -16,7 +16,7 @@ namespace ast
 
             const misc::symbol& name_get() const;
 
-            virtual void accept(const Visitor& visitor) = 0;
+            virtual void accept(Visitor& visitor) = 0;
 
         protected:
             misc::symbol name_;
