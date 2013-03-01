@@ -10,6 +10,7 @@ namespace ast
     class AttributVar;
     class MethodCallVar;
     class ModuleCallVar;
+    class ModuleAttributVar;
 
     class VarDec;
     class ImportDec;

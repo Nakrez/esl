@@ -103,6 +103,12 @@ namespace ast
         var.call_get()->accept(*this);
     }
 
+    void PrettyPrinter::operator()(ModuleAttributVar& var)
+    {
+        var.var_get()->accept(*this);
+        stream_ << "." << var.name_get();
+    }
+
     void PrettyPrinter::operator()(FunctionDec& dec)
     {
         stream_ << "function " << dec.name_get() << " (";
