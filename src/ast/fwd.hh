@@ -4,25 +4,32 @@
 namespace ast
 {
     class Ast;
+
     class Var;
     class VarId;
     class AttributVar;
+
     class VarDec;
     class ImportDec;
     class FunctionDec;
     class AttributDec;
-    class ExpList;
+
+    class Exp;
     class OpExp;
     class IntExp;
     class StringExp;
+    class FunctionCallExp;
+
+    class Instr;
     class IfInstr;
     class ElseInstr;
     class WhileInstr;
-    class Instr;
+
     template <class T>
     class AnyList;
 
     typedef AnyList<Instr> InstrList;
     typedef AnyList<VarDec> VarDecList;
+    typedef AnyList<Exp> ExpList;
 } // namespace ast
 #endif /* !FWD_HH */

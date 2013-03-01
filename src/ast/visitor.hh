@@ -14,15 +14,20 @@ namespace ast
             virtual ~Visitor();
 
             virtual void operator()(Ast&);
+
             virtual void operator()(IntExp&) = 0;
             virtual void operator()(OpExp&) = 0;
             virtual void operator()(StringExp&) = 0;
+            virtual void operator()(FunctionCallExp&) = 0;
+
             virtual void operator()(IfInstr&) = 0;
             virtual void operator()(ElseInstr&) = 0;
             virtual void operator()(WhileInstr&) = 0;
             virtual void operator()(InstrList&) = 0;
+
             virtual void operator()(VarId&) = 0;
             virtual void operator()(AttributVar&) = 0;
+
             virtual void operator()(FunctionDec&) = 0;
             virtual void operator()(VarDec&) = 0;
     };

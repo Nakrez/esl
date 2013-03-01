@@ -36,6 +36,13 @@ namespace ast
         }
     }
 
+    void PrettyPrinter::operator()(FunctionCallExp& exp)
+    {
+        stream_ << exp.name_get() << "(";
+        separate(exp.args_get()->list_get(), ", ");
+        stream_ << ")";
+    }
+
     void PrettyPrinter::operator()(IfInstr& instr)
     {
         stream_ << "if (";

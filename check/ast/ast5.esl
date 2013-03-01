@@ -1,0 +1,10 @@
+function test()
+    0
+end
+function test(test, test = 0)
+    0
+    0 + 3
+end
+test(9, 0)
+test()
+test(test(), 0 + 3)

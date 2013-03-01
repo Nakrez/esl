@@ -19,12 +19,16 @@ namespace ast
             virtual void operator()(IntExp&);
             virtual void operator()(StringExp&);
             virtual void operator()(OpExp&);
+            virtual void operator()(FunctionCallExp&);
+
             virtual void operator()(IfInstr&);
             virtual void operator()(ElseInstr&);
             virtual void operator()(WhileInstr&);
             virtual void operator()(InstrList&);
+
             virtual void operator()(VarId&);
             virtual void operator()(AttributVar&);
+
             virtual void operator()(FunctionDec&);
             virtual void operator()(VarDec&);
 

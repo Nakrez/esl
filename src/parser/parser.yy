@@ -37,13 +37,19 @@ class Driver;
     std::string* sval;
     int ival;
     ast::Ast* ast;
+
     ast::Instr* ast_instr;
     ast::InstrList* ast_list_instr;
+
     ast::Exp* ast_exp;
+    ast::ExpList* ast_list_exp;
+
     ast::Var* ast_var;
+
     ast::FunctionDec* ast_function;
     ast::VarDec* ast_vardec;
     ast::VarDecList* ast_vardec_list;
+
     std::list<ast::Ast *> *lval;
 }
 
@@ -105,6 +111,9 @@ class Driver;
         TOK_DIGIT           "digit"
 
 %type <ast_exp> expr
+                fun_call
+
+%type <ast_list_exp> exp_list
 
 %type <ast_var> lvalue
 
@@ -219,13 +228,21 @@ param_list      :
                 }
                 ;
 
-id_list         :
-                |expr
-                | id_list "," expr
+exp_list        :
+                { $$ = new ast::ExpList(@$); }
+                | expr { $$ = new ast::ExpList(@1, $1); }
+                | exp_list "," expr
+                {
+                    $$ = $1;
+                    $$->push_back($3);
+                }
                 ;
 
 fun_call        :
-                "identifier" "(" id_list ")"
+                "identifier" "(" exp_list ")"
+                {
+                    $$ = new ast::FunctionCallExp(@1, *$1, $3);
+                }
                 ;
 
 function        :
@@ -309,7 +326,7 @@ expr            :
                 |"(" expr ")" { $$ = $2; }
                 |"digit" { $$ = new ast::IntExp(@1, $1); }
                 |"string" { $$ = new ast::StringExp(@1, *$1); }
-                |fun_call
+                |fun_call { $$ = $1; }
                 |"new" fun_call
                 |lvalue
                 |lvalue "=" expr
@@ -318,9 +335,10 @@ expr            :
 lvalue:
       "identifier" { $$ = new ast::VarId(@1, *$1); }
       | lvalue "->" "identifier" { $$ = new ast::AttributVar(@1, *$1, *$3); }
-      | lvalue "->" "identifier" "(" id_list ")"
+      | lvalue "->" fun_call
+      /* Not Handled by VM yet */
       | lvalue "." "identifier"
-      | lvalue "." "identifier" "(" id_list")"
+      | lvalue "." fun_call
       | lvalue "[" expr "]"
       ;
 
