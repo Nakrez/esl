@@ -153,6 +153,7 @@ add_executable(esl
                src/ast/attribut-var.cc
                src/ast/var-id.cc
                src/ast/method-call-var.cc
+               src/ast/module-call-var.cc
 
                src/ast/pretty-printer.cc
                src/ast/visitor.cc

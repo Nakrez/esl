@@ -3,3 +3,5 @@ foo->bar
 foo->bar->foo
 foo->bar->foo()
 foo->bar->foo()->var->foo(foo->bar, foo->bar()->foo->bar())
+foo.bar()->test()->bar().ll()
+foo.bar()

@@ -340,7 +340,7 @@ lvalue:
       | lvalue "->" fun_call { $$ = new ast::MethodCallVar(@1, $1, $3); }
       /* Not Handled by VM yet */
       | lvalue "." "identifier"
-      | lvalue "." fun_call
+      | lvalue "." fun_call { $$ = new ast::ModuleCallVar(@1, $1, $3); }
       | lvalue "[" expr "]"
       ;
 

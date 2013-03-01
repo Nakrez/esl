@@ -9,6 +9,7 @@ namespace ast
     class VarId;
     class AttributVar;
     class MethodCallVar;
+    class ModuleCallVar;
 
     class VarDec;
     class ImportDec;
