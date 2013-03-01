@@ -2,6 +2,7 @@
 # define PRETTY_PRINTER_HH
 
 # include <iostream>
+# include <list>
 
 # include <ast/visitor.hh>
 # include <misc/indent.hh>
@@ -25,6 +26,11 @@ namespace ast
             virtual void operator()(VarId&);
             virtual void operator()(AttributVar&);
             virtual void operator()(FunctionDec&);
+            virtual void operator()(VarDec&);
+
+        protected:
+            template<typename T, class U> void separate(std::list<T> list,
+                                                        const U& sep);
 
         protected:
             std::ostream& stream_;

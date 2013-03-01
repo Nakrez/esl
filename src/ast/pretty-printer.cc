@@ -68,14 +68,7 @@ namespace ast
 
     void PrettyPrinter::operator()(InstrList& list)
     {
-        std::list<Instr*>::const_iterator it = list.list_get().begin();
-
-        for ( ; it != list.list_get().end(); ++it)
-        {
-            if (it != list.list_get().begin())
-                stream_ << misc::iendl;
-            (*it)->accept(*this);
-        }
+        separate(list.list_get(), misc::iendl);
     }
 
     void PrettyPrinter::operator()(VarId& var)
@@ -93,8 +86,34 @@ namespace ast
     {
         stream_ << "function " << dec.name_get() << " (";
 
+        if (dec.args_get())
+            separate(dec.args_get()->list_get(), ", ");
+
         stream_ << ")" << misc::incendl;
         dec.body_get()->accept(*this);
         stream_ << misc::decendl << "end" << misc::iendl;
+    }
+
+    void PrettyPrinter::operator()(VarDec& dec)
+    {
+        stream_ << dec.name_get();
+        if (dec.exp_get())
+        {
+            stream_ << " = ";
+            dec.exp_get()->accept(*this);
+        }
+    }
+
+    template<typename T, class U>
+    void PrettyPrinter::separate(std::list<T> list, const U& sep)
+    {
+        typename std::list<T>::const_iterator it = list.begin();
+
+        for ( ; it != list.end(); ++it)
+        {
+            if (it != list.begin())
+                stream_ << sep;
+            (*it)->accept(*this);
+        }
     }
 } // namespace ast
