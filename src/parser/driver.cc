@@ -8,8 +8,8 @@ Driver::Driver()
 {
     this->gen_ast_ = new esl::Ast(STATEMENTS);
     errors_ = 0;
-    byte_param = false;
-    ast_param = false;
+    byte_bool = false;
+    ast_bool = false;
 }
 
 Driver::~Driver()
@@ -37,26 +37,6 @@ esl::Ast *Driver::ast()
     return this->gen_ast_;
 }
 
-bool Driver::get_byte()
-{
-    return this->byte_param;
-}
-
-void Driver::set_byte(bool a)
-{
-    byte_param = a;
-}
-
-bool Driver::get_ast()
-{
-    return this->ast_param;
-}
-
-void Driver::set_ast(bool a)
-{
-    ast_param = a;
-}
-
 int Driver::parser(const std::string &f, const std::string &t)
 {
     int res = 0;
@@ -68,16 +48,15 @@ int Driver::parser(const std::string &f, const std::string &t)
         scan_begin();
         res = parser.parse();
         scan_end();
-
-        if (get_ast())
-            this->gen_ast_->print();
+        if(ast_bool) inst.ast_optn(this);
+        if(byte_bool) inst.byte_optn(this);
     }
     else
     {
         std::string s=f;
         s.erase(0,2);
-        if (!s.compare("ast")) inst.ast_optn();
-        else if (!s.compare("byte")) inst.byte_optn();
+        if (!s.compare("ast")) ast_bool = true;
+        else if (!s.compare("byte")) byte_bool = true;
         else if (!s.compare("ee")) inst.ee_optn();
         else
             std::cerr << "Unknown option : " << s << std::endl;

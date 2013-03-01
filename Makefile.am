@@ -32,10 +32,10 @@ esl_SOURCES =   src/utils/ast.cc src/utils/ast.hh \
 		src/utils/utils.cc src/utils/utils.hh \
 		src/utils/bytecode.cc src/utils/bytecode.hh \
 		src/utils/ro-data.cc src/utils/ro-data.hh \
-                src/utils/option.cc src/utils/option.hh \
 		src/parser/parser.yy \
 		src/parser/lexer.ll \
 		src/parser/driver.cc src/parser/driver.hh \
+                src/utils/option.cc src/utils/option.hh \
 		src/compile/compiler.cc src/compile/compiler.hh \
 		src/main.cc
 
