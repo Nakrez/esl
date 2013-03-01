@@ -42,6 +42,7 @@ class Driver;
     ast::InstrList* ast_list_instr;
 
     ast::Exp* ast_exp;
+    ast::FunctionCallExp* ast_funexp;
     ast::ExpList* ast_list_exp;
 
     ast::Var* ast_var;
@@ -111,7 +112,8 @@ class Driver;
         TOK_DIGIT           "digit"
 
 %type <ast_exp> expr
-                fun_call
+
+%type <ast_funexp> fun_call
 
 %type <ast_list_exp> exp_list
 
@@ -335,7 +337,7 @@ expr            :
 lvalue:
       "identifier" { $$ = new ast::VarId(@1, *$1); }
       | lvalue "->" "identifier" { $$ = new ast::AttributVar(@1, *$1, *$3); }
-      | lvalue "->" fun_call
+      | lvalue "->" fun_call { $$ = new ast::MethodCallVar(@1, $1, $3); }
       /* Not Handled by VM yet */
       | lvalue "." "identifier"
       | lvalue "." fun_call

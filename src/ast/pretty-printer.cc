@@ -89,6 +89,13 @@ namespace ast
         stream_ << "->" << var.name_get();
     }
 
+    void PrettyPrinter::operator()(MethodCallVar& var)
+    {
+        var.var_get()->accept(*this);
+        stream_ << "->";
+        var.call_get()->accept(*this);
+    }
+
     void PrettyPrinter::operator()(FunctionDec& dec)
     {
         stream_ << "function " << dec.name_get() << " (";

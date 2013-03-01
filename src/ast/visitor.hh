@@ -27,6 +27,7 @@ namespace ast
 
             virtual void operator()(VarId&) = 0;
             virtual void operator()(AttributVar&) = 0;
+            virtual void operator()(MethodCallVar&) = 0;
 
             virtual void operator()(FunctionDec&) = 0;
             virtual void operator()(VarDec&) = 0;
