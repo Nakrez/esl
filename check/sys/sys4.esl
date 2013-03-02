@@ -1,0 +1,5 @@
+import "io"
+import "sys"
+
+Sys.chdir("/")
+Io.print_newline(Sys.getcwd())

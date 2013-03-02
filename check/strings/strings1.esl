@@ -1,4 +1,4 @@
 import "io"
 
 test="sboob"
-Io.print(test)
+Io.print_newline(test)

@@ -1,0 +1,26 @@
+import "io"
+
+class queue
+    public function construct()
+        self->elem = "LOL"
+        return self
+    end
+    public function add (elem)
+        self->next = new queue()
+        self->next->elem = elem
+        return 0
+    end
+    public elem
+    public next
+end
+
+test = new queue()
+Io.print_newline("Start")
+test->elem = "1"
+test->add("2")
+
+temp = test
+Io.print_newline(temp->elem)
+temp = temp->next
+Io.print_newline(temp->elem)
+temp = temp->next

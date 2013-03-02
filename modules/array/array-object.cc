@@ -10,8 +10,10 @@ esl::ArrayObject::ArrayObject ()
 esl::ArrayObject::ArrayObject (int size)
     : Object ("array")
 {
+    data_.resize(size);
+
     for (int i = 0; i < size; ++i)
-        data_.push_back(new esl::MemoryObject<esl::Content>(new esl::IntObject(0)));
+        data_[i] = new esl::MemoryObject<esl::Content>(new esl::IntObject(0));
 }
 
 esl::ArrayObject::~ArrayObject ()

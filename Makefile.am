@@ -35,6 +35,7 @@ esl_SOURCES =   src/utils/ast.cc src/utils/ast.hh \
 		src/parser/parser.yy \
 		src/parser/lexer.ll \
 		src/parser/driver.cc src/parser/driver.hh \
+                src/utils/option.cc src/utils/option.hh \
 		src/compile/compiler.cc src/compile/compiler.hh \
 		src/main.cc
 
@@ -84,4 +85,5 @@ TESTS=	./check/io/io_check.sh \
 	./check/array/array_check.sh \
 	./check/comment/comment_check.sh \
 	./check/oo/oo_check.sh \
-	./check/mix/mix_check.sh
+	./check/mix/mix_check.sh \
+	./check/sys/sys_check.sh

@@ -1,0 +1,8 @@
+import "io"
+import "sys"
+
+if (test = Sys.vfork()) then
+    Io.print_newline("I am your father")
+else
+    Io.print_newline("I am your son")
+end

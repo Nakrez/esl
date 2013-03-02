@@ -120,6 +120,7 @@ namespace esl
             void make_attribut (Bytecode* bytecode);
             void store_attribut (Bytecode* bytecode);
             void load_attribut (Bytecode* bytecode);
+            void inherit (Bytecode* bytecode);
 
             /// @brief Push a delimiter on the stack
             void add_delim ();

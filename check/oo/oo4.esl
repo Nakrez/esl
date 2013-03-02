@@ -3,7 +3,7 @@ import "array"
 
 class a
     public function construct()
-        Io.print("cons")
+        Io.print_newline("cons")
         return self
     end
     public function lol()
@@ -14,5 +14,5 @@ class a
     end
 end
 test = new a()
-Io.print(test->test())
-Io.print(test->type())
+Io.print_newline(test->test())
+Io.print_newline(test->type())

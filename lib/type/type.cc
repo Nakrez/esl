@@ -77,6 +77,11 @@ void esl::Type::init_basics ()
                                                                      &esl::Type::bracket_op)));
 }
 
+void esl::Type::inherit (const std::string& type)
+{
+    esl::Squeleton::get()->inherit(name_, type);
+}
+
 void esl::Type::init ()
 {
     init_basics ();

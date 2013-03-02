@@ -22,6 +22,8 @@ namespace esl
             Type (const std::string& name);
             virtual ~Type ();
 
+            void inherit (const std::string& type);
+
             virtual void init ();
 
             virtual std::string type_name_get() const;

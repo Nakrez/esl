@@ -1,0 +1,5 @@
+import "io"
+import "sys"
+
+Sys.exit(8)
+Io.print_newline("Error")

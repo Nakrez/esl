@@ -15,7 +15,7 @@ end
 #end keyword #####
 
 #####################
-# Print the value 9 #
+# print_newline the value 9 #
 #####################
 
-Io.print(test(9))
+Io.print_newline(test(9))

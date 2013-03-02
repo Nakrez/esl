@@ -28,7 +28,7 @@ esl::Function* esl::Object::get_method (const std::string& fun_name)
     return esl::Squeleton::get()->method_get(type_, fun_name);
 }
 
-void esl::Object::register_attribut (const std::map<std::string, Visibility>& attr)
+void esl::Object::register_attribut (const std::unordered_map<std::string, Visibility>& attr)
 {
     for (auto attribut : attr)
     {

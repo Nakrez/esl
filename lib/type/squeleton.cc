@@ -16,9 +16,7 @@ esl::Squeleton::~Squeleton ()
     for (auto methods : object_methods_)
     {
         for (auto method : methods.second)
-        {
-            delete method.second.first;
-        }
+            method.second.first->decr();
     }
 }
 
@@ -63,16 +61,20 @@ esl::Function* esl::Squeleton::method_get(const std::string& type,
         this->object_methods_.at(type).end())
         throw esl::Exception ("unknow method " + name + " in type " + type);
 
-    return this->object_methods_.at(type).at(name).first;
+    return this->object_methods_.at(type).at(name).first->data_get();
 }
 
 const esl::Attributs& esl::Squeleton::attributs_get (const std::string& type)
 {
+    type_existance (type);
+
     return object_attributs_[type];
 }
 
 bool esl::Squeleton::has_attribut (const std::string& type)
 {
+    type_existance (type);
+
     return !object_attributs_[type].empty();
 }
 
@@ -80,30 +82,51 @@ void esl::Squeleton::register_method (const std::string& type,
                                       const std::string& name,
                                       Function* fun)
 {
-    try
-    {
-        delete this->object_methods_[type][name].first;
-    }
-    catch (...)
-    {
+    esl::MemoryObject<esl::Function>* fun_obj = nullptr;
 
-    }
+    fun_obj = new esl::MemoryObject<esl::Function>(fun);
 
-    this->object_methods_[type][name] = Method(fun, PUBLIC);
+    if (this->object_methods_.find(type) !=
+        this->object_methods_.end() &&
+        this->object_methods_.at(type).find(name) !=
+        this->object_methods_.at(type).end())
+        this->object_methods_[type][name].first->decr();
+
+    this->object_methods_[type][name] = Method(fun_obj, PUBLIC);
 }
 
 
 void esl::Squeleton::register_attribut (const std::string& type,
                                         const std::string& name)
 {
-    try
-    {
-        delete this->object_methods_[type][name].first;
-    }
-    catch (...)
-    {
-
-    }
-
     this->object_attributs_[type][name] = PUBLIC;
+}
+
+void esl::Squeleton::inherit (const std::string& type,
+                              const std::string& inherit)
+{
+    for (auto method : object_methods_[inherit])
+    {
+        method.second.first->incr();
+
+        if (method.first != "construct")
+        {
+            if (this->object_methods_.at(type).find(method.first) !=
+                this->object_methods_.at(type).end())
+                object_methods_.at(type).at(method.first).first->decr();
+
+            object_methods_[type][method.first] = Method(method.second);
+        }
+        else // Register super method
+        {
+            if (this->object_methods_.at(type).find("__super_" + inherit) !=
+                this->object_methods_.at(type).end())
+                object_methods_.at(type).at("__super_" + inherit).first->decr();
+
+            object_methods_[type]["__super_" + inherit] = Method(method.second);
+        }
+    }
+
+    this->object_attributs_[type].insert(this->object_attributs_[inherit].begin(),
+                                         this->object_attributs_[inherit].end());
 }

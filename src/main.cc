@@ -20,11 +20,10 @@ int main(int argc, char **argv)
     {
         std::string arg = argv[i];
 
-        if (arg.find("--")==0){
+        if (arg.find("--")==0)
             driver.parser(argv[i], "param");
-        }else{
+        else
             driver.parser(argv[i], "file");
-	}
     }
 
     /* Compile the AST given by the parser into bytecode */
@@ -40,7 +39,6 @@ int main(int argc, char **argv)
         #endif /* !BENCH */
 
         compiler->compile();
-
         #if BENCH == 1
             gettimeofday(&end, nullptr);
             useconds = end.tv_usec - start.tv_usec;

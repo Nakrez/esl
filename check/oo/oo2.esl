@@ -2,7 +2,7 @@ import "io"
 
 class test
     public function a()
-        Io.print("Method a from test class")
+        Io.print_newline("Method a from test class")
     end
 end
 

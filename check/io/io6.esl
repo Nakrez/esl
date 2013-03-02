@@ -1,0 +1,18 @@
+import "io"
+
+test = new file()
+if test->open("make_check_file_6", "w") == true and test->is_open() == true then
+    test->write("Hello")
+    test->write_newline("World")
+    test->close()
+    Io.print("Write done & ")
+    read = new file()
+    if read->open("make_check_file_6", "r") == true then
+        Io.print_newline("Open : ok")
+        Io.print_newline("Text Written :")
+        Io.print(read->read_all())
+        read->close()
+    else
+        Io.print_newline("Open : fail")
+    end
+end

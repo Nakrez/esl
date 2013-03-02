@@ -17,6 +17,11 @@ void esl::Extension::register_function (const std::string& name,
     functions_[name] = func;
 }
 
+bool esl::Extension::is_registered (const std::string& name) const
+{
+    return functions_.find(name) != functions_.end();
+}
+
 esl::MemoryObject<esl::Content> *esl::Extension::call (const std::string& name,
                                                        const esl::Params& params)
 {

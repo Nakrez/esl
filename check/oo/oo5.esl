@@ -3,7 +3,7 @@ import "array"
 
 class a
     public function construct()
-        Io.print("cons")
+        Io.print_newline("cons")
         self->temp = "Hello"
         self->attr = self->temp
         return self
@@ -19,9 +19,9 @@ class a
 end
 
 test = new a()
-Io.print(test->test())
-Io.print(test->type())
-Io.print(test->temp == test->attr)
+Io.print_newline(test->test())
+Io.print_newline(test->type())
+Io.print_newline(test->temp == test->attr)
 test->temp = "World"
-Io.print(test->temp == test->attr)
-Io.print(test->attr, test->temp)
+Io.print_newline(test->temp == test->attr)
+Io.print_newline(test->attr, test->temp)

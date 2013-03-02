@@ -1,3 +1,29 @@
+Nightly 27/01/2013
+
+- Introduce super call to OO mode
+- Add exception on invalid function call from a module
+- Improve general performances
+- Improve array type constructor performances
+- Add fork function to Sys module
+- Add vfork function to Sys module
+- Add exit function to Sys module
+- Add chdir function to Sys module
+- Add getcwd function to Sys module
+
+Nightly 26/01/2013
+
+- Add inheritance
+- Not working yet : call to super constructor
+
+Nightly 22/01/2013
+
+- Add complete file type (read/write operation)
+
+Nighlty 21/01/2013
+
+- Fix issues on methods
+- Add --byte and --ast parameters
+
 Nightly 19/01/2013
 
 - Add stack module

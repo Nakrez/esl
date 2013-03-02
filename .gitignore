@@ -5,7 +5,6 @@ parser.output
 tree.dot
 *.eslc
 *core*
-esl
 position.hh
 location.hh
 *.so
