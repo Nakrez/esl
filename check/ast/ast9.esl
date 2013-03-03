@@ -1,0 +1,29 @@
+class test
+end
+class test : (foo)
+end
+class test : (foo, bar)
+end
+class test : (foo, bar)
+    function test()
+        return 0
+    end
+    private function test()
+        return 0
+    end
+    public function test()
+        return 0
+    end
+    protected function test()
+        return 0
+    end
+    public test = 0
+    test = 0
+    private test = 0
+    protected test = 0
+    public test
+    test
+    protected test
+    private test
+end
+

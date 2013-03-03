@@ -178,6 +178,61 @@ namespace ast
         }
     }
 
+    void PrettyPrinter::operator()(MethodDec& dec)
+    {
+        stream_ << dec.visibility_get() << " function "
+                << dec.name_get() << " (";
+
+        if (dec.args_get())
+            separate(dec.args_get()->list_get(), ", ");
+
+        stream_ << ")" << misc::incendl;
+        dec.body_get()->accept(*this);
+        stream_ << misc::decendl << "end";
+    }
+
+    void PrettyPrinter::operator()(AttributDec& dec)
+    {
+        stream_ << dec.visibility_get() << " " << dec.name_get();
+
+        if (dec.value_get())
+        {
+            stream_ << " = ";
+            dec.value_get()->accept(*this);
+        }
+    }
+
+    void PrettyPrinter::operator()(ClassDec& dec)
+    {
+        stream_ << "class " << dec.name_get();
+
+        if (dec.inherit_get())
+        {
+            stream_ << " : (";
+
+            std::list<misc::symbol>& list = *dec.inherit_get();
+            std::list<misc::symbol>::const_iterator it = list.begin();
+
+            for ( ; it != list.end(); ++it)
+            {
+                if (it != list.begin())
+                    stream_ << ", ";
+                stream_ << (*it);
+            }
+
+            stream_ << ")";
+        }
+
+        stream_ << misc::incendl;
+        dec.components_get()->accept(*this);
+        stream_ << misc::decendl << "end";
+    }
+
+    void PrettyPrinter::operator()(DecList& list)
+    {
+        separate(list.list_get(), misc::iendl);
+    }
+
     template<typename T, class U>
     void PrettyPrinter::separate(std::list<T> list, const U& sep)
     {

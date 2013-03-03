@@ -14,6 +14,11 @@ namespace ast
     {
         visibility_ = visibility;
     }
+
+    inline void MethodDec::accept(Visitor& visitor)
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !METHOD_DEC_HXX */

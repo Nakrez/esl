@@ -150,6 +150,7 @@ class Driver;
 
 %type <ast_class> class_decl
 %type <ast_dec_list> class_components
+                     class_component_list
 %type <ast_dec> class_component
 %type <vis> visibility
 %type <ast_id_list> inherit_list
@@ -234,18 +235,22 @@ class_component:
                 }
                 ;
 
-class_components:
-                class_component
-                {
-                    $$ = new ast::DecList(@1);
-                    $$->push_back($1);
-                }
-                |class_components class_component
-                {
-                    $$ = $1;
-                    $$->push_back($2);
-                }
+class_components: { $$ = new ast::DecList(@$); }
+                | class_component_list { $$ = $1; }
                 ;
+
+class_component_list:
+                    class_component
+                    {
+                        $$ = new ast::DecList(@1);
+                        $$->push_back($1);
+                    }
+                    |class_component_list class_component
+                    {
+                        $$ = $1;
+                        $$->push_back($2);
+                    }
+                    ;
 
 compound_list   :
                 compound { $$ = new ast::InstrList(@1, $1); }

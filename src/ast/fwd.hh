@@ -21,6 +21,7 @@ namespace ast
     class VarDec;
     class FunctionDec;
     class AttributDec;
+    class MethodDec;
     class ClassDec;
 
     class Exp;

@@ -72,6 +72,7 @@ ADD_LIBRARY(esl_lib SHARED
             lib/type/type.cc
             lib/type/squeleton.cc
             lib/misc/symbol.cc
+            lib/misc/visibility.cc
             lib/misc/indent.cc
             src/execute/vm.cc)
 

@@ -41,6 +41,10 @@ namespace ast
 
             virtual void operator()(FunctionDec&) = 0;
             virtual void operator()(VarDec&) = 0;
+            virtual void operator()(MethodDec&) = 0;
+            virtual void operator()(AttributDec&) = 0;
+            virtual void operator()(ClassDec&) = 0;
+            virtual void operator()(DecList&) = 0;
     };
 } // namespace ast
 

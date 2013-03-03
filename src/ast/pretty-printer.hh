@@ -43,6 +43,10 @@ namespace ast
 
             virtual void operator()(FunctionDec&);
             virtual void operator()(VarDec&);
+            virtual void operator()(MethodDec&);
+            virtual void operator()(AttributDec&);
+            virtual void operator()(ClassDec&);
+            virtual void operator()(DecList&);
 
         protected:
             template<typename T, class U> void separate(std::list<T> list,
