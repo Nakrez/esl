@@ -6,4 +6,6 @@ foo->bar->foo()->var->foo(foo->bar, foo->bar()->foo->bar())
 foo.bar()->test()->bar().ll()
 foo.bar()
 foo.bar
-foo.bar->bar(foo.bar.bar.gte.bar->test(), bar.foo)
+foo.bar->bar(foo.bar.bar.gte.bar->test(), bar.foo, bar.foo->test()->foo[4])
+foo[4]
+foo[i]->foo().bar[7]

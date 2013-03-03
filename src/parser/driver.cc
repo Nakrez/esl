@@ -4,6 +4,7 @@
 #include "../compile/compiler.hh"
 
 Driver::Driver()
+    : ast_(nullptr)
 {
     errors_ = 0;
     byte_param = false;
@@ -17,12 +18,6 @@ Driver::~Driver()
 void Driver::free()
 {
     delete this->ast_;
-}
-
-void Driver::error(const yy::location& l, const std::string& m)
-{
-    std::cerr << file_ << ":" << l << ": " << m << std::endl;
-    ++errors_;
 }
 
 int Driver::errors_get ()
@@ -50,17 +45,32 @@ void Driver::set_ast(bool a)
     ast_param = a;
 }
 
+ast::Ast* Driver::parser(const std::string& filename)
+{
+    std::string old_file = file_;
+    ast::Ast* old_ast = ast_;
+
+    file_ = filename;
+
+    yy::eslxx_parser parser(*this);
+    scan_begin();
+    parser.parse();
+    scan_end();
+
+    file_ = old_file;
+    ast::Ast* temp = ast_;
+    ast_ = old_ast;
+
+    return temp;
+}
+
 int Driver::parser(const std::string &f, const std::string &t)
 {
     int res = 0;
 
     if (!t.compare("file"))
     {
-        this->file_ = f;
-        yy::eslxx_parser parser(*this);
-        scan_begin();
-        res = parser.parse();
-        scan_end();
+        ast_ = parser(f);
 
         /*if (get_ast())
             this->gen_ast_->print();*/

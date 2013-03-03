@@ -1,0 +1,6 @@
+before_include_var = 0
+
+include "check/ast/ast1.esl"
+include "check/ast/ast2.esl"
+
+after_include_var = 0

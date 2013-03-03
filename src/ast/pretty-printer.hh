@@ -16,6 +16,8 @@ namespace ast
 
             PrettyPrinter(std::ostream& stream);
 
+            virtual void operator()(AstList&);
+
             virtual void operator()(IntExp&);
             virtual void operator()(StringExp&);
             virtual void operator()(OpExp&);

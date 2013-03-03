@@ -14,6 +14,7 @@ namespace ast
             virtual ~Visitor();
 
             virtual void operator()(Ast&);
+            virtual void operator()(AstList&) = 0;
 
             virtual void operator()(IntExp&) = 0;
             virtual void operator()(OpExp&) = 0;

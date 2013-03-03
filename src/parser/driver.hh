@@ -1,6 +1,8 @@
 #ifndef DRIVER_HH
 # define DRIVER_HH
 
+# include <stack>
+
 # include <parser/parser.hh>
 # include <ast/ast.hh>
 
@@ -12,14 +14,17 @@
 
 YY_DECL;
 
+struct yy_buffer_state;
+
 class Driver
 {
     public:
         Driver ();
         ~Driver ();
-        void error (const yy::eslxx_parser::location_type& l,
-                    const std::string& m);
+
         int parser (const std::string &f, const std::string &t);
+        ast::Ast* parser(const std::string& filename);
+
         void scan_begin ();
         void scan_end ();
         void free ();
@@ -33,6 +38,8 @@ class Driver
         ast::Ast* ast_;
 
     private:
+        std::stack<yy_buffer_state*> states_;
+
         bool ast_param;
         bool byte_param;
         std::string file_;

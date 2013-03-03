@@ -40,5 +40,6 @@ namespace ast
     typedef AnyList<Instr> InstrList;
     typedef AnyList<VarDec> VarDecList;
     typedef AnyList<Exp> ExpList;
+    typedef AnyList<Ast> AstList;
 } // namespace ast
 #endif /* !FWD_HH */

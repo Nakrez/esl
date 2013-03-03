@@ -46,7 +46,7 @@ ELSE(FLEX_FOUND)
    ENDIF(Flex_FIND_REQUIRED)
 ENDIF(FLEX_FOUND)
 
-add_definitions(-Wall -Wextra -std=c++0x -Isrc -Ilib)
+add_definitions(-Wall -Wextra -std=c++0x -Isrc -Ilib -g)
 
 #######################
 #######################

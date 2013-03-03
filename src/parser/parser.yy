@@ -51,7 +51,7 @@ class Driver;
     ast::VarDec* ast_vardec;
     ast::VarDecList* ast_vardec_list;
 
-    std::list<ast::Ast *> *lval;
+    ast::AstList* ast_list;
 }
 
 %code
@@ -122,8 +122,8 @@ class Driver;
 %type <ast_var> lvalue
                 lvalue_assignable
 
-%type <ast_instr> instr
-                  esl_command
+%type <ast> instr
+%type <ast_instr> esl_command
                   rule_if
                   rule_while
                   rule_until
@@ -132,7 +132,8 @@ class Driver;
 
 %type <ast_list_instr> compound_list
                        do_group
-                       input
+
+%type <ast_list>       input
 
 %type <ast_vardec> param
 %type <ast_vardec_list> param_list
@@ -156,7 +157,7 @@ program:
 input   :
         instr
         {
-            $$ = new ast::InstrList(@1);
+            $$ = new ast::AstList(@1);
             $$->push_back($1);
         }
         | input instr
@@ -172,7 +173,7 @@ instr   :
         |class_decl
         |esl_command { $$ = $1; }
         |"import" "string" { $$ = new ast::ImportInstr(@1, *$2); }
-        |"include" "string"
+        |"include" "string" { $$ = driver.parser(*$2); delete $2; }
         ;
 
 inherit_list:
@@ -414,8 +415,8 @@ do_group        :
                 ;
 %%
 void yy::eslxx_parser::error (const yy::eslxx_parser::location_type& l,
-                               const std::string& m)
+                              const std::string& m)
 {
-    driver.error(l, m);
+    std::cerr << l << m << std::endl;
 }
 

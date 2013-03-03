@@ -8,6 +8,11 @@ namespace ast
         , stream_(stream)
     {}
 
+    void PrettyPrinter::operator()(AstList& list)
+    {
+        separate(list.list_get(), misc::iendl);
+    }
+
     void PrettyPrinter::operator()(IntExp& exp)
     {
         stream_ << exp.value_get();
