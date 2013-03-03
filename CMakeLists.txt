@@ -127,7 +127,6 @@ add_executable(esl
                src/parser/parser.cc
                src/parser/lexer.cc
                src/parser/driver.cc
-               src/utils/bytecode.cc
                src/utils/ro-data.cc
                src/utils/utils.cc
                src/ast/ast.cc
@@ -166,7 +165,10 @@ add_executable(esl
 
                src/ast/pretty-printer.cc
                src/ast/visitor.cc
-               #src/compile/compiler.cc
+
+               src/compile/compiler.cc
+               src/compile/bytecode.cc
+
                src/main.cc)
 
 # Library link

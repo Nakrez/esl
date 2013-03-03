@@ -8,6 +8,7 @@
 
 # include <set>
 # include <iosfwd>
+# include <iostream>
 
 namespace misc
 {

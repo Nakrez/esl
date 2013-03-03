@@ -14,7 +14,7 @@ const std::string esl::Vm::path_lib_[] =
     "./"
 };
 
-void esl::Vm::instanciate (const std::vector<esl::Bytecode*>& code)
+void esl::Vm::instanciate (const std::vector<compile::Bytecode*>& code)
 {
     instance_ = new esl::Vm(code);
 }
@@ -36,7 +36,7 @@ void esl::Vm::free ()
     }
 }
 
-esl::Vm::Vm (const std::vector<esl::Bytecode*>& code)
+esl::Vm::Vm (const std::vector<compile::Bytecode*>& code)
     : stack_ ()
 {
     this->code_ = code;
@@ -66,7 +66,7 @@ esl::Vm::~Vm()
 
 void esl::Vm::run()
 {
-    esl::Bytecode *instr = nullptr;
+    compile::Bytecode *instr = nullptr;
 
     // While PC is pointing on an instruction
     while (this->runtime_->pc_get() < this->code_.size())
@@ -221,7 +221,7 @@ bool esl::Vm::is_register_module(const std::string& name) const
     return runtime_->module_exist(name);
 }
 
-void esl::Vm::inherit (Bytecode* instr)
+void esl::Vm::inherit (compile::Bytecode* instr)
 {
     // Exctract the mother name
     std::string name = *(RoData::instance_get()->get(instr->get_param()));
@@ -234,7 +234,7 @@ void esl::Vm::inherit (Bytecode* instr)
     declaration->inherit(name);
 }
 
-void esl::Vm::store_attribut (Bytecode* instr)
+void esl::Vm::store_attribut (compile::Bytecode* instr)
 {
     esl::GCObject* content = stack_.top();
     esl::Object* object = dynamic_cast<esl::Object*>(content->data_get());
@@ -248,7 +248,7 @@ void esl::Vm::store_attribut (Bytecode* instr)
     content->decr();
 }
 
-void esl::Vm::load_attribut(esl::Bytecode* instr)
+void esl::Vm::load_attribut(compile::Bytecode* instr)
 {
     esl::Object* object = dynamic_cast<esl::Object*>(stack_.top()->data_get());
     esl::GCObject* value = nullptr;
@@ -264,7 +264,7 @@ void esl::Vm::load_attribut(esl::Bytecode* instr)
     this->stack_.push(value);
 }
 
-void esl::Vm::make_attribut (esl::Bytecode* instr)
+void esl::Vm::make_attribut (compile::Bytecode* instr)
 {
     std::string attr_name = *(RoData::instance_get()->get(instr->get_param()));
 
@@ -272,7 +272,7 @@ void esl::Vm::make_attribut (esl::Bytecode* instr)
                                              attr_name);
 }
 
-void esl::Vm::create_type (esl::Bytecode* instr)
+void esl::Vm::create_type (compile::Bytecode* instr)
 {
     std::string class_name = *(RoData::instance_get()->get(instr->get_param()));
 
@@ -307,7 +307,7 @@ bool esl::Vm::external_call (esl::Function* fun, const esl::Params& params)
     }
 }
 
-void esl::Vm::instanciation (esl::Bytecode* instr)
+void esl::Vm::instanciation (compile::Bytecode* instr)
 {
     std::string type;
     esl::Function* fun;
@@ -337,7 +337,7 @@ void esl::Vm::instanciation (esl::Bytecode* instr)
         params.decr();
 }
 
-void esl::Vm::call_method(esl::Bytecode *instr)
+void esl::Vm::call_method(compile::Bytecode *instr)
 {
     std::string fun_name;
     esl::GCObject* object_container = nullptr;
@@ -491,7 +491,7 @@ std::string esl::Vm::module_path(const std::string& mod_name)
     return "";
 }
 
-void esl::Vm::setup_module (Bytecode* instr)
+void esl::Vm::setup_module (compile::Bytecode* instr)
 {
     esl::Module* module = nullptr;
     std::string* module_name = RoData::instance_get()->get(instr->get_param());
@@ -508,7 +508,7 @@ void esl::Vm::setup_module (Bytecode* instr)
     this->runtime_->module_set(*module_name, new esl::GCObject(module));
 }
 
-void esl::Vm::module (Bytecode* instr)
+void esl::Vm::module (compile::Bytecode* instr)
 {
     std::string* mod_name = RoData::instance_get()->get(instr->get_param());
 
@@ -516,7 +516,7 @@ void esl::Vm::module (Bytecode* instr)
     this->stack_.push(this->runtime_->module_get(*mod_name));
 }
 
-void esl::Vm::call_module (Bytecode* instr)
+void esl::Vm::call_module (compile::Bytecode* instr)
 {
     esl::Params params;
     esl::Module* module = nullptr;
@@ -546,14 +546,14 @@ void esl::Vm::call_module (Bytecode* instr)
     params.decr();
 }
 
-void esl::Vm::load_int (Bytecode* instr)
+void esl::Vm::load_int (compile::Bytecode* instr)
 {
     esl::IntObject* v = new esl::IntObject(instr->get_param());
 
     this->stack_.push(new esl::GCObject(v));
 }
 
-void esl::Vm::load_str (Bytecode* instr)
+void esl::Vm::load_str (compile::Bytecode* instr)
 {
     esl::StringObject* v = nullptr;
     // Get string in RoData
@@ -599,7 +599,7 @@ void esl::Vm::function_return()
         this->stack_.push(new MemoryObject<esl::Content>(new esl::IntObject(0)));
 }
 
-void esl::Vm::call_function(esl::Bytecode *instr)
+void esl::Vm::call_function(compile::Bytecode *instr)
 {
     std::string fun_name;
     esl::Function* fun;
@@ -635,7 +635,7 @@ void esl::Vm::call_function(esl::Bytecode *instr)
     }
 }
 
-void esl::Vm::store(esl::Bytecode *instr)
+void esl::Vm::store(compile::Bytecode *instr)
 {
     std::string *var_name = nullptr;
 
@@ -649,7 +649,7 @@ void esl::Vm::store(esl::Bytecode *instr)
     this->runtime_->variable_set(*var_name, this->stack_.top());
 }
 
-void esl::Vm::load(esl::Bytecode *instr)
+void esl::Vm::load(compile::Bytecode *instr)
 {
     std::string* var_name = nullptr;
     esl::GCObject* value = nullptr;
@@ -666,7 +666,7 @@ void esl::Vm::load(esl::Bytecode *instr)
     this->stack_.push(value);
 }
 
-void esl::Vm::jump(esl::Bytecode *instr, int val)
+void esl::Vm::jump(compile::Bytecode *instr, int val)
 {
     // Check if conditional jump is performed over boolean expression
     if (dynamic_cast<esl::IntObject*> (this->stack_.top()->data_get()))
@@ -686,12 +686,12 @@ void esl::Vm::jump(esl::Bytecode *instr, int val)
         throw Exception("Conditional jump exception ! Is this a boolean expression ?");
 }
 
-void esl::Vm::jump(esl::Bytecode *instr)
+void esl::Vm::jump(compile::Bytecode *instr)
 {
     this->runtime_->pc_incr(instr->get_param());
 }
 
-void esl::Vm::register_function(esl::Bytecode *instr)
+void esl::Vm::register_function(compile::Bytecode *instr)
 {
     std::string fun_name = *(RoData::instance_get()->get(instr->get_param()));
     esl::Function* fun = nullptr;

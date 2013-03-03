@@ -12,5 +12,7 @@ namespace ast
     {}
 
     AttributDec::~AttributDec()
-    {}
+    {
+        delete value_;
+    }
 } // namespace ast

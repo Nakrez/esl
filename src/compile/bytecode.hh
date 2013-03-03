@@ -147,7 +147,7 @@ enum instr
     DELIM
 };
 
-namespace esl
+namespace compile
 {
     class Bytecode
     {
@@ -183,8 +183,8 @@ namespace esl
             /// @brief The parameter of the instruction (-1 if there is no one)
             int param_;
     };
-}
+} // namespace compile
 
-std::ostream& operator<< (std::ostream& os, const esl::Bytecode& instr);
+std::ostream& operator<< (std::ostream& os, const compile::Bytecode& instr);
 
 #endif /* ESL_BYTECODE_H_ */

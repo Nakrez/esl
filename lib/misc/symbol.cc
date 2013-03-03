@@ -13,17 +13,14 @@ namespace misc
 {
   symbol::symbol (const std::string& s)
     : unique<std::string> (s)
-  {
-  }
+  {}
 
   symbol::symbol (const char* s)
     : unique<std::string> (std::string (s))
-  {
-  }
+  {}
 
   symbol::~symbol ()
-  {
-  }
+  {}
 
   symbol::string_size_type
   symbol::string_map_size ()

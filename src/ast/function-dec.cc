@@ -1,4 +1,5 @@
 #include <ast/function-dec.hh>
+#include <ast/all.hh>
 
 namespace ast
 {
@@ -12,5 +13,8 @@ namespace ast
     {}
 
     FunctionDec::~FunctionDec()
-    {}
+    {
+        delete args_;
+        delete body_;
+    }
 } // namespace ast

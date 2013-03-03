@@ -13,6 +13,7 @@ Driver::Driver()
 
 Driver::~Driver()
 {
+    delete ast_;
 }
 
 void Driver::free()

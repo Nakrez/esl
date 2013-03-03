@@ -9,12 +9,11 @@
 #include <iostream>
 
 # define BENCH 0
-# define AST_TEST
+//# define AST_TEST
 
 int main(int argc, char **argv)
 {
     Driver driver;
-    esl::Compiler *compiler = nullptr;
 
     if (argc < 2)
         return (1);
@@ -36,7 +35,7 @@ int main(int argc, char **argv)
         print(*driver.ast_);
         std::cout << std::endl;
         #else
-        compiler = new esl::Compiler(driver.ast());
+        compile::Compiler compiler;
 
         #if BENCH == 1
             struct timeval start, end;
@@ -45,9 +44,10 @@ int main(int argc, char **argv)
             gettimeofday(&start, nullptr);
         #endif /* !BENCH */
 
-        compiler->compile();
-        if (driver.get_byte())
-            compiler->export_bytecode("byte.eslc");
+        compiler(*(driver.ast_));
+
+        /*if (driver.get_byte())
+            compiler->export_bytecode("byte.eslc");*/
         #if BENCH == 1
             gettimeofday(&end, nullptr);
             useconds = end.tv_usec - start.tv_usec;
@@ -61,8 +61,8 @@ int main(int argc, char **argv)
 
         try
         {
-            esl::Vm::instanciate(compiler->get_bytecode());
-            esl::Vm::get()->run();
+            /*esl::Vm::instanciate(compiler->get_bytecode());
+            esl::Vm::get()->run();*/
         }
         catch (esl::Exception& e)
         {
@@ -77,7 +77,6 @@ int main(int argc, char **argv)
         #endif /* !BENCH */
 
         esl::RoData::instance_delete();
-        delete compiler;
         #endif
     }
 

@@ -187,7 +187,11 @@ instr   :
         |function { $$ = $1; }
         |class_decl { $$ = $1; }
         |esl_command { $$ = $1; }
-        |"import" "string" { $$ = new ast::ImportInstr(@1, *$2); }
+        |"import" "string"
+        {
+            $$ = new ast::ImportInstr(@1, std::string(*$2));
+            delete $2;
+        }
         |"include" "string" { $$ = driver.parser(*$2); delete $2; }
         ;
 
@@ -195,22 +199,26 @@ inherit_list:
             "identifier"
             {
                 $$ = new ast::IdList();
-                $$->push_back(*$1);
+                $$->push_back(std::string(*$1));
+                delete $1;
             }
             | inherit_list "," "identifier"
             {
                 $$ = $1;
-                $$->push_back(*$3);
+                $$->push_back(std::string(*$3));
+                delete $3;
             }
             ;
 class_decl:
           "class" "identifier" class_components "end"
           {
-            $$ = new ast::ClassDec(@1, *$2, nullptr, $3);
+            $$ = new ast::ClassDec(@1, std::string(*$2), nullptr, $3);
+            delete $2;
           }
           |"class" "identifier" ":" "(" inherit_list ")" class_components "end"
           {
-            $$ = new ast::ClassDec(@1, *$2, $5, $7);
+            $$ = new ast::ClassDec(@1, std::string(*$2), $5, $7);
+            delete $2;
           }
           ;
 
@@ -223,15 +231,18 @@ visibility : { $$ = misc::PUBLIC; }
 class_component:
                 visibility "function" "identifier" "(" param_list ")" compound_list "end"
                 {
-                    $$ = new ast::MethodDec(@1, *$3, $5, $7, $1);
+                    $$ = new ast::MethodDec(@1, std::string(*$3), $5, $7, $1);
+                    delete $3;
                 }
                 |visibility "identifier"
                 {
-                    $$ = new ast::AttributDec(@1, *$2, nullptr, $1);
+                    $$ = new ast::AttributDec(@1, std::string(*$2), nullptr, $1);
+                    delete($2);
                 }
                 |visibility "identifier" "=" expr
                 {
-                    $$ = new ast::AttributDec(@1, *$2, $4, $1);
+                    $$ = new ast::AttributDec(@1, std::string(*$2), $4, $1);
+                    delete $2;
                 }
                 ;
 
@@ -269,8 +280,16 @@ compound:
         ;
 
 param:
-     "identifier" { $$ = new ast::VarDec(@1, *$1); }
-     |"identifier" "=" expr { $$ = new ast::VarDec(@1, *$1, $3); }
+     "identifier"
+     {
+        $$ = new ast::VarDec(@1, std::string(*$1));
+        delete $1;
+     }
+     |"identifier" "=" expr
+     {
+        $$ = new ast::VarDec(@1, std::string(*$1), $3);
+        delete $1;
+     }
      ;
 
 param_list      :
@@ -299,14 +318,16 @@ exp_list        :
 fun_call        :
                 "identifier" "(" exp_list ")"
                 {
-                    $$ = new ast::FunctionCallExp(@1, *$1, $3);
+                    $$ = new ast::FunctionCallExp(@1, std::string(*$1), $3);
+                    delete $1;
                 }
                 ;
 
 function        :
                 "function" "identifier" "(" param_list ")" compound_list "end"
                 {
-                    $$ = new ast::FunctionDec(@1, *$2, $4, $6);
+                    $$ = new ast::FunctionDec(@1, std::string(*$2), $4, $6);
+                    delete $2;
                 }
                 ;
 
@@ -383,7 +404,11 @@ expr            :
                 }
                 |"(" expr ")" { $$ = $2; }
                 |"digit" { $$ = new ast::IntExp(@1, $1); }
-                |"string" { $$ = new ast::StringExp(@1, *$1); }
+                |"string"
+                {
+                    $$ = new ast::StringExp(@1, std::string(*$1));
+                    delete $1;
+                }
                 |fun_call { $$ = $1; }
                 |"new" fun_call { $$ = new ast::NewExp(@1, $2); }
                 |lvalue { $$ = $1; }
@@ -394,19 +419,36 @@ expr            :
                 ;
 
 lvalue_assignable:
-      "identifier" { $$ = new ast::VarId(@1, *$1); }
-      | lvalue "->" "identifier" { $$ = new ast::AttributVar(@1, *$1, *$3); }
+      "identifier"
+      {
+        $$ = new ast::VarId(@1, std::string(*$1));
+        delete $1;
+      }
+      | lvalue "->" "identifier"
+      {
+        $$ = new ast::AttributVar(@1, *$1, std::string(*$3));
+        delete $3;
+      }
       | lvalue "[" expr "]" { $$ = new ast::ArrayVar(@1, $1, $3); }
       ;
 
 lvalue:
-      "identifier" { $$ = new ast::VarId(@1, *$1); }
-      | lvalue "->" "identifier" { $$ = new ast::AttributVar(@1, *$1, *$3); }
+      "identifier"
+      {
+        $$ = new ast::VarId(@1, std::string(*$1));
+        delete $1;
+      }
+      | lvalue "->" "identifier"
+      {
+        $$ = new ast::AttributVar(@1, *$1, std::string(*$3));
+        delete $3;
+      }
       | lvalue "->" fun_call { $$ = new ast::MethodCallVar(@1, $1, $3); }
       /* Not Handled by VM yet */
       | lvalue "." "identifier"
       {
-        $$ = new ast::ModuleAttributVar(@1, $1, *$3);
+        $$ = new ast::ModuleAttributVar(@1, $1, std::string(*$3));
+        delete $3;
       }
       | lvalue "." fun_call { $$ = new ast::ModuleCallVar(@1, $1, $3); }
       | lvalue "[" expr "]" { $$ = new ast::ArrayVar(@1, $1, $3); }
