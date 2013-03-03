@@ -49,6 +49,11 @@ namespace ast
         exp.exp_get()->accept(*this);
     }
 
+    void PrettyPrinter::operator()(BreakExp& exp)
+    {
+        stream_ << "break";
+    }
+
     void PrettyPrinter::operator()(IfInstr& instr)
     {
         stream_ << "if (";

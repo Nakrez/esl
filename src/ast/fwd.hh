@@ -23,6 +23,7 @@ namespace ast
     class StringExp;
     class FunctionCallExp;
     class ReturnExp;
+    class BreakExp;
 
     class Instr;
     class IfInstr;

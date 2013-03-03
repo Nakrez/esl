@@ -1,6 +1,7 @@
 while 0 do
     1
     2
+    break
 end
 
 until 0 do

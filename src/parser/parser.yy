@@ -92,6 +92,7 @@ class Driver;
         TOK_INCLUDE         "include"
         TOK_FUNCTION        "function"
         TOK_RETURN          "return"
+        TOK_BREAK           "break"
         TOK_FOR             "for"
         TOK_DO              "do"
         TOK_WHILE           "while"
@@ -210,6 +211,7 @@ compound:
         "return" expr { $$ = new ast::ReturnExp(@1, $2); }
         | expr { $$ = $1; }
         | esl_command { $$ = $1; }
+        | "break" { $$ = new ast::BreakExp(@1); }
         ;
 
 param:

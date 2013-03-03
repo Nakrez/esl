@@ -53,6 +53,7 @@
 "while"                 return token::TOK_WHILE;
 "until"                 return token::TOK_UNTIL;
 "return"                return token::TOK_RETURN;
+"break"                 return token::TOK_BREAK;
 "import"                return token::TOK_IMPORT;
 "include"               return token::TOK_INCLUDE;
 "true"                  yylval->ival = 1; return token::TOK_DIGIT;
