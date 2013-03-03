@@ -333,7 +333,7 @@ expr            :
                 |"digit" { $$ = new ast::IntExp(@1, $1); }
                 |"string" { $$ = new ast::StringExp(@1, *$1); }
                 |fun_call { $$ = $1; }
-                |"new" fun_call
+                |"new" fun_call { $$ = new ast::NewExp(@1, $2); }
                 |lvalue { $$ = $1; }
                 |lvalue "=" expr
                 ;

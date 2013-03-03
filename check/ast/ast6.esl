@@ -1,0 +1,2 @@
+new test()
+new foo(bar.test, bar->foo().bar)
