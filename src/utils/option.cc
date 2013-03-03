@@ -12,7 +12,9 @@ Option::~Option(){}
 
 void Option::instanciate ()
 {
-    instance_ = new Option();
+    if(instance_ == nullptr){
+        instance_ = new Option();
+    }
 }
 
 Option* Option::get ()
