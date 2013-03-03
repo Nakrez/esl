@@ -54,6 +54,11 @@ namespace ast
         stream_ << "break";
     }
 
+    void PrettyPrinter::operator()(ContinueExp& exp)
+    {
+        stream_ << "continue";
+    }
+
     void PrettyPrinter::operator()(IfInstr& instr)
     {
         stream_ << "if (";

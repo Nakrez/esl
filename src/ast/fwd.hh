@@ -24,6 +24,7 @@ namespace ast
     class FunctionCallExp;
     class ReturnExp;
     class BreakExp;
+    class ContinueExp;
 
     class Instr;
     class IfInstr;

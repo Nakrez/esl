@@ -6,4 +6,5 @@ end
 while ((!0)) do
   1
   2
+  continue
 end

@@ -22,6 +22,7 @@ namespace ast
             virtual void operator()(FunctionCallExp&);
             virtual void operator()(ReturnExp&);
             virtual void operator()(BreakExp&);
+            virtual void operator()(ContinueExp&);
 
             virtual void operator()(IfInstr&);
             virtual void operator()(ElseInstr&);

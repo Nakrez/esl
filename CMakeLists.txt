@@ -145,6 +145,7 @@ add_executable(esl
                src/ast/string-exp.cc
                src/ast/return-exp.cc
                src/ast/break-exp.cc
+               src/ast/continue-exp.cc
 
                src/ast/instr.cc
                src/ast/if-instr.cc

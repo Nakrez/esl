@@ -19,6 +19,7 @@
 # include <ast/function-call-exp.hh>
 # include <ast/return-exp.hh>
 # include <ast/break-exp.hh>
+# include <ast/continue-exp.hh>
 
 # include <ast/instr.hh>
 # include <ast/while-instr.hh>
