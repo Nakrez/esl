@@ -21,6 +21,7 @@
 # include <ast/break-exp.hh>
 # include <ast/continue-exp.hh>
 # include <ast/new-exp.hh>
+# include <ast/assign-exp.hh>
 
 # include <ast/instr.hh>
 # include <ast/while-instr.hh>

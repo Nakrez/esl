@@ -49,12 +49,12 @@ namespace ast
         exp.exp_get()->accept(*this);
     }
 
-    void PrettyPrinter::operator()(BreakExp& exp)
+    void PrettyPrinter::operator()(BreakExp&)
     {
         stream_ << "break";
     }
 
-    void PrettyPrinter::operator()(ContinueExp& exp)
+    void PrettyPrinter::operator()(ContinueExp&)
     {
         stream_ << "continue";
     }
@@ -62,6 +62,13 @@ namespace ast
     void PrettyPrinter::operator()(NewExp& exp)
     {
         stream_ << "new ";
+        exp.exp_get()->accept(*this);
+    }
+
+    void PrettyPrinter::operator()(AssignExp& exp)
+    {
+        exp.var_get()->accept(*this);
+        stream_ << " = ";
         exp.exp_get()->accept(*this);
     }
 

@@ -335,7 +335,7 @@ expr            :
                 |fun_call { $$ = $1; }
                 |"new" fun_call { $$ = new ast::NewExp(@1, $2); }
                 |lvalue { $$ = $1; }
-                |lvalue "=" expr
+                |lvalue "=" expr { $$ = new ast::AssignExp(@1, $1, $3); }
                 ;
 
 lvalue:

@@ -26,6 +26,7 @@ namespace ast
     class BreakExp;
     class ContinueExp;
     class NewExp;
+    class AssignExp;
 
     class Instr;
     class IfInstr;
