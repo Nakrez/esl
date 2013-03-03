@@ -36,6 +36,9 @@ class Driver;
 {
     std::string* sval;
     int ival;
+
+    misc::visibility vis;
+
     ast::Ast* ast;
 
     ast::Instr* ast_instr;
@@ -146,6 +149,7 @@ class Driver;
 %type <ast_class> class_decl
 %type <ast_dec_list> class_components
 %type <ast_dec> class_component
+%type <vis> visibility
 
 %left prec_exp
 %right "="
@@ -192,16 +196,25 @@ class_decl:
           |"class" "identifier" ":" "(" inherit_list ")" class_components "end"
           ;
 
-visibility :
-           | "public"
-           | "private"
-           | "protected"
+visibility : { $$ = misc::PUBLIC; }
+           | "public" { $$ = misc::PUBLIC; }
+           | "private" { $$ = misc::PRIVATE; }
+           | "protected" { $$ = misc::PROTECTED; }
            ;
 
 class_component:
-                visibility function
+                visibility "function" "identifier" "(" param_list ")" compound_list "end"
+                {
+                    $$ = new ast::MethodDec(@1, *$3, $5, $7, $1);
+                }
                 |visibility "identifier"
+                {
+                    $$ = new ast::AttributDec(@1, *$2, nullptr, $1);
+                }
                 |visibility "identifier" "=" expr
+                {
+                    $$ = new ast::AttributDec(@1, *$2, $4, $1);
+                }
                 ;
 
 class_components:
