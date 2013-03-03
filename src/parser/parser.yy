@@ -171,7 +171,7 @@ instr   :
         |function { $$ = $1; }
         |class_decl
         |esl_command { $$ = $1; }
-        |"import" "string"
+        |"import" "string" { $$ = new ast::ImportInstr(@1, *$2); }
         |"include" "string"
         ;
 

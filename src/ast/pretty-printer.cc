@@ -107,6 +107,11 @@ namespace ast
         separate(list.list_get(), misc::iendl);
     }
 
+    void PrettyPrinter::operator()(ImportInstr& instr)
+    {
+        stream_ << "import " << "\"" << instr.name_get() << "\"";
+    }
+
     void PrettyPrinter::operator()(VarId& var)
     {
         stream_ << var.name_get();

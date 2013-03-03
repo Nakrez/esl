@@ -1,3 +1,7 @@
+import "io"
+import "foo"
+import "bar"
+
 0
 "bonjour"
 test

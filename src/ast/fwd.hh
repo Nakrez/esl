@@ -14,7 +14,6 @@ namespace ast
     class ArrayVar;
 
     class VarDec;
-    class ImportDec;
     class FunctionDec;
     class AttributDec;
 
@@ -33,6 +32,7 @@ namespace ast
     class IfInstr;
     class ElseInstr;
     class WhileInstr;
+    class ImportInstr;
 
     template <class T>
     class AnyList;

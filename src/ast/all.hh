@@ -9,7 +9,7 @@
 # include <ast/attribut-dec.hh>
 # include <ast/function-dec.hh>
 # include <ast/method-dec.hh>
-# include <ast/import-dec.hh>
+# include <ast/import-instr.hh>
 # include <ast/var-dec.hh>
 
 # include <ast/exp.hh>

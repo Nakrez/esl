@@ -134,7 +134,6 @@ add_executable(esl
                src/ast/dec.cc
                src/ast/attribut-dec.cc
                src/ast/function-dec.cc
-               src/ast/import-dec.cc
                src/ast/method-dec.cc
                src/ast/var-dec.cc
 
@@ -153,6 +152,7 @@ add_executable(esl
                src/ast/if-instr.cc
                src/ast/else-instr.cc
                src/ast/while-instr.cc
+               src/ast/import-instr.cc
 
                src/ast/var.cc
                src/ast/attribut-var.cc

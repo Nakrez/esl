@@ -29,6 +29,7 @@ namespace ast
             virtual void operator()(ElseInstr&) = 0;
             virtual void operator()(WhileInstr&) = 0;
             virtual void operator()(InstrList&) = 0;
+            virtual void operator()(ImportInstr&) = 0;
 
             virtual void operator()(VarId&) = 0;
             virtual void operator()(AttributVar&) = 0;

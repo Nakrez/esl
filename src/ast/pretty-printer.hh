@@ -30,6 +30,7 @@ namespace ast
             virtual void operator()(ElseInstr&);
             virtual void operator()(WhileInstr&);
             virtual void operator()(InstrList&);
+            virtual void operator()(ImportInstr&);
 
             virtual void operator()(VarId&);
             virtual void operator()(AttributVar&);
