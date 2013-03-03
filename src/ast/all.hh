@@ -9,8 +9,8 @@
 # include <ast/attribut-dec.hh>
 # include <ast/function-dec.hh>
 # include <ast/method-dec.hh>
-# include <ast/import-instr.hh>
 # include <ast/var-dec.hh>
+# include <ast/class-dec.hh>
 
 # include <ast/exp.hh>
 # include <ast/int-exp.hh>
@@ -27,6 +27,7 @@
 # include <ast/while-instr.hh>
 # include <ast/if-instr.hh>
 # include <ast/else-instr.hh>
+# include <ast/import-instr.hh>
 
 # include <ast/var.hh>
 # include <ast/var-id.hh>

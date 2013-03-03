@@ -50,6 +50,9 @@ class Driver;
     ast::FunctionDec* ast_function;
     ast::VarDec* ast_vardec;
     ast::VarDecList* ast_vardec_list;
+    ast::DecList* ast_dec_list;
+    ast::Dec* ast_dec;
+    ast::ClassDec* ast_class;
 
     ast::AstList* ast_list;
 }
@@ -140,6 +143,10 @@ class Driver;
 
 %type <ast_function> function
 
+%type <ast_class> class_decl
+%type <ast_dec_list> class_components
+%type <ast_dec> class_component
+
 %left prec_exp
 %right "="
 %left "||" "&&"
@@ -170,7 +177,7 @@ input   :
 instr   :
         expr %prec prec_exp { $$ = $1; }
         |function { $$ = $1; }
-        |class_decl
+        |class_decl { $$ = $1; }
         |esl_command { $$ = $1; }
         |"import" "string" { $$ = new ast::ImportInstr(@1, *$2); }
         |"include" "string" { $$ = driver.parser(*$2); delete $2; }
@@ -199,7 +206,15 @@ class_component:
 
 class_components:
                 class_component
+                {
+                    $$ = new ast::DecList(@1);
+                    $$->push_back($1);
+                }
                 |class_components class_component
+                {
+                    $$ = $1;
+                    $$->push_back($2);
+                }
                 ;
 
 compound_list   :

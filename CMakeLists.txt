@@ -136,6 +136,7 @@ add_executable(esl
                src/ast/function-dec.cc
                src/ast/method-dec.cc
                src/ast/var-dec.cc
+               src/ast/class-dec.cc
 
                src/ast/exp.cc
                src/ast/int-exp.cc

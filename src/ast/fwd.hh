@@ -1,6 +1,10 @@
 #ifndef FWD_HH
 # define FWD_HH
 
+# include <list>
+
+# include <misc/symbol.hh>
+
 namespace ast
 {
     class Ast;
@@ -13,9 +17,11 @@ namespace ast
     class ModuleAttributVar;
     class ArrayVar;
 
+    class Dec;
     class VarDec;
     class FunctionDec;
     class AttributDec;
+    class ClassDec;
 
     class Exp;
     class OpExp;
@@ -39,7 +45,10 @@ namespace ast
 
     typedef AnyList<Instr> InstrList;
     typedef AnyList<VarDec> VarDecList;
+    typedef AnyList<Dec> DecList;
     typedef AnyList<Exp> ExpList;
     typedef AnyList<Ast> AstList;
+
+    typedef std::list<misc::symbol> IdList;
 } // namespace ast
 #endif /* !FWD_HH */
