@@ -345,7 +345,7 @@ expr            :
 lvalue_assignable:
       "identifier" { $$ = new ast::VarId(@1, *$1); }
       | lvalue "->" "identifier" { $$ = new ast::AttributVar(@1, *$1, *$3); }
-      | lvalue "[" expr "]"
+      | lvalue "[" expr "]" { $$ = new ast::ArrayVar(@1, $1, $3); }
       ;
 
 lvalue:
@@ -358,7 +358,7 @@ lvalue:
         $$ = new ast::ModuleAttributVar(@1, $1, *$3);
       }
       | lvalue "." fun_call { $$ = new ast::ModuleCallVar(@1, $1, $3); }
-      | lvalue "[" expr "]"
+      | lvalue "[" expr "]" { $$ = new ast::ArrayVar(@1, $1, $3); }
       ;
 
 esl_command     :

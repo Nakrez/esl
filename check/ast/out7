@@ -1,3 +1,6 @@
 test = 0
 test->test = 9
 foo.bar->foo = (0 - 9)
+test.foo[4] = 5
+foo[(7 + i)] = 9
+test->foo()[4] = 0

@@ -11,6 +11,7 @@ namespace ast
     class MethodCallVar;
     class ModuleCallVar;
     class ModuleAttributVar;
+    class ArrayVar;
 
     class VarDec;
     class ImportDec;

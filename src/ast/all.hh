@@ -34,5 +34,6 @@
 # include <ast/method-call-var.hh>
 # include <ast/module-call-var.hh>
 # include <ast/module-attribut-var.hh>
+# include <ast/array-var.hh>
 
 #endif /* !ALL_HH */
