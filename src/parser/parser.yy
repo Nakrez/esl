@@ -120,6 +120,7 @@ class Driver;
 %type <ast_list_exp> exp_list
 
 %type <ast_var> lvalue
+                lvalue_assignable
 
 %type <ast_instr> instr
                   esl_command
@@ -335,8 +336,17 @@ expr            :
                 |fun_call { $$ = $1; }
                 |"new" fun_call { $$ = new ast::NewExp(@1, $2); }
                 |lvalue { $$ = $1; }
-                |lvalue "=" expr { $$ = new ast::AssignExp(@1, $1, $3); }
+                |lvalue_assignable "=" expr
+                {
+                    $$ = new ast::AssignExp(@1, $1, $3);
+                }
                 ;
+
+lvalue_assignable:
+      "identifier" { $$ = new ast::VarId(@1, *$1); }
+      | lvalue "->" "identifier" { $$ = new ast::AttributVar(@1, *$1, *$3); }
+      | lvalue "[" expr "]"
+      ;
 
 lvalue:
       "identifier" { $$ = new ast::VarId(@1, *$1); }
