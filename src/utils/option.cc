@@ -4,12 +4,47 @@
 #include <iostream>
 #include <string>
 
-Option::Option(){
+Option* Option::instance_ = nullptr;
 
-}
-Option::~Option()
+Option::Option(){}
+
+Option::~Option(){}
+
+void Option::instanciate ()
 {
+    instance_ = new Option();
 }
+
+Option* Option::get ()
+{
+    return instance_;
+}
+
+void Option::free ()
+{
+    if (instance_)
+    {
+        delete instance_;
+        instance_ = nullptr;
+    }
+}
+
+void Option::set_ast(bool tmp){
+    ast_bool=tmp;
+}
+
+void Option::set_byte(bool tmp){
+    byte_bool=tmp;
+}
+
+const bool Option::get_ast() const{
+    return ast_bool;
+}
+
+const bool Option::get_byte() const{
+    return byte_bool;
+}
+
 void Option::ee_optn(){
     std::cout << "+      o     +              o   " << std::endl;
     std::cout << "    +             o     +       +" << std::endl;

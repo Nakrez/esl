@@ -27,8 +27,6 @@ class Driver
         int errors_get ();
 
     private:
-        bool ast_bool;
-        bool byte_bool;
         std::string file_;
         int errors_;
         esl::Ast* gen_ast_;

@@ -8,8 +8,6 @@ Driver::Driver()
 {
     this->gen_ast_ = new esl::Ast(STATEMENTS);
     errors_ = 0;
-    byte_bool = false;
-    ast_bool = false;
 }
 
 Driver::~Driver()
@@ -40,7 +38,7 @@ esl::Ast *Driver::ast()
 int Driver::parser(const std::string &f, const std::string &t)
 {
     int res = 0;
-    Option inst;
+    Option::instanciate();
     if (!t.compare("file"))
     {
         this->file_ = f;
@@ -48,16 +46,16 @@ int Driver::parser(const std::string &f, const std::string &t)
         scan_begin();
         res = parser.parse();
         scan_end();
-        if(ast_bool) inst.ast_optn(this);
-        if(byte_bool) inst.byte_optn(this);
+        if(Option::get()->get_ast()) Option::get()->ast_optn(this);
+        if(Option::get()->get_byte()) Option::get()->byte_optn(this);
     }
     else
     {
         std::string s=f;
         s.erase(0,2);
-        if (!s.compare("ast")) ast_bool = true;
-        else if (!s.compare("byte")) byte_bool = true;
-        else if (!s.compare("ee")) inst.ee_optn();
+        if (!s.compare("ast")) Option::get()->set_ast(true);
+        else if (!s.compare("byte")) Option::get()->set_byte(true);
+        else if (!s.compare("ee")) Option::get()->ee_optn();
         else
             std::cerr << "Unknown option : " << s << std::endl;
     }
