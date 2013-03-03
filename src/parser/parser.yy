@@ -58,6 +58,8 @@ class Driver;
     ast::ClassDec* ast_class;
 
     ast::AstList* ast_list;
+
+    ast::IdList* ast_id_list;
 }
 
 %code
@@ -150,6 +152,7 @@ class Driver;
 %type <ast_dec_list> class_components
 %type <ast_dec> class_component
 %type <vis> visibility
+%type <ast_id_list> inherit_list
 
 %left prec_exp
 %right "="
@@ -189,11 +192,25 @@ instr   :
 
 inherit_list:
             "identifier"
+            {
+                $$ = new ast::IdList();
+                $$->push_back(*$1);
+            }
             | inherit_list "," "identifier"
+            {
+                $$ = $1;
+                $$->push_back(*$3);
+            }
             ;
 class_decl:
           "class" "identifier" class_components "end"
+          {
+            $$ = new ast::ClassDec(@1, *$2, nullptr, $3);
+          }
           |"class" "identifier" ":" "(" inherit_list ")" class_components "end"
+          {
+            $$ = new ast::ClassDec(@1, *$2, $5, $7);
+          }
           ;
 
 visibility : { $$ = misc::PUBLIC; }
