@@ -207,9 +207,9 @@ compound_list   :
                 }
                 ;
 compound:
-        "return" expr
+        "return" expr { $$ = new ast::ReturnExp(@1, $2); }
         | expr { $$ = $1; }
-        | esl_command
+        | esl_command { $$ = $1; }
         ;
 
 param:
@@ -330,7 +330,7 @@ expr            :
                 |"string" { $$ = new ast::StringExp(@1, *$1); }
                 |fun_call { $$ = $1; }
                 |"new" fun_call
-                |lvalue
+                |lvalue { $$ = $1; }
                 |lvalue "=" expr
                 ;
 

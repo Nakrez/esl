@@ -43,6 +43,12 @@ namespace ast
         stream_ << ")";
     }
 
+    void PrettyPrinter::operator()(ReturnExp& exp)
+    {
+        stream_ << "return ";
+        exp.exp_get()->accept(*this);
+    }
+
     void PrettyPrinter::operator()(IfInstr& instr)
     {
         stream_ << "if (";

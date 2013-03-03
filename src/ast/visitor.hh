@@ -19,6 +19,7 @@ namespace ast
             virtual void operator()(OpExp&) = 0;
             virtual void operator()(StringExp&) = 0;
             virtual void operator()(FunctionCallExp&) = 0;
+            virtual void operator()(ReturnExp&) = 0;
 
             virtual void operator()(IfInstr&) = 0;
             virtual void operator()(ElseInstr&) = 0;

@@ -143,6 +143,7 @@ add_executable(esl
                src/ast/op-exp.cc
                src/ast/function-call-exp.cc
                src/ast/string-exp.cc
+               src/ast/return-exp.cc
 
                src/ast/instr.cc
                src/ast/if-instr.cc

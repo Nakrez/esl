@@ -1,10 +1,12 @@
 function test ()
   0
+  return (0 - 4)
 end
 
 function test (test, test = 0)
   0
   (0 + 3)
+  return 0
 end
 
 test(9, 0)
