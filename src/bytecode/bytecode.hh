@@ -17,7 +17,7 @@ namespace bytecode
     {
         public:
             Bytecode (const yy::location& location);
-            ~Bytecode ();
+            virtual ~Bytecode ();
 
             const yy::location& location_get() const;
 

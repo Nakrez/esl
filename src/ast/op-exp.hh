@@ -11,7 +11,7 @@ namespace ast
         public:
             enum Operator
             {
-                add, /* + */
+                add = 0, /* + */
                 min, /* - */
                 tim, /* * */
                 div, /* / */
