@@ -74,7 +74,8 @@ ADD_LIBRARY(esl_lib SHARED
             lib/misc/symbol.cc
             lib/misc/visibility.cc
             lib/misc/indent.cc
-            src/execute/vm.cc)
+            #src/execute/vm.cc
+            )
 
 SET_TARGET_PROPERTIES(
     esl_lib
@@ -166,8 +167,11 @@ add_executable(esl
                src/ast/pretty-printer.cc
                src/ast/visitor.cc
 
+               src/bytecode/bytecode.cc
+               src/bytecode/pop.cc
+               src/bytecode/visitor.cc
+
                src/compile/compiler.cc
-               src/compile/bytecode.cc
 
                src/main.cc)
 

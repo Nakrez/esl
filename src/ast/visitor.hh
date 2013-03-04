@@ -1,6 +1,6 @@
 /// date 17 Feb 2013
-#ifndef VISITOR_HH
-# define VISITOR_HH
+#ifndef AST_VISITOR_HH
+# define AST_VISITOR_HH
 
 # include <ast/fwd.hh>
 
@@ -48,4 +48,4 @@ namespace ast
     };
 } // namespace ast
 
-#endif /* !VISITOR_HH */
+#endif /* !AST_VISITOR_HH */

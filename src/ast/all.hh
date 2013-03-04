@@ -1,6 +1,6 @@
 /// date 17 Feb 2013
-#ifndef ALL_HH
-# define ALL_HH
+#ifndef AST_ALL_HH
+# define AST_ALL_HH
 
 # include <ast/ast.hh>
 
@@ -37,4 +37,4 @@
 # include <ast/module-attribut-var.hh>
 # include <ast/array-var.hh>
 
-#endif /* !ALL_HH */
+#endif /* !AST_ALL_HH */

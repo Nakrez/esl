@@ -27,7 +27,7 @@
 # include "../../lib/type/array-object.hh"
 # include "../../lib/type/array.hh"
 
-# include "../compile/bytecode.hh"
+# include "../bytecode/bytecode.hh"
 # include "../utils/ro-data.hh"
 
 namespace esl
@@ -35,7 +35,7 @@ namespace esl
     class Vm
     {
         public:
-            static void instanciate (const std::vector<compile::Bytecode*>& code);
+            static void instanciate (const std::vector<bytecode::Bytecode*>& code);
             static Vm* get ();
             static void free ();
 
@@ -57,61 +57,61 @@ namespace esl
         private:
             /// @brief Constructor
             /// @param code The bytecode to execute
-            Vm (const std::vector<compile::Bytecode*>& code);
+            Vm (const std::vector<bytecode::Bytecode*>& code);
 
             /// @brief Destructor
             ~Vm ();
 
             /// @brief Execute STORE instruction
             /// @param instr The instruction to execute
-            void store (compile::Bytecode* instr);
+            void store (bytecode::Bytecode* instr);
 
             /// @brief Execute STORE_STK instruction
             void store_stk ();
 
             /// @brief Execute LOAD instruction
             /// @param instr The instruction to execute
-            void load (compile::Bytecode* instr);
+            void load (bytecode::Bytecode* instr);
 
             /// @brief Execute LOAD_INT instruction
             /// @param instr The instruction to execute
-            void load_int (compile::Bytecode* instr);
+            void load_int (bytecode::Bytecode* instr);
 
             /// @brief Execute LOAD_STR instruction
             /// @param instr The instruction to execute
-            void load_str (compile::Bytecode* instr);
+            void load_str (bytecode::Bytecode* instr);
 
             /// @brief Execute JUMP instruction
             /// @param instr The instruction to execute
-            void jump (compile::Bytecode* instr);
+            void jump (bytecode::Bytecode* instr);
 
             /// @brief Execute JUMP instruction
             /// @param instr The instruction to execute
             /// @param val The value you want to compare with TOS
-            void jump (compile::Bytecode* instr, int);
+            void jump (bytecode::Bytecode* instr, int);
 
             /// @brief Execute MAKE_FUNCTION instruction
             /// @param instr The instruction to execute
-            void register_function (compile::Bytecode* instr);
+            void register_function (bytecode::Bytecode* instr);
 
             /// @brief Execute CALL_FUNCTION instruction
             /// @param instr The instruction to execute
-            void call_function (compile::Bytecode* instr);
+            void call_function (bytecode::Bytecode* instr);
 
             /// @brief Execute RETURN instruction
             void function_return ();
 
             /// @brief Execute OPEN instruction (load a module)
             /// @param instr The instruction to execute
-            void setup_module(compile::Bytecode* instr);
+            void setup_module(bytecode::Bytecode* instr);
 
             /// @brief Execute MODULE instruction (push module on stack)
             /// @param instr The instruction to execute
-            void module(compile::Bytecode* instr);
+            void module(bytecode::Bytecode* instr);
 
             /// @brief Execute CALL_MODULE
             /// @param instr The instruction to execute
-            void call_module(compile::Bytecode* instr);
+            void call_module(bytecode::Bytecode* instr);
 
             /// @brief Get the path of the module called
             /// @param mod_name The name of the module
@@ -123,14 +123,14 @@ namespace esl
 
             /// @brief Execute CALL_METHOD instruction
             /// @param instr The instruction to execute
-            void call_method (compile::Bytecode* bytecode);
+            void call_method (bytecode::Bytecode* bytecode);
 
-            void instanciation (compile::Bytecode* bytecode);
-            void create_type (compile::Bytecode* bytecode);
-            void make_attribut (compile::Bytecode* bytecode);
-            void store_attribut (compile::Bytecode* bytecode);
-            void load_attribut (compile::Bytecode* bytecode);
-            void inherit (compile::Bytecode* bytecode);
+            void instanciation (bytecode::Bytecode* bytecode);
+            void create_type (bytecode::Bytecode* bytecode);
+            void make_attribut (bytecode::Bytecode* bytecode);
+            void store_attribut (bytecode::Bytecode* bytecode);
+            void load_attribut (bytecode::Bytecode* bytecode);
+            void inherit (bytecode::Bytecode* bytecode);
 
             /// @brief Push a delimiter on the stack
             void add_delim ();
@@ -139,7 +139,7 @@ namespace esl
             std::stack<esl::MemoryObject<esl::Content>*> stack_;
 
             /// @brief The code to execute
-            std::vector<compile::Bytecode*> code_;
+            std::vector<bytecode::Bytecode*> code_;
 
             /// @brief The current runtime
             esl::Context* runtime_;

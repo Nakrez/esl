@@ -2,6 +2,8 @@
 #      STACK MODULE      #
 ##########################
 
+add_definitions(-Wall -Wextra -std=c++0x -I../../src -I../../lib -g)
+
 ADD_LIBRARY(stack_module SHARED
             stack.cc
             stack-object.cc

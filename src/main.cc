@@ -83,7 +83,7 @@ int main(int argc, char **argv)
     //driver.free();
 
     esl::Squeleton::free();
-    esl::Vm::free();
+    //esl::Vm::free();
 
     return (0);
 }

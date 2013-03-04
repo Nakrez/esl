@@ -1,5 +1,5 @@
-#ifndef FWD_HH
-# define FWD_HH
+#ifndef AST_FWD_HH
+# define AST_FWD_HH
 
 # include <list>
 
@@ -52,4 +52,5 @@ namespace ast
 
     typedef std::list<misc::symbol> IdList;
 } // namespace ast
-#endif /* !FWD_HH */
+
+#endif /* !AST_FWD_HH */

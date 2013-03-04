@@ -1,7 +1,6 @@
-#include "driver.hh"
+#include <parser/driver.hh>
 #include <string>
 #include <algorithm>
-#include "../compile/compiler.hh"
 
 Driver::Driver()
     : ast_(nullptr)

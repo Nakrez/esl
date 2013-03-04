@@ -2,6 +2,8 @@
 #       ESL MODULE       #
 ##########################
 
+add_definitions(-Wall -Wextra -std=c++0x -I../../src -I../../lib -g)
+
 ADD_LIBRARY(esl_module SHARED
             esl.cc)
 

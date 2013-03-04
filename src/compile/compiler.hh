@@ -6,7 +6,7 @@
 
 # include <ast/visitor.hh>
 # include <misc/indent.hh>
-# include <compile/bytecode.hh>
+# include <bytecode/bytecode.hh>
 
 namespace compile
 {
@@ -18,7 +18,7 @@ namespace compile
             Compiler();
             virtual ~Compiler();
 
-            const std::vector<Bytecode>& bytecode_get() const;
+            const std::vector<bytecode::Bytecode>& bytecode_get() const;
 
         /* Visitor Implementation */
         public:
@@ -55,7 +55,7 @@ namespace compile
             virtual void operator()(ast::DecList&);
 
         protected:
-            std::vector<Bytecode> bytecode_;
+            std::vector<bytecode::Bytecode> bytecode_;
     };
 } // namespace compile
 
