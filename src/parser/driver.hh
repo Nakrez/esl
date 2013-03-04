@@ -3,6 +3,7 @@
 
 # include "esl-parser.hh"
 # include "../utils/ast.hh"
+#include "../utils/option.hh"
 
 # define YY_DECL                                        \
     yy::eslxx_parser::token_type yylex(                \
@@ -19,7 +20,7 @@ class Driver
         ~Driver ();
         void error (const yy::eslxx_parser::location_type& l,
                     const std::string& m);
-        int parser (const std::string &f, const std::string &t);
+        int parser (const std::string &f);
         void scan_begin ();
         void scan_end ();
         esl::Ast* ast ();
