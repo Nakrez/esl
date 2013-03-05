@@ -8,5 +8,6 @@
 # include <bytecode/new-object.hh>
 # include <bytecode/store-var.hh>
 # include <bytecode/store-attr.hh>
+# include <bytecode/store-array.hh>
 
 #endif /* !BYTECODE_ALL_HH */

@@ -1,3 +1,4 @@
+/// @date 05/03/2013
 #ifndef STORE_ATTR_HH
 # define STORE_ATTR_HH
 

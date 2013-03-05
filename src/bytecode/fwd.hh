@@ -10,6 +10,7 @@ namespace bytecode
     class NewObject;
     class StoreVar;
     class StoreAttr;
+    class StoreArray;
 } // namespace bytecode
 
 #endif /* !BYTECODE_FWD_HH */
