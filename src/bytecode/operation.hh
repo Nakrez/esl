@@ -1,3 +1,4 @@
+// @date 04/03/2013
 #ifndef OPERATION_HH
 # define OPERATION_HH
 

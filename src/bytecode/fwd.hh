@@ -8,6 +8,7 @@ namespace bytecode
     class Operation;
     class BracketOp;
     class NewObject;
+    class StoreVar;
 } // namespace bytecode
 
 #endif /* !BYTECODE_FWD_HH */

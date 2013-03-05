@@ -1,6 +1,6 @@
 // @date 05/03/2013
-#ifndef NEW_OBJECT_HH
-# define NEW_OBJECT_HH
+#ifndef STORE_VAR_HH
+# define STORE_VAR_HH
 
 # include <misc/symbol.hh>
 
@@ -9,12 +9,12 @@
 
 namespace bytecode
 {
-    class NewObject : public Bytecode
+    class StoreVar : public Bytecode
     {
         public:
-            NewObject(const yy::location& location,
-                      const misc::symbol& name);
-            virtual ~NewObject();
+            StoreVar(const yy::location& location,
+                     const misc::symbol& name);
+            virtual ~StoreVar();
 
             const misc::symbol& name_get() const;
 
@@ -25,6 +25,6 @@ namespace bytecode
     };
 } // namespace bytecode
 
-# include <bytecode/new-object.hxx>
+# include <bytecode/store-var.hxx>
 
-#endif /* !NEW_OBJECT_HH */
+#endif /* !STORE_VAR_HH */

@@ -1,3 +1,4 @@
+// @date 05/03/2013
 #ifndef BRACKET_OP_HH
 # define BRACKET_OP_HH
 
