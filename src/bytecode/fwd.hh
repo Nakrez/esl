@@ -7,6 +7,7 @@ namespace bytecode
     class Pop;
     class Operation;
     class BracketOp;
+    class NewObject;
 } // namespace bytecode
 
 #endif /* !BYTECODE_FWD_HH */

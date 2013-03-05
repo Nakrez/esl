@@ -171,6 +171,7 @@ add_executable(esl
                src/bytecode/pop.cc
                src/bytecode/operation.cc
                src/bytecode/bracket-op.cc
+               src/bytecode/new-object.cc
                src/bytecode/visitor.cc
 
                src/compile/compiler.cc
