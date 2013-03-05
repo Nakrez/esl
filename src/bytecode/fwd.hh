@@ -9,6 +9,7 @@ namespace bytecode
     class BracketOp;
     class NewObject;
     class StoreVar;
+    class StoreAttr;
 } // namespace bytecode
 
 #endif /* !BYTECODE_FWD_HH */

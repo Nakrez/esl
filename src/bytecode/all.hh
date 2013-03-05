@@ -7,5 +7,6 @@
 # include <bytecode/bracket-op.hh>
 # include <bytecode/new-object.hh>
 # include <bytecode/store-var.hh>
+# include <bytecode/store-attr.hh>
 
 #endif /* !BYTECODE_ALL_HH */
