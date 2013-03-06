@@ -16,6 +16,7 @@ namespace bytecode
     class LoadInt;
     class LoadFloat;
     class LoadAttr;
+    class LoadModule;
 } // namespace bytecode
 
 #endif /* !BYTECODE_FWD_HH */

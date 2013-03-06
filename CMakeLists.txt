@@ -180,6 +180,7 @@ add_executable(esl
                src/bytecode/load-int.cc
                src/bytecode/load-float.cc
                src/bytecode/load-attr.cc
+               src/bytecode/load-module.cc
                src/bytecode/visitor.cc
 
                src/compile/compiler.cc

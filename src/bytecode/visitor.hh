@@ -25,6 +25,7 @@ namespace bytecode
             virtual void operator()(const LoadInt& byte) const = 0;
             virtual void operator()(const LoadFloat& byte) const = 0;
             virtual void operator()(const LoadAttr& byte) const = 0;
+            virtual void operator()(const LoadModule& byte) const = 0;
     };
 } // namespace bytecode
 

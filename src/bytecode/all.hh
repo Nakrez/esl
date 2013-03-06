@@ -17,5 +17,6 @@
 # include <bytecode/load-int.hh>
 # include <bytecode/load-float.hh>
 # include <bytecode/load-attr.hh>
+# include <bytecode/load-module.hh>
 
 #endif /* !BYTECODE_ALL_HH */
