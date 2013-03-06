@@ -12,6 +12,7 @@ namespace bytecode
     class StoreAttr;
     class StoreArray;
     class LoadVar;
+    class LoadStr;
 } // namespace bytecode
 
 #endif /* !BYTECODE_FWD_HH */

@@ -10,5 +10,6 @@
 # include <bytecode/store-attr.hh>
 # include <bytecode/store-array.hh>
 # include <bytecode/load-var.hh>
+# include <bytecode/load-str.hh>
 
 #endif /* !BYTECODE_ALL_HH */

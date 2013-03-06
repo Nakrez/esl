@@ -14,6 +14,14 @@ namespace bytecode
 
             virtual void operator()(const Bytecode& byte) const;
             virtual void operator()(const Pop& byte) const = 0;
+            virtual void operator()(const Operation& byte) const = 0;
+            virtual void operator()(const BracketOp& byte) const = 0;
+            virtual void operator()(const NewObject& byte) const = 0;
+            virtual void operator()(const StoreVar& byte) const = 0;
+            virtual void operator()(const StoreAttr& byte) const = 0;
+            virtual void operator()(const StoreArray& byte) const = 0;
+            virtual void operator()(const LoadVar& byte) const = 0;
+            virtual void operator()(const LoadStr& byte) const = 0;
     };
 } // namespace bytecode
 
