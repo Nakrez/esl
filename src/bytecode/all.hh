@@ -16,5 +16,6 @@
 # include <bytecode/load-str.hh>
 # include <bytecode/load-int.hh>
 # include <bytecode/load-float.hh>
+# include <bytecode/load-attr.hh>
 
 #endif /* !BYTECODE_ALL_HH */
