@@ -22,6 +22,7 @@ namespace bytecode
             virtual void operator()(const StoreArray& byte) const = 0;
             virtual void operator()(const LoadVar& byte) const = 0;
             virtual void operator()(const LoadStr& byte) const = 0;
+            virtual void operator()(const LoadInt& byte) const = 0;
     };
 } // namespace bytecode
 
