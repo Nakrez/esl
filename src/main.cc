@@ -3,7 +3,8 @@
 #include "compile/compiler.hh"
 #include "execute/vm.hh"
 #include "utils/ro-data.hh"
-#include "../lib/type/squeleton.hh"
+#include "lib/type/squeleton.hh"
+#include "utils/option.hh"
 #include <cstring>
 #include <iostream>
 
@@ -19,11 +20,22 @@ int main(int argc, char **argv)
     for (int i = 1; i < argc; i++)
     {
         std::string arg = argv[i];
+        Option::instanciate();
+        Option* instance=Option::get();
 
-        if (arg.find("--")==0)
-            driver.parser(argv[i], "param");
+        if (arg.find("--")==0){
+            std::string s=arg;
+            s.erase(0,2);
+            if (!s.compare("ast")) instance->set_ast(true);
+            else if (!s.compare("byte")) instance->set_byte(true);
+            else if (!s.compare("ee")) instance->ee_optn();
+            else
+                std::cerr << "Unknown option : " << s << std::endl;
+        }
         else
-            driver.parser(argv[i], "file");
+            driver.parser(argv[i]);
+            if(instance->get_ast()) instance->ast_optn(&driver);
+            if(instance->get_byte()) instance->byte_optn(&driver);
     }
 
     /* Compile the AST given by the parser into bytecode */
@@ -39,8 +51,6 @@ int main(int argc, char **argv)
         #endif /* !BENCH */
 
         compiler->compile();
-        if (driver.get_byte())
-            compiler->export_bytecode("byte.eslc");
         #if BENCH == 1
             gettimeofday(&end, nullptr);
             useconds = end.tv_usec - start.tv_usec;
