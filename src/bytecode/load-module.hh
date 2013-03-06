@@ -2,7 +2,7 @@
 #ifndef LOAD_MODULE_HH
 # define LOAD_MODULE_HH
 
-# include <string>
+# include <misc/symbol.hh>
 
 # include <bytecode/visitor.hh>
 # include <bytecode/bytecode.hh>
@@ -13,15 +13,15 @@ namespace bytecode
     {
         public:
             LoadModule(const yy::location& location,
-                       const std::string& str);
+                       const misc::symbol& name);
             virtual ~LoadModule();
 
-            const std::string& str_get() const;
+            const misc::symbol& name_get() const;
 
             virtual void accept(const Visitor& visitor) const;
 
         protected:
-            std::string str_;
+            misc::symbol name_;
     };
 } // namespace bytecode
 

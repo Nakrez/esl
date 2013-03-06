@@ -3,9 +3,9 @@
 namespace bytecode
 {
     LoadModule::LoadModule(const yy::location& location,
-                           const std::string& str)
+                           const misc::symbol& name)
         : Bytecode(location)
-        , str_(str)
+        , name_(name)
     {}
 
     LoadModule::~LoadModule()

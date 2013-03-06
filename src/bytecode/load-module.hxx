@@ -5,9 +5,9 @@
 
 namespace bytecode
 {
-    inline const std::string& LoadModule::str_get() const
+    inline const misc::symbol& LoadModule::name_get() const
     {
-        return str_;
+        return name_;
     }
 
     inline void LoadModule::accept(const Visitor& visitor) const
