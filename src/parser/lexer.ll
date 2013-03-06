@@ -1,6 +1,6 @@
 %{
-#include "esl-parser.hh"
-#include "driver.hh"
+#include <parser/parser.hh>
+#include <parser/driver.hh>
 
 # undef yywrap
 # define yywrap() 1
@@ -33,7 +33,7 @@
                             yylloc->lines(yyleng);
                             yylloc->step();
                         }
-<COMMENT_MULTI>.*
+<COMMENT_MULTI>.        yylloc->step();
 
 "#"                     BEGIN(COMMENT_SIMPLE);
 <COMMENT_SIMPLE>"\n"    {

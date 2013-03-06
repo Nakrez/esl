@@ -42,26 +42,58 @@ class Driver;
 {
 #include "driver.hh"
 }
-%token END       0 "end_of_file"
-%token TOK_EQ "=" TOK_DOT "." TOK_SEPARATOR ";"
-%token TOK_PLUS "+" TOK_MINUS "-" TOK_MUL "*" TOK_DIV "/" TOK_MOD "%"
-%token TOK_POW "^"
-%token TOK_BIN_EQ "==" TOK_DIFF "!=" TOK_GT ">" TOK_GE ">="
-%token TOK_LT "<" TOK_LE "<="
-%token TOK_AND "&&" TOK_OR "||"
-%token TOK_DOUBLEP ":" TOK_ARROW "->" TOK_NEW "new"
-%token TOK_PAROPEN "(" TOK_PARCLOSE ")" TOK_COMA ","
-%token TOK_IF "if" TOK_THEN "then" TOK_ELSE "else" TOK_ELIF "elif"
-%token TOK_END "end" TOK_IMPORT "import" TOK_INCLUDE "include"
-%token TOK_FUNCTION "function" TOK_RETURN "return"
-%token TOK_FOR "for" TOK_DO "do" TOK_WHILE "while" TOK_UNTIL "until"
-%token TOK_BRACKET_OP "[" TOK_BRACKET_CL "]"
 
-%token TOK_CLASS "class" TOK_PUBLIC "public" TOK_PRIVATE "private"
-%token TOK_PROTECTED "protected"
+%token  END       0         "end_of_file"
+        TOK_EQ              "="
+        TOK_DOT             "."
+        TOK_SEPARATOR       ";"
+        TOK_PLUS            "+"
+        TOK_MINUS           "-"
+        TOK_MUL             "*"
+        TOK_DIV             "/"
+        TOK_MOD             "%"
+        TOK_POW             "^"
+        TOK_BIN_EQ          "=="
+        TOK_DIFF            "!="
+        TOK_GT              ">"
+        TOK_GE              ">="
+        TOK_LT              "<"
+        TOK_LE              "<="
+        TOK_AND             "&&"
+        TOK_OR              "||"
+        TOK_DOUBLEP         ":"
+        TOK_ARROW           "->"
+        TOK_NEW             "new"
+        TOK_PAROPEN         "("
+        TOK_PARCLOSE        ")"
+        TOK_COMA            ","
+        TOK_IF              "if"
+        TOK_THEN            "then"
+        TOK_ELSE            "else"
+        TOK_ELIF            "elif"
+        TOK_END             "end"
+        TOK_IMPORT          "import"
+        TOK_INCLUDE         "include"
+        TOK_FUNCTION        "function"
+        TOK_RETURN          "return"
+        TOK_FOR             "for"
+        TOK_DO              "do"
+        TOK_WHILE           "while"
+        TOK_UNTIL           "until"
+        TOK_BRACKET_OP      "["
+        TOK_BRACKET_CL      "]"
+        TOK_CLASS           "class"
+        TOK_PUBLIC          "public"
+        TOK_PRIVATE         "private"
+        TOK_PROTECTED       "protected"
 
-%token <sval> TOK_ID "identifier" TOK_STRING "string" TOK_MOD_ID "mod_id"
-%token <ival> TOK_DIGIT "digit"
+%token <sval>
+        TOK_ID              "identifier"
+        TOK_STRING          "string"
+        TOK_MOD_ID          "mod_id"
+
+%token <ival>
+        TOK_DIGIT           "digit"
 
 %type <ast> instr expr functions esl_command fun_call
 %type <ast> rule_while rule_until rule_if do_group else_group
@@ -81,7 +113,7 @@ class Driver;
 %%
 
 input   :
-        |input instr { if ($2) driver.ast()->add($2); }
+        | input instr { if ($instr) driver.ast()->add($instr); }
         ;
 
 instr   :

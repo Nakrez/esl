@@ -16,13 +16,24 @@ II) How to use it
 
 First of all you will have to make the executable.
 To create the esl executable just run
-    ./bootstrap
-    ./configure
+
+    cmake .
     make
-    make install (optional, just if you want to install it on your computer)
+
+(You need first to install cmake)
+
 It will generate to you an esl executable and a dynamic library.
 You then, just have to do a ./esl filename (where filename is a path to a .esl
 file), to execute an esl file
+
+If you want to install esl on your computer you can run :
+
+    sudo make install
+
+or
+    make install DESTDIR=/path/install/
+
+You may also have to run ldconfig to update your library path.
 
 III) Bugs
 

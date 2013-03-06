@@ -92,6 +92,22 @@ dd p
     margin-top: 0;
 }
 
+table
+{
+    border: 1px black solid;
+}
+
+th
+{
+    background-color: #7a5ada;
+    color:white;
+}
+
+td
+{
+    background-color: #aa9afa;
+    color:black;
+}
 #footer
 {
     padding-top: 1em;
