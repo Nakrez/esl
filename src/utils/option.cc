@@ -6,15 +6,16 @@
 
 Option* Option::instance_ = nullptr;
 
-Option::Option(){}
+Option::Option()
+{}
 
-Option::~Option(){}
+Option::~Option()
+{}
 
 void Option::instanciate ()
 {
-    if(instance_ == nullptr){
+    if(instance_ == nullptr)
         instance_ = new Option();
-    }
 }
 
 Option* Option::get ()
@@ -31,23 +32,28 @@ void Option::free ()
     }
 }
 
-void Option::set_ast(bool tmp){
-    ast_bool=tmp;
+void Option::set_ast(bool tmp)
+{
+    ast_bool = tmp;
 }
 
-void Option::set_byte(bool tmp){
-    byte_bool=tmp;
+void Option::set_byte(bool tmp)
+{
+    byte_bool = tmp;
 }
 
-const bool Option::get_ast() const{
+bool Option::get_ast() const
+{
     return ast_bool;
 }
 
-const bool Option::get_byte() const{
+bool Option::get_byte() const
+{
     return byte_bool;
 }
 
-void Option::ee_optn(){
+void Option::ee_optn()
+{
     std::cout << "+      o     +              o   " << std::endl;
     std::cout << "    +             o     +       +" << std::endl;
     std::cout << "o          +" << std::endl;
@@ -63,13 +69,17 @@ void Option::ee_optn(){
     std::cout << "    o           +" << std::endl;
     std::cout << "+      +     o        o      +" << std::endl;
     std::cout << "\033[4;35m" << "Trololol, this is Nyan Cat!"
-                      << "\033[0m" << std::endl;
+              << "\033[0m" << std::endl;
 }
-void Option::ast_optn(Driver* driver){
+
+void Option::ast_optn(Driver* driver)
+{
     esl::Ast* gen_ast_= driver->ast();
     gen_ast_->print();
 }
-void Option::byte_optn(Driver* driver){
+
+void Option::byte_optn(Driver* driver)
+{
     esl::Compiler *compiler = nullptr;
     compiler = new esl::Compiler(driver->ast());
     compiler->export_bytecode("byte.eslc");

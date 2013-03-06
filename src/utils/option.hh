@@ -17,8 +17,8 @@ class Option
         void ast_optn(Driver* driver);
         void set_ast(bool tmp);
         void set_byte(bool tmp);
-        const bool get_ast() const;
-        const bool get_byte() const;
+        bool get_ast() const;
+        bool get_byte() const;
     private:
         bool ast_bool;
         bool byte_bool;

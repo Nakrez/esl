@@ -87,6 +87,7 @@ add_executable(esl
                src/utils/bytecode.cc
                src/utils/ro-data.cc
                src/utils/utils.cc
+               src/utils/option.cc
                src/compile/compiler.cc
                src/main.cc)
 
