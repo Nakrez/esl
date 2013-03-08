@@ -10,6 +10,7 @@ namespace esl
     class DelegateBase
     {
         public:
+            virtual ~DelegateBase() {}
             virtual GCObject* Call(const Params&, Context*) = 0;
     };
 
