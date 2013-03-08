@@ -10,7 +10,7 @@ namespace bytecode
         return name_;
     }
 
-    inline void LoadVar::accept(const Visitor& visitor) const
+    inline void LoadVar::accept(Visitor& visitor) const
     {
         visitor(*this);
     }

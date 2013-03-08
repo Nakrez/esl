@@ -17,7 +17,7 @@ II) How to use it
 First of all you will have to make the executable.
 To create the esl executable just run
 
-    cmake .
+    ./configure
     make
 
 (You need first to install cmake)

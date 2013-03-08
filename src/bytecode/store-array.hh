@@ -13,7 +13,7 @@ namespace bytecode
             StoreArray(const yy::location& location);
             virtual ~StoreArray();
 
-            virtual void accept(const Visitor& visitor) const;
+            virtual void accept(Visitor& visitor) const;
     };
 } // namespace bytecode
 

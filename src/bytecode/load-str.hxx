@@ -10,7 +10,7 @@ namespace bytecode
         return str_;
     }
 
-    inline void LoadStr::accept(const Visitor& visitor) const
+    inline void LoadStr::accept(Visitor& visitor) const
     {
         visitor(*this);
     }

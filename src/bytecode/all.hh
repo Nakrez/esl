@@ -20,4 +20,6 @@
 # include <bytecode/load-module.hh>
 # include <bytecode/open-module.hh>
 
+# include <bytecode/call-module.hh>
+
 #endif /* !BYTECODE_ALL_HH */

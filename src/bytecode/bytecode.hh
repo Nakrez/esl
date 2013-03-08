@@ -21,7 +21,7 @@ namespace bytecode
 
             const yy::location& location_get() const;
 
-            virtual void accept(const Visitor& visitor) const = 0;
+            virtual void accept(Visitor& visitor) const = 0;
 
         protected:
             yy::location location_;

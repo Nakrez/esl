@@ -10,7 +10,7 @@ namespace bytecode
         return name_;
     }
 
-    inline void NewObject::accept(const Visitor& visitor) const
+    inline void NewObject::accept(Visitor& visitor) const
     {
         visitor(*this);
     }

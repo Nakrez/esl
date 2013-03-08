@@ -13,7 +13,7 @@ namespace bytecode
             Pop(const yy::location& location);
             virtual ~Pop();
 
-            virtual void accept(const Visitor& visitor) const;
+            virtual void accept(Visitor& visitor) const;
     };
 } // namespace bytecode
 

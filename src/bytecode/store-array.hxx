@@ -5,7 +5,7 @@
 
 namespace bytecode
 {
-    inline void StoreArray::accept(const Visitor& visitor) const
+    inline void StoreArray::accept(Visitor& visitor) const
     {
         visitor(*this);
     }

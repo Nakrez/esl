@@ -10,7 +10,7 @@ namespace bytecode
         return name_;
     }
 
-    inline void StoreAttr::accept(const Visitor& visitor) const
+    inline void StoreAttr::accept(Visitor& visitor) const
     {
         visitor(*this);
     }

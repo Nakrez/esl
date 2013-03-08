@@ -12,26 +12,26 @@ namespace bytecode
             Visitor();
             virtual ~Visitor();
 
-            virtual void operator()(const Bytecode& byte) const;
+            virtual void operator()(const Bytecode& byte);
 
-            virtual void operator()(const Pop& byte) const = 0;
+            virtual void operator()(const Pop& byte) = 0;
 
-            virtual void operator()(const Operation& byte) const = 0;
-            virtual void operator()(const BracketOp& byte) const = 0;
-            virtual void operator()(const NewObject& byte) const = 0;
+            virtual void operator()(const Operation& byte) = 0;
+            virtual void operator()(const BracketOp& byte) = 0;
+            virtual void operator()(const NewObject& byte) = 0;
 
-            virtual void operator()(const StoreVar& byte) const = 0;
-            virtual void operator()(const StoreAttr& byte) const = 0;
-            virtual void operator()(const StoreArray& byte) const = 0;
+            virtual void operator()(const StoreVar& byte) = 0;
+            virtual void operator()(const StoreAttr& byte) = 0;
+            virtual void operator()(const StoreArray& byte) = 0;
 
-            virtual void operator()(const LoadVar& byte) const = 0;
-            virtual void operator()(const LoadStr& byte) const = 0;
-            virtual void operator()(const LoadInt& byte) const = 0;
-            virtual void operator()(const LoadFloat& byte) const = 0;
-            virtual void operator()(const LoadAttr& byte) const = 0;
-            virtual void operator()(const LoadModule& byte) const = 0;
+            virtual void operator()(const LoadVar& byte) = 0;
+            virtual void operator()(const LoadStr& byte) = 0;
+            virtual void operator()(const LoadInt& byte) = 0;
+            virtual void operator()(const LoadFloat& byte) = 0;
+            virtual void operator()(const LoadAttr& byte) = 0;
+            virtual void operator()(const LoadModule& byte) = 0;
 
-            virtual void operator()(const OpenModule& byte) const = 0;
+            virtual void operator()(const OpenModule& byte) = 0;
     };
 } // namespace bytecode
 

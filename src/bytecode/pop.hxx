@@ -5,7 +5,7 @@
 
 namespace bytecode
 {
-    inline void Pop::accept(const Visitor& visitor) const
+    inline void Pop::accept(Visitor& visitor) const
     {
         visitor(*this);
     }

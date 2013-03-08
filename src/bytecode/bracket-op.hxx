@@ -5,7 +5,7 @@
 
 namespace bytecode
 {
-    inline void BracketOp::accept(const Visitor& visitor) const
+    inline void BracketOp::accept(Visitor& visitor) const
     {
         visitor(*this);
     }

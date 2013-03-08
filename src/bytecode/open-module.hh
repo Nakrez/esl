@@ -18,7 +18,7 @@ namespace bytecode
 
             const std::string& str_get() const;
 
-            virtual void accept(const Visitor& visitor) const;
+            virtual void accept(Visitor& visitor) const;
 
         protected:
             std::string str_;

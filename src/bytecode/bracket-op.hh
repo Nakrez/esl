@@ -13,7 +13,7 @@ namespace bytecode
             BracketOp(const yy::location& location);
             virtual ~BracketOp();
 
-            virtual void accept(const Visitor& visitor) const;
+            virtual void accept(Visitor& visitor) const;
     };
 } // namespace bytecode
 

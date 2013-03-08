@@ -9,7 +9,7 @@ namespace bytecode
     Visitor::~Visitor()
     {}
 
-    void Visitor::operator()(const Bytecode& byte) const
+    void Visitor::operator()(const Bytecode& byte)
     {
         byte.accept(*this);
     }

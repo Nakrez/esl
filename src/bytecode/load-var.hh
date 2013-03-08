@@ -18,7 +18,7 @@ namespace bytecode
 
             const misc::symbol& name_get() const;
 
-            void accept(const Visitor& visitor) const;
+            void accept(Visitor& visitor) const;
 
         protected:
             misc::symbol name_;

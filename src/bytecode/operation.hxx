@@ -10,7 +10,7 @@ namespace bytecode
         return op_;
     }
 
-    inline void Operation::accept(const Visitor& visitor) const
+    inline void Operation::accept(Visitor& visitor) const
     {
         visitor(*this);
     }

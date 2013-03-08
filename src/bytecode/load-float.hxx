@@ -10,7 +10,7 @@ namespace bytecode
         return value_;
     }
 
-    inline void LoadFloat::accept(const Visitor& visitor) const
+    inline void LoadFloat::accept(Visitor& visitor) const
     {
         visitor(*this);
     }

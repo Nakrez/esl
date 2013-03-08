@@ -10,7 +10,7 @@ namespace bytecode
         return str_;
     }
 
-    inline void OpenModule::accept(const Visitor& visitor) const
+    inline void OpenModule::accept(Visitor& visitor) const
     {
         visitor(*this);
     }

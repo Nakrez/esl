@@ -19,7 +19,7 @@ namespace bytecode
             ast::OpExp::Operator op_get() const;
             const std::string& string_op() const;
 
-            virtual void accept(const Visitor& visitor) const;
+            virtual void accept(Visitor& visitor) const;
 
         protected:
             ast::OpExp::Operator op_;

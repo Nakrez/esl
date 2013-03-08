@@ -16,7 +16,7 @@ namespace bytecode
 
             float value_get() const;
 
-            virtual void accept(const Visitor& visitor) const;
+            virtual void accept(Visitor& visitor) const;
 
         protected:
             float value_;
