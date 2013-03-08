@@ -183,6 +183,7 @@ add_executable(esl
                src/bytecode/load-module.cc
                src/bytecode/open-module.cc
                src/bytecode/call-module.cc
+               src/bytecode/call-method.cc
                src/bytecode/visitor.cc
 
                src/compile/compiler.cc
