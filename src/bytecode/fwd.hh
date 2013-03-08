@@ -27,6 +27,8 @@ namespace bytecode
     class CallModule;
     class CallMethod;
     class CallFunction;
+
+    class StartClass;
 } // namespace bytecode
 
 #endif /* !BYTECODE_FWD_HH */

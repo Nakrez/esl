@@ -1,6 +1,6 @@
 /// @date 08/03/2013
-#ifndef CALL_METHOD_HH
-# define CALL_METHOD_HH
+#ifndef START_CLASS_HH
+# define START_CLASS_HH
 
 # include <misc/symbol.hh>
 
@@ -9,12 +9,12 @@
 
 namespace bytecode
 {
-    class CallMethod : public Bytecode
+    class StartClass : public Bytecode
     {
         public:
-            CallMethod(const yy::location& location,
+            StartClass(const yy::location& location,
                        const misc::symbol& name);
-            virtual ~CallMethod();
+            virtual ~StartClass();
 
             const misc::symbol& name_get() const;
 
@@ -25,6 +25,6 @@ namespace bytecode
     };
 } // namespace bytecode
 
-# include <bytecode/call-method.hxx>
+# include <bytecode/start-class.hxx>
 
-#endif /* !CALL_METHOD_HH */
+#endif /* !START_CLASS_HH */

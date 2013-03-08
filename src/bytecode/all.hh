@@ -24,4 +24,6 @@
 # include <bytecode/call-method.hh>
 # include <bytecode/call-function.hh>
 
+# include <bytecode/start-class.hh>
+
 #endif /* !BYTECODE_ALL_HH */
