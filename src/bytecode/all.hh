@@ -28,5 +28,6 @@
 # include <bytecode/end-class.hh>
 # include <bytecode/register-attribut.hh>
 # include <bytecode/register-function.hh>
+# include <bytecode/inherit.hh>
 
 #endif /* !BYTECODE_ALL_HH */

@@ -32,6 +32,7 @@ namespace bytecode
     class EndClass;
     class RegisterAttribut;
     class RegisterFunction;
+    class Inherit;
 } // namespace bytecode
 
 #endif /* !BYTECODE_FWD_HH */
