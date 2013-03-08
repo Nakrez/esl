@@ -138,7 +138,6 @@ add_executable(esl
                src/ast/method-dec.cc
                src/ast/var-dec.cc
                src/ast/class-dec.cc
-
                src/ast/exp.cc
                src/ast/int-exp.cc
                src/ast/op-exp.cc
@@ -149,13 +148,11 @@ add_executable(esl
                src/ast/continue-exp.cc
                src/ast/new-exp.cc
                src/ast/assign-exp.cc
-
                src/ast/instr.cc
                src/ast/if-instr.cc
                src/ast/else-instr.cc
                src/ast/while-instr.cc
                src/ast/import-instr.cc
-
                src/ast/var.cc
                src/ast/attribut-var.cc
                src/ast/var-id.cc
@@ -163,7 +160,6 @@ add_executable(esl
                src/ast/module-call-var.cc
                src/ast/module-attribut-var.cc
                src/ast/array-var.cc
-
                src/ast/pretty-printer.cc
                src/ast/visitor.cc
 
@@ -188,6 +184,7 @@ add_executable(esl
                src/bytecode/start-class.cc
                src/bytecode/end-class.cc
                src/bytecode/register-attribut.cc
+               src/bytecode/register-function.cc
                src/bytecode/visitor.cc
 
                src/compile/compiler.cc
