@@ -8,6 +8,7 @@
 %}
 
 %option nounput noyywrap noinput batch stack
+%option noyy_top_state
 
 %{
 # define YY_USER_ACTION  yylloc->columns (yyleng);
