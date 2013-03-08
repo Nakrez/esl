@@ -30,6 +30,7 @@ namespace bytecode
 
     class StartClass;
     class EndClass;
+    class RegisterAttribut;
 } // namespace bytecode
 
 #endif /* !BYTECODE_FWD_HH */

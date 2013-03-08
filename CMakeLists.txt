@@ -187,6 +187,7 @@ add_executable(esl
                src/bytecode/call-function.cc
                src/bytecode/start-class.cc
                src/bytecode/end-class.cc
+               src/bytecode/register-attribut.cc
                src/bytecode/visitor.cc
 
                src/compile/compiler.cc

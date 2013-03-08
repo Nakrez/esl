@@ -26,5 +26,6 @@
 
 # include <bytecode/start-class.hh>
 # include <bytecode/end-class.hh>
+# include <bytecode/register-attribut.hh>
 
 #endif /* !BYTECODE_ALL_HH */
