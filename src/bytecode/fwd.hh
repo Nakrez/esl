@@ -35,6 +35,7 @@ namespace bytecode
     class Inherit;
 
     class Jump;
+    class JumpTrue;
 } // namespace bytecode
 
 #endif /* !BYTECODE_FWD_HH */

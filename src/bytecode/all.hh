@@ -31,5 +31,6 @@
 # include <bytecode/inherit.hh>
 
 # include <bytecode/jump.hh>
+# include <bytecode/jump-true.hh>
 
 #endif /* !BYTECODE_ALL_HH */
