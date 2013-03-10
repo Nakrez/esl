@@ -30,4 +30,6 @@
 # include <bytecode/register-function.hh>
 # include <bytecode/inherit.hh>
 
+# include <bytecode/jump.hh>
+
 #endif /* !BYTECODE_ALL_HH */

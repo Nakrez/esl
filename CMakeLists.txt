@@ -186,6 +186,7 @@ add_executable(esl
                src/bytecode/register-attribut.cc
                src/bytecode/register-function.cc
                src/bytecode/inherit.cc
+               src/bytecode/jump.cc
                src/bytecode/visitor.cc
 
                src/compile/compiler.cc

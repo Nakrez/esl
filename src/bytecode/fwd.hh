@@ -33,6 +33,8 @@ namespace bytecode
     class RegisterAttribut;
     class RegisterFunction;
     class Inherit;
+
+    class Jump;
 } // namespace bytecode
 
 #endif /* !BYTECODE_FWD_HH */
