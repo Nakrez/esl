@@ -1,5 +1,6 @@
 #include <compile/compiler.hh>
 #include <ast/all.hh>
+#include <bytecode/all.hh>
 
 namespace compile
 {
@@ -8,7 +9,10 @@ namespace compile
     {}
 
     Compiler::~Compiler()
-    {}
+    {
+       for (auto elem : bytecode_)
+           delete elem;
+    }
 
     void Compiler::operator()(ast::AstList& list)
     {
@@ -32,6 +36,10 @@ namespace compile
 
     void Compiler::operator()(ast::ReturnExp& exp)
     {
+        if (exp.exp_get())
+            exp.exp_get()->accept(*this);
+
+        bytecode_.push_back(new bytecode::Return(exp.location_get()));
     }
 
     void Compiler::operator()(ast::BreakExp&)

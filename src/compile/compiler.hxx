@@ -5,7 +5,7 @@
 
 namespace compile
 {
-    inline const std::vector<bytecode::Bytecode>&
+    inline const std::vector<bytecode::Bytecode*>&
     Compiler::bytecode_get() const
     {
         return bytecode_;
