@@ -189,6 +189,7 @@ add_executable(esl
                src/bytecode/jump.cc
                src/bytecode/jump-true.cc
                src/bytecode/jump-false.cc
+               src/bytecode/return.cc
                src/bytecode/visitor.cc
 
                src/compile/compiler.cc

@@ -34,4 +34,6 @@
 # include <bytecode/jump-true.hh>
 # include <bytecode/jump-false.hh>
 
+# include <bytecode/return.hh>
+
 #endif /* !BYTECODE_ALL_HH */
