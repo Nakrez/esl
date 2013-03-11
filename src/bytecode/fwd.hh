@@ -39,6 +39,8 @@ namespace bytecode
     class JumpFalse;
 
     class Return;
+
+    class Delim;
 } // namespace bytecode
 
 #endif /* !BYTECODE_FWD_HH */

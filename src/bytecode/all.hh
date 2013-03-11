@@ -36,4 +36,6 @@
 
 # include <bytecode/return.hh>
 
+# include <bytecode/delim.hh>
+
 #endif /* !BYTECODE_ALL_HH */
