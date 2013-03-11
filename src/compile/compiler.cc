@@ -110,6 +110,11 @@ namespace compile
 
     void Compiler::operator()(ast::VarDec& dec)
     {
+        if (dec.exp_get())
+            dec.exp_get()->accept(*this);
+
+        bytecode_.push_back(new bytecode::StoreVar(dec.location_get(),
+                                                   dec.name_get()));
     }
 
     void Compiler::operator()(ast::MethodDec& dec)
