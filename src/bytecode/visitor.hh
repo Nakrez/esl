@@ -34,21 +34,21 @@ namespace bytecode
             virtual void operator()(const OpenModule& byte) = 0;
             virtual void operator()(const CallModule& byte) = 0;
             virtual void operator()(const CallMethod& byte) = 0;
-            virtual void operator()(const CallFunction; byte) = 0;
+            virtual void operator()(const CallFunction& byte) = 0;
 
-            virtual void operator()(const StartClass; byte) = 0;
-            virtual void operator()(const EndClass; byte) = 0;
-            virtual void operator()(const RegisterAttribut; byte) = 0;
-            virtual void operator()(const RegisterFunction; byte) = 0;
-            virtual void operator()(const Inherit; byte) = 0;
+            virtual void operator()(const StartClass& byte) = 0;
+            virtual void operator()(const EndClass& byte) = 0;
+            virtual void operator()(const RegisterAttribut& byte) = 0;
+            virtual void operator()(const RegisterFunction& byte) = 0;
+            virtual void operator()(const Inherit& byte) = 0;
 
-            virtual void operator()(const Jump; byte) = 0;
-            virtual void operator()(const JumpTrue; byte) = 0;
-            virtual void operator()(const JumpFalse; byte) = 0;
+            virtual void operator()(const Jump& byte) = 0;
+            virtual void operator()(const JumpTrue& byte) = 0;
+            virtual void operator()(const JumpFalse& byte) = 0;
 
-            virtual void operator()(const Return; byte) = 0;
+            virtual void operator()(const Return& byte) = 0;
 
-            virtual void operator()(const Delim; byte) = 0;
+            virtual void operator()(const Delim& byte) = 0;
     };
 } // namespace bytecode
 
