@@ -76,6 +76,8 @@ namespace compile
 
     void Compiler::operator()(ast::ImportInstr& instr)
     {
+        bytecode_.push_back(new bytecode::OpenModule(instr.location_get(),
+                                                     instr.name_get()));
     }
 
     void Compiler::operator()(ast::VarId& var)
