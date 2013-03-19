@@ -23,8 +23,10 @@ namespace bytecode
             virtual void operator()(const StoreVar& byte) = 0;
             virtual void operator()(const StoreAttr& byte) = 0;
             virtual void operator()(const StoreArray& byte) = 0;
+            virtual void operator()(const StoreLocal& byte) = 0;
 
             virtual void operator()(const LoadVar& byte) = 0;
+            virtual void operator()(const LoadLocal& byte) = 0;
             virtual void operator()(const LoadStr& byte) = 0;
             virtual void operator()(const LoadInt& byte) = 0;
             virtual void operator()(const LoadFloat& byte) = 0;
