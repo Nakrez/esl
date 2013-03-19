@@ -3,10 +3,14 @@
 
 # include <iostream>
 # include <vector>
+# include <set>
+
+# include <misc/symbol.hh>
+# include <misc/scoped-map.hh>
 
 # include <ast/visitor.hh>
-# include <misc/indent.hh>
-# include <bytecode/bytecode.hh>
+
+# include <bytecode/all.hh>
 
 namespace compile
 {
@@ -59,6 +63,9 @@ namespace compile
 
             /// Allows compiler to treat variable as local variable
             bool local_;
+
+            /// Contains global names
+            std::set<misc::symbol> globals_;
     };
 } // namespace compile
 
