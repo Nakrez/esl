@@ -56,6 +56,9 @@ namespace compile
 
         protected:
             std::vector<bytecode::Bytecode*> bytecode_;
+
+            /// Allows compiler to treat variable as local variable
+            bool local_;
     };
 } // namespace compile
 

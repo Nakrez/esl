@@ -6,6 +6,7 @@ namespace compile
 {
     Compiler::Compiler()
         : Visitor()
+        , local_(false)
     {}
 
     Compiler::~Compiler()
@@ -32,6 +33,10 @@ namespace compile
 
     void Compiler::operator()(ast::FunctionCallExp& exp)
     {
+        bool save_local = local_;
+        local_ = true;
+        // FIXME
+        local_ = save_local;
     }
 
     void Compiler::operator()(ast::ReturnExp& exp)

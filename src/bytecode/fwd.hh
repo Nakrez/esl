@@ -14,6 +14,7 @@ namespace bytecode
     class StoreVar;
     class StoreAttr;
     class StoreArray;
+    class StoreLocal;
 
     class LoadVar;
     class LoadStr;
