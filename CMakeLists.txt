@@ -172,6 +172,7 @@ add_executable(esl
                src/bytecode/store-attr.cc
                src/bytecode/store-array.cc
                src/bytecode/load-var.cc
+               src/bytecode/load-local.cc
                src/bytecode/load-str.cc
                src/bytecode/load-int.cc
                src/bytecode/load-float.cc
