@@ -239,6 +239,9 @@ add_subdirectory(modules)
 ENABLE_TESTING()
 
 SET(TEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/check")
+
+add_subdirectory(${TEST_DIR}/unitary)
+
 ADD_TEST("AST" ${TEST_DIR}/ast/ast_check.sh)
 ADD_TEST("Arith" ${TEST_DIR}/arith/arith_check.sh)
 ADD_TEST("Array" ${TEST_DIR}/array/array_check.sh)
@@ -291,5 +294,6 @@ CONFIGURE_FILE(
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_clear.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_clear.cmake"
   IMMEDIATE @ONLY)
-ADD_CUSTOM_TARGET(clear
-  "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_clear.cmake")
+ADD_CUSTOM_TARGET(distclean
+  COMMAND ${CMAKE_BUILD_TOOL} clean
+  COMMAND "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_clear.cmake")
