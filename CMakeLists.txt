@@ -128,9 +128,11 @@ add_executable(esl
                src/parser/parser.cc
                src/parser/lexer.cc
                src/parser/driver.cc
-               src/utils/utils.cc
-               src/ast/ast.cc
 
+               src/utils/utils.cc
+               src/utils/option.cc
+
+               src/ast/ast.cc
                src/ast/dec.cc
                src/ast/attribut-dec.cc
                src/ast/function-dec.cc

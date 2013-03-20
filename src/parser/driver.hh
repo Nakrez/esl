@@ -4,10 +4,11 @@
 # include <stack>
 
 # include <parser/parser.hh>
-# include <ast/ast.hh>
+# include <ast/all.hh>
+# include <utils/option.hh>
 
-# define YY_DECL                                           \
-    yy::eslxx_parser::token_type yylex(                    \
+# define YY_DECL                                        \
+    yy::eslxx_parser::token_type yylex(                \
             yy::eslxx_parser::semantic_type *yylval,       \
             yy::eslxx_parser::location_type *yylloc,       \
             Driver& driver)
@@ -21,27 +22,19 @@ class Driver
     public:
         Driver ();
         ~Driver ();
-
-        int parser (const std::string &f, const std::string &t);
-        ast::Ast* parser(const std::string& filename);
-
+        void error (const yy::eslxx_parser::location_type& l,
+                    const std::string& m);
         void scan_begin ();
         void scan_end ();
+        ast::Ast* parser(const std::string& filename);
         void free ();
         int errors_get ();
-        void set_byte (bool a);
-        bool get_byte ();
-        void set_ast (bool a);
-        bool get_ast ();
 
     public:
         ast::Ast* ast_;
 
     private:
         std::stack<yy_buffer_state*> states_;
-
-        bool ast_param;
-        bool byte_param;
         std::string file_;
         int errors_;
 };
