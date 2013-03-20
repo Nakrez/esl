@@ -14,8 +14,10 @@ namespace bytecode
     class StoreVar;
     class StoreAttr;
     class StoreArray;
+    class StoreLocal;
 
     class LoadVar;
+    class LoadLocal;
     class LoadStr;
     class LoadInt;
     class LoadFloat;
