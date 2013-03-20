@@ -28,7 +28,6 @@
 # include "../../lib/type/array.hh"
 
 # include "../bytecode/bytecode.hh"
-# include "../utils/ro-data.hh"
 
 namespace esl
 {

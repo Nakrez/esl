@@ -2,7 +2,6 @@
 #include <parser/driver.hh>
 #include <compile/compiler.hh>
 #include <execute/vm.hh>
-#include <utils/ro-data.hh>
 #include <type/squeleton.hh>
 #include <ast/pretty-printer.hh>
 #include <cstring>
@@ -30,11 +29,12 @@ int main(int argc, char **argv)
     /* Compile the AST given by the parser into bytecode */
     if (!driver.errors_get())
     {
-        #ifdef AST_TEST
+        #if 0
+        // FIXME replace by a proper option (-p, -pretty-print)
         ast::PrettyPrinter print(std::cout);
         print(*driver.ast_);
         std::cout << std::endl;
-        #else
+        #endif
         compile::Compiler compiler;
 
         #if BENCH == 1
@@ -44,20 +44,8 @@ int main(int argc, char **argv)
             gettimeofday(&start, nullptr);
         #endif /* !BENCH */
 
+        // Compiler instanciation
         compiler(*(driver.ast_));
-
-        /*if (driver.get_byte())
-            compiler->export_bytecode("byte.eslc");*/
-        #if BENCH == 1
-            gettimeofday(&end, nullptr);
-            useconds = end.tv_usec - start.tv_usec;
-
-            std::cout << "Compilation time : " << useconds << std::endl;
-        #endif /* !BENCH */
-
-        #if BENCH == 1
-            gettimeofday(&start, nullptr);
-        #endif /* !BENCH */
 
         try
         {
@@ -68,19 +56,7 @@ int main(int argc, char **argv)
         {
             std::cerr << "ESL exception: " << e.message() << std::endl;
         }
-
-        #if BENCH == 1
-            gettimeofday(&end, nullptr);
-            useconds = end.tv_usec - start.tv_usec;
-
-            std::cout << "Execution time : " << useconds << std::endl;
-        #endif /* !BENCH */
-
-        esl::RoData::instance_delete();
-        #endif
     }
-
-    //driver.free();
 
     esl::Squeleton::free();
     //esl::Vm::free();

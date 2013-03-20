@@ -128,7 +128,6 @@ add_executable(esl
                src/parser/parser.cc
                src/parser/lexer.cc
                src/parser/driver.cc
-               src/utils/ro-data.cc
                src/utils/utils.cc
                src/ast/ast.cc
 
