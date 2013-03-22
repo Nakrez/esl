@@ -53,13 +53,6 @@ int main(int argc, char **argv)
     {
         compile::Compiler compiler;
 
-        #if BENCH == 1
-            struct timeval start, end;
-            long long useconds;
-
-            gettimeofday(&start, nullptr);
-        #endif /* !BENCH */
-
         // Compiler instanciation
         compiler(*(driver.ast_));
 
