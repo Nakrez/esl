@@ -1,8 +1,11 @@
 ;begin ro_data section
 .string 0 Foo
+.string 1 Bar
 ;end ro_data section
 
 ;begin code section
 LOAD_STR 0 ;ro_data Foo
+LOAD_STR 1 ;ro_data Bar
+OPERATION 10 ;operator<
 POP
 ;end code section

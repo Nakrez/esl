@@ -19,12 +19,13 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const Pop& byte)
     {
-
+        ostr_ << "POP" << std::endl;
     }
 
     void BytecodeDumper::operator()(const Operation& byte)
     {
-
+        ostr_ << "OPERATION " << byte.op_get() << " ;" <<
+              byte.string_op() << std::endl;;
     }
 
     void BytecodeDumper::operator()(const BracketOp& byte)

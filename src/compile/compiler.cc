@@ -8,8 +8,8 @@ namespace compile
         : Visitor()
         , local_(false)
         , var_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
-        , error_(false)
         , ro_data_counter_(0)
+        , error_(false)
     {}
 
     Compiler::~Compiler()
@@ -18,7 +18,10 @@ namespace compile
     void Compiler::operator()(ast::AstList& list)
     {
         for (auto node : list.list_get())
+        {
             node->accept(*this);
+            exec_.add_instruction(new bytecode::Pop(node->location_get()));
+        }
     }
 
     void Compiler::operator()(ast::IntExp& exp)
@@ -35,6 +38,11 @@ namespace compile
 
     void Compiler::operator()(ast::OpExp& exp)
     {
+        exp.lop_get()->accept(*this);
+        exp.rop_get()->accept(*this);
+
+        exec_.add_instruction(new bytecode::Operation(exp.location_get(),
+                                                      exp.op_get()));
     }
 
     void Compiler::operator()(ast::FunctionCallExp& exp)

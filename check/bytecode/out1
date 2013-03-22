@@ -3,4 +3,5 @@
 
 ;begin code section
 LOAD_INT 0
+POP
 ;end code section
