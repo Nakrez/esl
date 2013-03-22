@@ -94,7 +94,10 @@ namespace compile
     void Compiler::operator()(ast::InstrList& list)
     {
         for (auto instr : list.list_get())
+        {
             instr->accept(*this);
+            exec_.add_instruction(new bytecode::Pop(instr->location_get()));
+        }
     }
 
     void Compiler::operator()(ast::ImportInstr& instr)
@@ -109,7 +112,7 @@ namespace compile
         {
             if (local_)
                 exec_.add_instruction(new bytecode::StoreLocal(var.location_get(),
-                                                               local_addr_++));
+                                                               local_addr_get(var.name_get())));
             else
                 exec_.add_instruction(new bytecode::StoreVar(var.location_get(),
                                                              ro_data_get(var.name_get())));
@@ -194,5 +197,18 @@ namespace compile
 
             return ro_data_counter_++;
         }
+    }
+
+    int Compiler::local_addr_get(const std::string& str)
+    {
+        int addr = var_scope_.get(str);
+
+        if (addr == INT_MIN)
+        {
+            addr = local_addr_++;
+            var_scope_.add(str, addr);
+        }
+
+        return addr;
     }
 } // namespace compile

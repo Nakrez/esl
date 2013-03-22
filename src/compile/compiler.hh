@@ -62,6 +62,7 @@ namespace compile
 
         protected:
             int ro_data_get(const std::string& str);
+            int local_addr_get(const std::string& str);
 
         protected:
             execute::Executable exec_;
