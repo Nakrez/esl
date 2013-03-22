@@ -14,6 +14,7 @@ namespace execute
             ~Executable();
 
             const std::vector<bytecode::Bytecode*>& code_get() const;
+            void add_instruction(bytecode::Bytecode* instr);
 
         private:
             std::vector<bytecode::Bytecode*> code_;
