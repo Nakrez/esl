@@ -244,9 +244,11 @@ add_subdirectory(modules)
 
 SET(TEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/check")
 
-add_subdirectory(${TEST_DIR}/unitary)
 
 ENABLE_TESTING()
+
+add_subdirectory(${TEST_DIR}/unitary)
+
 ADD_TEST("AST" ${TEST_DIR}/ast/ast_check.sh)
 ADD_TEST("Bytecode" ${TEST_DIR}/bytecode/bytecode_check.sh)
 ADD_TEST("Arith" ${TEST_DIR}/arith/arith_check.sh)

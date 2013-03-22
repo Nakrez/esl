@@ -1,10 +1,11 @@
 #include <string>
+#include <climits>
 #include <assert.h>
 #include <misc/scoped-map.hh>
 
 int main()
 {
-    misc::ScopedMap<std::string, int> map;
+    misc::ScopedMap<std::string, int> map(INT_MIN);
 
     map.add("foo", 2);
     map.add("bar", 5);
