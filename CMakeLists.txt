@@ -199,6 +199,8 @@ add_executable(esl
 
                src/compile/compiler.cc
 
+               src/execute/executable.cc
+
                src/main.cc)
 
 # Library link
