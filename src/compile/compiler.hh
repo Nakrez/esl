@@ -3,7 +3,7 @@
 
 # include <iostream>
 # include <vector>
-# include <set>
+# include <climits>
 
 # include <misc/symbol.hh>
 # include <misc/scoped-map.hh>
@@ -64,8 +64,10 @@ namespace compile
             /// Allows compiler to treat variable as local variable
             bool local_;
 
-            /// Contains global names
-            std::set<misc::symbol> globals_;
+            misc::ScopedMap<misc::symbol, int> var_scope_;
+            int local_addr_;
+
+            bool error_;
     };
 } // namespace compile
 

@@ -64,10 +64,10 @@ int main(int argc, char **argv)
         // Compiler instanciation
         compiler(*(driver.ast_));
 
-        /*
         if (instance->get_byte())
-            instance->byte_optn(&driver);
-        */
+        {
+            // FIXME export bytecode on std::cout
+        }
 
         try
         {

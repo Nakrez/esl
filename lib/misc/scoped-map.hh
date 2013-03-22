@@ -10,7 +10,7 @@ namespace misc
     class ScopedMap
     {
         public:
-            ScopedMap();
+            ScopedMap(const Data& default_value);
             ~ScopedMap();
 
             void add(Key k, Data d);
@@ -21,6 +21,7 @@ namespace misc
 
         private:
             std::list<std::map<Key, Data>> map_;
+            Data default_value_;
     };
 } // namespace misc
 

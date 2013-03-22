@@ -7,6 +7,8 @@ namespace compile
     Compiler::Compiler()
         : Visitor()
         , local_(false)
+        , var_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
+        , error_(false)
     {}
 
     Compiler::~Compiler()
@@ -33,10 +35,6 @@ namespace compile
 
     void Compiler::operator()(ast::FunctionCallExp& exp)
     {
-        bool save_local = local_;
-        local_ = true;
-        // FIXME
-        local_ = save_local;
     }
 
     void Compiler::operator()(ast::ReturnExp& exp)
@@ -111,6 +109,9 @@ namespace compile
 
     void Compiler::operator()(ast::FunctionDec& dec)
     {
+        local_ = true;
+
+        local_ = false;
     }
 
     void Compiler::operator()(ast::VarDec& dec)
@@ -118,8 +119,20 @@ namespace compile
         if (dec.exp_get())
             dec.exp_get()->accept(*this);
 
-        bytecode_.push_back(new bytecode::StoreVar(dec.location_get(),
-                                                   dec.name_get()));
+        if (local_)
+        {
+            int addr = var_scope_.get(dec.name_get());
+
+            if (addr == INT_MIN)
+                std::cerr << dec.location_get() << ": undefined reference to"
+                          << dec.name_get() << std::endl;
+
+            bytecode_.push_back(new bytecode::StoreLocal(dec.location_get(),
+                                                         addr));
+        }
+        else
+            bytecode_.push_back(new bytecode::StoreVar(dec.location_get(),
+                                                       dec.name_get()));
     }
 
     void Compiler::operator()(ast::MethodDec& dec)

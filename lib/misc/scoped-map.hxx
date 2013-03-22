@@ -6,7 +6,8 @@
 namespace misc
 {
     template<class Key, class Data>
-    ScopedMap<Key, Data>::ScopedMap()
+    ScopedMap<Key, Data>::ScopedMap(const Data& default_value)
+        : default_value_(default_value)
     {
         scope_begin();
     }
@@ -24,13 +25,22 @@ namespace misc
     template<class Key, class Data>
     const Data& ScopedMap<Key, Data>::get(Key k) const
     {
-        return map_.back().at(k);
+        try {
+            return map_.back().at(k);
+        }
+        catch (...)
+        {
+            return default_value_;
+        }
     }
 
     template<class Key, class Data>
     void ScopedMap<Key, Data>::scope_begin()
     {
-        map_.push_back(std::map<Key, Data>(map_.back()));
+        if (!map_.size())
+            map_.push_back(std::map<Key, Data>());
+        else
+            map_.push_back(std::map<Key, Data>(map_.back()));
     }
 
     template<class Key, class Data>
