@@ -200,6 +200,7 @@ add_executable(esl
                src/compile/compiler.cc
 
                src/execute/executable.cc
+               src/execute/executable-dumper.cc
 
                src/main.cc)
 

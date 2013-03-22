@@ -5,7 +5,7 @@
 #include <execute/vm.hh>
 #include <ast/pretty-printer.hh>
 #include <utils/option.hh>
-#include <bytecode/bytecode-dumper.hh>
+#include <execute/executable-dumper.hh>
 
 # define BENCH 0
 //# define AST_TEST
@@ -58,8 +58,8 @@ int main(int argc, char **argv)
 
         if (instance->get_byte())
         {
-            bytecode::BytecodeDumper dumper(std::cout);
-            dumper.dump(compiler.exec_get().code_get());
+            execute::ExecutableDumper dumper(std::cout);
+            dumper.dump(compiler.exec_get());
         }
 
         try
