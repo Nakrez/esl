@@ -1,12 +1,11 @@
-#include <sys/time.h>
+#include <iostream>
+
 #include <parser/driver.hh>
 #include <compile/compiler.hh>
 #include <execute/vm.hh>
-#include <type/squeleton.hh>
 #include <ast/pretty-printer.hh>
 #include <utils/option.hh>
-#include <cstring>
-#include <iostream>
+#include <bytecode/bytecode-dumper.hh>
 
 # define BENCH 0
 //# define AST_TEST
@@ -66,7 +65,8 @@ int main(int argc, char **argv)
 
         if (instance->get_byte())
         {
-            // FIXME export bytecode on std::cout
+            bytecode::BytecodeDumper dumper(std::cout);
+            dumper.dump(compiler.bytecode_get());
         }
 
         try
