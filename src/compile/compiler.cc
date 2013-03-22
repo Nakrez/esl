@@ -31,6 +31,8 @@ namespace compile
 
     void Compiler::operator()(ast::StringExp& exp)
     {
+        bytecode_.push_back(new bytecode::LoadStr(exp.location_get(),
+                                                  exp.value_get()));
     }
 
     void Compiler::operator()(ast::OpExp& exp)
