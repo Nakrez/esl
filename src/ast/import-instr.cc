@@ -10,6 +10,6 @@ namespace ast
 
     ImportInstr::~ImportInstr()
     {
-        delete &name_;
+//        delete &name_;
     }
 } // namespace ast
