@@ -19,6 +19,8 @@ namespace compile
 
     void Compiler::operator()(ast::AstList& list)
     {
+        for (auto node : list.list_get())
+            node->accept(*this);
     }
 
     void Compiler::operator()(ast::IntExp& exp)
