@@ -61,6 +61,9 @@ namespace compile
             virtual void operator()(ast::DecList&);
 
         protected:
+            int ro_data_get(const std::string& str);
+
+        protected:
             execute::Executable exec_;
 
             /// Allows compiler to treat variable as local variable
@@ -68,6 +71,10 @@ namespace compile
 
             misc::ScopedMap<misc::symbol, int> var_scope_;
             int local_addr_;
+
+            // Rodata management
+            std::map<std::string, int> ro_data_;
+            int ro_data_counter;
 
             bool error_;
     };

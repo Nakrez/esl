@@ -15,6 +15,16 @@ namespace execute
     {
         code_.push_back(instr);
     }
+
+    inline const std::vector<std::string>& Executable::ro_data_get() const
+    {
+        return ro_data_;
+    }
+
+    inline void Executable::add_ro_data(const std::string& data)
+    {
+        ro_data_.push_back(data);
+    }
 } // namespace execute
 
 #endif /* !EXECUTABLE_HXX */

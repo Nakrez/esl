@@ -152,4 +152,21 @@ namespace compile
     void Compiler::operator()(ast::DecList& list)
     {
     }
+
+    int Compiler::ro_data_get(const std::string& str)
+    {
+        std::map<std::string, int>::iterator it;
+
+        it = ro_data_.find(str);
+
+        if (it != ro_data_.end())
+            return it->second;
+        else
+        {
+            ro_data_.insert(std::pair<std::string, int>(str, ro_data_counter));
+            exec_.add_ro_data(str);
+
+            return ro_data_counter++;
+        }
+    }
 } // namespace compile

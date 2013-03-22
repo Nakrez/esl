@@ -16,8 +16,12 @@ namespace execute
             const std::vector<bytecode::Bytecode*>& code_get() const;
             void add_instruction(bytecode::Bytecode* instr);
 
+            const std::vector<std::string>& ro_data_get() const;
+            void add_ro_data(const std::string& data);
+
         private:
             std::vector<bytecode::Bytecode*> code_;
+            std::vector<std::string> ro_data_;
     };
 } // namespace execute
 
