@@ -5,9 +5,9 @@
 
 namespace bytecode
 {
-    inline const misc::symbol& StoreVar::name_get() const
+    inline int StoreVar::data_get() const
     {
-        return name_;
+        return data_;
     }
 
     inline void StoreVar::accept(Visitor& visitor) const

@@ -77,6 +77,8 @@ namespace compile
             int ro_data_counter_;
 
             bool error_;
+
+            bool assign_;
     };
 } // namespace compile
 

@@ -10,6 +10,7 @@ namespace compile
         , var_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
         , ro_data_counter_(0)
         , error_(false)
+        , assign_(false)
     {}
 
     Compiler::~Compiler()
@@ -71,6 +72,11 @@ namespace compile
 
     void Compiler::operator()(ast::AssignExp& exp)
     {
+        exp.exp_get()->accept(*this);
+
+        assign_ = true;
+        exp.var_get()->accept(*this);
+        assign_ = false;
     }
 
     void Compiler::operator()(ast::IfInstr& instr)
@@ -97,6 +103,14 @@ namespace compile
 
     void Compiler::operator()(ast::VarId& var)
     {
+        if (assign_)
+        {
+            if (local_)
+                ; // FIXME
+            else
+                exec_.add_instruction(new bytecode::StoreVar(var.location_get(),
+                                                             ro_data_get(var.name_get())));
+        }
     }
 
     void Compiler::operator()(ast::AttributVar& var)

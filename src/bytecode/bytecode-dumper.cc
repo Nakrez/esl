@@ -40,7 +40,8 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const StoreVar& byte)
     {
-
+        ostr_ << "STORE_VAR " << byte.data_get()
+              << " ;ro_data " << ro_data_[byte.data_get()] << std::endl;
     }
 
     void BytecodeDumper::operator()(const StoreAttr& byte)

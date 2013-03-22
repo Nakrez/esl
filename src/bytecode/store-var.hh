@@ -13,15 +13,15 @@ namespace bytecode
     {
         public:
             StoreVar(const yy::location& location,
-                     const misc::symbol& name);
+                     int data);
             virtual ~StoreVar();
 
-            const misc::symbol& name_get() const;
+            int data_get() const;
 
             virtual void accept(Visitor& visitor) const;
 
         protected:
-            misc::symbol name_;
+            int data_;
     };
 } // namespace bytecode
 

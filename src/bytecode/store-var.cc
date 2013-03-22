@@ -3,9 +3,9 @@
 namespace bytecode
 {
     StoreVar::StoreVar(const yy::location& location,
-                       const misc::symbol& name)
+                       int data)
         : Bytecode(location)
-        , name_(name)
+        , data_(data)
     {}
 
     StoreVar::~StoreVar()
