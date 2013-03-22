@@ -5,10 +5,9 @@
 
 namespace compile
 {
-    inline const std::vector<bytecode::Bytecode*>&
-    Compiler::bytecode_get() const
+    inline const execute::Executable& Compiler::exec_get() const
     {
-        return bytecode_;
+        return exec_;
     }
 } // namespace compile
 

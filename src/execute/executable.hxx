@@ -11,7 +11,7 @@ namespace execute
         return code_;
     }
 
-    void Executable::add_instruction(bytecode::Bytecode* instr)
+    inline void Executable::add_instruction(bytecode::Bytecode* instr)
     {
         code_.push_back(instr);
     }

@@ -59,7 +59,7 @@ int main(int argc, char **argv)
         if (instance->get_byte())
         {
             bytecode::BytecodeDumper dumper(std::cout);
-            dumper.dump(compiler.bytecode_get());
+            dumper.dump(compiler.exec_get().code_get());
         }
 
         try

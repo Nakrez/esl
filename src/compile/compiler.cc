@@ -12,10 +12,7 @@ namespace compile
     {}
 
     Compiler::~Compiler()
-    {
-       for (auto elem : bytecode_)
-           delete elem;
-    }
+    {}
 
     void Compiler::operator()(ast::AstList& list)
     {
@@ -25,14 +22,14 @@ namespace compile
 
     void Compiler::operator()(ast::IntExp& exp)
     {
-        bytecode_.push_back(new bytecode::LoadInt(exp.location_get(),
-                                                  exp.value_get()));
+        exec_.add_instruction(new bytecode::LoadInt(exp.location_get(),
+                                                    exp.value_get()));
     }
 
     void Compiler::operator()(ast::StringExp& exp)
     {
-        bytecode_.push_back(new bytecode::LoadStr(exp.location_get(),
-                                                  exp.value_get()));
+        exec_.add_instruction(new bytecode::LoadStr(exp.location_get(),
+                                                    exp.value_get()));
     }
 
     void Compiler::operator()(ast::OpExp& exp)
@@ -48,7 +45,7 @@ namespace compile
         if (exp.exp_get())
             exp.exp_get()->accept(*this);
 
-        bytecode_.push_back(new bytecode::Return(exp.location_get()));
+        exec_.add_instruction(new bytecode::Return(exp.location_get()));
     }
 
     void Compiler::operator()(ast::BreakExp&)
@@ -85,8 +82,8 @@ namespace compile
 
     void Compiler::operator()(ast::ImportInstr& instr)
     {
-        bytecode_.push_back(new bytecode::OpenModule(instr.location_get(),
-                                                     instr.name_get()));
+        exec_.add_instruction(new bytecode::OpenModule(instr.location_get(),
+                                                       instr.name_get()));
     }
 
     void Compiler::operator()(ast::VarId& var)
@@ -133,8 +130,8 @@ namespace compile
 
         var_scope_.add(dec.name_get(), addr);
 
-        bytecode_.push_back(new bytecode::StoreLocal(dec.location_get(),
-                                                     addr));
+        exec_.add_instruction(new bytecode::StoreLocal(dec.location_get(),
+                                                       addr));
 
         // Increment local adress
         ++local_addr_;

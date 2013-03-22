@@ -8,6 +8,8 @@
 # include <misc/symbol.hh>
 # include <misc/scoped-map.hh>
 
+# include <execute/executable.hh>
+
 # include <ast/visitor.hh>
 
 # include <bytecode/all.hh>
@@ -22,7 +24,7 @@ namespace compile
             Compiler();
             virtual ~Compiler();
 
-            const std::vector<bytecode::Bytecode*>& bytecode_get() const;
+            const execute::Executable& exec_get() const;
 
         /* Visitor Implementation */
         public:
@@ -59,7 +61,7 @@ namespace compile
             virtual void operator()(ast::DecList&);
 
         protected:
-            std::vector<bytecode::Bytecode*> bytecode_;
+            execute::Executable exec_;
 
             /// Allows compiler to treat variable as local variable
             bool local_;
