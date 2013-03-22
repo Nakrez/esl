@@ -73,7 +73,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const LoadInt& byte)
     {
-
+        ostr_ << "LOADINT " << byte.value_get() << std::endl;
     }
 
     void BytecodeDumper::operator()(const LoadFloat& byte)
