@@ -56,7 +56,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const StoreLocal& byte)
     {
-
+        ostr_ << "STORE_LOCAL " << byte.addr_get() << std::endl;
     }
 
 

@@ -93,6 +93,8 @@ namespace compile
 
     void Compiler::operator()(ast::InstrList& list)
     {
+        for (auto instr : list.list_get())
+            instr->accept(*this);
     }
 
     void Compiler::operator()(ast::ImportInstr& instr)
@@ -106,7 +108,8 @@ namespace compile
         if (assign_)
         {
             if (local_)
-                ; // FIXME
+                exec_.add_instruction(new bytecode::StoreLocal(var.location_get(),
+                                                               local_addr_++));
             else
                 exec_.add_instruction(new bytecode::StoreVar(var.location_get(),
                                                              ro_data_get(var.name_get())));
