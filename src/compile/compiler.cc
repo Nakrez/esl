@@ -110,29 +110,28 @@ namespace compile
     void Compiler::operator()(ast::FunctionDec& dec)
     {
         local_ = true;
+        local_addr_ = 0;
+
+        dec.args_get()->accept(*this);
+        dec.body_get()->accept(*this);
 
         local_ = false;
     }
 
     void Compiler::operator()(ast::VarDec& dec)
     {
-        if (dec.exp_get())
-            dec.exp_get()->accept(*this);
+        // Only function, method parameter
+        // So put put adress on map and generate bytecode instr
 
-        if (local_)
-        {
-            int addr = var_scope_.get(dec.name_get());
+        int addr = local_addr_;
 
-            if (addr == INT_MIN)
-                std::cerr << dec.location_get() << ": undefined reference to"
-                          << dec.name_get() << std::endl;
+        var_scope_.add(dec.name_get(), addr);
 
-            bytecode_.push_back(new bytecode::StoreLocal(dec.location_get(),
-                                                         addr));
-        }
-        else
-            bytecode_.push_back(new bytecode::StoreVar(dec.location_get(),
-                                                       dec.name_get()));
+        bytecode_.push_back(new bytecode::StoreLocal(dec.location_get(),
+                                                     addr));
+
+        // Increment local adress
+        ++local_addr_;
     }
 
     void Compiler::operator()(ast::MethodDec& dec)
