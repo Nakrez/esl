@@ -25,6 +25,11 @@ namespace execute
     {
         ro_data_.push_back(data);
     }
+
+    inline const std::string& Executable::ro_data_get(int at) const
+    {
+        return ro_data_[at];
+    }
 } // namespace execute
 
 #endif /* !EXECUTABLE_HXX */

@@ -1,6 +1,7 @@
 ;begin ro_data section
+.string 0 Foo
 ;end ro_data section
 
 ;begin code section
-LOAD_INT 0
+LOAD_STR 0 ;ro_data Foo
 ;end code section

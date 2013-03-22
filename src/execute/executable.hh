@@ -18,6 +18,7 @@ namespace execute
 
             const std::vector<std::string>& ro_data_get() const;
             void add_ro_data(const std::string& data);
+            const std::string& ro_data_get(int at) const;
 
         private:
             std::vector<bytecode::Bytecode*> code_;

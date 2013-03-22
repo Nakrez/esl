@@ -74,7 +74,7 @@ namespace compile
 
             // Rodata management
             std::map<std::string, int> ro_data_;
-            int ro_data_counter;
+            int ro_data_counter_;
 
             bool error_;
     };

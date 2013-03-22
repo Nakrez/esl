@@ -9,6 +9,7 @@ namespace compile
         , local_(false)
         , var_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
         , error_(false)
+        , ro_data_counter_(0)
     {}
 
     Compiler::~Compiler()
@@ -163,10 +164,10 @@ namespace compile
             return it->second;
         else
         {
-            ro_data_.insert(std::pair<std::string, int>(str, ro_data_counter));
+            ro_data_.insert(std::pair<std::string, int>(str, ro_data_counter_));
             exec_.add_ro_data(str);
 
-            return ro_data_counter++;
+            return ro_data_counter_++;
         }
     }
 } // namespace compile

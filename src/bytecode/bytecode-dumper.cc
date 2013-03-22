@@ -2,8 +2,10 @@
 
 namespace bytecode
 {
-    BytecodeDumper::BytecodeDumper(std::ostream& ostr)
+    BytecodeDumper::BytecodeDumper(std::ostream& ostr,
+                                   const std::vector<std::string>& ro_data)
         : ostr_(ostr)
+        , ro_data_(ro_data)
     {}
 
     BytecodeDumper::~BytecodeDumper()
@@ -68,12 +70,13 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const LoadStr& byte)
     {
-
+        ostr_ << "LOAD_STR " << byte.data_get()
+              << " ;ro_data " << ro_data_[byte.data_get()] << std::endl;
     }
 
     void BytecodeDumper::operator()(const LoadInt& byte)
     {
-        ostr_ << "LOADINT " << byte.value_get() << std::endl;
+        ostr_ << "LOAD_INT " << byte.value_get() << std::endl;
     }
 
     void BytecodeDumper::operator()(const LoadFloat& byte)

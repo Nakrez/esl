@@ -13,7 +13,8 @@ namespace bytecode
     class BytecodeDumper : public Visitor
     {
         public:
-            BytecodeDumper(std::ostream& ostr);
+            BytecodeDumper(std::ostream& ostr,
+                           const std::vector<std::string>& ro_data);
             ~BytecodeDumper();
 
             void dump(const std::vector<Bytecode*>& code);
@@ -58,6 +59,7 @@ namespace bytecode
 
         private:
             std::ostream& ostr_;
+            std::vector<std::string> ro_data_;
     };
 } // namespace bytecode
 
