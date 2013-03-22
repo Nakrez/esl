@@ -5,9 +5,9 @@
 
 namespace bytecode
 {
-    inline const std::string& LoadStr::str_get() const
+    inline int LoadStr::data_get() const
     {
-        return str_;
+        return data_;
     }
 
     inline void LoadStr::accept(Visitor& visitor) const

@@ -29,7 +29,7 @@ namespace compile
     void Compiler::operator()(ast::StringExp& exp)
     {
         exec_.add_instruction(new bytecode::LoadStr(exp.location_get(),
-                                                    exp.value_get()));
+                                                    ro_data_get(exp.value_get())));
     }
 
     void Compiler::operator()(ast::OpExp& exp)

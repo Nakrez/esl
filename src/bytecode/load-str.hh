@@ -13,15 +13,15 @@ namespace bytecode
     {
         public:
             LoadStr(const yy::location& location,
-                    const std::string& str);
+                    int data);
             virtual ~LoadStr();
 
-            const std::string& str_get() const;
+            int data_get() const;
 
             void accept(Visitor& visitor) const;
 
         protected:
-            std::string str_;
+            int data_;
     };
 } // namespace bytecode
 
