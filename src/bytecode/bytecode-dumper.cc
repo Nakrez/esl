@@ -13,8 +13,13 @@ namespace bytecode
 
     void BytecodeDumper::dump(const std::vector<Bytecode*>& code)
     {
+        unsigned counter = 0;
+
         for (auto instr : code)
+        {
+            ostr_ << counter++ << " ";
             instr->accept(*this);
+        }
     }
 
     void BytecodeDumper::operator()(const Pop& byte)
@@ -144,7 +149,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const Jump& byte)
     {
-
+        ostr_ << "JUMP " << byte.offset_get() << std::endl;
     }
 
     void BytecodeDumper::operator()(const JumpTrue& byte)

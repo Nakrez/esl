@@ -15,6 +15,7 @@ namespace bytecode
             virtual ~Jump();
 
             int offset_get() const;
+            void offset_set(int offset);
 
             virtual void accept(Visitor& visitor) const;
 

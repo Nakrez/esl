@@ -161,8 +161,20 @@ namespace compile
         exec_.add_instruction(new bytecode::RegisterFunction(dec.location_get(),
                                                              ro_data_get(dec.name_get())));
 
+        // Prepare jump instruction
+        // offset is 0 because not known yet
+        bytecode::Jump* jump = new bytecode::Jump(dec.location_get(), 0);
+
+        exec_.add_instruction(jump);
+
+        int offset = exec_.code_get().size();
+
         dec.args_get()->accept(*this);
         dec.body_get()->accept(*this);
+
+        offset = exec_.code_get().size() - offset + 1;
+
+        jump->offset_set(offset);
 
         local_ = false;
     }

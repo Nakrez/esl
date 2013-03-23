@@ -10,6 +10,11 @@ namespace bytecode
         return offset_;
     }
 
+    inline void Jump::offset_set(int offset)
+    {
+        offset_ = offset;
+    }
+
     inline void Jump::accept(Visitor& visitor) const
     {
         visitor(*this);
