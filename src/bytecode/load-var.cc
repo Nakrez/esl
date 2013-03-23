@@ -3,9 +3,9 @@
 namespace bytecode
 {
     LoadVar::LoadVar(const yy::location& location,
-                     const misc::symbol& name)
+                     unsigned addr)
         : Bytecode(location)
-        , name_(name)
+        , addr_(addr)
     {}
 
     LoadVar::~LoadVar()

@@ -2,8 +2,6 @@
 #ifndef LOAD_VAR_HH
 # define LOAD_VAR_HH
 
-# include <misc/symbol.hh>
-
 # include <bytecode/visitor.hh>
 # include <bytecode/bytecode.hh>
 
@@ -13,15 +11,15 @@ namespace bytecode
     {
         public:
             LoadVar(const yy::location& location,
-                    const misc::symbol& name);
+                    unsigned addr);
             virtual ~LoadVar();
 
-            const misc::symbol& name_get() const;
+            unsigned addr_get() const;
 
             void accept(Visitor& visitor) const;
 
         protected:
-            misc::symbol name_;
+            unsigned addr_;
     };
 } // namespace bytecode
 

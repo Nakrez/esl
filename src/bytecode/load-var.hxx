@@ -5,9 +5,9 @@
 
 namespace bytecode
 {
-    inline const misc::symbol& LoadVar::name_get() const
+    inline unsigned LoadVar::addr_get() const
     {
-        return name_;
+        return addr_;
     }
 
     inline void LoadVar::accept(Visitor& visitor) const
