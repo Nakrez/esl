@@ -3,6 +3,6 @@
 ;end ro_data section
 
 ;begin code section
-LOAD_STR 0 ;ro_data Foo
-POP
+0 LOAD_STR 0 ;ro_data Foo
+1 POP
 ;end code section

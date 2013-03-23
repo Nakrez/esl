@@ -4,8 +4,8 @@
 ;end ro_data section
 
 ;begin code section
-LOAD_STR 0 ;ro_data Foo
-LOAD_STR 1 ;ro_data Bar
-OPERATION 9 ;operator>=
-POP
+0 LOAD_STR 0 ;ro_data Foo
+1 LOAD_STR 1 ;ro_data Bar
+2 OPERATION 9 ;operator>=
+3 POP
 ;end code section

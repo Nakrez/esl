@@ -172,7 +172,9 @@ namespace compile
         dec.args_get()->accept(*this);
         dec.body_get()->accept(*this);
 
-        offset = exec_.code_get().size() - offset + 1;
+        offset = exec_.code_get().size() - offset + 2;
+
+        exec_.add_instruction(new bytecode::Return(dec.location_get()));
 
         jump->offset_set(offset);
 

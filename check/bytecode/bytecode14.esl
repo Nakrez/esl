@@ -1,0 +1,5 @@
+function test()
+    foo = 0
+    bar = 1
+    foo = bar
+end

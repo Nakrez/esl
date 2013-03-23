@@ -164,7 +164,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const Return& byte)
     {
-
+        ostr_ << "RETURN" << std::endl;
     }
 
     void BytecodeDumper::operator()(const Delim& byte)
