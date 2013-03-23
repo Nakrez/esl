@@ -13,15 +13,15 @@ namespace bytecode
     {
         public:
             RegisterFunction(const yy::location& location,
-                             const misc::symbol& name);
+                             unsigned data);
             virtual ~RegisterFunction();
 
-            const misc::symbol& name_get() const;
+            unsigned data_get() const;
 
             virtual void accept(Visitor& visitor) const;
 
         protected:
-            misc::symbol name_;
+            unsigned data_;
     };
 } // namespace bytecode
 

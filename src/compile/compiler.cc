@@ -158,6 +158,9 @@ namespace compile
         local_ = true;
         local_addr_ = 0;
 
+        exec_.add_instruction(new bytecode::RegisterFunction(dec.location_get(),
+                                                             ro_data_get(dec.name_get())));
+
         dec.args_get()->accept(*this);
         dec.body_get()->accept(*this);
 

@@ -5,9 +5,9 @@
 
 namespace bytecode
 {
-    inline const misc::symbol& RegisterFunction::name_get() const
+    inline unsigned RegisterFunction::data_get() const
     {
-        return name_;
+        return data_;
     }
 
     inline void RegisterFunction::accept(Visitor& visitor) const

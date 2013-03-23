@@ -3,9 +3,9 @@
 namespace bytecode
 {
     RegisterFunction::RegisterFunction(const yy::location& location,
-                                       const misc::symbol& name)
+                                       unsigned data)
         : Bytecode(location)
-        , name_(name)
+        , data_(data)
     {}
 
     RegisterFunction::~RegisterFunction()
