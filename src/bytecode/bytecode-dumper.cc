@@ -67,7 +67,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const LoadLocal& byte)
     {
-
+        ostr_ << "LOAD_LOCAL " << byte.addr_get() << std::endl;
     }
 
     void BytecodeDumper::operator()(const LoadStr& byte)
