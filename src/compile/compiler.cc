@@ -117,6 +117,15 @@ namespace compile
                 exec_.add_instruction(new bytecode::StoreVar(var.location_get(),
                                                              ro_data_get(var.name_get())));
         }
+        else
+        {
+            if (local_)
+                exec_.add_instruction(new bytecode::LoadLocal(var.location_get(),
+                                                              local_addr_get(var.name_get())));
+            else
+                exec_.add_instruction(new bytecode::LoadVar(var.location_get(),
+                                                            ro_data_get(var.name_get())));
+        }
     }
 
     void Compiler::operator()(ast::AttributVar& var)
