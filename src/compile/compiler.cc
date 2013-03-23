@@ -21,7 +21,12 @@ namespace compile
         for (auto node : list.list_get())
         {
             node->accept(*this);
-            exec_.add_instruction(new bytecode::Pop(node->location_get()));
+
+            // Some node needs a pop to clean the stack
+            // (assignation, calculus, ...)
+            if (!dynamic_cast<ast::IfInstr*> (node)
+                && !dynamic_cast<ast::FunctionDec*> (node))
+                exec_.add_instruction(new bytecode::Pop(node->location_get()));
         }
     }
 
