@@ -57,6 +57,12 @@ namespace compile
     void Compiler::operator()(ast::FunctionCallExp& exp)
     {
         int fun_addr = fun_scope_.get(exp.name_get());
+
+        // Delimit function call formals
+        exec_.add_instruction(new bytecode::Delim(exp.location_get()));
+
+        exec_.add_instruction(new bytecode::CallFunction(exp.location_get(),
+                                                         fun_addr));
     }
 
     void Compiler::operator()(ast::ReturnExp& exp)

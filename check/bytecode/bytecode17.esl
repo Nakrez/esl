@@ -1,0 +1,21 @@
+function test()
+    foo = 0
+    bar = 5
+end
+
+function foo()
+    foo = 5
+end
+
+function bar()
+    bar = 8
+end
+
+foo()
+bar()
+foo()
+bar()
+test()
+bar()
+test()
+bar()
