@@ -9,6 +9,8 @@ namespace compile
         , local_(false)
         , var_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
         , fun_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
+        , var_addr_(0)
+        , fun_addr_(0)
         , ro_data_counter_(0)
         , error_(false)
         , assign_(false)
