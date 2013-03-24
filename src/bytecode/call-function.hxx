@@ -5,9 +5,9 @@
 
 namespace bytecode
 {
-    inline const misc::symbol& CallFunction::name_get() const
+    inline unsigned CallFunction::addr_get() const
     {
-        return name_;
+        return addr_;
     }
 
     inline void CallFunction::accept(Visitor& visitor) const
