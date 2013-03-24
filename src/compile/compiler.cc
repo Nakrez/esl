@@ -56,6 +56,7 @@ namespace compile
 
     void Compiler::operator()(ast::FunctionCallExp& exp)
     {
+        int fun_addr = fun_scope_.get(exp.name_get());
     }
 
     void Compiler::operator()(ast::ReturnExp& exp)

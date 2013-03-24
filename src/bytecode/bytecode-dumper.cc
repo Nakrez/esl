@@ -118,7 +118,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const CallFunction& byte)
     {
-
+        ostr_ << "CALL_FUNCTION " << byte.addr_get() << std::endl;
     }
 
     void BytecodeDumper::operator()(const StartClass& byte)
