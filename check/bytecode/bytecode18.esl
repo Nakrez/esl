@@ -1,0 +1,16 @@
+test = 9
+function test(first, second)
+    foo = 0
+    bar = 1
+    foo = bar
+end
+
+function foo(third, second, first)
+    bar = 5
+    foo = 7
+    yy = 0
+    yy = yy + bar * foo
+end
+
+test(1, 2)
+foo(test(1, 2), 4, "test")

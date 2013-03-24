@@ -56,11 +56,23 @@ namespace compile
 
     void Compiler::operator()(ast::FunctionCallExp& exp)
     {
+        // Fetching function address
         int fun_addr = fun_scope_.get(exp.name_get());
 
         // Delimit function call formals
         exec_.add_instruction(new bytecode::Delim(exp.location_get()));
 
+        // Formal needs to be process in reverse order
+        typedef std::list<ast::Exp*>::const_reverse_iterator ExpIterator;
+        ExpIterator it = exp.args_get()->list_get().rbegin();
+        ExpIterator end = exp.args_get()->list_get().rend();
+
+        for ( ; it != end; ++it)
+        {
+            (*it)->accept(*this);
+        }
+
+        // Add the call instruction
         exec_.add_instruction(new bytecode::CallFunction(exp.location_get(),
                                                          fun_addr));
     }
