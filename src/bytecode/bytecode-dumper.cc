@@ -168,7 +168,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const Delim& byte)
     {
-
+        ostr_ << "DELIM" << std::endl;
     }
 
 } // namespace bytecode
