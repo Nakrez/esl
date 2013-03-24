@@ -1,0 +1,10 @@
+function test()
+    foo = 0
+    bar = 1
+    foo = bar
+end
+
+function foo()
+    yy = 0
+    yy = yy + 1
+end

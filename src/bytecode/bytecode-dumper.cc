@@ -138,8 +138,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const RegisterFunction& byte)
     {
-        ostr_ << "REGISTER_FUNCTION " << byte.data_get()
-              << " ;ro_data " << ro_data_[byte.data_get()] << std::endl;
+        ostr_ << "REGISTER_FUNCTION " << byte.data_get() << std::endl;
     }
 
     void BytecodeDumper::operator()(const Inherit& byte)

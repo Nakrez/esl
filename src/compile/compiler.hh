@@ -62,7 +62,9 @@ namespace compile
 
         protected:
             int ro_data_get(const std::string& str);
-            int local_addr_get(const std::string& str);
+            int addr_get(const std::string& str,
+                         misc::ScopedMap<misc::symbol, int>& scope,
+                         int& scope_addr);
 
         protected:
             execute::Executable exec_;
@@ -70,8 +72,13 @@ namespace compile
             /// Allows compiler to treat variable as local variable
             bool local_;
 
+            // Scope
             misc::ScopedMap<misc::symbol, int> var_scope_;
-            int local_addr_;
+            misc::ScopedMap<misc::symbol, int> fun_scope_;
+
+            // Next addr to assign
+            int var_addr_;
+            int fun_addr_;
 
             // Rodata management
             std::map<std::string, int> ro_data_;

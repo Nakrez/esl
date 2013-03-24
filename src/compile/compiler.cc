@@ -8,6 +8,7 @@ namespace compile
         : Visitor()
         , local_(false)
         , var_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
+        , fun_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
         , ro_data_counter_(0)
         , error_(false)
         , assign_(false)
@@ -116,8 +117,12 @@ namespace compile
         if (assign_)
         {
             if (local_)
+            {
+                int addr_var = addr_get(var.name_get(), var_scope_,
+                                        var_addr_);
                 exec_.add_instruction(new bytecode::StoreLocal(var.location_get(),
-                                                               local_addr_get(var.name_get())));
+                                                               addr_var));
+            }
             else
                 exec_.add_instruction(new bytecode::StoreVar(var.location_get(),
                                                              ro_data_get(var.name_get())));
@@ -125,8 +130,12 @@ namespace compile
         else
         {
             if (local_)
+            {
+                int addr_var = addr_get(var.name_get(), var_scope_,
+                                        var_addr_);
                 exec_.add_instruction(new bytecode::LoadLocal(var.location_get(),
-                                                              local_addr_get(var.name_get())));
+                                                              addr_var));
+            }
             else
                 exec_.add_instruction(new bytecode::LoadVar(var.location_get(),
                                                             ro_data_get(var.name_get())));
@@ -156,10 +165,13 @@ namespace compile
     void Compiler::operator()(ast::FunctionDec& dec)
     {
         local_ = true;
-        local_addr_ = 0;
+        var_addr_ = 0;
+
+        int addr_fun = addr_get(dec.name_get(), fun_scope_,
+                                fun_addr_);
 
         exec_.add_instruction(new bytecode::RegisterFunction(dec.location_get(),
-                                                             ro_data_get(dec.name_get())));
+                                                             addr_fun));
 
         // Prepare jump instruction
         // offset is 0 because not known yet
@@ -186,7 +198,7 @@ namespace compile
         // Only function, method parameter
         // So put put adress on map and generate bytecode instr
 
-        int addr = local_addr_;
+        int addr = var_addr_;
 
         var_scope_.add(dec.name_get(), addr);
 
@@ -194,7 +206,7 @@ namespace compile
                                                        addr));
 
         // Increment local adress
-        ++local_addr_;
+        ++var_addr_;
     }
 
     void Compiler::operator()(ast::MethodDec& dec)
@@ -230,14 +242,16 @@ namespace compile
         }
     }
 
-    int Compiler::local_addr_get(const std::string& str)
+    int Compiler::addr_get(const std::string& str,
+                           misc::ScopedMap<misc::symbol, int>& scope,
+                           int& scope_addr)
     {
-        int addr = var_scope_.get(str);
+        int addr = scope.get(str);
 
         if (addr == INT_MIN)
         {
-            addr = local_addr_++;
-            var_scope_.add(str, addr);
+            addr = scope_addr++;
+            scope.add(str, addr);
         }
 
         return addr;
