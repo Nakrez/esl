@@ -169,6 +169,8 @@ namespace compile
         local_ = true;
         var_addr_ = 0;
 
+        var_scope_.scope_begin();
+
         int addr_fun = addr_get(dec.name_get(), fun_scope_,
                                 fun_addr_);
 
@@ -191,6 +193,8 @@ namespace compile
         exec_.add_instruction(new bytecode::Return(dec.location_get()));
 
         jump->offset_set(offset);
+
+        var_scope_.scope_end();
 
         local_ = false;
     }

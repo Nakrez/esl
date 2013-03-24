@@ -1,0 +1,13 @@
+test = 9
+function test()
+    foo = 0
+    bar = 1
+    foo = bar
+end
+
+function foo()
+    bar = 5
+    foo = 7
+    yy = 0
+    yy = yy + bar * foo
+end
