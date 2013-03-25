@@ -108,6 +108,23 @@ namespace compile
 
     void Compiler::operator()(ast::IfInstr& instr)
     {
+        instr.condition_get()->accept(*this);
+
+        bytecode::JumpFalse* jmp = new bytecode::JumpFalse(instr.location_get(),
+                                                           0);
+
+        exec_.add_instruction(jmp);
+
+        int offset = exec_.code_get().size();
+
+        instr.exp_true_get()->accept(*this);
+
+        offset = exec_.code_get().size() - offset + 1;
+
+        jmp->offset_set(offset);
+
+        if (instr.exp_else_get())
+            instr.exp_else_get()->accept(*this);
     }
 
     void Compiler::operator()(ast::ElseInstr& instr)
