@@ -158,7 +158,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const JumpFalse& byte)
     {
-
+        ostr_ << "JUMP_FALSE " << byte.offset_get() << std::endl;
     }
 
     void BytecodeDumper::operator()(const Return& byte)
