@@ -1,0 +1,9 @@
+yy = 20
+
+if 1 then
+    yy = 0
+else
+    yy = 5
+end
+
+zz = yy

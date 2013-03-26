@@ -112,14 +112,33 @@ namespace compile
 
         offset = exec_.code_get().size() - offset + 1;
 
-        jmp->offset_set(offset);
-
         if (instr.exp_else_get())
+        {
+            bytecode::Jump* jmp_else;
+            jmp_else = new bytecode::Jump(instr.location_get(), 0);
+
+            exec_.add_instruction(jmp_else);
+
+            // Calculate offset to avoid the else if the if is true
+            int else_offset = exec_.code_get().size();
+
+            // Increment the if offset cause we had the jump instruction
+            ++offset;
+
             instr.exp_else_get()->accept(*this);
+
+            else_offset = exec_.code_get().size() - else_offset + 1;
+
+            jmp_else->offset_set(else_offset);
+            jmp->offset_set(offset);
+        }
+        else
+            jmp->offset_set(offset);
     }
 
     void Compiler::operator()(const ast::ElseInstr& instr)
     {
+        instr.instr_list_get()->accept(*this);
     }
 
     void Compiler::operator()(const ast::WhileInstr& instr)
@@ -312,7 +331,8 @@ namespace compile
             // Some node needs a pop to clean the stack
             // (assignation, calculus, ...)
             if (!dynamic_cast<ast::IfInstr*> (node)
-                && !dynamic_cast<ast::FunctionDec*> (node))
+                && !dynamic_cast<ast::FunctionDec*> (node)
+                && !dynamic_cast<ast::ElseInstr*> (node))
                 exec_.add_instruction(new bytecode::Pop(node->location_get()));
         }
     }
