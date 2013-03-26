@@ -1,0 +1,16 @@
+;begin ro_data section
+;end ro_data section
+
+;begin code section
+0 LOAD_INT 20
+1 STORE_VAR 0
+2 POP
+3 LOAD_INT 1
+4 JUMP_FALSE 4
+5 LOAD_INT 0
+6 STORE_VAR 0
+7 POP
+8 LOAD_VAR 0
+9 STORE_VAR 1
+10 POP
+;end code section

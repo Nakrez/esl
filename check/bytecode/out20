@@ -1,0 +1,22 @@
+;begin ro_data section
+;end ro_data section
+
+;begin code section
+0 LOAD_INT 0
+1 STORE_VAR 0
+2 POP
+3 REGISTER_FUNCTION 1
+4 JUMP 13
+5 LOAD_INT 20
+6 STORE_LOCAL 0
+7 POP
+8 LOAD_INT 1
+9 JUMP_FALSE 4
+10 LOAD_INT 0
+11 STORE_LOCAL 0
+12 POP
+13 LOAD_LOCAL 0
+14 STORE_LOCAL 1
+15 POP
+16 RETURN
+;end code section

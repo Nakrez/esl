@@ -21,16 +21,7 @@ namespace compile
 
     void Compiler::operator()(const ast::AstList& list)
     {
-        for (auto node : list.list_get())
-        {
-            node->accept(*this);
-
-            // Some node needs a pop to clean the stack
-            // (assignation, calculus, ...)
-            if (!dynamic_cast<ast::IfInstr*> (node)
-                && !dynamic_cast<ast::FunctionDec*> (node))
-                exec_.add_instruction(new bytecode::Pop(node->location_get()));
-        }
+        compile_list(list);
     }
 
     void Compiler::operator()(const ast::IntExp& exp)
@@ -137,11 +128,7 @@ namespace compile
 
     void Compiler::operator()(const ast::InstrList& list)
     {
-        for (auto instr : list.list_get())
-        {
-            instr->accept(*this);
-            exec_.add_instruction(new bytecode::Pop(instr->location_get()));
-        }
+        compile_list(list);
     }
 
     void Compiler::operator()(const ast::ImportInstr& instr)
@@ -277,6 +264,7 @@ namespace compile
 
     void Compiler::operator()(const ast::DecList& list)
     {
+        compile_list(list);
     }
 
     int Compiler::ro_data_get(const std::string& str)
@@ -312,5 +300,20 @@ namespace compile
         }
 
         return addr;
+    }
+
+    template<typename List>
+    void Compiler::compile_list(const List& l)
+    {
+        for (auto node : l.list_get())
+        {
+            node->accept(*this);
+
+            // Some node needs a pop to clean the stack
+            // (assignation, calculus, ...)
+            if (!dynamic_cast<ast::IfInstr*> (node)
+                && !dynamic_cast<ast::FunctionDec*> (node))
+                exec_.add_instruction(new bytecode::Pop(node->location_get()));
+        }
     }
 } // namespace compile

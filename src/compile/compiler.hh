@@ -61,6 +61,8 @@ namespace compile
             virtual void operator()(const ast::DecList&);
 
         protected:
+            template<typename List> void compile_list(const List& l);
+
             int ro_data_get(const std::string& str);
             int addr_get(const std::string& str,
                          misc::ScopedMap<misc::symbol, int>& scope,

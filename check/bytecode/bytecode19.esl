@@ -1,3 +1,5 @@
+yy = 20
+
 if 1 then
     yy = 0
 end

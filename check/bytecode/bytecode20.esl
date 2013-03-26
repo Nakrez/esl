@@ -1,0 +1,11 @@
+bar = 0
+
+function test()
+    yy = 20
+
+    if 1 then
+        yy = 0
+    end
+
+    zz = yy
+end
