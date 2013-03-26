@@ -67,7 +67,8 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const LoadVar& byte)
     {
-
+        ostr_ << "LOAD_VAR " << byte.addr_get()
+              << " ;ro_data " << ro_data_[byte.addr_get()] << std::endl;
     }
 
     void BytecodeDumper::operator()(const LoadLocal& byte)
@@ -158,7 +159,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const JumpFalse& byte)
     {
-
+        ostr_ << "JUMP_FALSE " << byte.offset_get() << std::endl;
     }
 
     void BytecodeDumper::operator()(const Return& byte)
