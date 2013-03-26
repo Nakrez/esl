@@ -12,6 +12,11 @@ namespace ast
         return location_;
     }
 
+    inline yy::location& Ast::location_get()
+    {
+        return location_;
+    }
+
     inline void Ast::location_set(const yy::location& location)
     {
         location_ = location;

@@ -162,7 +162,6 @@ add_executable(esl
                src/ast/module-attribut-var.cc
                src/ast/array-var.cc
                src/ast/pretty-printer.cc
-               src/ast/visitor.cc
 
                src/bytecode/bytecode.cc
                src/bytecode/pop.cc

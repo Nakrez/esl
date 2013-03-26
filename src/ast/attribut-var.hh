@@ -2,7 +2,6 @@
 # define ATTRIBUT_VAR_HH
 
 # include <ast/var.hh>
-# include <ast/visitor.hh>
 
 namespace ast
 {
@@ -18,8 +17,10 @@ namespace ast
             Var& call_var_get();
 
             const misc::symbol& name_get() const;
+            misc::symbol& name_get();
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             Var* call_var_;

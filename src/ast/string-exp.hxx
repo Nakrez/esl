@@ -7,14 +7,24 @@
 
 namespace ast
 {
+    inline const std::string& StringExp::value_get() const
+    {
+        return value_;
+    }
+
+    inline std::string& StringExp::value_get()
+    {
+        return value_;
+    }
+
     inline void StringExp::accept(Visitor& visitor)
     {
         visitor(*this);
     }
 
-    inline const std::string& StringExp::value_get() const
+    inline void StringExp::accept(ConstVisitor& visitor) const
     {
-        return value_;
+        visitor(*this);
     }
 } // namespace ast
 

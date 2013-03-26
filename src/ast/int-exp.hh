@@ -12,9 +12,11 @@ namespace ast
                    int value);
             virtual ~IntExp();
 
-            virtual void accept(Visitor& visitor);
+            const int& value_get() const;
+            int& value_get();
 
-            int value_get() const;
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             int value_;

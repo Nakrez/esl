@@ -3,7 +3,6 @@
 # define VAR_DEC_HH
 
 # include <ast/dec.hh>
-# include <ast/visitor.hh>
 
 namespace ast
 {
@@ -21,6 +20,7 @@ namespace ast
             Exp* exp_get();
 
             virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             Exp* exp_;

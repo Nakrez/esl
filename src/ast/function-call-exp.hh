@@ -3,7 +3,6 @@
 # define FUNCTION_CALL_EXP_HH
 
 # include <ast/fwd.hh>
-# include <ast/visitor.hh>
 # include <ast/exp.hh>
 
 # include <misc/symbol.hh>
@@ -19,11 +18,13 @@ namespace ast
             virtual ~FunctionCallExp();
 
             const misc::symbol& name_get() const;
+            misc::symbol& name_get();
 
             const ExpList* args_get() const;
             ExpList* args_get();
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             misc::symbol name_;

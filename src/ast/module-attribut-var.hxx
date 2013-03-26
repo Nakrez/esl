@@ -30,6 +30,10 @@ namespace ast
         visitor(*this);
     }
 
+    inline void ModuleAttributVar::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !MODULE_ATTRIBUT_VAR_HXX */

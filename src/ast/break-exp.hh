@@ -1,7 +1,6 @@
 #ifndef BREAK_EXP_HH
 # define BREAK_EXP_HH
 
-# include <ast/visitor.hh>
 # include <ast/exp.hh>
 
 namespace ast
@@ -12,7 +11,8 @@ namespace ast
             BreakExp(const yy::location& location);
             ~BreakExp();
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
     };
 } // namespace ast
 

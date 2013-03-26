@@ -19,6 +19,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void VarDec::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !VAR_DEC_HXX */

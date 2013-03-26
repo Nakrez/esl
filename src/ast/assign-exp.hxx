@@ -29,6 +29,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void AssignExp::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 }
 
 #endif /* !ASSIGN_EXP_HXX */

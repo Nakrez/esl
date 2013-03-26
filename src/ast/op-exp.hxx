@@ -35,6 +35,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void OpExp::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !OP_EXP_HXX */

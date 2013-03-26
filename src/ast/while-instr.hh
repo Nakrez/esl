@@ -2,7 +2,6 @@
 # define WHILE_INSTR_HH
 
 # include <ast/fwd.hh>
-# include <ast/visitor.hh>
 # include <ast/any-list.hh>
 # include <ast/instr.hh>
 # include <ast/exp.hh>
@@ -19,9 +18,12 @@ namespace ast
 
             const InstrList* instr_list_get() const;
             const Exp* condition_get() const;
+
             Exp* condition_get();
             InstrList* instr_list_get();
-            void accept(Visitor& visitor);
+
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             Exp* condition_;

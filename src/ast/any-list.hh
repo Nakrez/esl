@@ -1,7 +1,6 @@
 #ifndef ANY_LIST_HH
 # define ANY_LIST_HH
 
-# include <ast/visitor.hh>
 # include <ast/ast.hh>
 
 namespace ast
@@ -15,8 +14,12 @@ namespace ast
             virtual ~AnyList();
 
             const std::list<T*>& list_get() const;
+            std::list<T*>& list_get();
+
             void push_back(T*);
-            void accept(Visitor&);
+
+            virtual void accept(Visitor&);
+            virtual void accept(ConstVisitor&) const;
 
         protected:
             std::list<T*> list_;

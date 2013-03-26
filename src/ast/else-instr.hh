@@ -2,7 +2,6 @@
 # define ELSE_INSTR_HH
 
 # include <ast/fwd.hh>
-# include <ast/visitor.hh>
 # include <ast/any-list.hh>
 # include <ast/instr.hh>
 
@@ -18,7 +17,8 @@ namespace ast
             const InstrList* instr_list_get() const;
             InstrList* instr_list_get();
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             InstrList* instr_list_;

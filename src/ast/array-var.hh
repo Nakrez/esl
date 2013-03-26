@@ -1,7 +1,6 @@
 #ifndef ARRAY_VAR_HH
 # define ARRAY_VAR_HH
 
-# include <ast/visitor.hh>
 # include <ast/var.hh>
 # include <ast/exp.hh>
 
@@ -21,7 +20,8 @@ namespace ast
             const Exp* exp_get() const;
             Exp* exp_get();
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             Var* var_;

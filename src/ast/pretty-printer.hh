@@ -4,15 +4,15 @@
 # include <iostream>
 # include <list>
 
-# include <ast/visitor.hh>
+# include <ast/default-visitor.hh>
 # include <misc/indent.hh>
 
 namespace ast
 {
-    class PrettyPrinter : public Visitor
+    class PrettyPrinter : public DefaultConstVisitor
     {
         public:
-            using Visitor::operator();
+            using DefaultConstVisitor::operator();
 
             PrettyPrinter(std::ostream& stream);
 

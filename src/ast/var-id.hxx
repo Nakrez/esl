@@ -5,14 +5,24 @@
 
 namespace ast
 {
+    inline const misc::symbol& VarId::name_get() const
+    {
+        return name_;
+    }
+
+    inline misc::symbol& VarId::name_get()
+    {
+        return name_;
+    }
+
     inline void VarId::accept(Visitor& visitor)
     {
         visitor(*this);
     }
 
-    inline const misc::symbol& VarId::name_get() const
+    inline void VarId::accept(ConstVisitor& visitor) const
     {
-        return name_;
+        visitor(*this);
     }
 }
 

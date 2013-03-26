@@ -29,6 +29,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void ArrayVar::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !ARRAY_VAR_HXX */

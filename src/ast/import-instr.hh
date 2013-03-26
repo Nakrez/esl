@@ -16,7 +16,8 @@ namespace ast
             const std::string& name_get() const;
             std::string& name_get();
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             std::string name_;

@@ -1,7 +1,6 @@
 #ifndef METHOD_DEC_HH
 # define METHOD_DEC_HH
 
-# include <ast/visitor.hh>
 # include <ast/function-dec.hh>
 
 # include <misc/visibility.hh>

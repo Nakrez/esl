@@ -31,6 +31,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void AttributDec::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !ATTRIBUT_DEC_HXX */

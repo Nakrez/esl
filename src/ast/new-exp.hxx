@@ -19,6 +19,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void NewExp::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !NEW_EXP_HXX */

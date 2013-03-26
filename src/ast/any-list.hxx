@@ -31,6 +31,12 @@ namespace ast
     }
 
     template <class T>
+    std::list<T*>& AnyList<T>::list_get()
+    {
+        return list_;
+    }
+
+    template <class T>
     inline void AnyList<T>::push_back(T* elem)
     {
         list_.push_back(elem);
@@ -38,6 +44,12 @@ namespace ast
 
     template <class T>
     inline void AnyList<T>::accept(Visitor& visitor)
+    {
+        visitor(*this);
+    }
+
+    template <class T>
+    inline void AnyList<T>::accept(ConstVisitor& visitor) const
     {
         visitor(*this);
     }

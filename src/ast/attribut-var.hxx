@@ -20,7 +20,17 @@ namespace ast
         return name_;
     }
 
+    inline misc::symbol& AttributVar::name_get()
+    {
+        return name_;
+    }
+
     inline void AttributVar::accept(Visitor& visitor)
+    {
+        visitor(*this);
+    }
+
+    inline void AttributVar::accept(ConstVisitor& visitor) const
     {
         visitor(*this);
     }

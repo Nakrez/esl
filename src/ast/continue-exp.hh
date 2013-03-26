@@ -1,7 +1,6 @@
 #ifndef CONTINUE_EXP_HH
 # define CONTINUE_EXP_HH
 
-# include <ast/visitor.hh>
 # include <ast/exp.hh>
 
 namespace ast
@@ -12,7 +11,8 @@ namespace ast
             ContinueExp(const yy::location& location);
             ~ContinueExp();
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
     };
 } // namespace ast
 

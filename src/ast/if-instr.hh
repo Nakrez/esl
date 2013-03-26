@@ -3,7 +3,6 @@
 # define IF_INSTR_HH
 
 # include <ast/fwd.hh>
-# include <ast/visitor.hh>
 # include <ast/exp.hh>
 # include <ast/any-list.hh>
 # include <ast/instr.hh>
@@ -25,11 +24,13 @@ namespace ast
             const Exp* condition_get() const;
             const InstrList* exp_true_get() const;
             const Instr* exp_else_get() const;
+
             Exp* condition_get();
             InstrList* exp_true_get();
             Instr* exp_else_get();
 
             virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             Exp* condition_;

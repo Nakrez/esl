@@ -1,7 +1,6 @@
 #ifndef ASSIGN_EXP_HH
 # define ASSIGN_EXP_HH
 
-# include <ast/visitor.hh>
 # include <ast/exp.hh>
 # include <ast/var.hh>
 
@@ -21,7 +20,8 @@ namespace ast
             const Exp* exp_get() const;
             Exp* exp_get();
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             Var* var_;

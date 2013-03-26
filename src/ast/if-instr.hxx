@@ -36,7 +36,13 @@ namespace ast
     {
         return exp_else_;
     }
+
     inline void IfInstr::accept(Visitor& visitor)
+    {
+        visitor(*this);
+    }
+
+    inline void IfInstr::accept(ConstVisitor& visitor) const
     {
         visitor(*this);
     }

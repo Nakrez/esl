@@ -10,6 +10,11 @@ namespace ast
         return name_;
     }
 
+    inline misc::symbol& FunctionCallExp::name_get()
+    {
+        return name_;
+    }
+
     inline const ExpList* FunctionCallExp::args_get() const
     {
         return args_;
@@ -25,6 +30,10 @@ namespace ast
         visitor(*this);
     }
 
+    inline void FunctionCallExp::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !FUNCTION_CALL_EXP_HXX */

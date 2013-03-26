@@ -1,7 +1,6 @@
 #ifndef NEW_EXP_HH
 # define NEW_EXP_HH
 
-# include <ast/visitor.hh>
 # include <ast/exp.hh>
 # include <ast/function-call-exp.hh>
 
@@ -17,7 +16,8 @@ namespace ast
             const FunctionCallExp* exp_get() const;
             FunctionCallExp* exp_get();
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             FunctionCallExp* exp_;

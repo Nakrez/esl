@@ -29,6 +29,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void WhileInstr::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !WHILE_INSTR_HXX */

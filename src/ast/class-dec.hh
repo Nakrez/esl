@@ -4,7 +4,6 @@
 # include <misc/symbol.hh>
 
 # include <ast/fwd.hh>
-# include <ast/visitor.hh>
 # include <ast/dec.hh>
 
 namespace ast
@@ -24,7 +23,8 @@ namespace ast
             const DecList* components_get() const;
             DecList* components_get();
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             IdList* inherit_;

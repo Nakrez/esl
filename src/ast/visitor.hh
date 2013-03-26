@@ -2,51 +2,63 @@
 #ifndef AST_VISITOR_HH
 # define AST_VISITOR_HH
 
+# include <functional>
+
+# include <misc/constness.hh>
+
 # include <ast/fwd.hh>
 
 namespace ast
 {
-
-    class Visitor
+    template <template <typename> class Constness>
+    class GenVisitor : public std::unary_function<Ast, void>
     {
         public:
-            Visitor();
-            virtual ~Visitor();
+            GenVisitor() = default;
+            virtual ~GenVisitor() = default;
 
-            virtual void operator()(Ast&);
-            virtual void operator()(AstList&);
+            template <typename A> void visit(A* a);
+            template <typename A> void visit(typename Constness<A>::type& a);
 
-            virtual void operator()(DecList&);
-            virtual void operator()(IntExp&) = 0;
-            virtual void operator()(OpExp&) = 0;
-            virtual void operator()(StringExp&) = 0;
-            virtual void operator()(FunctionCallExp&) = 0;
-            virtual void operator()(ReturnExp&) = 0;
-            virtual void operator()(BreakExp&) = 0;
-            virtual void operator()(ContinueExp&) = 0;
-            virtual void operator()(NewExp&) = 0;
-            virtual void operator()(AssignExp&) = 0;
+            virtual void operator()(typename Constness<Ast>::type&);
+            virtual void operator()(typename Constness<AstList>::type&) = 0;
 
-            virtual void operator()(IfInstr&) = 0;
-            virtual void operator()(ElseInstr&) = 0;
-            virtual void operator()(WhileInstr&) = 0;
-            virtual void operator()(InstrList&);
-            virtual void operator()(ImportInstr&) = 0;
+            virtual void operator()(typename Constness<DecList>::type&) = 0;
+            virtual void operator()(typename Constness<IntExp>::type&) = 0;
+            virtual void operator()(typename Constness<OpExp>::type&) = 0;
+            virtual void operator()(typename Constness<StringExp>::type&) = 0;
+            virtual void operator()(typename Constness<FunctionCallExp>::type&) = 0;
+            virtual void operator()(typename Constness<ReturnExp>::type&) = 0;
+            virtual void operator()(typename Constness<BreakExp>::type&) = 0;
+            virtual void operator()(typename Constness<ContinueExp>::type&) = 0;
+            virtual void operator()(typename Constness<NewExp>::type&) = 0;
+            virtual void operator()(typename Constness<AssignExp>::type&) = 0;
 
-            virtual void operator()(VarId&) = 0;
-            virtual void operator()(AttributVar&) = 0;
-            virtual void operator()(MethodCallVar&) = 0;
-            virtual void operator()(ModuleCallVar&) = 0;
-            virtual void operator()(ModuleAttributVar&) = 0;
-            virtual void operator()(ArrayVar&) = 0;
+            virtual void operator()(typename Constness<IfInstr>::type&) = 0;
+            virtual void operator()(typename Constness<ElseInstr>::type&) = 0;
+            virtual void operator()(typename Constness<WhileInstr>::type&) = 0;
+            virtual void operator()(typename Constness<InstrList>::type&);
+            virtual void operator()(typename Constness<ImportInstr>::type&) = 0;
 
-            virtual void operator()(FunctionDec&) = 0;
-            virtual void operator()(VarDec&) = 0;
-            virtual void operator()(VarDecList&);
-            virtual void operator()(MethodDec&) = 0;
-            virtual void operator()(AttributDec&) = 0;
-            virtual void operator()(ClassDec&) = 0;
+            virtual void operator()(typename Constness<VarId>::type&) = 0;
+            virtual void operator()(typename Constness<AttributVar>::type&) = 0;
+            virtual void operator()(typename Constness<MethodCallVar>::type&) = 0;
+            virtual void operator()(typename Constness<ModuleCallVar>::type&) = 0;
+            virtual void operator()(typename Constness<ModuleAttributVar>::type&) = 0;
+            virtual void operator()(typename Constness<ArrayVar>::type&) = 0;
+
+            virtual void operator()(typename Constness<FunctionDec>::type&) = 0;
+            virtual void operator()(typename Constness<VarDec>::type&) = 0;
+            virtual void operator()(typename Constness<VarDecList>::type&);
+            virtual void operator()(typename Constness<MethodDec>::type&) = 0;
+            virtual void operator()(typename Constness<AttributDec>::type&) = 0;
+            virtual void operator()(typename Constness<ClassDec>::type&) = 0;
     };
+
+    typedef GenVisitor<misc::const_type> ConstVisitor;
+    typedef GenVisitor<misc::nonconst_type> Visitor;
 } // namespace ast
+
+# include <ast/visitor.hxx>
 
 #endif /* !AST_VISITOR_HH */

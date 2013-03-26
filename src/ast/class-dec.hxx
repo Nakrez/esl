@@ -29,6 +29,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void ClassDec::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !CLASS_DEC_HXX */

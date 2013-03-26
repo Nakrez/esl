@@ -2,7 +2,6 @@
 # define MODULE_ATTRIBUT_VAR_HH
 
 # include <ast/var.hh>
-# include <ast/visitor.hh>
 
 # include <misc/symbol.hh>
 
@@ -22,7 +21,8 @@ namespace ast
             misc::symbol& name_get();
             const misc::symbol& name_get() const;
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             Var* var_;

@@ -4,8 +4,6 @@
 # include <ast/var.hh>
 # include <ast/function-call-exp.hh>
 
-# include <ast/visitor.hh>
-
 namespace ast
 {
     class MethodCallVar : public Var
@@ -22,7 +20,8 @@ namespace ast
             const FunctionCallExp* call_get() const;
             FunctionCallExp* call_get();
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             Var* var_;

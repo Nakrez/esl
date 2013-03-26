@@ -4,6 +4,7 @@
 # include <list>
 
 # include <misc/symbol.hh>
+# include <misc/constness.hh>
 
 namespace ast
 {
@@ -51,6 +52,12 @@ namespace ast
     typedef AnyList<Ast> AstList;
 
     typedef std::list<misc::symbol> IdList;
+
+    template <template <typename> class Constness>
+    class GenVisitor;
+
+    typedef GenVisitor<misc::const_type> ConstVisitor;
+    typedef GenVisitor<misc::nonconst_type> Visitor;
 } // namespace ast
 
 #endif /* !AST_FWD_HH */

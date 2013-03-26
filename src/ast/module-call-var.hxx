@@ -29,6 +29,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void ModuleCallVar::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !MODULE_CALL_VAR_HXX */

@@ -31,6 +31,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void FunctionDec::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !FUNCTION_DEC_HXX */

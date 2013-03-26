@@ -9,6 +9,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void BreakExp::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !BREAK_EXP_HXX */

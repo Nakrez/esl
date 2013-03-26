@@ -19,6 +19,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void ElseInstr::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !ELSE_INSTR_HXX */

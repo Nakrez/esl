@@ -20,10 +20,12 @@ namespace ast
 
             const VarDecList* args_get() const;
             const InstrList* body_get() const;
+
             VarDecList* args_get();
             InstrList* body_get();
 
             virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             VarDecList* args_;

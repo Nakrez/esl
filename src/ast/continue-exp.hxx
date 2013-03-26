@@ -9,6 +9,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void ContinueExp::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !CONTINUE_EXP_HXX */

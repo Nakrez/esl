@@ -21,5 +21,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void ImportInstr::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
+
 #endif /* !IMPORT_INSTR_HXX */

@@ -7,14 +7,24 @@
 
 namespace ast
 {
+    inline const int& IntExp::value_get() const
+    {
+        return value_;
+    }
+
+    inline int& IntExp::value_get()
+    {
+        return value_;
+    }
+
     inline void IntExp::accept(Visitor& visitor)
     {
         visitor(*this);
     }
 
-    inline int IntExp::value_get() const
+    inline void IntExp::accept(ConstVisitor& visitor) const
     {
-        return value_;
+        visitor(*this);
     }
 } // namespace ast
 

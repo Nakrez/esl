@@ -19,6 +19,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void ReturnExp::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !RETURN_EXP_HXX */

@@ -12,9 +12,11 @@ namespace ast
                       const std::string& value);
             virtual ~StringExp();
 
-            virtual void accept(Visitor& visitor);
-
             const std::string& value_get() const;
+            std::string& value_get();
+
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             std::string value_;

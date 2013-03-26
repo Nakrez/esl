@@ -3,8 +3,6 @@
 
 # include <ast/var.hh>
 
-# include <ast/visitor.hh>
-
 namespace ast
 {
     class VarId : public Var
@@ -15,7 +13,10 @@ namespace ast
             virtual ~VarId();
 
             const misc::symbol& name_get() const;
-            void accept(Visitor& visitor);
+            misc::symbol& name_get();
+
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
 
         protected:
             misc::symbol name_;
