@@ -10,16 +10,16 @@
 
 # include <execute/executable.hh>
 
-# include <ast/visitor.hh>
+# include <ast/default-visitor.hh>
 
 # include <bytecode/all.hh>
 
 namespace compile
 {
-    class Compiler : public ast::Visitor
+    class Compiler : public ast::DefaultConstVisitor
     {
         public:
-            using ast::Visitor::operator();
+            using ast::DefaultConstVisitor::operator();
 
             Compiler();
             virtual ~Compiler();
@@ -28,37 +28,37 @@ namespace compile
 
         /* Visitor Implementation */
         public:
-            virtual void operator()(ast::AstList&);
+            virtual void operator()(const ast::AstList&);
 
-            virtual void operator()(ast::IntExp&);
-            virtual void operator()(ast::StringExp&);
-            virtual void operator()(ast::OpExp&);
-            virtual void operator()(ast::FunctionCallExp&);
-            virtual void operator()(ast::ReturnExp&);
-            virtual void operator()(ast::BreakExp&);
-            virtual void operator()(ast::ContinueExp&);
-            virtual void operator()(ast::NewExp&);
-            virtual void operator()(ast::AssignExp&);
+            virtual void operator()(const ast::IntExp&);
+            virtual void operator()(const ast::StringExp&);
+            virtual void operator()(const ast::OpExp&);
+            virtual void operator()(const ast::FunctionCallExp&);
+            virtual void operator()(const ast::ReturnExp&);
+            virtual void operator()(const ast::BreakExp&);
+            virtual void operator()(const ast::ContinueExp&);
+            virtual void operator()(const ast::NewExp&);
+            virtual void operator()(const ast::AssignExp&);
 
-            virtual void operator()(ast::IfInstr&);
-            virtual void operator()(ast::ElseInstr&);
-            virtual void operator()(ast::WhileInstr&);
-            virtual void operator()(ast::InstrList&);
-            virtual void operator()(ast::ImportInstr&);
+            virtual void operator()(const ast::IfInstr&);
+            virtual void operator()(const ast::ElseInstr&);
+            virtual void operator()(const ast::WhileInstr&);
+            virtual void operator()(const ast::InstrList&);
+            virtual void operator()(const ast::ImportInstr&);
 
-            virtual void operator()(ast::VarId&);
-            virtual void operator()(ast::AttributVar&);
-            virtual void operator()(ast::MethodCallVar&);
-            virtual void operator()(ast::ModuleCallVar&);
-            virtual void operator()(ast::ModuleAttributVar&);
-            virtual void operator()(ast::ArrayVar&);
+            virtual void operator()(const ast::VarId&);
+            virtual void operator()(const ast::AttributVar&);
+            virtual void operator()(const ast::MethodCallVar&);
+            virtual void operator()(const ast::ModuleCallVar&);
+            virtual void operator()(const ast::ModuleAttributVar&);
+            virtual void operator()(const ast::ArrayVar&);
 
-            virtual void operator()(ast::FunctionDec&);
-            virtual void operator()(ast::VarDec&);
-            virtual void operator()(ast::MethodDec&);
-            virtual void operator()(ast::AttributDec&);
-            virtual void operator()(ast::ClassDec&);
-            virtual void operator()(ast::DecList&);
+            virtual void operator()(const ast::FunctionDec&);
+            virtual void operator()(const ast::VarDec&);
+            virtual void operator()(const ast::MethodDec&);
+            virtual void operator()(const ast::AttributDec&);
+            virtual void operator()(const ast::ClassDec&);
+            virtual void operator()(const ast::DecList&);
 
         protected:
             int ro_data_get(const std::string& str);

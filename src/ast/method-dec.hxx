@@ -19,6 +19,11 @@ namespace ast
     {
         visitor(*this);
     }
+
+    inline void MethodDec::accept(ConstVisitor& visitor) const
+    {
+        visitor(*this);
+    }
 } // namespace ast
 
 #endif /* !METHOD_DEC_HXX */

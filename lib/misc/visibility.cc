@@ -15,6 +15,8 @@ namespace misc
             case PROTECTED:
                 ostr << "protected";
                 break;
+            default:
+                ostr << "public";
         }
 
         return ostr;

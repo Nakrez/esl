@@ -20,7 +20,8 @@ namespace ast
             misc::visibility visibility_get() const;
             void visibility_set(misc::visibility visibility);
 
-            void accept(Visitor& visitor);
+            virtual void accept(Visitor& visitor);
+            virtual void accept(ConstVisitor& visitor) const;
         protected:
             misc::visibility visibility_;
     };

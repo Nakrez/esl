@@ -10,11 +10,13 @@
 namespace ast
 {
     template <template <typename> class Constness>
-    class GenDefaultVisitor : public GenVisitor<Constness>
+    class GenDefaultVisitor : public virtual GenVisitor<Constness>
     {
         public:
+            using GenVisitor<Constness>::operator();
+
             GenDefaultVisitor() = default;
-            virtual ~GenDefaultVisitor() = default;
+            virtual ~GenDefaultVisitor();
 
             virtual void operator()(typename Constness<AstList>::type&);
 

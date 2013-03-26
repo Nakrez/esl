@@ -15,7 +15,7 @@ namespace ast
     {
         public:
             GenVisitor() = default;
-            virtual ~GenVisitor() = default;
+            virtual ~GenVisitor();
 
             template <typename A> void visit(A* a);
             template <typename A> void visit(typename Constness<A>::type& a);
@@ -37,7 +37,7 @@ namespace ast
             virtual void operator()(typename Constness<IfInstr>::type&) = 0;
             virtual void operator()(typename Constness<ElseInstr>::type&) = 0;
             virtual void operator()(typename Constness<WhileInstr>::type&) = 0;
-            virtual void operator()(typename Constness<InstrList>::type&);
+            virtual void operator()(typename Constness<InstrList>::type&) = 0;
             virtual void operator()(typename Constness<ImportInstr>::type&) = 0;
 
             virtual void operator()(typename Constness<VarId>::type&) = 0;
@@ -49,7 +49,7 @@ namespace ast
 
             virtual void operator()(typename Constness<FunctionDec>::type&) = 0;
             virtual void operator()(typename Constness<VarDec>::type&) = 0;
-            virtual void operator()(typename Constness<VarDecList>::type&);
+            virtual void operator()(typename Constness<VarDecList>::type&) = 0;
             virtual void operator()(typename Constness<MethodDec>::type&) = 0;
             virtual void operator()(typename Constness<AttributDec>::type&) = 0;
             virtual void operator()(typename Constness<ClassDec>::type&) = 0;

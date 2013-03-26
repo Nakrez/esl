@@ -12,6 +12,7 @@ namespace ast
             Exp(const yy::location& location);
 
             virtual void accept(Visitor& visitor) = 0;
+            virtual void accept(ConstVisitor& visitor) const = 0;
     };
 }// namespace ast
 

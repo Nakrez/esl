@@ -9,6 +9,11 @@ namespace ast
     {
         return name_;
     }
+
+    inline misc::symbol& Dec::name_get()
+    {
+        return name_;
+    }
 } // namespace ast
 
 #endif /* !DEC_HXX */

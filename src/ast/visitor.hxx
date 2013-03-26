@@ -8,9 +8,13 @@
 namespace ast
 {
     template <template <typename> class Constness>
+    GenVisitor<Constness>::~GenVisitor()
+    {}
+
+    template <template <typename> class Constness>
     void GenVisitor<Constness>::operator()(typename Constness<Ast>::type& a)
     {
-        visit(a);
+        a.accept(*this);
     }
 
     template <template <typename> class Constness>

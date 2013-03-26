@@ -4,8 +4,9 @@
 # include <iostream>
 # include <list>
 
-# include <ast/default-visitor.hh>
 # include <misc/indent.hh>
+
+# include <ast/default-visitor.hh>
 
 namespace ast
 {
@@ -16,37 +17,37 @@ namespace ast
 
             PrettyPrinter(std::ostream& stream);
 
-            virtual void operator()(AstList&);
+            virtual void operator()(const AstList&);
 
-            virtual void operator()(IntExp&);
-            virtual void operator()(StringExp&);
-            virtual void operator()(OpExp&);
-            virtual void operator()(FunctionCallExp&);
-            virtual void operator()(ReturnExp&);
-            virtual void operator()(BreakExp&);
-            virtual void operator()(ContinueExp&);
-            virtual void operator()(NewExp&);
-            virtual void operator()(AssignExp&);
+            virtual void operator()(const IntExp&);
+            virtual void operator()(const StringExp&);
+            virtual void operator()(const OpExp&);
+            virtual void operator()(const FunctionCallExp&);
+            virtual void operator()(const ReturnExp&);
+            virtual void operator()(const BreakExp&);
+            virtual void operator()(const ContinueExp&);
+            virtual void operator()(const NewExp&);
+            virtual void operator()(const AssignExp&);
 
-            virtual void operator()(IfInstr&);
-            virtual void operator()(ElseInstr&);
-            virtual void operator()(WhileInstr&);
-            virtual void operator()(InstrList&);
-            virtual void operator()(ImportInstr&);
+            virtual void operator()(const IfInstr&);
+            virtual void operator()(const ElseInstr&);
+            virtual void operator()(const WhileInstr&);
+            virtual void operator()(const InstrList&);
+            virtual void operator()(const ImportInstr&);
 
-            virtual void operator()(VarId&);
-            virtual void operator()(AttributVar&);
-            virtual void operator()(MethodCallVar&);
-            virtual void operator()(ModuleCallVar&);
-            virtual void operator()(ModuleAttributVar&);
-            virtual void operator()(ArrayVar&);
+            virtual void operator()(const VarId&);
+            virtual void operator()(const AttributVar&);
+            virtual void operator()(const MethodCallVar&);
+            virtual void operator()(const ModuleCallVar&);
+            virtual void operator()(const ModuleAttributVar&);
+            virtual void operator()(const ArrayVar&);
 
-            virtual void operator()(FunctionDec&);
-            virtual void operator()(VarDec&);
-            virtual void operator()(MethodDec&);
-            virtual void operator()(AttributDec&);
-            virtual void operator()(ClassDec&);
-            virtual void operator()(DecList&);
+            virtual void operator()(const FunctionDec&);
+            virtual void operator()(const VarDec&);
+            virtual void operator()(const MethodDec&);
+            virtual void operator()(const AttributDec&);
+            virtual void operator()(const ClassDec&);
+            virtual void operator()(const DecList&);
 
         protected:
             template<typename T, class U> void separate(std::list<T> list,

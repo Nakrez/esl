@@ -1,8 +1,4 @@
-#include "option.hh"
-#include "../parser/driver.hh"
-#include "../compile/compiler.hh"
-#include <iostream>
-#include <string>
+#include <utils/option.hh>
 
 Option* Option::instance_ = nullptr;
 
@@ -15,7 +11,7 @@ Option::~Option()
 
 void Option::instanciate ()
 {
-    if(instance_ == nullptr)
+    if (!instance_)
         instance_ = new Option();
 }
 

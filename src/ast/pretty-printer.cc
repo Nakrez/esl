@@ -4,26 +4,26 @@
 namespace ast
 {
     PrettyPrinter::PrettyPrinter(std::ostream& stream)
-        : Visitor()
+        : DefaultConstVisitor()
         , stream_(stream)
     {}
 
-    void PrettyPrinter::operator()(AstList& list)
+    void PrettyPrinter::operator()(const AstList& list)
     {
         separate(list.list_get(), misc::iendl);
     }
 
-    void PrettyPrinter::operator()(IntExp& exp)
+    void PrettyPrinter::operator()(const IntExp& exp)
     {
         stream_ << exp.value_get();
     }
 
-    void PrettyPrinter::operator()(StringExp& exp)
+    void PrettyPrinter::operator()(const StringExp& exp)
     {
         stream_ << "\"" << exp.value_get() << "\"";
     }
 
-    void PrettyPrinter::operator()(OpExp& exp)
+    void PrettyPrinter::operator()(const OpExp& exp)
     {
         if (exp.rop_get())
         {
@@ -41,43 +41,43 @@ namespace ast
         }
     }
 
-    void PrettyPrinter::operator()(FunctionCallExp& exp)
+    void PrettyPrinter::operator()(const FunctionCallExp& exp)
     {
         stream_ << exp.name_get() << "(";
         separate(exp.args_get()->list_get(), ", ");
         stream_ << ")";
     }
 
-    void PrettyPrinter::operator()(ReturnExp& exp)
+    void PrettyPrinter::operator()(const ReturnExp& exp)
     {
         stream_ << "return ";
         exp.exp_get()->accept(*this);
     }
 
-    void PrettyPrinter::operator()(BreakExp&)
+    void PrettyPrinter::operator()(const BreakExp&)
     {
         stream_ << "break";
     }
 
-    void PrettyPrinter::operator()(ContinueExp&)
+    void PrettyPrinter::operator()(const ContinueExp&)
     {
         stream_ << "continue";
     }
 
-    void PrettyPrinter::operator()(NewExp& exp)
+    void PrettyPrinter::operator()(const NewExp& exp)
     {
         stream_ << "new ";
         exp.exp_get()->accept(*this);
     }
 
-    void PrettyPrinter::operator()(AssignExp& exp)
+    void PrettyPrinter::operator()(const AssignExp& exp)
     {
         exp.var_get()->accept(*this);
         stream_ << " = ";
         exp.exp_get()->accept(*this);
     }
 
-    void PrettyPrinter::operator()(IfInstr& instr)
+    void PrettyPrinter::operator()(const IfInstr& instr)
     {
         stream_ << "if (";
         instr.condition_get()->accept(*this);
@@ -93,12 +93,12 @@ namespace ast
         stream_ << misc::decendl << "end" << misc::iendl;
     }
 
-    void PrettyPrinter::operator()(ElseInstr& instr)
+    void PrettyPrinter::operator()(const ElseInstr& instr)
     {
         instr.instr_list_get()->accept(*this);
     }
 
-    void PrettyPrinter::operator()(WhileInstr& instr)
+    void PrettyPrinter::operator()(const WhileInstr& instr)
     {
         stream_ << "while (";
         instr.condition_get()->accept(*this);
@@ -107,48 +107,48 @@ namespace ast
         stream_ << misc::decendl << "end";
     }
 
-    void PrettyPrinter::operator()(InstrList& list)
+    void PrettyPrinter::operator()(const InstrList& list)
     {
         separate(list.list_get(), misc::iendl);
     }
 
-    void PrettyPrinter::operator()(ImportInstr& instr)
+    void PrettyPrinter::operator()(const ImportInstr& instr)
     {
         stream_ << "import " << "\"" << instr.name_get() << "\"";
     }
 
-    void PrettyPrinter::operator()(VarId& var)
+    void PrettyPrinter::operator()(const VarId& var)
     {
         stream_ << var.name_get();
     }
 
-    void PrettyPrinter::operator()(AttributVar& var)
+    void PrettyPrinter::operator()(const AttributVar& var)
     {
         var.call_var_get().accept(*this);
         stream_ << "->" << var.name_get();
     }
 
-    void PrettyPrinter::operator()(MethodCallVar& var)
+    void PrettyPrinter::operator()(const MethodCallVar& var)
     {
         var.var_get()->accept(*this);
         stream_ << "->";
         var.call_get()->accept(*this);
     }
 
-    void PrettyPrinter::operator()(ModuleCallVar& var)
+    void PrettyPrinter::operator()(const ModuleCallVar& var)
     {
         var.var_get()->accept(*this);
         stream_ << ".";
         var.call_get()->accept(*this);
     }
 
-    void PrettyPrinter::operator()(ModuleAttributVar& var)
+    void PrettyPrinter::operator()(const ModuleAttributVar& var)
     {
         var.var_get()->accept(*this);
         stream_ << "." << var.name_get();
     }
 
-    void PrettyPrinter::operator()(ArrayVar& var)
+    void PrettyPrinter::operator()(const ArrayVar& var)
     {
         var.var_get()->accept(*this);
         stream_ << "[";
@@ -156,7 +156,7 @@ namespace ast
         stream_ << "]";
     }
 
-    void PrettyPrinter::operator()(FunctionDec& dec)
+    void PrettyPrinter::operator()(const FunctionDec& dec)
     {
         stream_ << "function " << dec.name_get() << " (";
 
@@ -168,7 +168,7 @@ namespace ast
         stream_ << misc::decendl << "end" << misc::iendl;
     }
 
-    void PrettyPrinter::operator()(VarDec& dec)
+    void PrettyPrinter::operator()(const VarDec& dec)
     {
         stream_ << dec.name_get();
         if (dec.exp_get())
@@ -178,7 +178,7 @@ namespace ast
         }
     }
 
-    void PrettyPrinter::operator()(MethodDec& dec)
+    void PrettyPrinter::operator()(const MethodDec& dec)
     {
         stream_ << dec.visibility_get() << " function "
                 << dec.name_get() << " (";
@@ -191,7 +191,7 @@ namespace ast
         stream_ << misc::decendl << "end";
     }
 
-    void PrettyPrinter::operator()(AttributDec& dec)
+    void PrettyPrinter::operator()(const AttributDec& dec)
     {
         stream_ << dec.visibility_get() << " " << dec.name_get();
 
@@ -202,7 +202,7 @@ namespace ast
         }
     }
 
-    void PrettyPrinter::operator()(ClassDec& dec)
+    void PrettyPrinter::operator()(const ClassDec& dec)
     {
         stream_ << "class " << dec.name_get();
 
@@ -210,7 +210,7 @@ namespace ast
         {
             stream_ << " : (";
 
-            std::list<misc::symbol>& list = *dec.inherit_get();
+            const std::list<misc::symbol>& list = *dec.inherit_get();
             std::list<misc::symbol>::const_iterator it = list.begin();
 
             for ( ; it != list.end(); ++it)
@@ -228,7 +228,7 @@ namespace ast
         stream_ << misc::decendl << "end";
     }
 
-    void PrettyPrinter::operator()(DecList& list)
+    void PrettyPrinter::operator()(const DecList& list)
     {
         separate(list.list_get(), misc::iendl);
     }
