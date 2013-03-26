@@ -130,10 +130,9 @@ namespace compile
             else_offset = exec_.code_get().size() - else_offset + 1;
 
             jmp_else->offset_set(else_offset);
-            jmp->offset_set(offset);
         }
-        else
-            jmp->offset_set(offset);
+
+        jmp->offset_set(offset);
     }
 
     void Compiler::operator()(const ast::ElseInstr& instr)

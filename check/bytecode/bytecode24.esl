@@ -1,0 +1,13 @@
+function foo()
+    yy = 20
+
+    if 1 then
+        yy = 0
+    elif 2 then
+        yy = 5
+    else
+        yy = 9
+    end
+
+    zz = yy
+end
