@@ -45,8 +45,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const StoreVar& byte)
     {
-        ostr_ << "STORE_VAR " << byte.data_get()
-              << " ;ro_data " << ro_data_[byte.data_get()] << std::endl;
+        ostr_ << "STORE_VAR " << byte.data_get() << std::endl;
     }
 
     void BytecodeDumper::operator()(const StoreAttr& byte)
@@ -67,8 +66,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const LoadVar& byte)
     {
-        ostr_ << "LOAD_VAR " << byte.addr_get()
-              << " ;ro_data " << ro_data_[byte.addr_get()] << std::endl;
+        ostr_ << "LOAD_VAR " << byte.addr_get() << std::endl;
     }
 
     void BytecodeDumper::operator()(const LoadLocal& byte)

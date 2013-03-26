@@ -1,4 +1,4 @@
-test = 9
+glob = 9
 function test(first, second)
     foo = 0
     bar = 1

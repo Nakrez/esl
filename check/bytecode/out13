@@ -1,10 +1,9 @@
 ;begin ro_data section
 .string 0 bar
-.string 1 var
 ;end ro_data section
 
 ;begin code section
 0 LOAD_STR 0 ;ro_data bar
-1 STORE_VAR 1 ;ro_data var
+1 STORE_VAR 0
 2 POP
 ;end code section

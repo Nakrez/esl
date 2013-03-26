@@ -8,9 +8,9 @@ namespace compile
         : ast::DefaultConstVisitor()
         , local_(false)
         , var_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
-        , fun_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
+        , glob_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
         , var_addr_(0)
-        , fun_addr_(0)
+        , glob_addr_(0)
         , ro_data_counter_(0)
         , error_(false)
         , assign_(false)
@@ -57,7 +57,7 @@ namespace compile
     void Compiler::operator()(const ast::FunctionCallExp& exp)
     {
         // Fetching function address
-        int fun_addr = fun_scope_.get(exp.name_get());
+        int glob_addr = glob_scope_.get(exp.name_get());
 
         // Delimit function call formals
         exec_.add_instruction(new bytecode::Delim(exp.location_get()));
@@ -74,7 +74,7 @@ namespace compile
 
         // Add the call instruction
         exec_.add_instruction(new bytecode::CallFunction(exp.location_get(),
-                                                         fun_addr));
+                                                         glob_addr));
     }
 
     void Compiler::operator()(const ast::ReturnExp& exp)
@@ -158,25 +158,37 @@ namespace compile
             {
                 int addr_var = addr_get(var.name_get(), var_scope_,
                                         var_addr_);
+
                 exec_.add_instruction(new bytecode::StoreLocal(var.location_get(),
                                                                addr_var));
             }
             else
+            {
+                int addr_glob = addr_get(var.name_get(), glob_scope_,
+                                         glob_addr_);
+
                 exec_.add_instruction(new bytecode::StoreVar(var.location_get(),
-                                                             ro_data_get(var.name_get())));
+                                                             addr_glob));
+            }
         }
         else
         {
             if (local_)
             {
                 int addr_var = addr_get(var.name_get(), var_scope_,
-                                        var_addr_);
+                                        var_addr_, true);
+
                 exec_.add_instruction(new bytecode::LoadLocal(var.location_get(),
                                                               addr_var));
             }
             else
+            {
+                int addr_glob = addr_get(var.name_get(), glob_scope_,
+                                         glob_addr_, true);
+
                 exec_.add_instruction(new bytecode::LoadVar(var.location_get(),
-                                                            ro_data_get(var.name_get())));
+                                                            addr_glob));
+            }
         }
     }
 
@@ -207,8 +219,8 @@ namespace compile
 
         var_scope_.scope_begin();
 
-        int addr_fun = addr_get(dec.name_get(), fun_scope_,
-                                fun_addr_);
+        int addr_fun = addr_get(dec.name_get(), glob_scope_,
+                                glob_addr_);
 
         exec_.add_instruction(new bytecode::RegisterFunction(dec.location_get(),
                                                              addr_fun));
@@ -286,12 +298,15 @@ namespace compile
 
     int Compiler::addr_get(const std::string& str,
                            misc::ScopedMap<misc::symbol, int>& scope,
-                           int& scope_addr)
+                           int& scope_addr,
+                           bool error)
     {
         int addr = scope.get(str);
 
         if (addr == INT_MIN)
         {
+            if (error)
+                std::cerr << "Var does not exist" << std::endl;
             addr = scope_addr++;
             scope.add(str, addr);
         }

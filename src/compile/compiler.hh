@@ -64,7 +64,8 @@ namespace compile
             int ro_data_get(const std::string& str);
             int addr_get(const std::string& str,
                          misc::ScopedMap<misc::symbol, int>& scope,
-                         int& scope_addr);
+                         int& scope_addr,
+                         bool error = false);
 
         protected:
             execute::Executable exec_;
@@ -74,11 +75,11 @@ namespace compile
 
             // Scope
             misc::ScopedMap<misc::symbol, int> var_scope_;
-            misc::ScopedMap<misc::symbol, int> fun_scope_;
+            misc::ScopedMap<misc::symbol, int> glob_scope_;
 
             // Next addr to assign
             int var_addr_;
-            int fun_addr_;
+            int glob_addr_;
 
             // Rodata management
             std::map<std::string, int> ro_data_;
