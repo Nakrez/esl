@@ -13,16 +13,16 @@ namespace bytecode
     {
         public:
             OpenModule(const yy::location& location,
-                       const std::string& str);
+                       int data);
             virtual ~OpenModule();
 
-            const std::string& str_get() const;
-            std::string& str_get();
+            const int& data_get() const;
+            int& data_get();
 
             virtual void accept(Visitor& visitor) const;
 
         protected:
-            std::string str_;
+            int data_;
     };
 } // namespace bytecode
 

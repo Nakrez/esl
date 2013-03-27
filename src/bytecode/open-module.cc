@@ -3,9 +3,9 @@
 namespace bytecode
 {
     OpenModule::OpenModule(const yy::location& location,
-                           const std::string& str)
+                           int data)
         : Bytecode(location)
-        , str_(str)
+        , data_(data)
     {}
 
     OpenModule::~OpenModule()

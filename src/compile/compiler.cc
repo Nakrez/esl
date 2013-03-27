@@ -177,7 +177,7 @@ namespace compile
     void Compiler::operator()(const ast::ImportInstr& instr)
     {
         exec_.add_instruction(new bytecode::OpenModule(instr.location_get(),
-                                                       instr.name_get()));
+                                                       ro_data_get(instr.name_get())));
     }
 
     void Compiler::operator()(const ast::VarId& var)

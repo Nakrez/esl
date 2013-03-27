@@ -5,14 +5,14 @@
 
 namespace bytecode
 {
-    inline const std::string& OpenModule::str_get() const
+    inline const int& OpenModule::data_get() const
     {
-        return str_;
+        return data_;
     }
 
-    inline std::string& OpenModule::str_get()
+    inline int& OpenModule::data_get()
     {
-        return str_;
+        return data_;
     }
 
     inline void OpenModule::accept(Visitor& visitor) const
