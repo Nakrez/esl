@@ -1,0 +1,7 @@
+while 1 do
+    test = 0
+    while 0 do
+        test = 5
+    end
+    test = 6
+end

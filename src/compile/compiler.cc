@@ -78,14 +78,17 @@ namespace compile
 
     void Compiler::operator()(const ast::BreakExp&)
     {
+        // FIXME
     }
 
     void Compiler::operator()(const ast::ContinueExp&)
     {
+        // FIXME
     }
 
     void Compiler::operator()(const ast::NewExp& exp)
     {
+        // FIXME
     }
 
     void Compiler::operator()(const ast::AssignExp& exp)
@@ -221,22 +224,27 @@ namespace compile
 
     void Compiler::operator()(const ast::AttributVar& var)
     {
+        // FIXME
     }
 
     void Compiler::operator()(const ast::MethodCallVar& var)
     {
+        // FIXME
     }
 
     void Compiler::operator()(const ast::ModuleCallVar& var)
     {
+
     }
 
     void Compiler::operator()(const ast::ModuleAttributVar& var)
     {
+        // FIXME
     }
 
     void Compiler::operator()(const ast::ArrayVar& var)
     {
+
     }
 
     void Compiler::operator()(const ast::FunctionDec& dec)
@@ -292,14 +300,17 @@ namespace compile
 
     void Compiler::operator()(const ast::MethodDec& dec)
     {
+        // FIXME
     }
 
     void Compiler::operator()(const ast::AttributDec& dec)
     {
+        // FIXME
     }
 
     void Compiler::operator()(const ast::ClassDec& dec)
     {
+        // FIXME
     }
 
     void Compiler::operator()(const ast::DecList& list)
