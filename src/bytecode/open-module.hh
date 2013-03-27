@@ -17,6 +17,7 @@ namespace bytecode
             virtual ~OpenModule();
 
             const std::string& str_get() const;
+            std::string& str_get();
 
             virtual void accept(Visitor& visitor) const;
 

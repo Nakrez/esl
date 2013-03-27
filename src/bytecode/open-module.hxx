@@ -10,6 +10,11 @@ namespace bytecode
         return str_;
     }
 
+    inline std::string& OpenModule::str_get()
+    {
+        return str_;
+    }
+
     inline void OpenModule::accept(Visitor& visitor) const
     {
         visitor(*this);
