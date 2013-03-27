@@ -116,7 +116,6 @@ class Driver;
 %token <sval>
         TOK_ID              "identifier"
         TOK_STRING          "string"
-        TOK_MOD_ID          "mod_id"
 
 %token <ival>
         TOK_DIGIT           "digit"
@@ -156,13 +155,15 @@ class Driver;
 %type <ast_id_list> inherit_list
 
 %left prec_exp
+
 %right "="
+%left "->" "."
 %left "||" "&&"
 %left "==" "!=" "<" ">" "<=" ">="
 %left "+" "-"
 %left "*" "/" "%"
+%left "!"
 %left "^"
-%left "[" ")" "->" "("
 
 %%
 program:
