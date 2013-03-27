@@ -365,7 +365,8 @@ namespace compile
             if (!dynamic_cast<ast::IfInstr*> (node)
                 && !dynamic_cast<ast::FunctionDec*> (node)
                 && !dynamic_cast<ast::ElseInstr*> (node)
-                && !dynamic_cast<ast::WhileInstr*> (node))
+                && !dynamic_cast<ast::WhileInstr*> (node)
+                && !dynamic_cast<ast::ImportInstr*> (node))
                 exec_.add_instruction(new bytecode::Pop(node->location_get()));
         }
     }
