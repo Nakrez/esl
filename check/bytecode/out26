@@ -1,0 +1,20 @@
+;begin ro_data section
+;end ro_data section
+
+;begin code section
+0 REGISTER_FUNCTION 0
+1 JUMP 14
+2 LOAD_INT 1
+3 STORE_LOCAL 0
+4 POP
+5 LOAD_LOCAL 0
+6 JUMP_FALSE 5
+7 LOAD_INT 5
+8 STORE_LOCAL 1
+9 POP
+10 JUMP -5
+11 LOAD_INT 4
+12 STORE_LOCAL 0
+13 POP
+14 RETURN
+;end code section

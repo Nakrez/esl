@@ -1,0 +1,9 @@
+function foo()
+    test = 1
+
+    while test do
+        a = 5
+    end
+
+    test = 4
+end

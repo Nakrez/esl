@@ -142,6 +142,28 @@ namespace compile
 
     void Compiler::operator()(const ast::WhileInstr& instr)
     {
+        // Offset for jump back to the condition
+        int start_offset = exec_.code_get().size();
+        bytecode::JumpFalse* out_loop;
+
+        out_loop = new bytecode::JumpFalse(instr.location_get(), 0);
+
+        instr.condition_get()->accept(*this);
+
+        // Offset to jump out to the loop
+        int offset = exec_.code_get().size();
+        exec_.add_instruction(out_loop);
+
+        instr.instr_list_get()->accept(*this);
+
+        out_loop->offset_set(exec_.code_get().size() - offset + 1);
+
+        // Compute jump to go back to the condition
+        bytecode::Jump* jump = new bytecode::Jump(instr.location_get(),
+                                                  start_offset
+                                                  - exec_.code_get().size());
+
+        exec_.add_instruction(jump);
     }
 
     void Compiler::operator()(const ast::InstrList& list)
@@ -331,7 +353,8 @@ namespace compile
             // (assignation, calculus, ...)
             if (!dynamic_cast<ast::IfInstr*> (node)
                 && !dynamic_cast<ast::FunctionDec*> (node)
-                && !dynamic_cast<ast::ElseInstr*> (node))
+                && !dynamic_cast<ast::ElseInstr*> (node)
+                && !dynamic_cast<ast::WhileInstr*> (node))
                 exec_.add_instruction(new bytecode::Pop(node->location_get()));
         }
     }
