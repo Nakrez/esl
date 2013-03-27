@@ -1,0 +1,11 @@
+test
+foo->bar
+foo->bar->foo
+foo->bar->foo()
+foo->bar->foo(1, 3)->var->foo(foo->bar, foo->bar()->foo->bar())
+foo.bar()->test()->bar().ll()
+foo.bar(3)
+foo.bar
+foo.bar->bar(foo.bar.bar.gte.bar->test(3), bar.foo, bar.foo->test()->foo[4])
+foo[4]
+foo[i]->foo(1).bar[7]

@@ -1,7 +1,7 @@
 #! /bin/sh
 
 categorie="ast"
-count=9
+count=10
 curr=1
 win=0
 

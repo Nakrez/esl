@@ -156,6 +156,7 @@ class Driver;
 
 %left prec_exp
 
+%right "identifier" "("
 %right "="
 %left "->" "."
 %left "||" "&&"
@@ -340,7 +341,7 @@ expr            :
                                         ast::OpExp::Operator::not_,
                                         nullptr);
                 }
-                | "-" expr
+                | "-" expr 
                 {
                   $$ = new ast::OpExp(@2,
                                       new ast::IntExp(@1, 0),
