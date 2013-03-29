@@ -74,6 +74,7 @@ ADD_LIBRARY(esl_lib SHARED
             lib/misc/symbol.cc
             lib/misc/visibility.cc
             lib/misc/indent.cc
+            lib/misc/error.cc
             )
 
 SET_TARGET_PROPERTIES(
