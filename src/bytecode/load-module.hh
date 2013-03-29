@@ -13,15 +13,16 @@ namespace bytecode
     {
         public:
             LoadModule(const yy::location& location,
-                       const misc::symbol& name);
+                       int data);
             virtual ~LoadModule();
 
-            const misc::symbol& name_get() const;
+            const int& data_get() const;
+            int& data_get();
 
             virtual void accept(Visitor& visitor) const;
 
         protected:
-            misc::symbol name_;
+            int data_;
     };
 } // namespace bytecode
 

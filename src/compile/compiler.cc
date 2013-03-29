@@ -234,7 +234,19 @@ namespace compile
 
     void Compiler::operator()(const ast::ModuleCallVar& var)
     {
+        const ast::VarId* varid;
 
+        varid =  dynamic_cast<const ast::VarId*> (var.var_get());
+
+        if (varid)
+        {
+            int ro = ro_data_get(varid->name_get());
+
+            exec_.add_instruction(new bytecode::LoadModule(varid->location_get(),
+                                                           ro));
+        }
+        else
+            this->visit(var.var_get());
     }
 
     void Compiler::operator()(const ast::ModuleAttributVar& var)
@@ -244,7 +256,14 @@ namespace compile
 
     void Compiler::operator()(const ast::ArrayVar& var)
     {
-
+        if (assign_)
+        {
+            // FIXME
+        }
+        else
+        {
+            // FIXME
+        }
     }
 
     void Compiler::operator()(const ast::FunctionDec& dec)
@@ -318,6 +337,7 @@ namespace compile
         compile_list(list);
     }
 
+    // TODO Same error handling as addr_get()
     int Compiler::ro_data_get(const std::string& str)
     {
         std::map<std::string, int>::iterator it;

@@ -3,9 +3,9 @@
 namespace bytecode
 {
     LoadModule::LoadModule(const yy::location& location,
-                           const misc::symbol& name)
+                           int data)
         : Bytecode(location)
-        , name_(name)
+        , data_(data)
     {}
 
     LoadModule::~LoadModule()
