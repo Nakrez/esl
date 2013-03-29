@@ -1,6 +1,8 @@
 #ifndef REGISTER_HH
 # define REGISTER_HH
 
+# include <command/command.hh>
+
 namespace command
 {
     class Register
@@ -10,6 +12,7 @@ namespace command
 
         public:
             static Register& instance();
+            void register_command(const Command& command);
 
         private:
             Register() = default;
