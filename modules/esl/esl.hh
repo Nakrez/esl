@@ -3,11 +3,12 @@
 
 # include <iostream>
 
-# include "../../lib/extension.hh"
-# include "../../lib/type/object.hh"
+# include <extension.hh>
+# include <type/object.hh>
+# include <type/int-object.hh>
+# include <type/string-object.hh>
 
-# include "../../src/execute/vm.hh"
-# include "../../lib/gc/memory-object.hh"
+# include <gc/memory-object.hh>
 
 class Esl: public esl::Extension
 {

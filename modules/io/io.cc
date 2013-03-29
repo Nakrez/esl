@@ -26,9 +26,9 @@ esl::GCObject* Io::print_core (const esl::Params& params)
             mem = new esl::GCObject(obj);
             print_params.params_set(mem);
 
-            esl::Vm::get()->external_call(obj->get_method("print"),
+            /*esl::Vm::get()->external_call(obj->get_method("print"),
                                           print_params);
-            esl::Vm::get()->pop();
+            esl::Vm::get()->pop();*/
 
             mem->free();
         }

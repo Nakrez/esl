@@ -26,15 +26,15 @@ esl::GCObject* Esl::function_exist(const esl::Params& params,
     if (params.count() < 1)
         throw esl::Exception("function_exist take 1 parameter");
 
-    esl::Vm* vm = esl::Vm::get();
+    //esl::Vm* vm = esl::Vm::get();
     esl::StringObject* str = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
 
     if (!str)
         throw esl::Exception("1st parameter of function_exist must be a string");
 
-    int ret = vm->is_register_function(str->data_get());
+    //int ret = vm->is_register_function(str->data_get());
 
-    return new esl::GCObject(new esl::IntObject(ret));
+    return new esl::GCObject(new esl::IntObject(0));//new esl::IntObject(ret));
 }
 
 esl::GCObject* Esl::module_exist(const esl::Params& params,
@@ -43,15 +43,15 @@ esl::GCObject* Esl::module_exist(const esl::Params& params,
     if (params.count() < 1)
         throw esl::Exception("module_exist take 1 parameter");
 
-    esl::Vm* vm = esl::Vm::get();
+    //esl::Vm* vm = esl::Vm::get();
     esl::StringObject* str = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
 
     if (!str)
         throw esl::Exception("1st parameter of module_exist must be a string");
 
-    int ret = vm->is_register_module(str->data_get());
+    //int ret = vm->is_register_module(str->data_get());
 
-    return new esl::GCObject(new esl::IntObject(ret));
+    return new esl::GCObject(new esl::IntObject(0));//new esl::IntObject(ret));
 }
 
 esl::GCObject* Esl::variable_exist(const esl::Params& params,
@@ -60,15 +60,15 @@ esl::GCObject* Esl::variable_exist(const esl::Params& params,
     if (params.count() < 1)
         throw esl::Exception("variable_exist take 1 parameter");
 
-    esl::Vm* vm = esl::Vm::get();
+    // esl::Vm* vm = esl::Vm::get();
     esl::StringObject* str = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
 
     if (!str)
         throw esl::Exception("1st parameter of variable_exist must be a string");
 
-    int ret = vm->is_register_variable(str->data_get());
+    // int ret = vm->is_register_variable(str->data_get());
 
-    return new esl::GCObject(new esl::IntObject(ret));
+    return new esl::GCObject(new esl::IntObject(0));//new esl::IntObject(ret));
 }
 
 esl::GCObject* Esl::type_method(const esl::Params& params,
@@ -153,7 +153,7 @@ esl::GCObject* Esl::module_function(const esl::Params& params,
     if (params.count() < 1)
         throw esl::Exception("module_function take 2 parameters");
 
-    esl::Vm* vm = esl::Vm::get();
+    // esl::Vm* vm = esl::Vm::get();
     esl::StringObject* module = dynamic_cast<esl::StringObject*>(params.get_params(1)->data_get());
     esl::StringObject* function = dynamic_cast<esl::StringObject*>(params.get_params(2)->data_get());
 
@@ -162,9 +162,9 @@ esl::GCObject* Esl::module_function(const esl::Params& params,
     if (!function)
         throw esl::Exception("2nd parameter of module_function must be a string");
 
-    int ret = vm->module_function(module->data_get(), function->data_get());
+    // int ret = vm->module_function(module->data_get(), function->data_get());
 
-    return new esl::GCObject(new esl::IntObject(ret));
+    return new esl::GCObject(new esl::IntObject(0));//new esl::IntObject(ret));
 }
 
 extern "C"

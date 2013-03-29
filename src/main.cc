@@ -47,6 +47,7 @@ int main(int argc, char **argv)
         ast::PrettyPrinter print(std::cout);
         print(*driver.ast_);
         std::cout << std::endl;
+        exit(0); // FIXME
     }
     /* Compile the AST given by the parser into bytecode */
     else if (!driver.errors_get())
@@ -60,12 +61,13 @@ int main(int argc, char **argv)
         {
             execute::ExecutableDumper dumper(std::cout);
             dumper.dump(compiler.exec_get());
+            exit(0); // FIXME
         }
 
         try
         {
-            /*execute::Vm::instanciate(compiler->get_bytecode());
-            execute::Vm::get()->run();*/
+            execute::Vm vm = execute::Vm(compiler.exec_get());
+            vm.run();
         }
         catch (esl::Exception& e)
         {

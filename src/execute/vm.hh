@@ -6,6 +6,7 @@
 #ifndef VM_HH
 # define VM_HH
 
+# include <execute/executable.hh>
 # include <bytecode/visitor.hh>
 
 namespace execute
@@ -13,8 +14,10 @@ namespace execute
     class Vm : public bytecode::Visitor
     {
         public:
-            Vm();
+            Vm(const Executable& exec);
             virtual ~Vm();
+
+            void run();
 
             virtual void operator()(const bytecode::Pop& byte);
 
@@ -53,6 +56,10 @@ namespace execute
             virtual void operator()(const bytecode::Return& byte);
 
             virtual void operator()(const bytecode::Delim& byte);
+
+        private:
+            // The executable executed
+            Executable exec_;
     };
 } // namespace execute
 

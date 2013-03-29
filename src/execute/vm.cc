@@ -2,11 +2,18 @@
 
 namespace execute
 {
-    Vm::Vm()
+    Vm::Vm(const Executable& exec)
+        : exec_(exec)
     {}
 
     Vm::~Vm()
     {}
+
+    void Vm::run()
+    {
+        for (auto instr : exec_.code_get())
+            instr->accept(*this);
+    }
 
     void Vm::operator()(const bytecode::Pop& byte)
     {
