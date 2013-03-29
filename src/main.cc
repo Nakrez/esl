@@ -1,14 +1,14 @@
 #include <iostream>
 
+#include <exception.hh>
+#include <type/squeleton.hh>
+
 #include <parser/driver.hh>
 #include <compile/compiler.hh>
 #include <execute/vm.hh>
 #include <ast/pretty-printer.hh>
 #include <utils/option.hh>
 #include <execute/executable-dumper.hh>
-
-# define BENCH 0
-//# define AST_TEST
 
 int main(int argc, char **argv)
 {
@@ -64,8 +64,8 @@ int main(int argc, char **argv)
 
         try
         {
-            /*esl::Vm::instanciate(compiler->get_bytecode());
-            esl::Vm::get()->run();*/
+            /*execute::Vm::instanciate(compiler->get_bytecode());
+            execute::Vm::get()->run();*/
         }
         catch (esl::Exception& e)
         {

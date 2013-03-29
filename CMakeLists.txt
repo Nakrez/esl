@@ -74,7 +74,6 @@ ADD_LIBRARY(esl_lib SHARED
             lib/misc/symbol.cc
             lib/misc/visibility.cc
             lib/misc/indent.cc
-            #src/execute/vm.cc
             )
 
 SET_TARGET_PROPERTIES(
@@ -198,6 +197,7 @@ add_executable(esl
 
                src/compile/compiler.cc
 
+               src/execute/vm.cc
                src/execute/executable.cc
                src/execute/executable-dumper.cc
 

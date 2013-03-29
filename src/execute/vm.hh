@@ -6,151 +6,54 @@
 #ifndef VM_HH
 # define VM_HH
 
-# include <fstream>
-# include <vector>
-# include <stack>
-# include <queue>
+# include <bytecode/visitor.hh>
 
-# include "../../lib/gc/memory-object.hh"
-# include "../../lib/content.hh"
-# include "../../lib/params.hh"
-# include "../../lib/module.hh"
-# include "../../lib/exception.hh"
-# include "../../lib/context.hh"
-# include "../../lib/stack-delimiter.hh"
-# include "../../lib/type/squeleton.hh"
-
-# include "../../lib/type/int-object.hh"
-# include "../../lib/type/int.hh"
-# include "../../lib/type/string-object.hh"
-# include "../../lib/type/string.hh"
-# include "../../lib/type/array-object.hh"
-# include "../../lib/type/array.hh"
-
-# include "../bytecode/bytecode.hh"
-
-namespace esl
+namespace execute
 {
-    class Vm
+    class Vm : public bytecode::Visitor
     {
         public:
-            static void instanciate (const std::vector<bytecode::Bytecode*>& code);
-            static Vm* get ();
-            static void free ();
+            Vm();
+            virtual ~Vm();
 
-            /// @brief Run the virtual machine
-            void run();
+            virtual void operator()(const bytecode::Pop& byte);
 
-            bool external_call (Function* fun, const Params& params);
+            virtual void operator()(const bytecode::Operation& byte);
+            virtual void operator()(const bytecode::BracketOp& byte);
+            virtual void operator()(const bytecode::NewObject& byte);
 
-            bool is_register_function(const std::string& name) const;
-            bool is_register_variable(const std::string& name) const;
-            bool is_register_module(const std::string& name) const;
+            virtual void operator()(const bytecode::StoreVar& byte);
+            virtual void operator()(const bytecode::StoreAttr& byte);
+            virtual void operator()(const bytecode::StoreArray& byte);
+            virtual void operator()(const bytecode::StoreLocal& byte);
 
-            bool module_function(const std::string& module,
-                                 const std::string& fun) const;
+            virtual void operator()(const bytecode::LoadVar& byte);
+            virtual void operator()(const bytecode::LoadLocal& byte);
+            virtual void operator()(const bytecode::LoadStr& byte);
+            virtual void operator()(const bytecode::LoadInt& byte);
+            virtual void operator()(const bytecode::LoadFloat& byte);
+            virtual void operator()(const bytecode::LoadAttr& byte);
+            virtual void operator()(const bytecode::LoadModule& byte);
 
-            /// @brief POP stack and decr counter on TOS
-            void pop ();
+            virtual void operator()(const bytecode::OpenModule& byte);
+            virtual void operator()(const bytecode::CallModule& byte);
+            virtual void operator()(const bytecode::CallMethod& byte);
+            virtual void operator()(const bytecode::CallFunction& byte);
 
-        private:
-            /// @brief Constructor
-            /// @param code The bytecode to execute
-            Vm (const std::vector<bytecode::Bytecode*>& code);
+            virtual void operator()(const bytecode::StartClass& byte);
+            virtual void operator()(const bytecode::EndClass& byte);
+            virtual void operator()(const bytecode::RegisterAttribut& byte);
+            virtual void operator()(const bytecode::RegisterFunction& byte);
+            virtual void operator()(const bytecode::Inherit& byte);
 
-            /// @brief Destructor
-            ~Vm ();
+            virtual void operator()(const bytecode::Jump& byte);
+            virtual void operator()(const bytecode::JumpTrue& byte);
+            virtual void operator()(const bytecode::JumpFalse& byte);
 
-            /// @brief Execute STORE instruction
-            /// @param instr The instruction to execute
-            void store (bytecode::Bytecode* instr);
+            virtual void operator()(const bytecode::Return& byte);
 
-            /// @brief Execute STORE_STK instruction
-            void store_stk ();
-
-            /// @brief Execute LOAD instruction
-            /// @param instr The instruction to execute
-            void load (bytecode::Bytecode* instr);
-
-            /// @brief Execute LOAD_INT instruction
-            /// @param instr The instruction to execute
-            void load_int (bytecode::Bytecode* instr);
-
-            /// @brief Execute LOAD_STR instruction
-            /// @param instr The instruction to execute
-            void load_str (bytecode::Bytecode* instr);
-
-            /// @brief Execute JUMP instruction
-            /// @param instr The instruction to execute
-            void jump (bytecode::Bytecode* instr);
-
-            /// @brief Execute JUMP instruction
-            /// @param instr The instruction to execute
-            /// @param val The value you want to compare with TOS
-            void jump (bytecode::Bytecode* instr, int);
-
-            /// @brief Execute MAKE_FUNCTION instruction
-            /// @param instr The instruction to execute
-            void register_function (bytecode::Bytecode* instr);
-
-            /// @brief Execute CALL_FUNCTION instruction
-            /// @param instr The instruction to execute
-            void call_function (bytecode::Bytecode* instr);
-
-            /// @brief Execute RETURN instruction
-            void function_return ();
-
-            /// @brief Execute OPEN instruction (load a module)
-            /// @param instr The instruction to execute
-            void setup_module(bytecode::Bytecode* instr);
-
-            /// @brief Execute MODULE instruction (push module on stack)
-            /// @param instr The instruction to execute
-            void module(bytecode::Bytecode* instr);
-
-            /// @brief Execute CALL_MODULE
-            /// @param instr The instruction to execute
-            void call_module(bytecode::Bytecode* instr);
-
-            /// @brief Get the path of the module called
-            /// @param mod_name The name of the module
-            std::string module_path (const std::string& mod_name);
-
-            /// @brief Perform an operation (call an operator)
-            /// @param name The name of the operation
-            void operation (const std::string& name);
-
-            /// @brief Execute CALL_METHOD instruction
-            /// @param instr The instruction to execute
-            void call_method (bytecode::Bytecode* bytecode);
-
-            void instanciation (bytecode::Bytecode* bytecode);
-            void create_type (bytecode::Bytecode* bytecode);
-            void make_attribut (bytecode::Bytecode* bytecode);
-            void store_attribut (bytecode::Bytecode* bytecode);
-            void load_attribut (bytecode::Bytecode* bytecode);
-            void inherit (bytecode::Bytecode* bytecode);
-
-            /// @brief Push a delimiter on the stack
-            void add_delim ();
-
-            /// @brief The VM stack
-            std::stack<esl::MemoryObject<esl::Content>*> stack_;
-
-            /// @brief The code to execute
-            std::vector<bytecode::Bytecode*> code_;
-
-            /// @brief The current runtime
-            esl::Context* runtime_;
-
-            /// @brief Path to look at to find module
-            static const std::string path_lib_[];
-
-            /// @brief Static instance of the VM
-            static Vm* instance_;
-
-            Type* declaration;
+            virtual void operator()(const bytecode::Delim& byte);
     };
-}
+} // namespace execute
 
 #endif /* !VM_HH */
