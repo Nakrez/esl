@@ -9,8 +9,8 @@ namespace command
     {
         public:
             CallbackCommand(const std::string& description,
-                            const std::string& dep,
                             const std::string& options,
+                            const std::string& dep,
                             void (*callback)());
 
             virtual ~CallbackCommand();

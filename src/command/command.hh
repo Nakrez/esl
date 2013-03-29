@@ -9,6 +9,7 @@ namespace command
     {
         public:
             Command(const std::string& description,
+                    const std::string& options,
                     const std::string& dep);
             virtual ~Command();
 
