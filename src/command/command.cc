@@ -6,6 +6,7 @@ namespace command
                      const std::string& options,
                      const std::string& dep)
         : descr_(description)
+        , opts_(options)
         , dep_(dep)
     {}
 

@@ -14,12 +14,14 @@ namespace command
             virtual ~Command();
 
             const std::string& descr_get() const;
+            const std::string& opts_get() const;
             const std::string& dep_get() const;
 
             virtual void execute() = 0;
 
         protected:
             std::string descr_;
+            std::string opts_;
             std::string dep_;
     };
 } // namespace command

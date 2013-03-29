@@ -10,6 +10,11 @@ namespace command
         return descr_;
     }
 
+    inline const std::string& Command::opts_get() const
+    {
+        return opts_;
+    }
+
     inline const std::string& Command::dep_get() const
     {
         return dep_;

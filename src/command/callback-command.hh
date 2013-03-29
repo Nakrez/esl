@@ -16,6 +16,9 @@ namespace command
             virtual ~CallbackCommand();
 
             virtual void execute();
+
+        protected:
+            void (*callback_)();
     };
 } // namespace command
 
