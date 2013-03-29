@@ -1,0 +1,14 @@
+;begin ro_data section
+.string 0 io
+.string 1 test
+.string 2 print_newline
+;end ro_data section
+
+;begin code section
+0 OPEN_MODULE 0 ;ro_data io
+1 LOAD_MODULE 0 ;ro_data io
+2 DELIM
+3 LOAD_STR 1 ;ro_data test
+4 LOAD_MODULE 2 ;ro_data print_newline
+5 POP
+;end code section

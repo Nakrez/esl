@@ -109,7 +109,8 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const CallModule& byte)
     {
-
+        ostr_ << "LOAD_MODULE " << byte.data_get()
+              << " ;ro_data " << ro_data_[byte.data_get()] << std::endl;
     }
 
     void BytecodeDumper::operator()(const CallMethod& byte)

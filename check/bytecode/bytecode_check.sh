@@ -1,7 +1,7 @@
 #! /bin/sh
 
 categorie="bytecode"
-count=27
+count=29
 curr=1
 win=0
 

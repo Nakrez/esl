@@ -7,6 +7,7 @@ namespace compile
     Compiler::Compiler()
         : ast::DefaultConstVisitor()
         , local_(false)
+        , module_(false)
         , var_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
         , glob_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
         , var_addr_(0)
@@ -63,9 +64,17 @@ namespace compile
             (*it)->accept(*this);
         }
 
-        // Add the call instruction
-        exec_.add_instruction(new bytecode::CallFunction(exp.location_get(),
-                                                         glob_addr));
+        if (module_)
+        {
+            int ro = ro_data_get(exp.name_get());
+
+            exec_.add_instruction(new bytecode::CallModule(exp.location_get(),
+                                                           ro));
+        }
+        else
+            // Add the call instruction
+            exec_.add_instruction(new bytecode::CallFunction(exp.location_get(),
+                                                             glob_addr));
     }
 
     void Compiler::operator()(const ast::ReturnExp& exp)
@@ -244,6 +253,9 @@ namespace compile
 
             exec_.add_instruction(new bytecode::LoadModule(varid->location_get(),
                                                            ro));
+            module_ = true;
+            var.call_get()->accept(*this);
+            module_ = false;
         }
         else
             this->visit(var.var_get());

@@ -1,0 +1,7 @@
+import "io"
+
+function test()
+    io.print_newline("test")
+end
+
+test()

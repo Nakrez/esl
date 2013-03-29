@@ -5,9 +5,14 @@
 
 namespace bytecode
 {
-    inline const misc::symbol& CallModule::name_get() const
+    inline const int& CallModule::data_get() const
     {
-        return name_;
+        return data_;
+    }
+
+    inline int& CallModule::data_get()
+    {
+        return data_;
     }
 
     inline void CallModule::accept(Visitor& visitor) const

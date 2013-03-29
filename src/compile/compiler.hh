@@ -74,6 +74,7 @@ namespace compile
 
             /// Allows compiler to treat variable as local variable
             bool local_;
+            bool module_;
 
             // Scope
             misc::ScopedMap<misc::symbol, int> var_scope_;
