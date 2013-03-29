@@ -5,7 +5,9 @@ SET(alias "/"
           "modules/esl/"
           "modules/stack/"
           "check/unitary/"
-          "check/unitary/scoped_map/")
+          "check/unitary/scoped_map/"
+          "check/unitary/error/")
+
 FOREACH(name ${alias})
 EXEC_PROGRAM(
     "@CMAKE_COMMAND@" ARGS "-E remove @CMAKE_CURRENT_SOURCE_DIR@/${name}CMakeCache.txt")
