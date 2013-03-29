@@ -102,11 +102,23 @@ namespace compile
 
     void Compiler::operator()(const ast::AssignExp& exp)
     {
+        const ast::ArrayVar* array;
+        array = dynamic_cast<const ast::ArrayVar*> (exp.var_get());
+
         exp.exp_get()->accept(*this);
 
-        assign_ = true;
-        exp.var_get()->accept(*this);
-        assign_ = false;
+        if (array)
+        {
+            array->exp_get()->accept(*this);
+            array->var_get()->accept(*this);
+            exec_.add_instruction(new bytecode::StoreArray(exp.location_get()));
+        }
+        else
+        {
+            assign_ = true;
+            exp.var_get()->accept(*this);
+            assign_ = false;
+        }
     }
 
     void Compiler::operator()(const ast::IfInstr& instr)
@@ -268,14 +280,9 @@ namespace compile
 
     void Compiler::operator()(const ast::ArrayVar& var)
     {
-        if (assign_)
-        {
-            // FIXME
-        }
-        else
-        {
-            // FIXME
-        }
+        var.exp_get()->accept(*this);
+        var.var_get()->accept(*this);
+        exec_.add_instruction(new bytecode::BracketOp(var.location_get()));
     }
 
     void Compiler::operator()(const ast::FunctionDec& dec)

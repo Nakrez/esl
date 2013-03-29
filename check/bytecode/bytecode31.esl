@@ -1,0 +1,5 @@
+function foo()
+    test = 0
+    test[5]
+    test[5] = 0
+end

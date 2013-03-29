@@ -35,12 +35,12 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const BracketOp& byte)
     {
-
+        ostr_ << "BRACKET_OP" << std::endl;
     }
 
     void BytecodeDumper::operator()(const NewObject& byte)
     {
-
+        // FIXME
     }
 
     void BytecodeDumper::operator()(const StoreVar& byte)
@@ -50,12 +50,12 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const StoreAttr& byte)
     {
-
+        // FIXME
     }
 
     void BytecodeDumper::operator()(const StoreArray& byte)
     {
-
+        ostr_ << "STORE_ARRAY" << std::endl;
     }
 
     void BytecodeDumper::operator()(const StoreLocal& byte)
@@ -92,7 +92,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const LoadAttr& byte)
     {
-
+        // FIXME
     }
 
     void BytecodeDumper::operator()(const LoadModule& byte)
@@ -115,7 +115,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const CallMethod& byte)
     {
-
+        // FIXME
     }
 
     void BytecodeDumper::operator()(const CallFunction& byte)
@@ -125,17 +125,17 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const StartClass& byte)
     {
-
+        // FIXME
     }
 
     void BytecodeDumper::operator()(const EndClass& byte)
     {
-
+        // FIXME
     }
 
     void BytecodeDumper::operator()(const RegisterAttribut& byte)
     {
-
+        // FIXME
     }
 
     void BytecodeDumper::operator()(const RegisterFunction& byte)
@@ -145,7 +145,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const Inherit& byte)
     {
-
+        // FIXME
     }
 
     void BytecodeDumper::operator()(const Jump& byte)
@@ -155,7 +155,7 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const JumpTrue& byte)
     {
-
+        ostr_ << "JUMP_TRUE " << byte.offset_get() << std::endl;
     }
 
     void BytecodeDumper::operator()(const JumpFalse& byte)
@@ -172,5 +172,4 @@ namespace bytecode
     {
         ostr_ << "DELIM" << std::endl;
     }
-
 } // namespace bytecode
