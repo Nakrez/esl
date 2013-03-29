@@ -197,6 +197,10 @@ add_executable(esl
 
                src/compile/compiler.cc
 
+               src/command/command.cc
+               src/command/callback-command.cc
+               src/command/register.cc
+
                src/execute/vm.cc
                src/execute/executable.cc
                src/execute/executable-dumper.cc
