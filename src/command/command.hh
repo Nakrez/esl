@@ -1,3 +1,5 @@
+/// @date 29/03/2013
+
 #ifndef COMMAND_HH
 # define COMMAND_HH
 
@@ -17,12 +19,16 @@ namespace command
             const std::string& opts_get() const;
             const std::string& dep_get() const;
 
-            virtual void execute() = 0;
+            bool enable_get() const;
+            void enable_set(bool enable);
+
+            virtual void execute() const = 0;
 
         protected:
             std::string descr_;
             std::string opts_;
             std::string dep_;
+            bool enabled_;
     };
 } // namespace command
 

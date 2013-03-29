@@ -128,6 +128,8 @@ add_executable(esl
                src/parser/parser.cc
                src/parser/lexer.cc
                src/parser/driver.cc
+               src/parser/libparser.cc
+               src/parser/command.cc
 
                src/utils/utils.cc
                src/utils/option.cc
@@ -206,6 +208,7 @@ add_executable(esl
                src/execute/executable.cc
                src/execute/executable-dumper.cc
 
+               src/global.cc
                src/main.cc)
 
 # Library link

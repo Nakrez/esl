@@ -1,4 +1,5 @@
 #include <command/command.hh>
+#include <command/register.hh>
 
 namespace command
 {
@@ -8,7 +9,10 @@ namespace command
         : descr_(description)
         , opts_(options)
         , dep_(dep)
-    {}
+        , enabled_(false)
+    {
+        Register::instance().register_command(*this);
+    }
 
     Command::~Command()
     {}

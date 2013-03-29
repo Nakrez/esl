@@ -19,6 +19,16 @@ namespace command
     {
         return dep_;
     }
+
+    inline bool Command::enable_get() const
+    {
+        return enabled_;
+    }
+
+    inline void Command::enable_set(bool enable)
+    {
+        enabled_ = enable;
+    }
 } // namespace command
 
 #endif /* !COMMAND_HXX */

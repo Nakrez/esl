@@ -1,11 +1,15 @@
+/// @date 29/03/2013
+
 #ifndef CALLBACK_COMMAND_HH
 # define CALLBACK_COMMAND_HH
+
+# include <string>
 
 # include <command/command.hh>
 
 namespace command
 {
-    class CallbackCommand : public Command
+    class CallbackCommand : public command::Command
     {
         public:
             CallbackCommand(const std::string& description,
@@ -15,7 +19,7 @@ namespace command
 
             virtual ~CallbackCommand();
 
-            virtual void execute();
+            virtual void execute() const;
 
         protected:
             void (*callback_)();

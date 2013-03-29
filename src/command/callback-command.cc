@@ -13,7 +13,7 @@ namespace command
     CallbackCommand::~CallbackCommand()
     {}
 
-    void CallbackCommand::execute()
+    void CallbackCommand::execute() const
     {
         callback_();
     }
