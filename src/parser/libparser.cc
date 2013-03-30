@@ -2,17 +2,15 @@
 
 namespace parser
 {
-    ast::Ast* main_ast = nullptr;
-
-    void parse_input_file(const std::string& name)
+    misc::Error parse_input_file(const std::string& name)
     {
         Driver driver;
         ast::Ast* generated_ast = nullptr;
 
         generated_ast = driver.parser(name);
 
-        // FIXME Add driver error handling
+        ast::main_ast = generated_ast;
 
-        main_ast = generated_ast;
+        return driver.error_;
     }
 } // namespace parser

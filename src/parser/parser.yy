@@ -8,7 +8,10 @@
 
 #include <ast/all.hh>
 
-class Driver;
+namespace parser
+{
+    class Driver;
+}
 }
 
 %define parser_class_name "eslxx_parser"
@@ -28,8 +31,8 @@ class Driver;
 
 /* Enable location tracking */
 %locations
-%parse-param { Driver& driver }
-%lex-param   { Driver& driver }
+%parse-param { parser::Driver& driver }
+%lex-param   { parser::Driver& driver }
 %pure-parser
 
 %union
@@ -511,6 +514,7 @@ do_group        :
 void yy::eslxx_parser::error (const yy::eslxx_parser::location_type& l,
                               const std::string& m)
 {
+    driver.error_ << misc::Error::PARSE;
+
     std::cerr << l << m << std::endl;
 }
-

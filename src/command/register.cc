@@ -8,7 +8,7 @@ namespace command
         return instance;
     }
 
-    void Register::register_command(const Command& command)
+    void Register::register_command(Command& command)
     {
         if (commands_.find(command.opts_get()) == commands_.end())
             commands_.insert(make_pair(command.opts_get(), &command));
@@ -55,15 +55,29 @@ namespace command
             return pattern == str;
     }
 
+    void Register::resolve_dependency(const std::string& str)
+    {
+        if (str != "")
+            enable_command(str);
+    }
+
     void Register::enable_command(const std::string& str)
     {
-        // FIXME resolve dependency
+        resolve_dependency(commands_.at(str)->dep_get());
+
+        commands_.at(str)->enable_set(true);
         execution_order_.push_back(commands_.at(str));
     }
 
     void Register::execute()
     {
         for (auto com : execution_order_)
-            com->execute();
+        {
+            if (com->enable_get())
+            {
+                com->execute();
+                com->enable_set(false);
+            }
+        }
     }
 } // namespace command

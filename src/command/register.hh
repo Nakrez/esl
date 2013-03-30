@@ -23,7 +23,7 @@ namespace command
 
         public:
             static Register& instance();
-            void register_command(const Command& command);
+            void register_command(Command& command);
 
             misc::Error error_get() const;
 
@@ -32,6 +32,7 @@ namespace command
 
             void enable_command(const std::string& str);
             void execute();
+            void resolve_dependency(const std::string& str);
 
         private:
             bool match(const std::string& pattern, const std::string& str);
@@ -40,8 +41,8 @@ namespace command
             Register() = default;
             misc::Error error_;
 
-            std::map<std::string, const Command*> commands_;
-            std::list<const Command*> execution_order_;
+            std::map<std::string, Command*> commands_;
+            std::list<Command*> execution_order_;
     };
 } // namespace command
 

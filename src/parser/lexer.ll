@@ -87,6 +87,7 @@
                           err += yytext;
                           std::cerr << *yylloc << err << std::endl;
                           yylloc->step();
+                          driver.error_ << misc::Error::SCAN;
                         }
 <LITTERAL>[^\\"]*       {
                             if (yylval->sval)
@@ -141,38 +142,42 @@
                           std::string err = "scan error, unknow character : '";
                           err += yytext;
                           err += "'";
+                          driver.error_ << misc::Error::SCAN;
+
                           std::cerr << *yylloc << err << std::endl;
                         }
 %%
 
-void Driver::scan_begin()
+namespace parser
 {
-    static bool first = true;
-    if (first)
+    void Driver::scan_begin()
     {
-        first = false;
-        // Reclaim all the memory allocated by Flex.
-        std::atexit ((void (*) ()) yylex_destroy);
+        static bool first = true;
+        if (first)
+        {
+            first = false;
+            // Reclaim all the memory allocated by Flex.
+            std::atexit ((void (*) ()) yylex_destroy);
+        }
+
+        states_.push (YY_CURRENT_BUFFER);
+
+        if (this->file_.empty() || this->file_ == "-")
+            yyin = stdin;
+        else if (!(yyin = fopen(this->file_.c_str(), "r")))
+        {
+            std::cerr << "cannot open " << this->file_ << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
     }
 
-    states_.push (YY_CURRENT_BUFFER);
-
-    if (this->file_.empty() || this->file_ == "-")
-        yyin = stdin;
-    else if (!(yyin = fopen(this->file_.c_str(), "r")))
+    void Driver::scan_end()
     {
-        std::cerr << "cannot open " << this->file_ << std::endl;
-        exit(EXIT_FAILURE);
+        if (yyin)
+            fclose (yyin);
+        yy_delete_buffer (YY_CURRENT_BUFFER);
+        yy_switch_to_buffer (states_.top ());
+        states_.pop ();
     }
-    yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
 }
-
-void Driver::scan_end()
-{
-    if (yyin)
-        fclose (yyin);
-    yy_delete_buffer (YY_CURRENT_BUFFER);
-    yy_switch_to_buffer (states_.top ());
-    states_.pop ();
-}
-

@@ -3,14 +3,15 @@
 
 # include <string>
 
+# include <misc/error.hh>
+
 # include <parser/driver.hh>
-# include <ast/ast.hh>
+
+# include <ast/libast.hh>
 
 namespace parser
 {
-    extern ast::Ast* main_ast;
-
-    void parse_input_file(const std::string& name);
+    misc::Error parse_input_file(const std::string& name);
 } // namespace parser
 
 #endif /* !LIBPARSER_HH */
