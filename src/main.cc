@@ -10,10 +10,7 @@ int main(int argc, char **argv)
         if (command::Register::instance().number_enable_command() == 0)
         {
             if (main_filename == "")
-            {
-                std::cout << "No option and no files" << std::endl;
-                // FIXME : execute help task
-            }
+                command::Register::instance().enable_command("usage");
             else
             {
                 std::cout << "Filename without opts" << std::endl;

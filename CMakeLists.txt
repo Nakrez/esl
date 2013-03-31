@@ -212,6 +212,8 @@ add_executable(esl
                src/execute/executable.cc
                src/execute/executable-dumper.cc
 
+               src/other/command.cc
+
                src/global.cc
                src/main.cc)
 
