@@ -6,6 +6,7 @@ namespace compile
 {
     Compiler::Compiler()
         : ast::DefaultConstVisitor()
+        , exec_()
         , local_(false)
         , module_(false)
         , var_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
@@ -13,7 +14,6 @@ namespace compile
         , var_addr_(0)
         , glob_addr_(0)
         , ro_data_counter_(0)
-        , error_(false)
         , assign_(false)
     {}
 
@@ -384,7 +384,8 @@ namespace compile
         if (addr == INT_MIN)
         {
             if (error)
-                std::cerr << "Var does not exist" << std::endl;
+                error_ << misc::Error::COMPILE
+                       << "Var " << str << " does not exist" << std::endl;
             addr = scope_addr++;
             scope.add(str, addr);
         }

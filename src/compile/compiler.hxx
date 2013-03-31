@@ -5,9 +5,14 @@
 
 namespace compile
 {
-    inline const execute::Executable& Compiler::exec_get() const
+    inline execute::Executable& Compiler::exec_get()
     {
         return exec_;
+    }
+
+    inline const misc::Error& Compiler::error_get() const
+    {
+        return error_;
     }
 } // namespace compile
 

@@ -7,6 +7,7 @@
 
 # include <misc/symbol.hh>
 # include <misc/scoped-map.hh>
+# include <misc/error.hh>
 
 # include <execute/executable.hh>
 
@@ -24,7 +25,8 @@ namespace compile
             Compiler();
             virtual ~Compiler();
 
-            const execute::Executable& exec_get() const;
+            execute::Executable& exec_get();
+            const misc::Error& error_get() const;
 
         /* Visitor Implementation */
         public:
@@ -88,7 +90,7 @@ namespace compile
             std::map<std::string, int> ro_data_;
             int ro_data_counter_;
 
-            bool error_;
+            misc::Error error_;
 
             bool assign_;
     };

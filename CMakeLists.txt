@@ -201,6 +201,8 @@ add_executable(esl
                src/bytecode/bytecode-dumper.cc
 
                src/compile/compiler.cc
+               src/compile/libcompile.cc
+               src/compile/command.cc
 
                src/command/command.cc
                src/command/callback-command.cc
