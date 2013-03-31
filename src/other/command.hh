@@ -5,6 +5,7 @@
 
 # include <global.hh>
 
+# include <command/register.hh>
 # include <command/libcommand.hh>
 
 namespace other
@@ -16,6 +17,10 @@ namespace other
     REGULAR_COMMAND("usage",
                     "Display the usage of ESL binary",
                     "", usage);
+
+    REGULAR_COMMAND("-v|--version",
+                    "Display the current version of ESL binary",
+                    "", version);
 } // namespace other
 
 #endif /* !OTHER_COMMAND_HH */

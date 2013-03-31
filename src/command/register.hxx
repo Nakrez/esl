@@ -14,6 +14,12 @@ namespace command
     {
         return execution_order_.size();
     }
+
+    inline const std::map<std::string, Command*>&
+    Register::commands_get() const
+    {
+        return commands_;
+    }
 } // namespace command
 
 #endif /* !REGISTER_HXX */

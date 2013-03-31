@@ -33,6 +33,7 @@ namespace command
             void enable_command(const std::string& str);
             void execute();
             void resolve_dependency(const std::string& str);
+            const std::map<std::string, Command*>& commands_get() const;
 
         private:
             bool match(const std::string& pattern, const std::string& str);
