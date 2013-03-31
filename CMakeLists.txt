@@ -199,6 +199,8 @@ add_executable(esl
                src/bytecode/delim.cc
                src/bytecode/visitor.cc
                src/bytecode/bytecode-dumper.cc
+               src/bytecode/command.cc
+               src/bytecode/libbytecode.cc
 
                src/compile/compiler.cc
                src/compile/libcompile.cc
