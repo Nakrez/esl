@@ -9,4 +9,12 @@ namespace execute
 
         return misc::Error();
     }
+
+    misc::Error execute(const Executable& exec)
+    {
+        Vm vm(exec);
+        vm.run();
+
+        return vm.error_get();
+    }
 } // namespace execute

@@ -6,8 +6,11 @@
 #ifndef VM_HH
 # define VM_HH
 
-# include <execute/executable.hh>
+# include <misc/error.hh>
+
 # include <bytecode/visitor.hh>
+
+# include <execute/executable.hh>
 
 namespace execute
 {
@@ -18,6 +21,7 @@ namespace execute
             virtual ~Vm();
 
             void run();
+            const misc::Error& error_get() const;
 
             virtual void operator()(const bytecode::Pop& byte);
 
@@ -60,7 +64,11 @@ namespace execute
         private:
             // The executable executed
             Executable exec_;
+
+            misc::Error error_;
     };
 } // namespace execute
+
+# include <execute/vm.hxx>
 
 #endif /* !VM_HH */

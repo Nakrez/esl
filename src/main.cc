@@ -13,10 +13,7 @@ int main(int argc, char **argv)
             if (main_filename == "")
                 command::Register::instance().enable_command("usage");
             else
-            {
-                std::cout << "Filename without opts" << std::endl;
-                // FIXME : enable full execution
-            }
+                command::Register::instance().enable_command("-e|--execute");
         }
 
         command::Register::instance().execute();
@@ -28,6 +25,7 @@ int main(int argc, char **argv)
         exit(e.error_code_get());
     }
 
-    if (compile::main_executable)
-        delete compile::main_executable;
+    // FIXME
+    // if (compile::main_executable)
+    //     delete compile::main_executable;
 }
