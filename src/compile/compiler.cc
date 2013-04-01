@@ -6,7 +6,7 @@ namespace compile
 {
     Compiler::Compiler()
         : ast::DefaultConstVisitor()
-        , exec_()
+        , exec_(new execute::Executable())
         , local_(false)
         , module_(false)
         , var_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
@@ -27,13 +27,13 @@ namespace compile
 
     void Compiler::operator()(const ast::IntExp& exp)
     {
-        exec_.add_instruction(new bytecode::LoadInt(exp.location_get(),
+        exec_->add_instruction(new bytecode::LoadInt(exp.location_get(),
                                                     exp.value_get()));
     }
 
     void Compiler::operator()(const ast::StringExp& exp)
     {
-        exec_.add_instruction(new bytecode::LoadStr(exp.location_get(),
+        exec_->add_instruction(new bytecode::LoadStr(exp.location_get(),
                                                     ro_data_get(exp.value_get())));
     }
 
@@ -42,7 +42,7 @@ namespace compile
         exp.lop_get()->accept(*this);
         exp.rop_get()->accept(*this);
 
-        exec_.add_instruction(new bytecode::Operation(exp.location_get(),
+        exec_->add_instruction(new bytecode::Operation(exp.location_get(),
                                                       exp.op_get()));
     }
 
@@ -52,7 +52,7 @@ namespace compile
         int glob_addr = glob_scope_.get(exp.name_get());
 
         // Delimit function call formals
-        exec_.add_instruction(new bytecode::Delim(exp.location_get()));
+        exec_->add_instruction(new bytecode::Delim(exp.location_get()));
 
         // Formal needs to be process in reverse order
         typedef std::list<ast::Exp*>::const_reverse_iterator ExpIterator;
@@ -68,12 +68,12 @@ namespace compile
         {
             int ro = ro_data_get(exp.name_get());
 
-            exec_.add_instruction(new bytecode::CallModule(exp.location_get(),
+            exec_->add_instruction(new bytecode::CallModule(exp.location_get(),
                                                            ro));
         }
         else
             // Add the call instruction
-            exec_.add_instruction(new bytecode::CallFunction(exp.location_get(),
+            exec_->add_instruction(new bytecode::CallFunction(exp.location_get(),
                                                              glob_addr));
     }
 
@@ -82,7 +82,7 @@ namespace compile
         if (exp.exp_get())
             exp.exp_get()->accept(*this);
 
-        exec_.add_instruction(new bytecode::Return(exp.location_get()));
+        exec_->add_instruction(new bytecode::Return(exp.location_get()));
     }
 
     void Compiler::operator()(const ast::BreakExp&)
@@ -111,7 +111,7 @@ namespace compile
         {
             array->exp_get()->accept(*this);
             array->var_get()->accept(*this);
-            exec_.add_instruction(new bytecode::StoreArray(exp.location_get()));
+            exec_->add_instruction(new bytecode::StoreArray(exp.location_get()));
         }
         else
         {
@@ -128,30 +128,30 @@ namespace compile
         bytecode::JumpFalse* jmp = new bytecode::JumpFalse(instr.location_get(),
                                                            0);
 
-        exec_.add_instruction(jmp);
+        exec_->add_instruction(jmp);
 
-        int offset = exec_.code_get().size();
+        int offset = exec_->code_get().size();
 
         instr.exp_true_get()->accept(*this);
 
-        offset = exec_.code_get().size() - offset + 1;
+        offset = exec_->code_get().size() - offset + 1;
 
         if (instr.exp_else_get())
         {
             bytecode::Jump* jmp_else;
             jmp_else = new bytecode::Jump(instr.location_get(), 0);
 
-            exec_.add_instruction(jmp_else);
+            exec_->add_instruction(jmp_else);
 
             // Calculate offset to avoid the else if the if is true
-            int else_offset = exec_.code_get().size();
+            int else_offset = exec_->code_get().size();
 
             // Increment the if offset cause we had the jump instruction
             ++offset;
 
             instr.exp_else_get()->accept(*this);
 
-            else_offset = exec_.code_get().size() - else_offset + 1;
+            else_offset = exec_->code_get().size() - else_offset + 1;
 
             jmp_else->offset_set(else_offset);
         }
@@ -167,7 +167,7 @@ namespace compile
     void Compiler::operator()(const ast::WhileInstr& instr)
     {
         // Offset for jump back to the condition
-        int start_offset = exec_.code_get().size();
+        int start_offset = exec_->code_get().size();
         bytecode::JumpFalse* out_loop;
 
         out_loop = new bytecode::JumpFalse(instr.location_get(), 0);
@@ -175,19 +175,19 @@ namespace compile
         instr.condition_get()->accept(*this);
 
         // Offset to jump out to the loop
-        int offset = exec_.code_get().size();
-        exec_.add_instruction(out_loop);
+        int offset = exec_->code_get().size();
+        exec_->add_instruction(out_loop);
 
         instr.instr_list_get()->accept(*this);
 
-        out_loop->offset_set(exec_.code_get().size() - offset + 1);
+        out_loop->offset_set(exec_->code_get().size() - offset + 1);
 
         // Compute jump to go back to the condition
         bytecode::Jump* jump = new bytecode::Jump(instr.location_get(),
                                                   start_offset
-                                                  - exec_.code_get().size());
+                                                  - exec_->code_get().size());
 
-        exec_.add_instruction(jump);
+        exec_->add_instruction(jump);
     }
 
     void Compiler::operator()(const ast::InstrList& list)
@@ -197,7 +197,7 @@ namespace compile
 
     void Compiler::operator()(const ast::ImportInstr& instr)
     {
-        exec_.add_instruction(new bytecode::OpenModule(instr.location_get(),
+        exec_->add_instruction(new bytecode::OpenModule(instr.location_get(),
                                                        ro_data_get(instr.name_get())));
     }
 
@@ -210,7 +210,7 @@ namespace compile
                 int addr_var = addr_get(var.name_get(), var_scope_,
                                         var_addr_);
 
-                exec_.add_instruction(new bytecode::StoreLocal(var.location_get(),
+                exec_->add_instruction(new bytecode::StoreLocal(var.location_get(),
                                                                addr_var));
             }
             else
@@ -218,7 +218,7 @@ namespace compile
                 int addr_glob = addr_get(var.name_get(), glob_scope_,
                                          glob_addr_);
 
-                exec_.add_instruction(new bytecode::StoreVar(var.location_get(),
+                exec_->add_instruction(new bytecode::StoreVar(var.location_get(),
                                                              addr_glob));
             }
         }
@@ -229,7 +229,7 @@ namespace compile
                 int addr_var = addr_get(var.name_get(), var_scope_,
                                         var_addr_, true);
 
-                exec_.add_instruction(new bytecode::LoadLocal(var.location_get(),
+                exec_->add_instruction(new bytecode::LoadLocal(var.location_get(),
                                                               addr_var));
             }
             else
@@ -237,7 +237,7 @@ namespace compile
                 int addr_glob = addr_get(var.name_get(), glob_scope_,
                                          glob_addr_, true);
 
-                exec_.add_instruction(new bytecode::LoadVar(var.location_get(),
+                exec_->add_instruction(new bytecode::LoadVar(var.location_get(),
                                                             addr_glob));
             }
         }
@@ -263,7 +263,7 @@ namespace compile
         {
             int ro = ro_data_get(varid->name_get());
 
-            exec_.add_instruction(new bytecode::LoadModule(varid->location_get(),
+            exec_->add_instruction(new bytecode::LoadModule(varid->location_get(),
                                                            ro));
             module_ = true;
             var.call_get()->accept(*this);
@@ -282,7 +282,7 @@ namespace compile
     {
         var.exp_get()->accept(*this);
         var.var_get()->accept(*this);
-        exec_.add_instruction(new bytecode::BracketOp(var.location_get()));
+        exec_->add_instruction(new bytecode::BracketOp(var.location_get()));
     }
 
     void Compiler::operator()(const ast::FunctionDec& dec)
@@ -295,23 +295,23 @@ namespace compile
         int addr_fun = addr_get(dec.name_get(), glob_scope_,
                                 glob_addr_);
 
-        exec_.add_instruction(new bytecode::RegisterFunction(dec.location_get(),
+        exec_->add_instruction(new bytecode::RegisterFunction(dec.location_get(),
                                                              addr_fun));
 
         // Prepare jump instruction
         // offset is 0 because not known yet
         bytecode::Jump* jump = new bytecode::Jump(dec.location_get(), 0);
 
-        exec_.add_instruction(jump);
+        exec_->add_instruction(jump);
 
-        int offset = exec_.code_get().size();
+        int offset = exec_->code_get().size();
 
         dec.args_get()->accept(*this);
         dec.body_get()->accept(*this);
 
-        offset = exec_.code_get().size() - offset + 2;
+        offset = exec_->code_get().size() - offset + 2;
 
-        exec_.add_instruction(new bytecode::Return(dec.location_get()));
+        exec_->add_instruction(new bytecode::Return(dec.location_get()));
 
         jump->offset_set(offset);
 
@@ -329,7 +329,7 @@ namespace compile
 
         var_scope_.add(dec.name_get(), addr);
 
-        exec_.add_instruction(new bytecode::StoreLocal(dec.location_get(),
+        exec_->add_instruction(new bytecode::StoreLocal(dec.location_get(),
                                                        addr));
 
         // Increment local adress
@@ -368,7 +368,7 @@ namespace compile
         else
         {
             ro_data_.insert(std::pair<std::string, int>(str, ro_data_counter_));
-            exec_.add_ro_data(str);
+            exec_->add_ro_data(str);
 
             return ro_data_counter_++;
         }
@@ -407,7 +407,7 @@ namespace compile
                 && !dynamic_cast<ast::ElseInstr*> (node)
                 && !dynamic_cast<ast::WhileInstr*> (node)
                 && !dynamic_cast<ast::ImportInstr*> (node))
-                exec_.add_instruction(new bytecode::Pop(node->location_get()));
+                exec_->add_instruction(new bytecode::Pop(node->location_get()));
         }
     }
 } // namespace compile

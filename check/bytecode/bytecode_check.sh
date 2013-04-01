@@ -7,7 +7,7 @@ win=0
 
 while test $curr -le $count; do
     file=$categorie$curr".esl"
-    ./esl --byte "./check/$categorie/$file" > ./check/$categorie/out
+    ./esl -d "./check/$categorie/$file" > ./check/$categorie/out
     if diff "./check/$categorie/out" "./check/$categorie/out$curr" > /dev/null; then
         win=$(($win+1))
     else

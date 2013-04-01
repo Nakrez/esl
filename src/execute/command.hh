@@ -5,6 +5,8 @@
 
 # include <compile/libcompile.hh>
 
+# include <execute/libexecute.hh>
+
 namespace bytecode
 {
     REGULAR_COMMAND("-d|--readable_dump",

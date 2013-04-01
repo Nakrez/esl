@@ -9,6 +9,8 @@ namespace compile
         Compiler compiler;
         compiler(*ast);
 
+        main_executable = compiler.exec_get();
+
         return compiler.error_get();
     }
 } // namespace compile

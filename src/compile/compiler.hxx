@@ -5,7 +5,7 @@
 
 namespace compile
 {
-    inline execute::Executable& Compiler::exec_get()
+    inline execute::Executable* Compiler::exec_get()
     {
         return exec_;
     }

@@ -25,7 +25,7 @@ namespace compile
             Compiler();
             virtual ~Compiler();
 
-            execute::Executable& exec_get();
+            execute::Executable* exec_get();
             const misc::Error& error_get() const;
 
         /* Visitor Implementation */
@@ -72,7 +72,7 @@ namespace compile
                          bool error = false);
 
         protected:
-            execute::Executable exec_;
+            execute::Executable* exec_;
 
             /// Allows compiler to treat variable as local variable
             bool local_;

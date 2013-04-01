@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include <compile/libcompile.hh>
 #include <command/register.hh>
 
 int main(int argc, char **argv)
@@ -26,4 +27,7 @@ int main(int argc, char **argv)
         std::cerr << e;
         exit(e.error_code_get());
     }
+
+    if (compile::main_executable)
+        delete compile::main_executable;
 }

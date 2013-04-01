@@ -14,6 +14,7 @@ namespace ast
 
         PrettyPrinter printer(std::cout);
         printer(*ast);
+        std::cout << std::endl;
 
         return misc::Error();
     }
