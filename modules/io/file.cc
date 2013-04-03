@@ -14,46 +14,46 @@ esl::File::~File ()
 
 void esl::File::init()
 {
-    esl::Squeleton* squeleton = esl::Squeleton::get();
+    esl::Squeleton& squeleton = esl::Squeleton::get();
 
     init_basics();
 
-    squeleton->register_method (name_, "open",
+    squeleton.register_method (name_, "open",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::open)));
-    squeleton->register_method (name_, "is_open",
+    squeleton.register_method (name_, "is_open",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::is_open)));
 
-    squeleton->register_method (name_, "close",
+    squeleton.register_method (name_, "close",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::close)));
 
-    squeleton->register_method (name_, "read_line",
+    squeleton.register_method (name_, "read_line",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::read_line)));
 
-    squeleton->register_method (name_, "read_all",
+    squeleton.register_method (name_, "read_all",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::read_all)));
 
-    squeleton->register_method (name_, "seek_beg",
+    squeleton.register_method (name_, "seek_beg",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::seek_beg)));
 
-    squeleton->register_method (name_, "seek_end",
+    squeleton.register_method (name_, "seek_end",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::seek_end)));
 
-    squeleton->register_method (name_, "eof",
+    squeleton.register_method (name_, "eof",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::eof)));
 
-    squeleton->register_method (name_, "write",
+    squeleton.register_method (name_, "write",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::write)));
 
-    squeleton->register_method (name_, "write_newline",
+    squeleton.register_method (name_, "write_newline",
                                 new Function(new Delegate<esl::File>(this,
                                                                      &esl::File::write_newline)));
 }

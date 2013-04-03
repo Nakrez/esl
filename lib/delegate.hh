@@ -25,9 +25,7 @@ namespace esl
             }
 
             virtual ~Delegate ()
-            {
-                delete obj_;
-            }
+            {}
 
             virtual GCObject* Call(const Params& params, Context* context)
             {
@@ -38,7 +36,6 @@ namespace esl
             Class* obj_;
             Function fun_;
     };
-
-}
+} // namespace esl
 
 #endif /* !DELEGATE_HH */

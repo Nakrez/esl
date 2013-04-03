@@ -6,7 +6,13 @@
 #ifndef VM_HH
 # define VM_HH
 
+# include <stack>
+
 # include <misc/error.hh>
+
+# include <gc/memory-object.hh>
+
+# include <type/built-in.hh>
 
 # include <bytecode/visitor.hh>
 
@@ -65,7 +71,10 @@ namespace execute
             // The executable executed
             Executable exec_;
 
+            // Error return by the VM
             misc::Error error_;
+
+            std::stack<esl::GCObject*> calculus_stack_;
     };
 } // namespace execute
 

@@ -85,8 +85,8 @@ esl::GCObject* Esl::type_method(const esl::Params& params,
     if (!method)
         throw esl::Exception("2nd parameter of type_method must be a string");
 
-    int ret = esl::Squeleton::get()->type_method(type->data_get(),
-                                                 method->data_get());
+    int ret = esl::Squeleton::get().type_method(type->data_get(),
+                                                method->data_get());
 
     return new esl::GCObject(new esl::IntObject(ret));
 }
@@ -105,8 +105,8 @@ esl::GCObject* Esl::type_attribut(const esl::Params& params,
     if (!attribut)
         throw esl::Exception("2nd parameter of type_attribut must be a string");
 
-    int ret = esl::Squeleton::get()->type_attribut(type->data_get(),
-                                                   attribut->data_get());
+    int ret = esl::Squeleton::get().type_attribut(type->data_get(),
+                                                  attribut->data_get());
 
     return new esl::GCObject(new esl::IntObject(ret));
 }
@@ -123,8 +123,8 @@ esl::GCObject* Esl::object_method(const esl::Params& params,
     if (!method)
         throw esl::Exception("2nd parameter of object_method must be a string");
 
-    int ret = esl::Squeleton::get()->type_method(obj->type_get(),
-                                                 method->data_get());
+    int ret = esl::Squeleton::get().type_method(obj->type_get(),
+                                                method->data_get());
 
     return new esl::GCObject(new esl::IntObject(ret));
 }
@@ -141,8 +141,8 @@ esl::GCObject* Esl::object_attribut(const esl::Params& params,
     if (!attribut)
         throw esl::Exception("2nd parameter of object_attribut must be a string");
 
-    int ret = esl::Squeleton::get()->type_attribut(obj->type_get(),
-                                                   attribut->data_get());
+    int ret = esl::Squeleton::get().type_attribut(obj->type_get(),
+                                                  attribut->data_get());
 
     return new esl::GCObject(new esl::IntObject(ret));
 }

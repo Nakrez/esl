@@ -14,72 +14,72 @@ esl::Type::~Type ()
 
 void esl::Type::init_basics ()
 {
-    esl::Squeleton* squeleton = esl::Squeleton::get();
+    esl::Squeleton& squeleton = esl::Squeleton::get();
 
-    squeleton->register_type(name_, this);
+    squeleton.register_type(name_, this);
 
-    squeleton->register_method (name_, "construct",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::construct)));
-    squeleton->register_method (name_, "type",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::type)));
-    squeleton->register_method (name_, "print",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::print)));
-    squeleton->register_method (name_, "tostring",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::to_string)));
-    squeleton->register_method (name_, "operator+",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::plus_op)));
-    squeleton->register_method (name_, "operator-",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::minus_op)));
-    squeleton->register_method (name_, "operator*",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::mul_op)));
-    squeleton->register_method (name_, "operator/",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::div_op)));
-    squeleton->register_method (name_, "operator%",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::mod_op)));
-    squeleton->register_method (name_, "operator^",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::pow_op)));
-    squeleton->register_method (name_, "operator==",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::eq_op)));
-    squeleton->register_method (name_, "operator!=",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::diff_op)));
-    squeleton->register_method (name_, "operator>",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::gt_op)));
-    squeleton->register_method (name_, "operator>=",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::ge_op)));
-    squeleton->register_method (name_, "operator<",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::lt_op)));
-    squeleton->register_method (name_, "operator<=",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::le_op)));
-    squeleton->register_method (name_, "operator&&",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::and_op)));
-    squeleton->register_method (name_, "operator||",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::or_op)));
-    squeleton->register_method (name_, "operator[]",
-                                new Function(new Delegate<esl::Type>(this,
-                                                                     &esl::Type::bracket_op)));
+    squeleton.register_method (name_, "construct",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::construct)));
+    squeleton.register_method (name_, "type",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::type)));
+    squeleton.register_method (name_, "print",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::print)));
+    squeleton.register_method (name_, "tostring",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::to_string)));
+    squeleton.register_method (name_, "operator+",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::plus_op)));
+    squeleton.register_method (name_, "operator-",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::minus_op)));
+    squeleton.register_method (name_, "operator*",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::mul_op)));
+    squeleton.register_method (name_, "operator/",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::div_op)));
+    squeleton.register_method (name_, "operator%",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::mod_op)));
+    squeleton.register_method (name_, "operator^",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::pow_op)));
+    squeleton.register_method (name_, "operator==",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::eq_op)));
+    squeleton.register_method (name_, "operator!=",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::diff_op)));
+    squeleton.register_method (name_, "operator>",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::gt_op)));
+    squeleton.register_method (name_, "operator>=",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::ge_op)));
+    squeleton.register_method (name_, "operator<",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::lt_op)));
+    squeleton.register_method (name_, "operator<=",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::le_op)));
+    squeleton.register_method (name_, "operator&&",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::and_op)));
+    squeleton.register_method (name_, "operator||",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::or_op)));
+    squeleton.register_method (name_, "operator[]",
+                               new Function(new Delegate<esl::Type>(this,
+                                                                    &esl::Type::bracket_op)));
 }
 
 void esl::Type::inherit (const std::string& type)
 {
-    esl::Squeleton::get()->inherit(name_, type);
+    esl::Squeleton::get().inherit(name_, type);
 }
 
 void esl::Type::init ()

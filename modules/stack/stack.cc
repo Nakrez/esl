@@ -14,23 +14,23 @@ esl::Stack::~Stack ()
 
 void esl::Stack::init ()
 {
-    esl::Squeleton* squeleton = esl::Squeleton::get();
+    esl::Squeleton& squeleton = esl::Squeleton::get();
 
     this->init_basics();
 
-    squeleton->register_method (name_, "empty",
+    squeleton.register_method (name_, "empty",
                                 new Function(new Delegate<esl::Stack>(this,
                                                                       &esl::Stack::empty)));
-    squeleton->register_method (name_, "size",
+    squeleton.register_method (name_, "size",
                                 new Function(new Delegate<esl::Stack>(this,
                                                                       &esl::Stack::size)));
-    squeleton->register_method (name_, "top",
+    squeleton.register_method (name_, "top",
                                 new Function(new Delegate<esl::Stack>(this,
                                                                       &esl::Stack::top)));
-    squeleton->register_method (name_, "pop",
+    squeleton.register_method (name_, "pop",
                                 new Function(new Delegate<esl::Stack>(this,
                                                                       &esl::Stack::pop)));
-    squeleton->register_method (name_, "push",
+    squeleton.register_method (name_, "push",
                                 new Function(new Delegate<esl::Stack>(this,
                                                                       &esl::Stack::push)));
 }

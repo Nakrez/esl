@@ -16,45 +16,45 @@ esl::String::~String ()
 
 void esl::String::init()
 {
-    esl::Squeleton* squeleton = esl::Squeleton::get();
+    esl::Squeleton& squeleton = esl::Squeleton::get();
 
     init_basics();
 
-    squeleton->register_method(name_, "size",
-                               new Function(new Delegate<esl::String>(this,
-                                                                      &esl::String::size)));
+    squeleton.register_method(name_, "size",
+                              new Function(new Delegate<esl::String>(this,
+                                                                     &esl::String::size)));
 
-    squeleton->register_method(name_, "at",
-                               new Function(new Delegate<esl::String>(this,
-                                                                      &esl::String::at)));
+    squeleton.register_method(name_, "at",
+                              new Function(new Delegate<esl::String>(this,
+                                                                     &esl::String::at)));
 
-    squeleton->register_method(name_, "split",
-                               new Function(new Delegate<esl::String>(this,
-                                                                      &esl::String::split)));
+    squeleton.register_method(name_, "split",
+                              new Function(new Delegate<esl::String>(this,
+                                                                     &esl::String::split)));
 
-    squeleton->register_method(name_, "to_int",
-                               new Function(new Delegate<esl::String>(this,
-                                                                      &esl::String::to_int)));
+    squeleton.register_method(name_, "to_int",
+                              new Function(new Delegate<esl::String>(this,
+                                                                     &esl::String::to_int)));
 
-    squeleton->register_method(name_, "empty",
-                               new Function(new Delegate<esl::String>(this,
-                                                                      &esl::String::empty)));
+    squeleton.register_method(name_, "empty",
+                              new Function(new Delegate<esl::String>(this,
+                                                                     &esl::String::empty)));
 
-    squeleton->register_method(name_, "insert",
-                               new Function(new Delegate<esl::String>(this,
-                                                                      &esl::String::insert)));
+    squeleton.register_method(name_, "insert",
+                              new Function(new Delegate<esl::String>(this,
+                                                                     &esl::String::insert)));
 
-    squeleton->register_method(name_, "erase",
-                               new Function(new Delegate<esl::String>(this,
-                                                                      &esl::String::erase)));
+    squeleton.register_method(name_, "erase",
+                              new Function(new Delegate<esl::String>(this,
+                                                                     &esl::String::erase)));
 
-    squeleton->register_method(name_, "replace",
-                               new Function(new Delegate<esl::String>(this,
-                                                                      &esl::String::replace)));
+    squeleton.register_method(name_, "replace",
+                              new Function(new Delegate<esl::String>(this,
+                                                                     &esl::String::replace)));
 
-    squeleton->register_method(name_, "substr",
-                               new Function(new Delegate<esl::String>(this,
-                                                                      &esl::String::substr)));
+    squeleton.register_method(name_, "substr",
+                              new Function(new Delegate<esl::String>(this,
+                                                                     &esl::String::substr)));
 }
 
 esl::GCObject* esl::String::construct (const Params&, Context*)

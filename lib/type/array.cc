@@ -3,132 +3,131 @@
 #include "int-object.hh"
 #include "array-object.hh"
 
-esl::Array::Array ()
-    : Type ("array")
+namespace esl
 {
-}
+    Array::Array ()
+        : Type ("array")
+    {}
 
-esl::Array::~Array ()
-{
-}
+    Array::~Array ()
+    {}
 
-void esl::Array::init()
-{
-    esl::Squeleton* squeleton = esl::Squeleton::get();
-
-    init_basics();
-
-    squeleton->register_method (name_, "size",
-                                new Function(new Delegate<esl::Array>(this,
-                                                                       &esl::Array::size)));
-
-    squeleton->register_method (name_, "at",
-                                new Function(new Delegate<esl::Array>(this,
-                                                                       &esl::Array::at)));
-
-    squeleton->register_method (name_, "put_at",
-                                new Function(new Delegate<esl::Array>(this,
-                                                                       &esl::Array::put_at)));
-
-    squeleton->register_method (name_, "push_back",
-                                new Function(new Delegate<esl::Array>(this,
-                                                                       &esl::Array::push_back)));
-}
-
-esl::GCObject* esl::Array::construct (const Params& params, Context*)
-{
-    esl::ArrayObject* array = nullptr;
-
-    if (params.count() == 1)
+    void Array::init()
     {
-        array = new esl::ArrayObject(0);
-    }
-    else
-    {
-        esl::IntObject* size = static_cast<esl::IntObject*> (params.get_params(1)->data_get());
-        array = new esl::ArrayObject(size->data_get());
+        Squeleton& squeleton = Squeleton::get();
+
+        init_basics();
+
+        squeleton.register_method(name_, "size",
+                                  new Function(new Delegate<Array>(this,
+                                                                   &Array::size)));
+
+        squeleton.register_method(name_, "at",
+                                  new Function(new Delegate<Array>(this,
+                                                                   &Array::at)));
+
+        squeleton.register_method(name_, "put_at",
+                                  new Function(new Delegate<Array>(this,
+                                                                   &Array::put_at)));
+
+        squeleton.register_method(name_, "push_back",
+                                  new Function(new Delegate<Array>(this,
+                                                                   &Array::push_back)));
     }
 
-    return new esl::GCObject(array);
-}
+    GCObject* Array::construct (const Params& params, Context*)
+    {
+        ArrayObject* array = nullptr;
 
-esl::GCObject* esl::Array::bracket_op (const Params& params, Context*)
-{
-    esl::ArrayObject* object = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
-    esl::IntObject* op2 = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
-    unsigned int pos = op2->data_get();
+        if (params.count() == 1)
+            array = new ArrayObject(0);
+        else
+        {
+            IntObject* size = static_cast<IntObject*> (params.get_params(1)->data_get());
+            array = new ArrayObject(size->data_get());
+        }
 
-    object->at(pos)->incr();
+        return new GCObject(array);
+    }
 
-    return object->at(pos);
-}
+    GCObject* Array::bracket_op (const Params& params, Context*)
+    {
+        ArrayObject* object = dynamic_cast<ArrayObject*>(params.get_params(1)->data_get());
+        IntObject* op2 = dynamic_cast<IntObject*>(params.get_params(2)->data_get());
+        unsigned int pos = op2->data_get();
 
-esl::GCObject* esl::Array::size (const Params& params, Context*)
-{
-    esl::ArrayObject* object = nullptr;
-    object = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
+        object->at(pos)->incr();
 
-    return new esl::GCObject(new esl::IntObject(object->size()));
-}
+        return object->at(pos);
+    }
 
-esl::GCObject* esl::Array::at (const Params& params, Context*)
-{
-    if (params.count() <= 1)
-        throw esl::Exception("at takes 1 parameter");
+    GCObject* Array::size (const Params& params, Context*)
+    {
+        ArrayObject* object = nullptr;
+        object = dynamic_cast<ArrayObject*>(params.get_params(1)->data_get());
 
-    esl::ArrayObject* object = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
-    esl::IntObject* op2 = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
-    unsigned int pos = op2->data_get();
+        return new GCObject(new IntObject(object->size()));
+    }
 
-    object->at(pos)->incr();
+    GCObject* Array::at (const Params& params, Context*)
+    {
+        if (params.count() <= 1)
+            throw Exception("at takes 1 parameter");
 
-    return object->at(pos);
-}
+        ArrayObject* object = dynamic_cast<ArrayObject*>(params.get_params(1)->data_get());
+        IntObject* op2 = dynamic_cast<IntObject*>(params.get_params(2)->data_get());
+        unsigned int pos = op2->data_get();
 
-esl::GCObject* esl::Array::push_back (const Params& params, Context*)
-{
-    if (params.count() <= 1)
-        throw esl::Exception("at takes 1 parameter");
+        object->at(pos)->incr();
 
-    esl::ArrayObject* array = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
-    esl::GCObject* obj = params.get_params(2);
+        return object->at(pos);
+    }
 
-    obj->incr();
-    array->push_back(obj);
+    GCObject* Array::push_back (const Params& params, Context*)
+    {
+        if (params.count() <= 1)
+            throw Exception("at takes 1 parameter");
 
-    return new esl::GCObject(new esl::IntObject(0));
-}
+        ArrayObject* array = dynamic_cast<ArrayObject*>(params.get_params(1)->data_get());
+        GCObject* obj = params.get_params(2);
 
-esl::GCObject* esl::Array::put_at (const Params& params, Context*)
-{
-    if (params.count() <= 2)
-        throw esl::Exception("at takes 2 parameter");
+        obj->incr();
+        array->push_back(obj);
 
-    esl::ArrayObject* object = dynamic_cast<esl::ArrayObject*>(params.get_params(1)->data_get());
-    esl::GCObject* value = params.get_params(3);
-    esl::IntObject* op2 = dynamic_cast<esl::IntObject*>(params.get_params(2)->data_get());
-    int pos = op2->data_get();
+        return new GCObject(new IntObject(0));
+    }
 
-    object->put_at(pos, value);
+    GCObject* Array::put_at (const Params& params, Context*)
+    {
+        if (params.count() <= 2)
+            throw Exception("at takes 2 parameter");
 
-    return new esl::GCObject(new IntObject(0));
-}
+        ArrayObject* object = dynamic_cast<ArrayObject*>(params.get_params(1)->data_get());
+        GCObject* value = params.get_params(3);
+        IntObject* op2 = dynamic_cast<IntObject*>(params.get_params(2)->data_get());
+        int pos = op2->data_get();
 
-esl::GCObject* esl::Array::print (const esl::Params&, Context*)
-{
-    std::cout << "[" << std::endl;
+        object->put_at(pos, value);
 
-    std::cout << "]" << std::endl;
+        return new GCObject(new IntObject(0));
+    }
 
-    return new esl::GCObject (new esl::IntObject(0));
-}
+    GCObject* Array::print (const Params&, Context*)
+    {
+        std::cout << "[" << std::endl;
 
-esl::GCObject* esl::Array::to_string (const esl::Params&, Context*)
-{
-    return new esl::GCObject (new esl::StringObject("Array"));
-}
+        std::cout << "]" << std::endl;
 
-std::string esl::Array::type_name_get () const
-{
-    return "Array";
-}
+        return new GCObject (new IntObject(0));
+    }
+
+    GCObject* Array::to_string (const Params&, Context*)
+    {
+        return new GCObject (new StringObject("Array"));
+    }
+
+    std::string Array::type_name_get () const
+    {
+        return "Array";
+    }
+} // namespace esl

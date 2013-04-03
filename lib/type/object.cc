@@ -4,8 +4,8 @@
 esl::Object::Object (const std::string& type)
     : type_ (type)
 {
-    if (esl::Squeleton::get()->has_attribut(type))
-        register_attribut(esl::Squeleton::get()->attributs_get(type));
+    if (esl::Squeleton::get().has_attribut(type))
+        register_attribut(esl::Squeleton::get().attributs_get(type));
 }
 
 esl::Object::~Object ()
@@ -20,12 +20,12 @@ esl::GCObject* esl::Object::call_method (const std::string& fun_name,
                                            esl::Context* context,
                                            const esl::Params& params)
 {
-    return esl::Squeleton::get()->method_get(type_, fun_name)->call(context, params);
+    return esl::Squeleton::get().method_get(type_, fun_name)->call(context, params);
 }
 
 esl::Function* esl::Object::get_method (const std::string& fun_name)
 {
-    return esl::Squeleton::get()->method_get(type_, fun_name);
+    return esl::Squeleton::get().method_get(type_, fun_name);
 }
 
 void esl::Object::register_attribut (const std::unordered_map<std::string, Visibility>& attr)

@@ -4,6 +4,8 @@ namespace execute
 {
     Vm::Vm(const Executable& exec)
         : exec_(exec)
+        , error_()
+        , calculus_stack_()
     {}
 
     Vm::~Vm()
@@ -11,13 +13,18 @@ namespace execute
 
     void Vm::run()
     {
+        (new esl::Int())->init();
+        (new esl::String())->init();
+        (new esl::Array())->init();
+
         for (auto instr : exec_.code_get())
             instr->accept(*this);
     }
 
     void Vm::operator()(const bytecode::Pop& byte)
     {
-
+        calculus_stack_.top()->decr();
+        calculus_stack_.pop();
     }
 
     void Vm::operator()(const bytecode::Operation& byte)
@@ -72,7 +79,11 @@ namespace execute
 
     void Vm::operator()(const bytecode::LoadInt& byte)
     {
+        esl::GCObject* obj = nullptr;
 
+        obj = new esl::GCObject(new esl::IntObject(byte.value_get()));
+
+        calculus_stack_.push(obj);
     }
 
     void Vm::operator()(const bytecode::LoadFloat& byte)

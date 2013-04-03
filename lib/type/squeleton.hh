@@ -8,6 +8,7 @@
 
 # include <unordered_map>
 # include <string>
+# include <iostream>
 
 # include "../exception.hh"
 # include "../delegate.hh"
@@ -32,9 +33,9 @@ namespace esl
 
     class Squeleton
     {
+        Squeleton(const Squeleton&) = delete;
         public:
-            static Squeleton* get();
-            static void free();
+            static Squeleton& get();
 
             void inherit (const std::string& type, const std::string& inherit);
 
