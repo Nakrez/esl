@@ -65,15 +65,6 @@ namespace misc
      ** \param rhs string to compare with. */
     bool operator!= (const symbol& rhs) const;
     /** \} */
-
-  public:
-     /** \name Factory methods.
-      ** \{ */
-    /** \brief Create a new unique symbol. */
-    static symbol fresh ();
-    /** \brief Create a new unique symbol, forged from \a s. */
-    static symbol fresh (const symbol& s);
-    /** \} */
   };
 
   /** \brief Intercept output stream redirection.

@@ -23,8 +23,7 @@ namespace execute
 
     void Vm::operator()(const bytecode::Pop& byte)
     {
-        calculus_stack_.top()->decr();
-        calculus_stack_.pop();
+
     }
 
     void Vm::operator()(const bytecode::Operation& byte)
@@ -79,11 +78,7 @@ namespace execute
 
     void Vm::operator()(const bytecode::LoadInt& byte)
     {
-        esl::GCObject* obj = nullptr;
 
-        obj = new esl::GCObject(new esl::IntObject(byte.value_get()));
-
-        calculus_stack_.push(obj);
     }
 
     void Vm::operator()(const bytecode::LoadFloat& byte)
