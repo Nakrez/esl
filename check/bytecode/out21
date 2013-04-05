@@ -1,8 +1,9 @@
 ;begin ro_data section
+.string 0 test
 ;end ro_data section
 
 ;begin code section
-0 REGISTER_FUNCTION 0
+0 REGISTER_FUNCTION 0 ;ro_data test
 1 JUMP 17
 2 LOAD_INT 20
 3 STORE_LOCAL 0

@@ -1,16 +1,18 @@
 ;begin ro_data section
+.string 0 yy
+.string 1 zz
 ;end ro_data section
 
 ;begin code section
 0 LOAD_INT 20
-1 STORE_VAR 0
+1 STORE_VAR 0 ;ro_data yy
 2 POP
 3 LOAD_INT 1
 4 JUMP_FALSE 4
 5 LOAD_INT 0
-6 STORE_VAR 0
+6 STORE_VAR 0 ;ro_data yy
 7 POP
-8 LOAD_VAR 0
-9 STORE_VAR 1
+8 LOAD_VAR 0 ;ro_data yy
+9 STORE_VAR 1 ;ro_data zz
 10 POP
 ;end code section

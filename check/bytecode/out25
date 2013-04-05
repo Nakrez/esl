@@ -1,17 +1,19 @@
 ;begin ro_data section
+.string 0 test
+.string 1 a
 ;end ro_data section
 
 ;begin code section
 0 LOAD_INT 1
-1 STORE_VAR 0
+1 STORE_VAR 0 ;ro_data test
 2 POP
-3 LOAD_VAR 0
+3 LOAD_VAR 0 ;ro_data test
 4 JUMP_FALSE 5
 5 LOAD_INT 5
-6 STORE_VAR 1
+6 STORE_VAR 1 ;ro_data a
 7 POP
 8 JUMP -5
 9 LOAD_INT 4
-10 STORE_VAR 0
+10 STORE_VAR 0 ;ro_data test
 11 POP
 ;end code section

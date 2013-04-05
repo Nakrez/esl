@@ -1,12 +1,14 @@
 ;begin ro_data section
-.string 0 test
+.string 0 glob
+.string 1 test
+.string 2 foo
 ;end ro_data section
 
 ;begin code section
 0 LOAD_INT 9
-1 STORE_VAR 0
+1 STORE_VAR 0 ;ro_data glob
 2 POP
-3 REGISTER_FUNCTION 1
+3 REGISTER_FUNCTION 1 ;ro_data test
 4 JUMP 13
 5 STORE_LOCAL 0
 6 STORE_LOCAL 1
@@ -20,7 +22,7 @@
 14 STORE_LOCAL 2
 15 POP
 16 RETURN
-17 REGISTER_FUNCTION 2
+17 REGISTER_FUNCTION 2 ;ro_data foo
 18 JUMP 21
 19 STORE_LOCAL 0
 20 STORE_LOCAL 1
@@ -45,15 +47,15 @@
 39 DELIM
 40 LOAD_INT 2
 41 LOAD_INT 1
-42 CALL_FUNCTION 1
+42 CALL_FUNCTION 1 ;ro_data test
 43 POP
 44 DELIM
-45 LOAD_STR 0 ;ro_data test
+45 LOAD_STR 1 ;ro_data test
 46 LOAD_INT 4
 47 DELIM
 48 LOAD_INT 2
 49 LOAD_INT 1
-50 CALL_FUNCTION 1
-51 CALL_FUNCTION 2
+50 CALL_FUNCTION 1 ;ro_data test
+51 CALL_FUNCTION 2 ;ro_data foo
 52 POP
 ;end code section

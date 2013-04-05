@@ -10,7 +10,6 @@ namespace compile
         , local_(false)
         , module_(false)
         , var_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
-        , glob_scope_(misc::ScopedMap<misc::symbol, int>(INT_MIN))
         , var_addr_(0)
         , glob_addr_(0)
         , ro_data_counter_(0)
@@ -49,7 +48,7 @@ namespace compile
     void Compiler::operator()(const ast::FunctionCallExp& exp)
     {
         // Fetching function address
-        int glob_addr = glob_scope_.get(exp.name_get());
+        int ro_addr = ro_data_get(exp.name_get());
 
         // Delimit function call formals
         exec_->add_instruction(new bytecode::Delim(exp.location_get()));
@@ -65,16 +64,12 @@ namespace compile
         }
 
         if (module_)
-        {
-            int ro = ro_data_get(exp.name_get());
-
             exec_->add_instruction(new bytecode::CallModule(exp.location_get(),
-                                                           ro));
-        }
+                                                            ro_addr));
         else
             // Add the call instruction
             exec_->add_instruction(new bytecode::CallFunction(exp.location_get(),
-                                                             glob_addr));
+                                                              ro_addr));
     }
 
     void Compiler::operator()(const ast::ReturnExp& exp)
@@ -215,11 +210,10 @@ namespace compile
             }
             else
             {
-                int addr_glob = addr_get(var.name_get(), glob_scope_,
-                                         glob_addr_);
+                int ro_addr = ro_data_get(var.name_get());
 
                 exec_->add_instruction(new bytecode::StoreVar(var.location_get(),
-                                                             addr_glob));
+                                                              ro_addr));
             }
         }
         else
@@ -234,11 +228,10 @@ namespace compile
             }
             else
             {
-                int addr_glob = addr_get(var.name_get(), glob_scope_,
-                                         glob_addr_, true);
+                int ro_addr = ro_data_get(var.name_get());
 
                 exec_->add_instruction(new bytecode::LoadVar(var.location_get(),
-                                                            addr_glob));
+                                                             ro_addr));
             }
         }
     }
@@ -292,11 +285,10 @@ namespace compile
 
         var_scope_.scope_begin();
 
-        int addr_fun = addr_get(dec.name_get(), glob_scope_,
-                                glob_addr_);
+        int ro_addr = ro_data_get(dec.name_get());
 
         exec_->add_instruction(new bytecode::RegisterFunction(dec.location_get(),
-                                                             addr_fun));
+                                                              ro_addr));
 
         // Prepare jump instruction
         // offset is 0 because not known yet
@@ -357,7 +349,7 @@ namespace compile
     }
 
     // TODO Same error handling as addr_get()
-    int Compiler::ro_data_get(const std::string& str)
+    int Compiler::ro_data_get(const std::string& str, bool error)
     {
         std::map<std::string, int>::iterator it;
 
@@ -367,6 +359,10 @@ namespace compile
             return it->second;
         else
         {
+            if (error)
+                error_ << misc::Error::COMPILE
+                       << "Function " << str << " does not exist" << std::endl;
+
             ro_data_.insert(std::pair<std::string, int>(str, ro_data_counter_));
             exec_->add_ro_data(str);
 

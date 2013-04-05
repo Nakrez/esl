@@ -45,7 +45,8 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const StoreVar& byte)
     {
-        ostr_ << "STORE_VAR " << byte.data_get() << std::endl;
+        ostr_ << "STORE_VAR " << byte.data_get()
+              << " ;ro_data " << ro_data_[byte.data_get()] << std::endl;
     }
 
     void BytecodeDumper::operator()(const StoreAttr& byte)
@@ -66,7 +67,8 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const LoadVar& byte)
     {
-        ostr_ << "LOAD_VAR " << byte.addr_get() << std::endl;
+        ostr_ << "LOAD_VAR " << byte.addr_get()
+              << " ;ro_data " << ro_data_[byte.addr_get()] << std::endl;
     }
 
     void BytecodeDumper::operator()(const LoadLocal& byte)
@@ -120,7 +122,8 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const CallFunction& byte)
     {
-        ostr_ << "CALL_FUNCTION " << byte.addr_get() << std::endl;
+        ostr_ << "CALL_FUNCTION " << byte.addr_get()
+              << " ;ro_data " << ro_data_[byte.addr_get()] << std::endl;
     }
 
     void BytecodeDumper::operator()(const StartClass& byte)
@@ -140,7 +143,8 @@ namespace bytecode
 
     void BytecodeDumper::operator()(const RegisterFunction& byte)
     {
-        ostr_ << "REGISTER_FUNCTION " << byte.data_get() << std::endl;
+        ostr_ << "REGISTER_FUNCTION " << byte.data_get()
+              << " ;ro_data " << ro_data_[byte.data_get()] << std::endl;
     }
 
     void BytecodeDumper::operator()(const Inherit& byte)
