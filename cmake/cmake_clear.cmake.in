@@ -6,7 +6,8 @@ SET(alias "/"
           "modules/stack/"
           "check/unitary/"
           "check/unitary/scoped_map/"
-          "check/unitary/error/")
+          "check/unitary/error/"
+          "check/unitary/dictionary/")
 
 FOREACH(name ${alias})
 EXEC_PROGRAM(
