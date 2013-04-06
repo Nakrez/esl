@@ -1,4 +1,4 @@
-# Unitary test : lib/misc/error
+# Unitary test : lib/misc/dictionary
 
 enable_testing()
 
