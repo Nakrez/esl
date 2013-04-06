@@ -6,4 +6,5 @@
 
 int main()
 {
+    misc::Stack<int> stack;
 }
