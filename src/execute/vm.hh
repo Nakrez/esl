@@ -10,8 +10,6 @@
 
 # include <misc/error.hh>
 
-# include <gc/memory-object.hh>
-
 # include <type/built-in.hh>
 
 # include <bytecode/visitor.hh>
@@ -74,7 +72,9 @@ namespace execute
             // Error return by the VM
             misc::Error error_;
 
-            std::stack<esl::GCObject*> calculus_stack_;
+            std::stack<std::shared_ptr<esl::Content>> calculus_stack_;
+
+            unsigned pc_;
     };
 } // namespace execute
 

@@ -6,6 +6,7 @@ namespace execute
         : exec_(exec)
         , error_()
         , calculus_stack_()
+        , pc_ (0)
     {}
 
     Vm::~Vm()
@@ -13,151 +14,156 @@ namespace execute
 
     void Vm::run()
     {
+        // Register ESL default types
         (new esl::Int())->init();
         (new esl::String())->init();
         (new esl::Array())->init();
 
-        for (auto instr : exec_.code_get())
-            instr->accept(*this);
+        // Execute every instruction
+
+        for ( ; pc_ < exec_.code_get().size() ; ++pc_)
+        {
+            exec_.code_get().at(pc_)->accept(*this);
+        }
     }
 
-    void Vm::operator()(const bytecode::Pop& byte)
+    void Vm::operator()(const bytecode::Pop&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::Operation& byte)
+    void Vm::operator()(const bytecode::Operation&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::BracketOp& byte)
+    void Vm::operator()(const bytecode::BracketOp&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::NewObject& byte)
+    void Vm::operator()(const bytecode::NewObject&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::StoreVar& byte)
+    void Vm::operator()(const bytecode::StoreVar&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::StoreAttr& byte)
+    void Vm::operator()(const bytecode::StoreAttr&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::StoreArray& byte)
+    void Vm::operator()(const bytecode::StoreArray&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::StoreLocal& byte)
+    void Vm::operator()(const bytecode::StoreLocal&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::LoadVar& byte)
+    void Vm::operator()(const bytecode::LoadVar&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::LoadLocal& byte)
+    void Vm::operator()(const bytecode::LoadLocal&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::LoadStr& byte)
+    void Vm::operator()(const bytecode::LoadStr&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::LoadInt& byte)
+    void Vm::operator()(const bytecode::LoadInt&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::LoadFloat& byte)
+    void Vm::operator()(const bytecode::LoadFloat&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::LoadAttr& byte)
+    void Vm::operator()(const bytecode::LoadAttr&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::LoadModule& byte)
+    void Vm::operator()(const bytecode::LoadModule&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::OpenModule& byte)
+    void Vm::operator()(const bytecode::OpenModule&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::CallModule& byte)
+    void Vm::operator()(const bytecode::CallModule&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::CallMethod& byte)
+    void Vm::operator()(const bytecode::CallMethod&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::CallFunction& byte)
+    void Vm::operator()(const bytecode::CallFunction&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::StartClass& byte)
+    void Vm::operator()(const bytecode::StartClass&)
     {
 
     }
-    void Vm::operator()(const bytecode::EndClass& byte)
+    void Vm::operator()(const bytecode::EndClass&)
     {
 
     }
-    void Vm::operator()(const bytecode::RegisterAttribut& byte)
-    {
-
-    }
-
-    void Vm::operator()(const bytecode::RegisterFunction& byte)
+    void Vm::operator()(const bytecode::RegisterAttribut&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::Inherit& byte)
+    void Vm::operator()(const bytecode::RegisterFunction&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::Jump& byte)
-    {
-
-    }
-    void Vm::operator()(const bytecode::JumpTrue& byte)
-    {
-
-    }
-    void Vm::operator()(const bytecode::JumpFalse& byte)
+    void Vm::operator()(const bytecode::Inherit&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::Return& byte)
+    void Vm::operator()(const bytecode::Jump&)
+    {
+
+    }
+    void Vm::operator()(const bytecode::JumpTrue&)
+    {
+
+    }
+    void Vm::operator()(const bytecode::JumpFalse&)
     {
 
     }
 
-    void Vm::operator()(const bytecode::Delim& byte)
+    void Vm::operator()(const bytecode::Return&)
+    {
+
+    }
+
+    void Vm::operator()(const bytecode::Delim&)
     {
 
     }
