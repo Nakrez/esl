@@ -33,7 +33,7 @@ namespace parser
 %locations
 %parse-param { parser::Driver& driver }
 %lex-param   { parser::Driver& driver }
-%pure-parser
+/*%pure-parser*/
 
 %union
 {
